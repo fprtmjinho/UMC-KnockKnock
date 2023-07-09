@@ -20,11 +20,16 @@
 		C93246BF2A48313000908D6B /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93246BE2A48313000908D6B /* SearchController.swift */; };
 		C93246C12A48315800908D6B /* MyPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93246C02A48315800908D6B /* MyPageController.swift */; };
 		C93246C32A48317800908D6B /* FriendController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93246C22A48317800908D6B /* FriendController.swift */; };
-		C93246C52A48318B00908D6B /* InformationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93246C42A48318B00908D6B /* InformationController.swift */; };
-		C935FA1A2A57F0520035FA2C /* ProfileEditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C935FA192A57F0520035FA2C /* ProfileEditVC.swift */; };
+		C93246C52A48318B00908D6B /* CommunityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93246C42A48318B00908D6B /* CommunityController.swift */; };
 		C935FA1C2A57F1B90035FA2C /* MyProfilePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C935FA1B2A57F1B90035FA2C /* MyProfilePage.swift */; };
 		C935FA1F2A58264B0035FA2C /* LoginFirstVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C935FA1E2A58264B0035FA2C /* LoginFirstVC.swift */; };
 		C935FA212A58656C0035FA2C /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C935FA202A58656C0035FA2C /* LoginVC.swift */; };
+		C935FA232A59357B0035FA2C /* LoginSecondVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C935FA222A59357B0035FA2C /* LoginSecondVC.swift */; };
+		C935FA252A59475A0035FA2C /* LoginSuccessVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C935FA242A59475A0035FA2C /* LoginSuccessVC.swift */; };
+		C935FA272A59BC840035FA2C /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C935FA262A59BC840035FA2C /* Extension.swift */; };
+		C935FA2D2A59C1B30035FA2C /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C935FA2C2A59C1B30035FA2C /* TabBarController.swift */; };
+		C935FA2F2A59D0EA0035FA2C /* AddFriendVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C935FA2E2A59D0EA0035FA2C /* AddFriendVC.swift */; };
+		C935FA312A5A52730035FA2C /* FriendProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C935FA302A5A52730035FA2C /* FriendProfileVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,11 +67,16 @@
 		C93246BE2A48313000908D6B /* SearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
 		C93246C02A48315800908D6B /* MyPageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageController.swift; sourceTree = "<group>"; };
 		C93246C22A48317800908D6B /* FriendController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendController.swift; sourceTree = "<group>"; };
-		C93246C42A48318B00908D6B /* InformationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InformationController.swift; sourceTree = "<group>"; };
-		C935FA192A57F0520035FA2C /* ProfileEditVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditVC.swift; sourceTree = "<group>"; };
+		C93246C42A48318B00908D6B /* CommunityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityController.swift; sourceTree = "<group>"; };
 		C935FA1B2A57F1B90035FA2C /* MyProfilePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfilePage.swift; sourceTree = "<group>"; };
 		C935FA1E2A58264B0035FA2C /* LoginFirstVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFirstVC.swift; sourceTree = "<group>"; };
 		C935FA202A58656C0035FA2C /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
+		C935FA222A59357B0035FA2C /* LoginSecondVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginSecondVC.swift; sourceTree = "<group>"; };
+		C935FA242A59475A0035FA2C /* LoginSuccessVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginSuccessVC.swift; sourceTree = "<group>"; };
+		C935FA262A59BC840035FA2C /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		C935FA2C2A59C1B30035FA2C /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		C935FA2E2A59D0EA0035FA2C /* AddFriendVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendVC.swift; sourceTree = "<group>"; };
+		C935FA302A5A52730035FA2C /* FriendProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendProfileVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,9 +130,13 @@
 				C93246782A458D9400908D6B /* AppDelegate.swift */,
 				C932467A2A458D9400908D6B /* SceneDelegate.swift */,
 				C93246AF2A46253D00908D6B /* Image.swift */,
+				C935FA262A59BC840035FA2C /* Extension.swift */,
+				C935FA2C2A59C1B30035FA2C /* TabBarController.swift */,
 				C935FA1D2A5817FB0035FA2C /* Login */,
-				C93246BD2A48311500908D6B /* Controller */,
-				C93246AB2A458DD600908D6B /* View */,
+				C935FA292A59BDCC0035FA2C /* Search */,
+				C935FA282A59BD860035FA2C /* Friend */,
+				C935FA2B2A59BDE10035FA2C /* Community */,
+				C935FA2A2A59BDD90035FA2C /* MyPage */,
 				C93246842A458D9600908D6B /* Assets.xcassets */,
 				C93246862A458D9600908D6B /* LaunchScreen.storyboard */,
 				C93246892A458D9600908D6B /* Info.plist */,
@@ -148,34 +162,51 @@
 			path = KnockKnockUITests;
 			sourceTree = "<group>";
 		};
-		C93246AB2A458DD600908D6B /* View */ = {
-			isa = PBXGroup;
-			children = (
-				C93246B12A4631E200908D6B /* MyPage.swift */,
-				C935FA1B2A57F1B90035FA2C /* MyProfilePage.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		C93246BD2A48311500908D6B /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				C93246BE2A48313000908D6B /* SearchController.swift */,
-				C93246C22A48317800908D6B /* FriendController.swift */,
-				C93246C42A48318B00908D6B /* InformationController.swift */,
-				C93246C02A48315800908D6B /* MyPageController.swift */,
-				C935FA192A57F0520035FA2C /* ProfileEditVC.swift */,
-			);
-			path = Controller;
-			sourceTree = "<group>";
-		};
 		C935FA1D2A5817FB0035FA2C /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				C935FA1E2A58264B0035FA2C /* LoginFirstVC.swift */,
 				C935FA202A58656C0035FA2C /* LoginVC.swift */,
+				C935FA1E2A58264B0035FA2C /* LoginFirstVC.swift */,
+				C935FA222A59357B0035FA2C /* LoginSecondVC.swift */,
+				C935FA242A59475A0035FA2C /* LoginSuccessVC.swift */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		C935FA282A59BD860035FA2C /* Friend */ = {
+			isa = PBXGroup;
+			children = (
+				C93246C22A48317800908D6B /* FriendController.swift */,
+			);
+			path = Friend;
+			sourceTree = "<group>";
+		};
+		C935FA292A59BDCC0035FA2C /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				C93246BE2A48313000908D6B /* SearchController.swift */,
+				C935FA2E2A59D0EA0035FA2C /* AddFriendVC.swift */,
+				C935FA302A5A52730035FA2C /* FriendProfileVC.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		C935FA2A2A59BDD90035FA2C /* MyPage */ = {
+			isa = PBXGroup;
+			children = (
+				C93246C02A48315800908D6B /* MyPageController.swift */,
+				C93246B12A4631E200908D6B /* MyPage.swift */,
+				C935FA1B2A57F1B90035FA2C /* MyProfilePage.swift */,
+			);
+			path = MyPage;
+			sourceTree = "<group>";
+		};
+		C935FA2B2A59BDE10035FA2C /* Community */ = {
+			isa = PBXGroup;
+			children = (
+				C93246C42A48318B00908D6B /* CommunityController.swift */,
+			);
+			path = Community;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -308,18 +339,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C935FA232A59357B0035FA2C /* LoginSecondVC.swift in Sources */,
+				C935FA2D2A59C1B30035FA2C /* TabBarController.swift in Sources */,
+				C935FA312A5A52730035FA2C /* FriendProfileVC.swift in Sources */,
 				C93246C12A48315800908D6B /* MyPageController.swift in Sources */,
 				C935FA1C2A57F1B90035FA2C /* MyProfilePage.swift in Sources */,
 				C93246C32A48317800908D6B /* FriendController.swift in Sources */,
 				C93246B02A46253D00908D6B /* Image.swift in Sources */,
 				C93246792A458D9400908D6B /* AppDelegate.swift in Sources */,
 				C932467B2A458D9400908D6B /* SceneDelegate.swift in Sources */,
+				C935FA272A59BC840035FA2C /* Extension.swift in Sources */,
 				C935FA1F2A58264B0035FA2C /* LoginFirstVC.swift in Sources */,
+				C935FA252A59475A0035FA2C /* LoginSuccessVC.swift in Sources */,
 				C93246BF2A48313000908D6B /* SearchController.swift in Sources */,
+				C935FA2F2A59D0EA0035FA2C /* AddFriendVC.swift in Sources */,
 				C93246832A458D9400908D6B /* KnockKnock.xcdatamodeld in Sources */,
 				C935FA212A58656C0035FA2C /* LoginVC.swift in Sources */,
-				C93246C52A48318B00908D6B /* InformationController.swift in Sources */,
-				C935FA1A2A57F0520035FA2C /* ProfileEditVC.swift in Sources */,
+				C93246C52A48318B00908D6B /* CommunityController.swift in Sources */,
 				C93246B22A4631E200908D6B /* MyPage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
