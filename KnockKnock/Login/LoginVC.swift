@@ -7,6 +7,7 @@
 
 import UIKit
 class LoginVC : UIViewController {
+
         
         let Title : UILabel = {
            let title = UILabel()
@@ -21,14 +22,11 @@ class LoginVC : UIViewController {
         let EmailButton : UITextField = {
             let emailBtn = UITextField()
             emailBtn.placeholder = "이메일 주소"
-            //padding 설정 해야 함
+            emailBtn.addLeftPadding()
             emailBtn.backgroundColor = .systemGray6
             emailBtn.layer.cornerRadius = 25
             //모서리 둥글게
             emailBtn.clearButtonMode = .whileEditing
-            emailBtn.leftViewMode = .always
-            emailBtn.addLeftPadding()
-
             //clear모드 설정
             return emailBtn
         }()
@@ -36,13 +34,11 @@ class LoginVC : UIViewController {
         let PasswordButton : UITextField = {
             let passwordBtn = UITextField()
             passwordBtn.placeholder = "비밀번호"
-            //padding 설정 해야 함
+            passwordBtn.addLeftPadding()
             passwordBtn.backgroundColor = .systemGray6
             passwordBtn.layer.cornerRadius = 25
             passwordBtn.clearButtonMode = .whileEditing
             passwordBtn.isSecureTextEntry = true
-            passwordBtn.addLeftPadding()
-            
             return passwordBtn
         }()
         
@@ -52,7 +48,6 @@ class LoginVC : UIViewController {
             loginBtn.backgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
             loginBtn.layer.cornerRadius = 25
             loginBtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-            
             return loginBtn
         }()
         
@@ -92,8 +87,7 @@ class LoginVC : UIViewController {
         
         let ForKakaoBtn : UIButton = {
             let kakao = UIButton()
-            kakao.layer.cornerRadius = 32
-            //둥근 모양 설정
+            kakao.layer.cornerRadius = 32.5
             
             kakao.backgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
             kakao.setImage(Image.kakaoIMG, for: .normal)
@@ -102,7 +96,7 @@ class LoginVC : UIViewController {
         
         let ForFaceBtn : UIButton = {
            let face = UIButton()
-            face.layer.cornerRadius = 32
+            face.layer.cornerRadius = 32.5
             face.backgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
             face.setImage(Image.facebookIMG, for: .normal)
             //아이콘 수정 필요 -> 세 아이콘 모두
@@ -111,7 +105,7 @@ class LoginVC : UIViewController {
         
         let ForGoogleBtn : UIButton = {
             let google = UIButton()
-            google.layer.cornerRadius = 32
+            google.layer.cornerRadius = 32.5
             google.backgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
             google.setImage(Image.googleIMG, for: .normal)
             return google
@@ -132,13 +126,13 @@ class LoginVC : UIViewController {
             enternew.setUnderLine()
             return enternew
         }()
+        
     func makeConstraint(){
         Title.translatesAutoresizingMaskIntoConstraints = false
         EmailButton.translatesAutoresizingMaskIntoConstraints = false
         LoginButton.translatesAutoresizingMaskIntoConstraints = false
         PasswordButton.translatesAutoresizingMaskIntoConstraints = false
         ForgetPassword.translatesAutoresizingMaskIntoConstraints = false
-        
         ForKakaoBtn.translatesAutoresizingMaskIntoConstraints = false
         ForFaceBtn.translatesAutoresizingMaskIntoConstraints = false
         ForGoogleBtn.translatesAutoresizingMaskIntoConstraints = false
@@ -227,51 +221,39 @@ class LoginVC : UIViewController {
             
         view.addSubview(NotYet)
         view.addSubview(EnterNew)
-    }
-    func buttonClick(){
-        self.LoginButton.addTarget(self, action: #selector(loginFunc(_:)), for: .touchUpInside)
+}
+    
+    func makeAddTarget(){
         self.EnterNew.addTarget(self, action: #selector(signUpFunc(_:)), for: .touchUpInside)
+        //회원가입 뷰로 이동
     }
+        
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         makeSubView()
         makeConstraint()
-    }
-    @objc func loginFunc(_:UIButton){
-        let mainPage = mainPage()
-        self.navigationController?.pushViewController(mainPage, animated: true)
+        makeAddTarget()
+        
     }
     
     @objc func signUpFunc(_:UIButton){
-        let loginFirstVC = LoginFirstVC()
-        self.navigationController?.pushViewController(loginFirstVC, animated: true)
+        let LoginNavigationController = UINavigationController(rootViewController: LoginFirstVC())
+        
+        LoginNavigationController.modalPresentationStyle = .fullScreen
+        self.present(LoginNavigationController, animated: true, completion: nil)
+        
     }
         
-}
-
-
-
-
-extension UITextField {
-  func addLeftPadding() {
-    let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: self.frame.height))
-    self.leftView = paddingView
-    self.leftViewMode = ViewMode.always
-  }
-}
-        
-extension UIButton {
-    func setUnderLine(){
-        guard let title = title(for: .normal) else { return }
-        let attributedString = NSMutableAttributedString(string: title)
-        attributedString.addAttribute(.underlineStyle,
-                value: NSUnderlineStyle.single.rawValue,
-                range: NSRange(location: 0, length: title.count)
-                        )
-        setAttributedTitle(attributedString, for: .normal)
     }
-}
+
+
+
+
+
+        
+
 
 
     

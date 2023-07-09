@@ -20,31 +20,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         
         let mainViewController = LoginVC()
-        let navigationController = UINavigationController(rootViewController: mainViewController)
-        
-        
-        let SearchController = SearchController()
-        let MyPageController = MyPageController()
-        let FriendController = FriendController()
-        let InformationController = InformationController()
-        
+        let tabBarController = TabBarController()
 
-        let tabbarController = UITabBarController()
-        tabbarController.setViewControllers([SearchController, MyPageController, FriendController, InformationController], animated: true)
-        
-        
-        if let items = tabbarController.tabBar.items{
-            items[0].image = Image.searchIMG
-            items[1].image = Image.peopleIMG
-            items[2].image = Image.userIMG
-            items[3].image = Image.informationIMG
-        }
-        
-        tabbarController.tabBar.unselectedItemTintColor = .systemGray4
-        tabbarController.tabBar.tintColor = #colorLiteral(red: 0.8564454913, green: 0.1857742071, blue: 0.4008496106, alpha: 1)
-        
-       
-        window?.rootViewController = navigationController
+       let testV = FriendProfileVC()
+        window?.rootViewController = mainViewController
         window?.makeKeyAndVisible()
     }
 
