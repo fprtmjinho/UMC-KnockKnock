@@ -33,14 +33,18 @@ class LoginThirdVC: UIViewController{
         fourthText1.backgroundColor = .systemGray6
         fourthText1.layer.cornerRadius = 20
         fourthText1.addLeftPadding()
+        fourthText1.clearButtonMode = .whileEditing
+        fourthText1.isSecureTextEntry = true
         return fourthText1
     }()
     
     let fourthLabel2: UILabel = {
         let fourthlabel2 = UILabel()
-        fourthlabel2.text = "비밀번호 입력"
+        fourthlabel2.text = "비밀번호 확인"
         fourthlabel2.font = UIFont.boldSystemFont(ofSize: 20)
         return fourthlabel2
+        
+        //fourthLabel1에서 비밀번호 입력 되어야 활성화, 색 변경
     }()
     
     let fourthText2: UITextField = {
@@ -48,6 +52,8 @@ class LoginThirdVC: UIViewController{
         fourthText2.backgroundColor = .systemGray6
         fourthText2.layer.cornerRadius = 20
         fourthText2.addLeftPadding()
+        fourthText2.clearButtonMode = .whileEditing
+        fourthText2.isSecureTextEntry = true
         return fourthText2
     }()
     
@@ -78,27 +84,27 @@ class LoginThirdVC: UIViewController{
         fourthText2.translatesAutoresizingMaskIntoConstraints = false
         nextBtn.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([num5.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 70),
-                                     num5.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-                                     num5.widthAnchor.constraint(equalToConstant: 25), num5.heightAnchor.constraint(equalToConstant: 25),
-                                     fourthLabel1.topAnchor.constraint(equalTo: num5.bottomAnchor, constant: 5),
-                                     fourthLabel1.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-                                     fourthLabel1.heightAnchor.constraint(equalToConstant: 50),
-                                     fourthText1.topAnchor.constraint(equalTo: fourthLabel1.bottomAnchor, constant: 15),
-                                     fourthText1.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-                                     fourthText1.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
-                                     fourthText1.heightAnchor.constraint(equalToConstant: 45),
-                                     fourthLabel2.topAnchor.constraint(equalTo: fourthText1.bottomAnchor, constant: 15),
-                                     fourthLabel2.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-                                     fourthLabel2.heightAnchor.constraint(equalToConstant: 50),
-                                     fourthText2.topAnchor.constraint(equalTo:fourthLabel2.bottomAnchor, constant: 15),
-                                     fourthText2.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-                                     fourthText2.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
-                                     fourthText2.heightAnchor.constraint(equalToConstant: 45),
-                                     nextBtn.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
-                                     nextBtn.heightAnchor.constraint(equalToConstant: 50),
-                                     nextBtn.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-                                     nextBtn.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30)])
+        NSLayoutConstraint.activate([
+            num5.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 70),
+            num5.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            num5.widthAnchor.constraint(equalToConstant: 25), num5.heightAnchor.constraint(equalToConstant: 25),
+            fourthLabel1.topAnchor.constraint(equalTo: num5.bottomAnchor, constant: 5),
+            fourthLabel1.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            fourthText1.topAnchor.constraint(equalTo: fourthLabel1.bottomAnchor, constant: 10),
+            fourthText1.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            fourthText1.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
+            fourthText1.heightAnchor.constraint(equalToConstant: 45),
+            
+            fourthLabel2.topAnchor.constraint(equalTo: fourthText1.bottomAnchor, constant: 40),
+            fourthLabel2.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            fourthText2.topAnchor.constraint(equalTo: fourthLabel2.bottomAnchor, constant: 10),
+            fourthText2.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            fourthText2.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
+            fourthText2.heightAnchor.constraint(equalToConstant: 45),
+            nextBtn.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
+            nextBtn.heightAnchor.constraint(equalToConstant: 50),
+            nextBtn.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+             nextBtn.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30)])
         
     }
     

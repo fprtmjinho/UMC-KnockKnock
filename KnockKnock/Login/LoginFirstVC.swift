@@ -31,6 +31,7 @@ class LoginFirstVC : UIViewController {
         firsttext.backgroundColor = .systemGray6
         firsttext.layer.cornerRadius = 20
         firsttext.addLeftPadding()
+        firsttext.clearButtonMode = .whileEditing
         return firsttext
     }()
     
@@ -97,6 +98,7 @@ class LoginFirstVC : UIViewController {
         thirdtext.backgroundColor = .systemGray6
         thirdtext.layer.cornerRadius = 20
         thirdtext.addLeftPadding()
+        thirdtext.clearButtonMode = .whileEditing
         return thirdtext
     }()
     

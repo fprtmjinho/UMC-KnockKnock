@@ -22,8 +22,9 @@ class LoginSecondVC : UIViewController{
     
     let forthLabel : UILabel = {
        let forthlabel = UILabel()
-        forthlabel.text = "사용하실 이메일을 입력하세요"
+        forthlabel.text = "사용하실\n이메일을 입력하세요"
         forthlabel.font = UIFont.boldSystemFont(ofSize: 20)
+        forthlabel.numberOfLines = 2
         return forthlabel
     }()
     let forthText : UITextField = {
@@ -31,6 +32,8 @@ class LoginSecondVC : UIViewController{
         forthtext.backgroundColor = .systemGray6
         forthtext.layer.cornerRadius = 20
         forthtext.addLeftPadding()
+        forthtext.clearButtonMode = .whileEditing
+      
         return forthtext
     }()
     
@@ -65,8 +68,7 @@ class LoginSecondVC : UIViewController{
             num4.heightAnchor.constraint(equalToConstant: 25),
             forthLabel.topAnchor.constraint(equalTo: num4.bottomAnchor, constant: 5),
             forthLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            forthLabel.heightAnchor.constraint(equalToConstant: 50),
-            forthText.topAnchor.constraint(equalTo: forthLabel.bottomAnchor, constant: 5),
+            forthText.topAnchor.constraint(equalTo: forthLabel.bottomAnchor, constant: 10),
             forthText.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             forthText.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
             forthText.heightAnchor.constraint(equalToConstant: 45),
