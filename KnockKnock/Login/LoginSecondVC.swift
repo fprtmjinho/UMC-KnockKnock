@@ -84,8 +84,8 @@ class LoginSecondVC : UIViewController{
     }
     
     @objc func nextView(_: UIButton){
-        let loginSuccessVC = LoginSuccessVC()
-        navigationController?.pushViewController(loginSuccessVC, animated: true)
+        let loginThirdVC = LoginThirdVC()
+        navigationController?.pushViewController(loginThirdVC, animated: true)
     }
     
     
