@@ -97,16 +97,26 @@ class LoginSecondVC : UIViewController{
         if let emailText = forthText.text{
             email = emailText
         }
-        // 입력 안된 정보 있을때 예외처리
-        /*
-        if (email == ""){
-            
-        }*/
+        let checkOne: Bool = emailCheck()
+        if(checkOne){
+            return
+        }
         UserDefaults.standard.set(email, forKey: "email")
 
         // 데이터 동기화
         UserDefaults.standard.synchronize()
         nextView()
+    }
+    //이메일이 빈칸이거나 형식이 틀리면 타이틀 강조 (@를 포함하지 않거나 다른 조건(추가해야함))
+    @objc func emailCheck()->Bool{
+        if(email == "" || !email.contains("@")){
+            forthLabel.textColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+            return true
+        }
+        else{
+            forthLabel.textColor = .black
+            return false
+        }
     }
     @objc func nextView(){
         let loginThirdVC = LoginThirdVC()

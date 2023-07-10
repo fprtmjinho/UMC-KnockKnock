@@ -236,27 +236,19 @@ class LoginFirstVC : UIViewController {
         else if(secondChoice2.backgroundColor == choieColor){
             sex = "woman"
         }
-        // 성별 선택(bool)
-        /*
-        if sex=="man"{
-            sexType=true
-        }
-        else if sex=="woman"{
-            sexType=false
-        }*/
-        
         if let nameText = firstText.text{
             nickName = nameText
         }
         if let dayText = thirdText.text{
             birthday = dayText
         }
-
-        // 입력 안된 정보 있을때 예외처리
-        /*
-        if (nickName == ""||birthday == ""||sex==""){
-            
-        }*/
+        // 입력 안된 정보 있을때
+        let checkOne: Bool = nickNameCheck()
+        let checkTwo: Bool = sexCheck()
+        let checkThird: Bool = birthdayCheck()
+        if(checkOne||checkTwo||checkThird){
+            return
+        }
         // 데이터 저장
         UserDefaults.standard.set(nickName, forKey: "nickName")
         UserDefaults.standard.set(sex, forKey: "sex")
@@ -265,6 +257,45 @@ class LoginFirstVC : UIViewController {
         // 데이터 동기화
         UserDefaults.standard.synchronize()
         nextView()
+    }
+    // 별명 체크
+    @objc func nickNameCheck()-> Bool{
+        // 별명이 빈칸이면 별명 타이틀을 빨간색으로 강조
+        if(nickName==""){
+            firstLabel.textColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+            return true
+        }
+        // 아니면 검정색
+        else{
+            firstLabel.textColor = .black
+            return false
+        }
+        
+    }
+    // 성별 체크
+    @objc func sexCheck()-> Bool{
+        // 성별이 선택 안되었으면 성별 타이틀을 빨간색으로 강조
+        if(sex==""){
+            secondLabel.textColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+            return true
+        }
+        // 아니면 검정색
+        else{
+            secondLabel.textColor = .black
+            return false
+        }
+    }
+    // 생년월일 체크
+    @objc func birthdayCheck()-> Bool{
+        // 생년월일이 빈칸이거나 6자리가 아니면 생년월일 타이틀을 빨간색으로 강조
+        if(birthday==""||birthday.count != 6){
+            thirdLabel.textColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+            return true
+        }
+        else{
+            thirdLabel.textColor = .black
+            return false
+        }
     }
     @objc func nextView(){
         let loginSecondVC = LoginSecondVC()

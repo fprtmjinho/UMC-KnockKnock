@@ -120,22 +120,22 @@ class LoginThirdVC: UIViewController{
         makeAddTarget()
     }
     @objc func touchNextBtn(_:UIButton){
-        var passwordCheck : String = ""
+        var passwordSame : String = ""
         if let passwordText = fourthText1.text{
             password = passwordText
         }
-        if let passwordCheckText = fourthText2.text{
-            passwordCheck = passwordCheckText
+        if let passwordSameText = fourthText2.text{
+            passwordSame = passwordSameText
         }
-        // 입력 안된 정보 있을때 예외처리
-        /*
-        if (email == ""){
-            
-        }*/
-        // 위 if 문 안에 넣을 비밀번호와 비밀번호 확인이 다를경우
-        if (password != passwordCheck){
-            
+        let checkOne: Bool = passwordCheck()
+        if (checkOne){
+            return
+        }
+        if (password != passwordSame){
+            fourthLabel2.textColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+            return
         }else{
+            fourthLabel2.textColor = .black
             UserDefaults.standard.set(password, forKey: "password")
 
             // 데이터 동기화
@@ -143,6 +143,17 @@ class LoginThirdVC: UIViewController{
             nextView()
         }
     }
+    @objc func passwordCheck()->Bool{
+        if (password == ""){
+            fourthLabel1.textColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+            return true
+        }
+        else{
+            fourthLabel1.textColor = .black
+            return false
+        }
+    }
+    
     @objc func nextView(){
         let loginSuccessVC = LoginSuccessVC()
         self.navigationController?.pushViewController(loginSuccessVC, animated: true)
