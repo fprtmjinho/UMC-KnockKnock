@@ -191,13 +191,43 @@ class LoginFirstVC : UIViewController {
     
     
     func makeAddTarget(){
-        self.nextBtn.addTarget(self, action: #selector(nextView(_:)), for: .touchUpInside)
+        self.nextBtn.addTarget(self, action: #selector(touchNextBtn(_:)), for: .touchUpInside)
     }
     
     @objc func nextView(_: UIButton){
         let loginSecondVC = LoginSecondVC()
         navigationController?.pushViewController(loginSecondVC, animated: true)
     }
+    @objc func touchNextBtn(_:UIButton){
+        var nickName: String = ""
+        var birthday: String = ""
+        var sexType: Bool = true
+        var sex: String = ""
+        let choieColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+        // 성별 선택(string)
+        if (secondChoice1.backgroundColor == choieColor){
+            sex = "man"
+        }
+        else if(secondChoice2.backgroundColor == choieColor){
+            sex = "woman"
+        }
+        // 성별 선택(bool)
+        if sex=="man"{
+            sexType=true
+        }
+        else if sex=="woman"{
+            sexType=false
+        }
+        
+        if let nameText = firstText.text{
+            nickName = nameText
+        }
+        if let dayText = thirdText.text{
+            birthday = dayText
+        }
+        //savePersonalInfo(nickName: nickName, sex: sexType, birthday: birthday)
+    }
+
     
     
 
