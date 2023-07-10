@@ -58,7 +58,7 @@ extension SettingVC: UITableViewDelegate, UITableViewDataSource {
             
             let switchView = UISwitch()
             switchView.isOn = false // 기본값 설정
-            switchView.onTintColor = UIColor(red: 1.0, green: 0.0, blue: 0.376, alpha: 1.0)
+            switchView.onTintColor = #colorLiteral(red: 1, green: 0.1719063818, blue: 0.4505617023, alpha: 1)
             switchView.addTarget(self, action: #selector(pushSwitchValueChanged(_:)), for: .valueChanged)
             
             cell.accessoryView = switchView
