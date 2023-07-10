@@ -30,6 +30,10 @@
 		C935FA2D2A59C1B30035FA2C /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C935FA2C2A59C1B30035FA2C /* TabBarController.swift */; };
 		C935FA2F2A59D0EA0035FA2C /* AddFriendVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C935FA2E2A59D0EA0035FA2C /* AddFriendVC.swift */; };
 		C935FA312A5A52730035FA2C /* FriendProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C935FA302A5A52730035FA2C /* FriendProfileVC.swift */; };
+		C935FA332A5BC6C50035FA2C /* AddAlarmVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C935FA322A5BC6C50035FA2C /* AddAlarmVC.swift */; };
+		C935FA742A5BE56D0035FA2C /* TextGuideVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C935FA732A5BE56D0035FA2C /* TextGuideVC.swift */; };
+		C935FA762A5BE7280035FA2C /* GetInformatioinVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C935FA752A5BE7280035FA2C /* GetInformatioinVC.swift */; };
+		C935FA782A5C01200035FA2C /* SettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C935FA772A5C01200035FA2C /* SettingVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +81,10 @@
 		C935FA2C2A59C1B30035FA2C /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		C935FA2E2A59D0EA0035FA2C /* AddFriendVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendVC.swift; sourceTree = "<group>"; };
 		C935FA302A5A52730035FA2C /* FriendProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendProfileVC.swift; sourceTree = "<group>"; };
+		C935FA322A5BC6C50035FA2C /* AddAlarmVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAlarmVC.swift; sourceTree = "<group>"; };
+		C935FA732A5BE56D0035FA2C /* TextGuideVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextGuideVC.swift; sourceTree = "<group>"; };
+		C935FA752A5BE7280035FA2C /* GetInformatioinVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetInformatioinVC.swift; sourceTree = "<group>"; };
+		C935FA772A5C01200035FA2C /* SettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,6 +195,9 @@
 				C93246BE2A48313000908D6B /* SearchController.swift */,
 				C935FA2E2A59D0EA0035FA2C /* AddFriendVC.swift */,
 				C935FA302A5A52730035FA2C /* FriendProfileVC.swift */,
+				C935FA322A5BC6C50035FA2C /* AddAlarmVC.swift */,
+				C935FA732A5BE56D0035FA2C /* TextGuideVC.swift */,
+				C935FA752A5BE7280035FA2C /* GetInformatioinVC.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -195,6 +206,7 @@
 			isa = PBXGroup;
 			children = (
 				C93246C02A48315800908D6B /* MyPageController.swift */,
+				C935FA772A5C01200035FA2C /* SettingVC.swift */,
 				C93246B12A4631E200908D6B /* MyPage.swift */,
 				C935FA1B2A57F1B90035FA2C /* MyProfilePage.swift */,
 			);
@@ -339,10 +351,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C935FA762A5BE7280035FA2C /* GetInformatioinVC.swift in Sources */,
+				C935FA742A5BE56D0035FA2C /* TextGuideVC.swift in Sources */,
 				C935FA232A59357B0035FA2C /* LoginSecondVC.swift in Sources */,
 				C935FA2D2A59C1B30035FA2C /* TabBarController.swift in Sources */,
 				C935FA312A5A52730035FA2C /* FriendProfileVC.swift in Sources */,
+				C935FA332A5BC6C50035FA2C /* AddAlarmVC.swift in Sources */,
 				C93246C12A48315800908D6B /* MyPageController.swift in Sources */,
+				C935FA782A5C01200035FA2C /* SettingVC.swift in Sources */,
 				C935FA1C2A57F1B90035FA2C /* MyProfilePage.swift in Sources */,
 				C93246C32A48317800908D6B /* FriendController.swift in Sources */,
 				C93246B02A46253D00908D6B /* Image.swift in Sources */,

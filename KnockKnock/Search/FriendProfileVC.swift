@@ -9,16 +9,16 @@ import UIKit
 class FriendProfileVC : UIViewController {
 
     
-    let Name : UILabel = {
-        let name = UILabel()
-        name.text = "Name"
-        name.textAlignment = .center
-        name.font = .systemFont(ofSize: 16)
+    let Number : UILabel = {
+        let number = UILabel()
+        number.text = "010-0000-0000"
+        number.textAlignment = .center
+        number.font = .systemFont(ofSize: 16)
         //두께 및 크기 조정
-        name.backgroundColor = .white
-        name.textColor = .black
+        number.backgroundColor = .white
+        number.textColor = .black
 
-        return name
+        return number
     }()
     
     
@@ -26,8 +26,6 @@ class FriendProfileVC : UIViewController {
        var profileView = UIImageView()
         let config = UIImage.SymbolConfiguration(paletteColors: [#colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)])
         profileView.image = UIImage(systemName: "person.circle.fill", withConfiguration: config)
-        
-        //profileView.image!.withTintColor(UIColor.systemGray2)
         profileView.layer.cornerRadius = 40
         
         return profileView
@@ -36,8 +34,16 @@ class FriendProfileVC : UIViewController {
     let textTitle : UILabel = {
        let texttitle =  UILabel()
         texttitle.text = "연락하기"
-        texttitle.font = UIFont.boldSystemFont(ofSize: 17)
+        texttitle.font = UIFont.boldSystemFont(ofSize: 18)
         return texttitle
+    }()
+    
+    let textGuideBtn : UIButton = {
+       let textguide = UIButton()
+        textguide.setTitle("쓸 말이 안떠오르시나요?", for: .normal)
+        textguide.setTitleColor(#colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1), for: .normal)
+        textguide.titleLabel?.font = UIFont.systemFont(ofSize: 13)
+        return textguide
     }()
     
     let myText : UITextField = {
@@ -59,8 +65,8 @@ class FriendProfileVC : UIViewController {
     let sendMessageBtn : UIButton = {
        let sendMessagebtn = UIButton()
         sendMessagebtn.backgroundColor = .systemGray6
-        sendMessagebtn.tintColor = .black
         sendMessagebtn.setTitle("문자하기", for: .normal)
+        sendMessagebtn.setTitleColor(.black, for: .normal)
         sendMessagebtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
         sendMessagebtn.layer.cornerRadius = 15
         return sendMessagebtn
@@ -78,15 +84,16 @@ class FriendProfileVC : UIViewController {
     let AlarmLabel : UILabel = {
        let alarmLabel = UILabel()
         alarmLabel.text = "연락 주기 및 예정 알림"
-        alarmLabel.font = UIFont.boldSystemFont(ofSize: 17)
+        alarmLabel.font = UIFont.boldSystemFont(ofSize: 18)
         return alarmLabel
     }()
     
     let addAlarmBtn : UIButton = {
        let addAlarm = UIButton()
         addAlarm.backgroundColor = .systemGray6
-       
-        addAlarm.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        addAlarm.setTitle("+ 연락 알림 추가", for: .normal)
+        addAlarm.setTitleColor(.black, for: .normal)
+        addAlarm.titleLabel?.font = UIFont.systemFont(ofSize: 18)
         addAlarm.layer.cornerRadius = 25
         return addAlarm
     }()
@@ -94,7 +101,7 @@ class FriendProfileVC : UIViewController {
     let setBFLabel : UILabel = {
        let setbfLabel = UILabel()
         setbfLabel.text = "찐친 등록하기"
-        setbfLabel.font = UIFont.boldSystemFont(ofSize: 17)
+        setbfLabel.font = UIFont.boldSystemFont(ofSize: 18)
         return setbfLabel
     }()
     
@@ -104,9 +111,10 @@ class FriendProfileVC : UIViewController {
     }()
     
     func makeSubView(){
-        view.addSubview(Name)
+        view.addSubview(Number)
         view.addSubview(ProfileView)
         view.addSubview(textTitle)
+        view.addSubview(textGuideBtn)
         view.addSubview(myText)
         view.addSubview(sendMessageBtn)
         view.addSubview(copyBtn)
@@ -117,9 +125,10 @@ class FriendProfileVC : UIViewController {
     }
     
     func makeConstraint(){
-        Name.translatesAutoresizingMaskIntoConstraints = false
+        Number.translatesAutoresizingMaskIntoConstraints = false
         ProfileView.translatesAutoresizingMaskIntoConstraints = false
         textTitle.translatesAutoresizingMaskIntoConstraints = false
+        textGuideBtn.translatesAutoresizingMaskIntoConstraints = false
         myText.translatesAutoresizingMaskIntoConstraints = false
         sendMessageBtn.translatesAutoresizingMaskIntoConstraints = false
         copyBtn.translatesAutoresizingMaskIntoConstraints = false
@@ -135,10 +144,13 @@ class FriendProfileVC : UIViewController {
             ProfileView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50),
             ProfileView.widthAnchor.constraint(equalToConstant: 100),
             ProfileView.heightAnchor.constraint(equalToConstant: 100),
-            Name.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            Name.topAnchor.constraint(equalTo: ProfileView.bottomAnchor, constant: 10),
-            textTitle.topAnchor.constraint(equalTo: Name.bottomAnchor, constant: 40),
+            Number.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            Number.topAnchor.constraint(equalTo: ProfileView.bottomAnchor, constant: 10),
+            textTitle.topAnchor.constraint(equalTo: Number.bottomAnchor, constant: 40),
             textTitle.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            textGuideBtn.topAnchor.constraint(equalTo: Number.bottomAnchor, constant: 40),
+            textGuideBtn.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
+            
             myText.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             myText.topAnchor.constraint(equalTo: textTitle.bottomAnchor, constant: 8),
             myText.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
@@ -162,17 +174,44 @@ class FriendProfileVC : UIViewController {
             
             setBFLabel.topAnchor.constraint(equalTo: addAlarmBtn.bottomAnchor, constant: 40),
             setBFLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            BfSwitch.topAnchor.constraint(equalTo: addAlarmBtn.bottomAnchor, constant: 20),
+            BfSwitch.topAnchor.constraint(equalTo: addAlarmBtn.bottomAnchor, constant: 40),
             BfSwitch.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30)
         ])
     }
     
+    func makeAddTarget(){
+        self.addAlarmBtn.addTarget(self, action: #selector(addAlarmFunc(_:)), for: .touchUpInside)
+        self.textGuideBtn.addTarget(self, action: #selector(textGuideFunc(_:)), for: .touchUpInside)
+    }
+    
+    @objc func addAlarmFunc(_:UIButton){
+        let addAlarmVC = AddAlarmVC()
+        addAlarmVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(addAlarmVC, animated: true)
+    }
+    @objc func textGuideFunc(_: UIButton){
+        let textGuideVC = TextGuideVC()
+        textGuideVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(textGuideVC, animated: true)
+    }
+    
+    
+  
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
+        self.title = "Name"
+        //title은 cell 따라 변경 필요
+        //임의 지정
+        
+        setNavigationBar()
         makeSubView()
         makeConstraint()
-        
+        makeAddTarget()
+       
     }
     
 }
+
+

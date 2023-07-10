@@ -69,14 +69,6 @@ class LoginFirstVC : UIViewController {
         secondchoice2.titleLabel?.font = UIFont.systemFont(ofSize: 15)
         secondchoice2.tintColor = .gray
         secondchoice2.layer.cornerRadius = 20
-        
-        if(secondchoice2.isSelected){
-            secondchoice2.backgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-        } else  {
-            secondchoice2.backgroundColor = .systemGray6
-        }
-        //선택되면 색 변경해야 함
-        
             
         return secondchoice2
     }()

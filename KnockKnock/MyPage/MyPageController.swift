@@ -18,25 +18,26 @@ class MyPageController : UIViewController{
         let myProfilePg = MyProfilePage()
         return myProfilePg
     }()
-
     
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setNavigationBar()
-        self.navigationController?.navigationBar.topItem?.title = "내 페이지"
-        self.view.backgroundColor = .white
+    func makeSubView(){
         self.view.addSubview(myPage)
         self.view.addSubview(scrollView)
         scrollView.addSubview(myProfilePage)
-        setScrollView()
-        //Scroll 기능 구현
+    }
+    
+    func makeConstraint(){
+        
+    }
+    
+    func makeAddTarget(){
         
     }
     
  
     
     func setScrollView(){
+        //스크롤 기능 구현
+        
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         myPage.translatesAutoresizingMaskIntoConstraints = false
         myProfilePage.translatesAutoresizingMaskIntoConstraints = false
@@ -71,7 +72,39 @@ class MyPageController : UIViewController{
         contentViewHeight.isActive = true
     
     }
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.view.backgroundColor = .white
+        self.title = "내 페이지"
+        setNavigationBar()
+        customNavigationBar()
+        
+        makeSubView()
+        makeConstraint()
+        makeAddTarget()
+        setScrollView()
+       
+        
+    }
    
+}
+
+
+extension MyPageController {
+    func customNavigationBar(){
+        let settingBtn : UIBarButtonItem = {
+            let settingBtn = UIBarButtonItem(image: UIImage(systemName: "gearshape"), style: .plain, target: self, action: #selector(settingBtnPressed(_:)))
+            return settingBtn
+        }()
+        navigationItem.rightBarButtonItem = settingBtn
+    }
+    
+    @objc func settingBtnPressed(_: UIBarButtonItem){
+        let settingVC = SettingVC()
+        navigationController?.pushViewController(settingVC, animated: true)
+    }
 }
 
 

@@ -159,20 +159,21 @@ class AddFriendVC : UIViewController {
         
     }
     
+    func makeAddTarget(){
+        navigationController?.popViewController(animated: true)
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         setNavigationBar()
-        
         self.title = "연락처 추가"
-        //large X
-       
         
         
         makeSubView()
         makeConstraint()
-        //makeAddTarget()
+        makeAddTarget()
         
     }
 }
