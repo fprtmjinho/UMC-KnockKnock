@@ -164,9 +164,9 @@ class AddFriendVC : UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setNavigationBar()
-        self.navigationController?.navigationBar.topItem?.title = "연락처 추가"
-        //pop하면 전 뷰 title로 넘어감
-        //수정 필요
+        
+        self.title = "연락처 추가"
+        //large X
        
         
         

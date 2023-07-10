@@ -22,8 +22,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let mainViewController = LoginVC()
         let tabBarController = TabBarController()
 
-       let testV = FriendProfileVC()
-        window?.rootViewController = mainViewController
+
+        window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
     }
 
