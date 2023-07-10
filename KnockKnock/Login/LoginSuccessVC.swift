@@ -9,14 +9,14 @@ import UIKit
 class LoginSuccessVC : UIViewController {
     
     let checkIMg : UIImageView = {
-       let checkImg = UIImageView()
+        let checkImg = UIImageView()
         let config = UIImage.SymbolConfiguration(paletteColors: [#colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)])
         checkImg.image = UIImage(systemName: "checkmark.circle.fill", withConfiguration: config)
         return checkImg
     }()
     
     let firstLabel : UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.text = "환영합니다!"
         label.textAlignment = .center
         label.font = UIFont.boldSystemFont(ofSize: 25)
@@ -24,7 +24,7 @@ class LoginSuccessVC : UIViewController {
     }()
     
     let secondLabel : UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.text = "회원가입 되었습니다."
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 20)
@@ -32,7 +32,7 @@ class LoginSuccessVC : UIViewController {
     }()
     
     let startBtn : UIButton = {
-       let startbtn = UIButton()
+        let startbtn = UIButton()
         startbtn.backgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
         startbtn.setTitle("시작하기", for: .normal)
         startbtn.tintColor = .white
@@ -52,7 +52,7 @@ class LoginSuccessVC : UIViewController {
     func makeConstraint(){
         checkIMg.translatesAutoresizingMaskIntoConstraints = false
         firstLabel.translatesAutoresizingMaskIntoConstraints = false
-    secondLabel.translatesAutoresizingMaskIntoConstraints = false
+        secondLabel.translatesAutoresizingMaskIntoConstraints = false
         startBtn.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -78,7 +78,6 @@ class LoginSuccessVC : UIViewController {
         ])
         
     }
-    
     func makeAddTarget(){
         self.startBtn.addTarget(self, action: #selector(nextView(_:)), for: .touchUpInside)
     }
@@ -86,15 +85,12 @@ class LoginSuccessVC : UIViewController {
     @objc func nextView(_: UIButton){
         let tabBarController = TabBarController()
         tabBarController.modalPresentationStyle = .fullScreen
-       self.present(tabBarController, animated: true, completion: nil)
+        self.present(tabBarController, animated: true, completion: nil)
         
         //시작 버튼 누르면 tabbarcontroller로 이동
         //방식 수정 필요
-     
+        
     }
-    
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -102,6 +98,24 @@ class LoginSuccessVC : UIViewController {
         makeSubView()
         makeConstraint()
         makeAddTarget()
-        
+        debugingFunction()
+    }
+    func debugingFunction(){
+        // 데이터 가져오기
+        if let nickName = UserDefaults.standard.string(forKey: "nickName"),
+           let sex = UserDefaults.standard.string(forKey: "sex"),
+           let birthday = UserDefaults.standard.string(forKey: "birthday"),
+           let email = UserDefaults.standard.string(forKey: "email"),
+           let password = UserDefaults.standard.string(forKey: "password"){
+            // 가져온 값 사용
+            print(nickName)
+            print(sex)
+            print(birthday)
+            print(email)
+            print(password)
+        } else {
+            // 저장된 데이터가 없을 경우 기본값 또는 처리할 로직 설정
+            print("No data found.")
+        }
     }
 }

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 class LoginFirstVC : UIViewController {
     
     let num1 : UILabel = {
@@ -69,6 +70,7 @@ class LoginFirstVC : UIViewController {
         secondchoice2.setTitle("여성", for: .normal)
         secondchoice2.titleLabel?.font = UIFont.systemFont(ofSize: 15)
         secondchoice2.tintColor = .gray
+        secondchoice2.backgroundColor = .systemGray6
         secondchoice2.layer.cornerRadius = 20
             
         return secondchoice2
@@ -188,21 +190,44 @@ class LoginFirstVC : UIViewController {
         ])
         
     }
-    
+    var nickName: String = ""
+    var sex: String = ""
+    var birthday: String = ""
     
     func makeAddTarget(){
         self.nextBtn.addTarget(self, action: #selector(touchNextBtn(_:)), for: .touchUpInside)
+        self.secondChoice1.addTarget(self, action: #selector(choiceMan(_:)), for: .touchUpInside)
+        self.secondChoice2.addTarget(self, action: #selector(choiceWoman(_:)), for: .touchUpInside)
     }
-    
-    @objc func nextView(_: UIButton){
-        let loginSecondVC = LoginSecondVC()
-        navigationController?.pushViewController(loginSecondVC, animated: true)
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        setNavigationBar()
+        makeSubView()
+        makeConstraint()
+        makeAddTarget()
+    }
+    @objc func choiceMan(_:UIButton){
+        let color = secondChoice1.backgroundColor
+        if color == #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1){
+            secondChoice2.backgroundColor = .systemGray6
+        }
+        else{
+            secondChoice1.backgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+            secondChoice2.backgroundColor = .systemGray6
+        }
+    }
+    @objc func choiceWoman(_:UIButton){
+        let color = secondChoice2.backgroundColor
+        if color == #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1){
+            secondChoice1.backgroundColor = .systemGray6}
+        else{
+            secondChoice2.backgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+            secondChoice1.backgroundColor = .systemGray6
+        }
     }
     @objc func touchNextBtn(_:UIButton){
-        var nickName: String = ""
-        var birthday: String = ""
-        var sexType: Bool = true
-        var sex: String = ""
+        //var sexType: Bool = true
         let choieColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
         // 성별 선택(string)
         if (secondChoice1.backgroundColor == choieColor){
@@ -212,12 +237,13 @@ class LoginFirstVC : UIViewController {
             sex = "woman"
         }
         // 성별 선택(bool)
+        /*
         if sex=="man"{
             sexType=true
         }
         else if sex=="woman"{
             sexType=false
-        }
+        }*/
         
         if let nameText = firstText.text{
             nickName = nameText
@@ -225,23 +251,25 @@ class LoginFirstVC : UIViewController {
         if let dayText = thirdText.text{
             birthday = dayText
         }
-        //savePersonalInfo(nickName: nickName, sex: sexType, birthday: birthday)
-    }
 
-    
-    
+        // 입력 안된 정보 있을때 예외처리
+        /*
+        if (nickName == ""||birthday == ""||sex==""){
+            
+        }*/
+        // 데이터 저장
+        UserDefaults.standard.set(nickName, forKey: "nickName")
+        UserDefaults.standard.set(sex, forKey: "sex")
+        UserDefaults.standard.set(birthday, forKey: "birthday")
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .white
-        setNavigationBar()
-        makeSubView()
-        makeConstraint()
-        makeAddTarget()
-    
+        // 데이터 동기화
+        UserDefaults.standard.synchronize()
+        nextView()
     }
-    
-   
+    @objc func nextView(){
+        let loginSecondVC = LoginSecondVC()
+        self.navigationController?.pushViewController(loginSecondVC, animated: true)
+    }
 }
 
 

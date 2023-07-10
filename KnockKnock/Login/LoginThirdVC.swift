@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import CoreData
 class LoginThirdVC: UIViewController{
     
     let num5: UILabel = {
@@ -107,16 +107,10 @@ class LoginThirdVC: UIViewController{
              nextBtn.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30)])
         
     }
-    
+    var password: String = ""
     func makeAddTarget(){
-        self.nextBtn.addTarget(self, action: #selector(nextView(_:)), for: .touchUpInside)
+        self.nextBtn.addTarget(self, action: #selector(touchNextBtn(_:)), for: .touchUpInside)
     }
-    
-    @objc func nextView(_: UIButton){
-        let loginSuccessVC = LoginSuccessVC()
-        navigationController?.pushViewController(loginSuccessVC, animated: true)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -125,5 +119,34 @@ class LoginThirdVC: UIViewController{
         makeConstraint()
         makeAddTarget()
     }
+    @objc func touchNextBtn(_:UIButton){
+        var passwordCheck : String = ""
+        if let passwordText = fourthText1.text{
+            password = passwordText
+        }
+        if let passwordCheckText = fourthText2.text{
+            passwordCheck = passwordCheckText
+        }
+        // 입력 안된 정보 있을때 예외처리
+        /*
+        if (email == ""){
+            
+        }*/
+        // 위 if 문 안에 넣을 비밀번호와 비밀번호 확인이 다를경우
+        if (password != passwordCheck){
+            
+        }else{
+            UserDefaults.standard.set(password, forKey: "password")
+
+            // 데이터 동기화
+            UserDefaults.standard.synchronize()
+            nextView()
+        }
+    }
+    @objc func nextView(){
+        let loginSuccessVC = LoginSuccessVC()
+        self.navigationController?.pushViewController(loginSuccessVC, animated: true)
+    }
+    
     
 }

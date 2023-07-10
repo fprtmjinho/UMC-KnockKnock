@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 class LoginSecondVC : UIViewController{
     
     let num4 : UILabel = {
@@ -80,17 +81,10 @@ class LoginSecondVC : UIViewController{
         ])
         
     }
-    
+    var email: String = ""
     func makeAddTarget(){
-        self.nextBtn.addTarget(self, action: #selector(nextView(_:)), for: .touchUpInside)
+        self.nextBtn.addTarget(self, action: #selector(touchNextBtn(_:)), for: .touchUpInside)
     }
-    
-    @objc func nextView(_: UIButton){
-        let loginThirdVC = LoginThirdVC()
-        navigationController?.pushViewController(loginThirdVC, animated: true)
-    }
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -98,9 +92,24 @@ class LoginSecondVC : UIViewController{
         makeSubView()
         makeConstraint()
         makeAddTarget()
-        
-        
     }
-    
-    
+    @objc func touchNextBtn(_:UIButton){
+        if let emailText = forthText.text{
+            email = emailText
+        }
+        // 입력 안된 정보 있을때 예외처리
+        /*
+        if (email == ""){
+            
+        }*/
+        UserDefaults.standard.set(email, forKey: "email")
+
+        // 데이터 동기화
+        UserDefaults.standard.synchronize()
+        nextView()
+    }
+    @objc func nextView(){
+        let loginThirdVC = LoginThirdVC()
+        self.navigationController?.pushViewController(loginThirdVC, animated: true)
+    }
 }
