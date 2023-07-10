@@ -110,11 +110,6 @@ class SearchController : UIViewController{
         makeConstraint()
         makeAddTarget()
         
-        
-        
-        
-
-        
         let button : UIButton = {
            //임시로 지정한 friendProfileVC로 넘기기 위한 버튼
             let button = UIButton()

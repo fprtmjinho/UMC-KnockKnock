@@ -225,9 +225,10 @@ class LoginVC : UIViewController {
     
     func makeAddTarget(){
         self.EnterNew.addTarget(self, action: #selector(signUpFunc(_:)), for: .touchUpInside)
+        self.LoginButton.addTarget(self, action: #selector(loginSuccess(_:)), for: .touchUpInside)
         //회원가입 뷰로 이동
     }
-        
+    
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -237,7 +238,23 @@ class LoginVC : UIViewController {
         makeAddTarget()
         
     }
-    
+    @objc func loginSuccess(_: UIButton){
+        //로그인 성공여부 판별하는 로직 짜야함(서버랑 얘기하고 구현)
+//        if(){
+//            nextView()
+//        }else{
+//            return
+//        }
+    }
+    @objc func nextView(){
+        let tabBarController = TabBarController()
+        tabBarController.modalPresentationStyle = .fullScreen
+        self.present(tabBarController, animated: true, completion: nil)
+        
+        //시작 버튼 누르면 tabbarcontroller로 이동
+        //방식 수정 필요
+        
+    }
     @objc func signUpFunc(_:UIButton){
         let LoginNavigationController = UINavigationController(rootViewController: LoginFirstVC())
         
