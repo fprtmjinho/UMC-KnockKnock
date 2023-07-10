@@ -160,6 +160,10 @@ class AddFriendVC : UIViewController {
     }
     
     func makeAddTarget(){
+        saveBtn.addTarget(self, action: #selector(saveBtnPressed(_:)), for: .touchUpInside)
+    }
+    
+    @objc func saveBtnPressed(_: UIButton){
         navigationController?.popViewController(animated: true)
     }
     
