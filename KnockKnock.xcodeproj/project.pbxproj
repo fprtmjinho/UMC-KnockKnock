@@ -170,8 +170,8 @@
 				C935FA202A58656C0035FA2C /* LoginVC.swift */,
 				C935FA1E2A58264B0035FA2C /* LoginFirstVC.swift */,
 				C935FA222A59357B0035FA2C /* LoginSecondVC.swift */,
-				C935FA242A59475A0035FA2C /* LoginSuccessVC.swift */,
 				00186ACC2A5BD97F004BE22D /* LoginThirdVC.swift */,
+				C935FA242A59475A0035FA2C /* LoginSuccessVC.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
