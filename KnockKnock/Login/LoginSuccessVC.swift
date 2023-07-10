@@ -15,7 +15,7 @@ class LoginSuccessVC : UIViewController {
         return checkImg
     }()
     
-    let firstLabel : UILabel = {
+    let welcomeLabel : UILabel = {
         let label = UILabel()
         label.text = "환영합니다!"
         label.textAlignment = .center
@@ -23,7 +23,7 @@ class LoginSuccessVC : UIViewController {
         return label
     }()
     
-    let secondLabel : UILabel = {
+    let signInLabel : UILabel = {
         let label = UILabel()
         label.text = "회원가입 되었습니다."
         label.textAlignment = .center
@@ -44,15 +44,15 @@ class LoginSuccessVC : UIViewController {
     
     func makeSubView(){
         view.addSubview(checkIMg)
-        view.addSubview(firstLabel)
-        view.addSubview(secondLabel)
+        view.addSubview(welcomeLabel)
+        view.addSubview(signInLabel)
         view.addSubview(startBtn)
     }
     
     func makeConstraint(){
         checkIMg.translatesAutoresizingMaskIntoConstraints = false
-        firstLabel.translatesAutoresizingMaskIntoConstraints = false
-        secondLabel.translatesAutoresizingMaskIntoConstraints = false
+        welcomeLabel.translatesAutoresizingMaskIntoConstraints = false
+        signInLabel.translatesAutoresizingMaskIntoConstraints = false
         startBtn.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -60,16 +60,16 @@ class LoginSuccessVC : UIViewController {
             checkIMg.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 180),
             checkIMg.widthAnchor.constraint(equalToConstant: 90),
             checkIMg.heightAnchor.constraint(equalToConstant: 90),
-            firstLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            firstLabel.topAnchor.constraint(equalTo: checkIMg.bottomAnchor, constant: 20),
-            firstLabel.widthAnchor.constraint(equalToConstant: 40),
-            firstLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            firstLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
-            secondLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            secondLabel.topAnchor.constraint(equalTo: firstLabel.bottomAnchor, constant: 5),
-            secondLabel.widthAnchor.constraint(equalToConstant: 40),
-            secondLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            secondLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
+            welcomeLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            welcomeLabel.topAnchor.constraint(equalTo: checkIMg.bottomAnchor, constant: 20),
+            welcomeLabel.widthAnchor.constraint(equalToConstant: 40),
+            welcomeLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            welcomeLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
+            signInLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            signInLabel.topAnchor.constraint(equalTo: welcomeLabel.bottomAnchor, constant: 5),
+            signInLabel.widthAnchor.constraint(equalToConstant: 40),
+            signInLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            signInLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
             
             startBtn.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
             startBtn.heightAnchor.constraint(equalToConstant: 50),
@@ -78,18 +78,13 @@ class LoginSuccessVC : UIViewController {
         ])
         
     }
+    var nickName: String = ""
+    var sex: String = ""
+    var birthday: String = ""
+    var email: String = ""
+    var password: String = ""
     func makeAddTarget(){
         self.startBtn.addTarget(self, action: #selector(nextView(_:)), for: .touchUpInside)
-    }
-    
-    @objc func nextView(_: UIButton){
-        let tabBarController = TabBarController()
-        tabBarController.modalPresentationStyle = .fullScreen
-        self.present(tabBarController, animated: true, completion: nil)
-        
-        //시작 버튼 누르면 tabbarcontroller로 이동
-        //방식 수정 필요
-        
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -117,5 +112,14 @@ class LoginSuccessVC : UIViewController {
             // 저장된 데이터가 없을 경우 기본값 또는 처리할 로직 설정
             print("No data found.")
         }
+    }
+    @objc func nextView(_: UIButton){
+        let tabBarController = TabBarController()
+        tabBarController.modalPresentationStyle = .fullScreen
+        self.present(tabBarController, animated: true, completion: nil)
+        
+        //시작 버튼 누르면 tabbarcontroller로 이동
+        //방식 수정 필요
+        
     }
 }

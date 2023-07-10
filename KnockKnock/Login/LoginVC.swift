@@ -19,7 +19,7 @@ class LoginVC : UIViewController {
             return title
         }()
         
-        let EmailButton : UITextField = {
+        let EmailText : UITextField = {
             let emailBtn = UITextField()
             emailBtn.placeholder = "이메일 주소"
             emailBtn.addLeftPadding()
@@ -31,7 +31,7 @@ class LoginVC : UIViewController {
             return emailBtn
         }()
         
-        let PasswordButton : UITextField = {
+        let PasswordText : UITextField = {
             let passwordBtn = UITextField()
             passwordBtn.placeholder = "비밀번호"
             passwordBtn.addLeftPadding()
@@ -118,7 +118,7 @@ class LoginVC : UIViewController {
             notyet.titleLabel?.font = UIFont.systemFont(ofSize: 15)
             return notyet
         }()
-        let EnterNew : UIButton = {
+        let SignUp : UIButton = {
            let enternew = UIButton()
             enternew.setTitle("가입하기", for: .normal)
             enternew.setTitleColor(.systemGray, for: .normal)
@@ -129,9 +129,9 @@ class LoginVC : UIViewController {
         
     func makeConstraint(){
         Title.translatesAutoresizingMaskIntoConstraints = false
-        EmailButton.translatesAutoresizingMaskIntoConstraints = false
+        EmailText.translatesAutoresizingMaskIntoConstraints = false
         LoginButton.translatesAutoresizingMaskIntoConstraints = false
-        PasswordButton.translatesAutoresizingMaskIntoConstraints = false
+        PasswordText.translatesAutoresizingMaskIntoConstraints = false
         ForgetPassword.translatesAutoresizingMaskIntoConstraints = false
         ForKakaoBtn.translatesAutoresizingMaskIntoConstraints = false
         ForFaceBtn.translatesAutoresizingMaskIntoConstraints = false
@@ -140,7 +140,7 @@ class LoginVC : UIViewController {
         LoginGuide_1.translatesAutoresizingMaskIntoConstraints = false
         LoginGuide_2.translatesAutoresizingMaskIntoConstraints = false
         NotYet.translatesAutoresizingMaskIntoConstraints = false
-        EnterNew.translatesAutoresizingMaskIntoConstraints = false
+        SignUp.translatesAutoresizingMaskIntoConstraints = false
             
             
         NSLayoutConstraint.activate([
@@ -148,15 +148,15 @@ class LoginVC : UIViewController {
             Title.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             Title.heightAnchor.constraint(equalToConstant: 80),
             
-            EmailButton.topAnchor.constraint(equalTo: Title.bottomAnchor, constant: 80),
-            EmailButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            EmailButton.widthAnchor.constraint(equalToConstant: 330),
-            EmailButton.heightAnchor.constraint(equalToConstant: 50),
-            PasswordButton.topAnchor.constraint(equalTo: EmailButton.bottomAnchor, constant: 10),
-            PasswordButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            PasswordButton.widthAnchor.constraint(equalToConstant: 330),
-            PasswordButton.heightAnchor.constraint(equalToConstant: 50),
-            LoginButton.topAnchor.constraint(equalTo: PasswordButton.bottomAnchor, constant: 20),
+            EmailText.topAnchor.constraint(equalTo: Title.bottomAnchor, constant: 80),
+            EmailText.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            EmailText.widthAnchor.constraint(equalToConstant: 330),
+            EmailText.heightAnchor.constraint(equalToConstant: 50),
+            PasswordText.topAnchor.constraint(equalTo: EmailText.bottomAnchor, constant: 10),
+            PasswordText.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            PasswordText.widthAnchor.constraint(equalToConstant: 330),
+            PasswordText.heightAnchor.constraint(equalToConstant: 50),
+            LoginButton.topAnchor.constraint(equalTo: PasswordText.bottomAnchor, constant: 20),
             LoginButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             LoginButton.widthAnchor.constraint(equalToConstant: 330),
             LoginButton.heightAnchor.constraint(equalToConstant: 50),
@@ -196,9 +196,9 @@ class LoginVC : UIViewController {
                 
             NotYet.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 90),
             NotYet.topAnchor.constraint(equalTo: ForFaceBtn.bottomAnchor, constant: 55),
-            EnterNew.topAnchor.constraint(equalTo: ForFaceBtn.bottomAnchor, constant: 55),
-            EnterNew.leadingAnchor.constraint(equalTo: NotYet.trailingAnchor, constant: 5),
-            EnterNew.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -90)
+            SignUp.topAnchor.constraint(equalTo: ForFaceBtn.bottomAnchor, constant: 55),
+            SignUp.leadingAnchor.constraint(equalTo: NotYet.trailingAnchor, constant: 5),
+            SignUp.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -90)
         ])
             
         
@@ -206,8 +206,8 @@ class LoginVC : UIViewController {
     func makeSubView(){
         view.addSubview(Title)
                 
-        view.addSubview(EmailButton)
-        view.addSubview(PasswordButton)
+        view.addSubview(EmailText)
+        view.addSubview(PasswordText)
         view.addSubview(LoginButton)
         view.addSubview(ForgetPassword)
         
@@ -220,11 +220,11 @@ class LoginVC : UIViewController {
         view.addSubview(LoginGuide_2)
             
         view.addSubview(NotYet)
-        view.addSubview(EnterNew)
+        view.addSubview(SignUp)
 }
     
     func makeAddTarget(){
-        self.EnterNew.addTarget(self, action: #selector(signUpFunc(_:)), for: .touchUpInside)
+        self.SignUp.addTarget(self, action: #selector(signUpFunc(_:)), for: .touchUpInside)
         self.LoginButton.addTarget(self, action: #selector(loginSuccess(_:)), for: .touchUpInside)
         //회원가입 뷰로 이동
     }

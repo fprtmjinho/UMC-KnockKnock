@@ -21,14 +21,14 @@ class LoginSecondVC : UIViewController{
         return num4
     }()
     
-    let forthLabel : UILabel = {
+    let emailLabel : UILabel = {
        let forthlabel = UILabel()
         forthlabel.text = "사용하실\n이메일을 입력하세요"
         forthlabel.font = UIFont.boldSystemFont(ofSize: 20)
         forthlabel.numberOfLines = 2
         return forthlabel
     }()
-    let forthText : UITextField = {
+    let emailText : UITextField = {
         let forthtext = UITextField()
         forthtext.backgroundColor = .systemGray6
         forthtext.layer.cornerRadius = 20
@@ -50,15 +50,15 @@ class LoginSecondVC : UIViewController{
     
     func makeSubView(){
         view.addSubview(num4)
-        view.addSubview(forthLabel)
-        view.addSubview(forthText)
+        view.addSubview(emailLabel)
+        view.addSubview(emailText)
         view.addSubview(nextBtn)
     }
     
     func makeConstraint(){
         num4.translatesAutoresizingMaskIntoConstraints = false
-        forthLabel.translatesAutoresizingMaskIntoConstraints = false
-        forthText.translatesAutoresizingMaskIntoConstraints = false
+        emailLabel.translatesAutoresizingMaskIntoConstraints = false
+        emailText.translatesAutoresizingMaskIntoConstraints = false
         nextBtn.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -67,12 +67,12 @@ class LoginSecondVC : UIViewController{
             num4.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             num4.widthAnchor.constraint(equalToConstant: 25),
             num4.heightAnchor.constraint(equalToConstant: 25),
-            forthLabel.topAnchor.constraint(equalTo: num4.bottomAnchor, constant: 5),
-            forthLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            forthText.topAnchor.constraint(equalTo: forthLabel.bottomAnchor, constant: 10),
-            forthText.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            forthText.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
-            forthText.heightAnchor.constraint(equalToConstant: 45),
+            emailLabel.topAnchor.constraint(equalTo: num4.bottomAnchor, constant: 5),
+            emailLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            emailText.topAnchor.constraint(equalTo: emailLabel.bottomAnchor, constant: 10),
+            emailText.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            emailText.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
+            emailText.heightAnchor.constraint(equalToConstant: 45),
             
             nextBtn.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
             nextBtn.heightAnchor.constraint(equalToConstant: 50),
@@ -94,7 +94,7 @@ class LoginSecondVC : UIViewController{
         makeAddTarget()
     }
     @objc func touchNextBtn(_:UIButton){
-        if let emailText = forthText.text{
+        if let emailText = emailText.text{
             email = emailText
         }
         let checkOne: Bool = emailCheck()
@@ -110,11 +110,11 @@ class LoginSecondVC : UIViewController{
     //이메일이 빈칸이거나 형식이 틀리면 타이틀 강조 (@를 포함하지 않거나 다른 조건(추가해야함))
     @objc func emailCheck()->Bool{
         if(email == "" || !email.contains("@")){
-            forthLabel.textColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+            emailLabel.textColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
             return true
         }
         else{
-            forthLabel.textColor = .black
+            emailLabel.textColor = .black
             return false
         }
     }

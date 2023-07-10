@@ -21,13 +21,13 @@ class LoginFirstVC : UIViewController {
         return num1
     }()
     
-    let firstLabel : UILabel = {
+    let nameLabel : UILabel = {
        let firstlabel = UILabel()
         firstlabel.text = "뭐라고 불러드릴까요?"
         firstlabel.font = UIFont.boldSystemFont(ofSize: 20)
         return firstlabel
     }()
-    let firstText : UITextField = {
+    let nameText : UITextField = {
         let firsttext = UITextField()
         firsttext.backgroundColor = .systemGray6
         firsttext.layer.cornerRadius = 20
@@ -48,14 +48,14 @@ class LoginFirstVC : UIViewController {
         return num2
     }()
 
-    let secondLabel : UILabel = {
+    let sexLabel : UILabel = {
        let secondlabel = UILabel()
         secondlabel.text = "성별을 알려주세요 !"
         secondlabel.font = UIFont.boldSystemFont(ofSize: 20)
         return secondlabel
     }()
     
-    let secondChoice1 : UIButton = {
+    let manButton : UIButton = {
      let secondchoice1 = UIButton()
         secondchoice1.setTitle("남성", for: .normal)
         secondchoice1.titleLabel?.font = UIFont.systemFont(ofSize: 15)
@@ -65,7 +65,7 @@ class LoginFirstVC : UIViewController {
         return secondchoice1
     }()
     
-    let secondChoice2 : UIButton = {
+    let womanButton : UIButton = {
      let secondchoice2 = UIButton()
         secondchoice2.setTitle("여성", for: .normal)
         secondchoice2.titleLabel?.font = UIFont.systemFont(ofSize: 15)
@@ -88,14 +88,14 @@ class LoginFirstVC : UIViewController {
         return num3
     }()
     
-    let thirdLabel : UILabel = {
+    let birthdayLabel : UILabel = {
        let thirdlabel = UILabel()
         thirdlabel.text = "생년월일 6자리를 입력해주세요!"
         thirdlabel.font = UIFont.boldSystemFont(ofSize: 20)
         return thirdlabel
     }()
     
-    let thirdText : UITextField = {
+    let birthdayText : UITextField = {
         let thirdtext = UITextField()
         thirdtext.backgroundColor = .systemGray6
         thirdtext.layer.cornerRadius = 20
@@ -116,15 +116,15 @@ class LoginFirstVC : UIViewController {
       
     func makeSubView(){
         view.addSubview(num1)
-        view.addSubview(firstLabel)
-        view.addSubview(firstText)
+        view.addSubview(nameLabel)
+        view.addSubview(nameText)
         view.addSubview(num2)
-        view.addSubview(secondLabel)
-        view.addSubview(secondChoice1)
-        view.addSubview(secondChoice2)
+        view.addSubview(sexLabel)
+        view.addSubview(manButton)
+        view.addSubview(womanButton)
         view.addSubview(num3)
-        view.addSubview(thirdLabel)
-        view.addSubview(thirdText)
+        view.addSubview(birthdayLabel)
+        view.addSubview(birthdayText)
         view.addSubview(nextBtn)
     }
     
@@ -133,13 +133,13 @@ class LoginFirstVC : UIViewController {
         num1.translatesAutoresizingMaskIntoConstraints = false
         num2.translatesAutoresizingMaskIntoConstraints = false
         num3.translatesAutoresizingMaskIntoConstraints = false
-        firstLabel.translatesAutoresizingMaskIntoConstraints = false
-        firstText.translatesAutoresizingMaskIntoConstraints = false
-        secondLabel.translatesAutoresizingMaskIntoConstraints = false
-        secondChoice1.translatesAutoresizingMaskIntoConstraints = false
-        secondChoice2.translatesAutoresizingMaskIntoConstraints = false
-        thirdText.translatesAutoresizingMaskIntoConstraints = false
-        thirdLabel.translatesAutoresizingMaskIntoConstraints = false
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        nameText.translatesAutoresizingMaskIntoConstraints = false
+        sexLabel.translatesAutoresizingMaskIntoConstraints = false
+        manButton.translatesAutoresizingMaskIntoConstraints = false
+        womanButton.translatesAutoresizingMaskIntoConstraints = false
+        birthdayText.translatesAutoresizingMaskIntoConstraints = false
+        birthdayLabel.translatesAutoresizingMaskIntoConstraints = false
         nextBtn.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -147,40 +147,40 @@ class LoginFirstVC : UIViewController {
             num1.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             num1.widthAnchor.constraint(equalToConstant: 25),
             num1.heightAnchor.constraint(equalToConstant: 25),
-            firstLabel.topAnchor.constraint(equalTo: num1.bottomAnchor, constant: 5),
-            firstLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            firstLabel.heightAnchor.constraint(equalToConstant: 40),
-            firstText.topAnchor.constraint(equalTo: firstLabel.bottomAnchor, constant: 5),
-            firstText.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            firstText.widthAnchor.constraint(equalToConstant: 250),
-            firstText.heightAnchor.constraint(equalToConstant: 45),
+            nameLabel.topAnchor.constraint(equalTo: num1.bottomAnchor, constant: 5),
+            nameLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            nameLabel.heightAnchor.constraint(equalToConstant: 40),
+            nameText.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 5),
+            nameText.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            nameText.widthAnchor.constraint(equalToConstant: 250),
+            nameText.heightAnchor.constraint(equalToConstant: 45),
             
-            num2.topAnchor.constraint(equalTo: firstText.bottomAnchor, constant: 40),
+            num2.topAnchor.constraint(equalTo: nameText.bottomAnchor, constant: 40),
             num2.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             num2.widthAnchor.constraint(equalToConstant: 25),
             num2.heightAnchor.constraint(equalToConstant: 25),
-            secondLabel.topAnchor.constraint(equalTo: num2.bottomAnchor, constant: 5),
-            secondLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            secondLabel.heightAnchor.constraint(equalToConstant: 40),
-            secondChoice1.topAnchor.constraint(equalTo: secondLabel.bottomAnchor, constant: 5),
-            secondChoice1.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            secondChoice1.widthAnchor.constraint(equalToConstant: 160),
-            secondChoice1.heightAnchor.constraint(equalToConstant: 45),
-            secondChoice2.topAnchor.constraint(equalTo: secondLabel.bottomAnchor, constant: 5),
-            secondChoice2.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
-            secondChoice2.widthAnchor.constraint(equalToConstant: 160),
-            secondChoice2.heightAnchor.constraint(equalToConstant: 45),
+            sexLabel.topAnchor.constraint(equalTo: num2.bottomAnchor, constant: 5),
+            sexLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            sexLabel.heightAnchor.constraint(equalToConstant: 40),
+            manButton.topAnchor.constraint(equalTo: sexLabel.bottomAnchor, constant: 5),
+            manButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            manButton.widthAnchor.constraint(equalToConstant: 160),
+            manButton.heightAnchor.constraint(equalToConstant: 45),
+            womanButton.topAnchor.constraint(equalTo: sexLabel.bottomAnchor, constant: 5),
+            womanButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
+            womanButton.widthAnchor.constraint(equalToConstant: 160),
+            womanButton.heightAnchor.constraint(equalToConstant: 45),
             
-            num3.topAnchor.constraint(equalTo: secondChoice1.bottomAnchor, constant: 40),
+            num3.topAnchor.constraint(equalTo: manButton.bottomAnchor, constant: 40),
             num3.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             num3.widthAnchor.constraint(equalToConstant: 25),
             num3.heightAnchor.constraint(equalToConstant: 25),
-            thirdLabel.topAnchor.constraint(equalTo: num3.bottomAnchor, constant: 5),
-            thirdLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            thirdText.topAnchor.constraint(equalTo: thirdLabel.bottomAnchor, constant: 10),
-            thirdText.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            thirdText.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
-            thirdText.heightAnchor.constraint(equalToConstant: 45),
+            birthdayLabel.topAnchor.constraint(equalTo: num3.bottomAnchor, constant: 5),
+            birthdayLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            birthdayText.topAnchor.constraint(equalTo: birthdayLabel.bottomAnchor, constant: 10),
+            birthdayText.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            birthdayText.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
+            birthdayText.heightAnchor.constraint(equalToConstant: 45),
             nextBtn.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
             nextBtn.heightAnchor.constraint(equalToConstant: 50),
             nextBtn.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
@@ -196,8 +196,8 @@ class LoginFirstVC : UIViewController {
     
     func makeAddTarget(){
         self.nextBtn.addTarget(self, action: #selector(touchNextBtn(_:)), for: .touchUpInside)
-        self.secondChoice1.addTarget(self, action: #selector(choiceMan(_:)), for: .touchUpInside)
-        self.secondChoice2.addTarget(self, action: #selector(choiceWoman(_:)), for: .touchUpInside)
+        self.manButton.addTarget(self, action: #selector(choiceMan(_:)), for: .touchUpInside)
+        self.womanButton.addTarget(self, action: #selector(choiceWoman(_:)), for: .touchUpInside)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -208,39 +208,39 @@ class LoginFirstVC : UIViewController {
         makeAddTarget()
     }
     @objc func choiceMan(_:UIButton){
-        let color = secondChoice1.backgroundColor
+        let color = manButton.backgroundColor
         if color == #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1){
-            secondChoice2.backgroundColor = .systemGray6
+            womanButton.backgroundColor = .systemGray6
         }
         else{
-            secondChoice1.backgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-            secondChoice2.backgroundColor = .systemGray6
+            manButton.backgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+            womanButton.backgroundColor = .systemGray6
         }
     }
     @objc func choiceWoman(_:UIButton){
-        let color = secondChoice2.backgroundColor
+        let color = womanButton.backgroundColor
         if color == #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1){
-            secondChoice1.backgroundColor = .systemGray6}
+            manButton.backgroundColor = .systemGray6}
         else{
-            secondChoice2.backgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-            secondChoice1.backgroundColor = .systemGray6
+            womanButton.backgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+            manButton.backgroundColor = .systemGray6
         }
     }
     @objc func touchNextBtn(_:UIButton){
         //var sexType: Bool = true
         let choieColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
         // 성별 선택(string)
-        if (secondChoice1.backgroundColor == choieColor){
+        if (manButton.backgroundColor == choieColor){
             sex = "man"
         }
-        else if(secondChoice2.backgroundColor == choieColor){
+        else if(womanButton.backgroundColor == choieColor){
             sex = "woman"
         }
-        if let nameText = firstText.text{
+        if let nameText = nameText.text{
             nickName = nameText
         }
-        if let dayText = thirdText.text{
-            birthday = dayText
+        if let birthdayText = birthdayText.text{
+            birthday = birthdayText
         }
         // 입력 안된 정보 있을때
         let checkOne: Bool = nickNameCheck()
@@ -262,12 +262,12 @@ class LoginFirstVC : UIViewController {
     @objc func nickNameCheck()-> Bool{
         // 별명이 빈칸이면 별명 타이틀을 빨간색으로 강조
         if(nickName==""){
-            firstLabel.textColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+            nameLabel.textColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
             return true
         }
         // 아니면 검정색
         else{
-            firstLabel.textColor = .black
+            nameLabel.textColor = .black
             return false
         }
         
@@ -276,12 +276,12 @@ class LoginFirstVC : UIViewController {
     @objc func sexCheck()-> Bool{
         // 성별이 선택 안되었으면 성별 타이틀을 빨간색으로 강조
         if(sex==""){
-            secondLabel.textColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+            sexLabel.textColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
             return true
         }
         // 아니면 검정색
         else{
-            secondLabel.textColor = .black
+            sexLabel.textColor = .black
             return false
         }
     }
@@ -289,11 +289,11 @@ class LoginFirstVC : UIViewController {
     @objc func birthdayCheck()-> Bool{
         // 생년월일이 빈칸이거나 6자리가 아니면 생년월일 타이틀을 빨간색으로 강조
         if(birthday==""||birthday.count != 6){
-            thirdLabel.textColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+            birthdayLabel.textColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
             return true
         }
         else{
-            thirdLabel.textColor = .black
+            birthdayLabel.textColor = .black
             return false
         }
     }

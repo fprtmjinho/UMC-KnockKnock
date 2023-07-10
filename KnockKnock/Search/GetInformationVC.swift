@@ -155,6 +155,6 @@ class GetInformationVC : UIViewController {
     }
     
     @objc func downloadNumberBook(){
-        
+        readContacts()
     }
 }
