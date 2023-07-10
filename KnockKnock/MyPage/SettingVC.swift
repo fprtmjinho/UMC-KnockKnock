@@ -10,7 +10,8 @@ import UIKit
 class SettingVC: UIViewController {
     let tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.backgroundColor = .white // 테이블뷰 뒷배경 컬러도 white로 수정
+        tableView.separatorStyle = .none // 셀 사이 선 없애기
         return tableView
     }()
     
@@ -22,8 +23,10 @@ class SettingVC: UIViewController {
     }
     
     func makeConstraint(){
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
@@ -36,6 +39,8 @@ class SettingVC: UIViewController {
         view.backgroundColor = .white
         makeSubView()
         makeConstraint()
+        
+        
     }
 }
 
@@ -83,6 +88,7 @@ extension SettingVC: UITableViewDelegate, UITableViewDataSource {
         switch indexPath.row {
         case 1:
             let addFriendVC = AddFriendVC()
+            addFriendVC.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(addFriendVC, animated: true)
         default:
             break
