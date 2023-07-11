@@ -16,7 +16,6 @@
 		C93246932A458D9600908D6B /* KnockKnockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93246922A458D9600908D6B /* KnockKnockTests.swift */; };
 		C932469D2A458D9600908D6B /* KnockKnockUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C932469C2A458D9600908D6B /* KnockKnockUITests.swift */; };
 		C932469F2A458D9600908D6B /* KnockKnockUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C932469E2A458D9600908D6B /* KnockKnockUITestsLaunchTests.swift */; };
-		C93246B02A46253D00908D6B /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93246AF2A46253D00908D6B /* Image.swift */; };
 		C93246B22A4631E200908D6B /* MyPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93246B12A4631E200908D6B /* MyPage.swift */; };
 		C93246BF2A48313000908D6B /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93246BE2A48313000908D6B /* SearchController.swift */; };
 		C93246C12A48315800908D6B /* MyPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93246C02A48315800908D6B /* MyPageController.swift */; };
@@ -68,7 +67,6 @@
 		C93246982A458D9600908D6B /* KnockKnockUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KnockKnockUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C932469C2A458D9600908D6B /* KnockKnockUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnockKnockUITests.swift; sourceTree = "<group>"; };
 		C932469E2A458D9600908D6B /* KnockKnockUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnockKnockUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		C93246AF2A46253D00908D6B /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		C93246B12A4631E200908D6B /* MyPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPage.swift; sourceTree = "<group>"; };
 		C93246BE2A48313000908D6B /* SearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
 		C93246C02A48315800908D6B /* MyPageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageController.swift; sourceTree = "<group>"; };
@@ -139,7 +137,6 @@
 			children = (
 				C93246782A458D9400908D6B /* AppDelegate.swift */,
 				C932467A2A458D9400908D6B /* SceneDelegate.swift */,
-				C93246AF2A46253D00908D6B /* Image.swift */,
 				C935FA262A59BC840035FA2C /* Extension.swift */,
 				C935FA2C2A59C1B30035FA2C /* TabBarController.swift */,
 				C935FA1D2A5817FB0035FA2C /* Login */,
@@ -364,7 +361,6 @@
 				C935FA782A5C01200035FA2C /* SettingVC.swift in Sources */,
 				C935FA1C2A57F1B90035FA2C /* MyProfilePage.swift in Sources */,
 				C93246C32A48317800908D6B /* FriendController.swift in Sources */,
-				C93246B02A46253D00908D6B /* Image.swift in Sources */,
 				C93246792A458D9400908D6B /* AppDelegate.swift in Sources */,
 				C932467B2A458D9400908D6B /* SceneDelegate.swift in Sources */,
 				C935FA272A59BC840035FA2C /* Extension.swift in Sources */,

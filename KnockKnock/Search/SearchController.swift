@@ -153,7 +153,9 @@ extension SearchController {
         }()
         
         let getInformationBtn : UIBarButtonItem = {
-            let getInformationBtn = UIBarButtonItem(image: UIImage(systemName: "tray.and.arrow.down"), style: .plain, target: self, action: #selector(getInformationBtnPressed(_:)))
+            let icon = UIImage(named: "upload")
+            
+            let getInformationBtn = UIBarButtonItem(image: icon, style: .plain, target: self, action: #selector(getInformationBtnPressed(_:)))
             getInformationBtn.image = UIImage(systemName: "tray.and.arrow.down")
             getInformationBtn.tintColor = .white
             return getInformationBtn
