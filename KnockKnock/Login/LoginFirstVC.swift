@@ -269,40 +269,46 @@ class LoginFirstVC : UIViewController {
     }
     // 별명 체크
     @objc func nickNameCheck()-> Bool{
-        // 별명이 빈칸이면 별명 타이틀을 빨간색으로 강조
+        // 별명이 빈칸이면 별명 입력창을 빨간색으로 강조
         if(nickName==""){
-            nameLabel.textColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+            nameText.layer.borderColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+            nameText.layer.borderWidth = 2
             return true
         }
         // 아니면 검정색
         else{
-            nameLabel.textColor = .black
+            nameText.layer.borderWidth = 0
             return false
         }
         
     }
     // 성별 체크
     @objc func sexCheck()-> Bool{
-        // 성별이 선택 안되었으면 성별 타이틀을 빨간색으로 강조
+        // 성별이 선택 안되었으면 버튼 두 개 빨간색으로 강조
         if(sex==""){
-            sexLabel.textColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+            manButton.layer.borderColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+            manButton.layer.borderWidth = 2
+            womanButton.layer.borderColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+            womanButton.layer.borderWidth = 2
             return true
         }
-        // 아니면 검정색
+       
         else{
-            sexLabel.textColor = .black
+            manButton.layer.borderWidth = 0
+            manButton.layer.borderWidth = 0
             return false
         }
     }
     // 생년월일 체크
     @objc func birthdayCheck()-> Bool{
-        // 생년월일이 빈칸이거나 6자리가 아니면 생년월일 타이틀을 빨간색으로 강조
+        // 생년월일이 빈칸이거나 6자리가 아니면 생년월일 입력창을 빨간색으로 강조
         if(birthday==""||birthday.count != 6){
-            birthdayLabel.textColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+            birthdayText.layer.borderColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+            birthdayText.layer.borderWidth = 2
             return true
         }
         else{
-            birthdayLabel.textColor = .black
+            birthdayText.layer.borderWidth = 0
             return false
         }
     }

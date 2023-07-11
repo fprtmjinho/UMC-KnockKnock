@@ -111,11 +111,12 @@ class LoginSecondVC : UIViewController{
     //이메일이 빈칸이거나 형식이 틀리면 타이틀 강조 (@를 포함하지 않거나 다른 조건(추가해야함))
     @objc func emailCheck()->Bool{
         if(email == "" || !email.contains("@")){
-            emailLabel.textColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+            emailText.layer.borderColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+            emailText.layer.borderWidth = 2
             return true
         }
         else{
-            emailLabel.textColor = .black
+            emailText.layer.borderWidth = 0
             return false
         }
     }

@@ -120,8 +120,5 @@ class LoginSuccessVC : UIViewController {
         tabBarController.modalPresentationStyle = .fullScreen
         self.present(tabBarController, animated: true, completion: nil)
         
-        //시작 버튼 누르면 tabbarcontroller로 이동
-        //방식 수정 필요
-        
     }
 }

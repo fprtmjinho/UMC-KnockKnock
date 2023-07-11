@@ -151,10 +151,11 @@ class LoginThirdVC: UIViewController{
             return
         }
         if (password != passwordSame){
-            passwordCheckLabel.textColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+            passwordCheckText.layer.borderColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+            passwordCheckText.layer.borderWidth = 2
             return
         }else{
-            passwordCheckLabel.textColor = .black
+            passwordCheckText.layer.borderWidth = 0
             UserDefaults.standard.set(password, forKey: "password")
 
             // 데이터 동기화
@@ -164,11 +165,12 @@ class LoginThirdVC: UIViewController{
     }
     @objc func passwordCheck()->Bool{
         if (password == ""){
-            passwordLabel.textColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+            passwordText.layer.borderColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+            passwordText.layer.borderWidth = 2
             return true
         }
         else{
-            passwordLabel.textColor = .black
+            passwordText.layer.borderWidth = 0
             return false
         }
     }
