@@ -23,7 +23,7 @@ class GuideVC: UIViewController {
 
     let label1: UILabel = {
         let label1 = UILabel()
-        label1.text = "낙낙의 똑똑한 기능들에 대해 소개해드릴게요. 저희 낙낙은 사용자님들이 인간관계에서 고민할 만한 문제와 상황들에 대한 해결책을 드리려고 해요."
+        label1.text = " 낙낙의 똑똑한 기능들에 대해 소개해드릴게요. 저희 낙낙은 사용자님들이 인간관계에서 고민할 만한 문제와 상황들에 대한 해결책을 드리려고 해요."
         label1.numberOfLines = 0
         label1.translatesAutoresizingMaskIntoConstraints = false
         return label1
