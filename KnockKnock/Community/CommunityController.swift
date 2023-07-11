@@ -16,7 +16,40 @@ class CommunityController: TabmanViewController {
         view.backgroundColor = .white
         return view
     }()
-
+    
+    let topLine: UIView = {
+        let topLine = UIView()
+        topLine.backgroundColor = #colorLiteral(red: 0.9436392188, green: 0.9436392188, blue: 0.9436392188, alpha: 1)
+        return topLine
+    }()
+    
+    let bottomLine: UIView = {
+        let bottomLine = UIView()
+        bottomLine.backgroundColor = #colorLiteral(red: 0.9436392188, green: 0.9436392188, blue: 0.9436392188, alpha: 1)
+        return bottomLine
+    }()
+    
+    func makeSubView() {
+        barView.addSubview(topLine)
+        barView.addSubview(bottomLine)
+    }
+    
+    func makeConstraint() {
+        topLine.translatesAutoresizingMaskIntoConstraints = false
+        bottomLine.translatesAutoresizingMaskIntoConstraints = false
+        
+        
+        NSLayoutConstraint.activate([
+            topLine.topAnchor.constraint(equalTo: barView.topAnchor),
+            topLine.leadingAnchor.constraint(equalTo: barView.leadingAnchor),
+            topLine.trailingAnchor.constraint(equalTo: barView.trailingAnchor),
+            topLine.heightAnchor.constraint(equalToConstant: 1.0),
+            bottomLine.bottomAnchor.constraint(equalTo: barView.bottomAnchor),
+            bottomLine.leadingAnchor.constraint(equalTo: barView.leadingAnchor),
+            bottomLine.trailingAnchor.constraint(equalTo: barView.trailingAnchor),
+            bottomLine.heightAnchor.constraint(equalToConstant: 1.0),
+        ])
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,14 +68,14 @@ class CommunityController: TabmanViewController {
         bar.buttons.customize { (button) in
             // 버튼 커스텀
             button.selectedTintColor = #colorLiteral(red: 1, green: 0.1719063818, blue: 0.4505617023, alpha: 1)
-            button.backgroundColor = .white
         }
-        
         bar.indicator.tintColor = .clear
-        bar.tintColor = .white
-        bar.backgroundColor = .white
         bar.indicator.weight = .custom(value: 1.0)
         addBar(bar, dataSource: self, at: .top)
+        
+        makeSubView()
+        makeConstraint()
+        
     }
 }
 
@@ -52,11 +85,16 @@ extension CommunityController: PageboyViewControllerDataSource {
     }
     
     func viewController(for pageboyViewController: PageboyViewController, at index: PageboyViewController.PageIndex) -> UIViewController? {
-        if index == 0 {
-            return GoodVC() // 좌측
-        } else {
-            return BadVC() // 우측
+        
+        switch index {
+        case 0:
+            return GoodVC()
+        case 1:
+            return BadVC()
+        default:
+            return nil
         }
+        
     }
     
     func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
