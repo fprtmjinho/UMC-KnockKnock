@@ -18,6 +18,7 @@ class LoginSuccessVC : UIViewController {
     let welcomeLabel : UILabel = {
         let label = UILabel()
         label.text = "환영합니다!"
+        //nickname 넣어야 함
         label.textAlignment = .center
         label.font = UIFont.boldSystemFont(ofSize: 25)
         return label
@@ -83,6 +84,7 @@ class LoginSuccessVC : UIViewController {
     var birthday: String = ""
     var email: String = ""
     var password: String = ""
+    
     func makeAddTarget(){
         self.startBtn.addTarget(self, action: #selector(nextView(_:)), for: .touchUpInside)
     }

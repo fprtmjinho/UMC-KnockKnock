@@ -30,6 +30,7 @@ class LoginSecondVC : UIViewController{
     }()
     let emailText : UITextField = {
         let forthtext = UITextField()
+        forthtext.placeholder = "knock@knock.com"
         forthtext.backgroundColor = .systemGray6
         forthtext.layer.cornerRadius = 20
         forthtext.addLeftPadding()

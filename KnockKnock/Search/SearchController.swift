@@ -47,10 +47,9 @@ class SearchController : UIViewController{
         searchFriendBar.placeholder = "친구를 검색해주세요!"
         searchFriendBar.backgroundColor = .none
         searchFriendBar.isTranslucent = false
-        searchFriendBar.searchBarStyle = .minimal
         
         searchFriendBar.searchTextField.backgroundColor = .white
-        searchFriendBar.layer.cornerRadius = 20
+        searchFriendBar.layer.cornerRadius = 25
         searchFriendBar.clipsToBounds = true
         searchFriendBar.searchBarStyle = .default
         searchFriendBar.barTintColor = .white

@@ -30,6 +30,7 @@ class LoginVC : UIViewController {
             //clear모드 설정
             return emailBtn
         }()
+    //image 첨부 필요
         
         let PasswordText : UITextField = {
             let passwordBtn = UITextField()
@@ -41,6 +42,7 @@ class LoginVC : UIViewController {
             passwordBtn.isSecureTextEntry = true
             return passwordBtn
         }()
+    //image 첨부 필요
         
         let LoginButton : UIButton={
             let loginBtn = UIButton()
@@ -241,6 +243,9 @@ class LoginVC : UIViewController {
         makeConstraint()
         makeAddTarget()
         
+      
+        navigationController?.isNavigationBarHidden = true
+        
     }
     @objc func loginSuccess(_: UIButton){
         //로그인 성공여부 판별하는 로직 짜야함(서버랑 얘기하고 구현)
@@ -252,14 +257,16 @@ class LoginVC : UIViewController {
     }
   
     @objc func signUpFunc(_:UIButton){
-        let LoginNavigationController = UINavigationController(rootViewController: LoginFirstVC())
+        let loginFirstVC = LoginFirstVC()
         
-        LoginNavigationController.modalPresentationStyle = .fullScreen
-        self.present(LoginNavigationController, animated: true, completion: nil)
-        
+        self.navigationController?.pushViewController(loginFirstVC, animated: true)
     }
         
     }
+
+
+
+
 
 
 

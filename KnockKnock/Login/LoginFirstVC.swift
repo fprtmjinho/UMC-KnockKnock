@@ -35,6 +35,7 @@ class LoginFirstVC : UIViewController {
         firsttext.clearButtonMode = .whileEditing
         return firsttext
     }()
+    //글자수 현황 체크 필요
     
     let num2 : UILabel = {
        let num2 = UILabel()
@@ -58,8 +59,8 @@ class LoginFirstVC : UIViewController {
     let manButton : UIButton = {
      let secondchoice1 = UIButton()
         secondchoice1.setTitle("남성", for: .normal)
-        secondchoice1.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-        secondchoice1.tintColor = .gray
+        secondchoice1.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        secondchoice1.setTitleColor(.gray, for: .normal)
         secondchoice1.backgroundColor = .systemGray6
         secondchoice1.layer.cornerRadius = 20
         return secondchoice1
@@ -68,8 +69,8 @@ class LoginFirstVC : UIViewController {
     let womanButton : UIButton = {
      let secondchoice2 = UIButton()
         secondchoice2.setTitle("여성", for: .normal)
-        secondchoice2.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-        secondchoice2.tintColor = .gray
+        secondchoice2.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
+        secondchoice2.setTitleColor(.gray, for: .normal)
         secondchoice2.backgroundColor = .systemGray6
         secondchoice2.layer.cornerRadius = 20
             
@@ -97,6 +98,7 @@ class LoginFirstVC : UIViewController {
     
     let birthdayText : UITextField = {
         let thirdtext = UITextField()
+        thirdtext.placeholder = "생년월일 6자리"
         thirdtext.backgroundColor = .systemGray6
         thirdtext.layer.cornerRadius = 20
         thirdtext.addLeftPadding()
@@ -206,6 +208,9 @@ class LoginFirstVC : UIViewController {
         makeSubView()
         makeConstraint()
         makeAddTarget()
+        
+        navigationController?.isNavigationBarHidden = false
+        
     }
     @objc func choiceMan(_:UIButton){
         let color = manButton.backgroundColor
@@ -214,7 +219,9 @@ class LoginFirstVC : UIViewController {
         }
         else{
             manButton.backgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+            manButton.setTitleColor(.white, for: .normal)
             womanButton.backgroundColor = .systemGray6
+            womanButton.setTitleColor(.gray, for: .normal)
         }
     }
     @objc func choiceWoman(_:UIButton){
@@ -223,7 +230,9 @@ class LoginFirstVC : UIViewController {
             manButton.backgroundColor = .systemGray6}
         else{
             womanButton.backgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+            womanButton.setTitleColor(.white, for: .normal)
             manButton.backgroundColor = .systemGray6
+            manButton.setTitleColor(.gray, for: .normal)
         }
     }
     @objc func touchNextBtn(_:UIButton){

@@ -25,7 +25,7 @@ class GetInformationVC : UIViewController {
       
         return searchFriendBar
     }()
-    //custom 필요
+  
     
     let addBtn : UIButton = {
        let addBtn = UIButton()

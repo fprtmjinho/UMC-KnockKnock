@@ -30,6 +30,7 @@ class LoginThirdVC: UIViewController{
     
     let passwordText: UITextField = {
         let fourthText1 = UITextField()
+        fourthText1.placeholder = "6자리 이상 입력해 주세요."
         fourthText1.backgroundColor = .systemGray6
         fourthText1.layer.cornerRadius = 20
         fourthText1.addLeftPadding()
@@ -37,6 +38,8 @@ class LoginThirdVC: UIViewController{
         fourthText1.isSecureTextEntry = true
         return fourthText1
     }()
+    //글자 수 6개 이상이어야 통과하도록 수정해야 함
+    
     
     let passwordCheckLabel: UILabel = {
         let fourthlabel2 = UILabel()
@@ -49,12 +52,22 @@ class LoginThirdVC: UIViewController{
     
     let passwordCheckText: UITextField = {
         let fourthText2 = UITextField()
+        fourthText2.placeholder = "다시 한번 입력해 주세요."
         fourthText2.backgroundColor = .systemGray6
         fourthText2.layer.cornerRadius = 20
         fourthText2.addLeftPadding()
         fourthText2.clearButtonMode = .whileEditing
         fourthText2.isSecureTextEntry = true
         return fourthText2
+    }()
+    
+    let lastLabel : UILabel = {
+        let label = UILabel()
+        label.text = "다음이 마지막 단계입니다!"
+        label.textAlignment = .center
+        label.textColor = .systemGray
+        label.font = UIFont.systemFont(ofSize: 14)
+        return label
     }()
     
     let nextBtn: UIButton = {
@@ -73,6 +86,7 @@ class LoginThirdVC: UIViewController{
         view.addSubview(passwordText)
         view.addSubview(passwordCheckLabel)
         view.addSubview(passwordCheckText)
+        view.addSubview(lastLabel)
         view.addSubview(nextBtn)
     }
     
@@ -82,6 +96,7 @@ class LoginThirdVC: UIViewController{
         passwordText.translatesAutoresizingMaskIntoConstraints = false
         passwordCheckLabel.translatesAutoresizingMaskIntoConstraints = false
         passwordCheckText.translatesAutoresizingMaskIntoConstraints = false
+        lastLabel.translatesAutoresizingMaskIntoConstraints = false
         nextBtn.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -101,6 +116,9 @@ class LoginThirdVC: UIViewController{
             passwordCheckText.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             passwordCheckText.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
             passwordCheckText.heightAnchor.constraint(equalToConstant: 45),
+            
+            lastLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            lastLabel.bottomAnchor.constraint(equalTo: nextBtn.topAnchor, constant: -10),
             nextBtn.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
             nextBtn.heightAnchor.constraint(equalToConstant: 50),
             nextBtn.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
@@ -111,6 +129,7 @@ class LoginThirdVC: UIViewController{
     func makeAddTarget(){
         self.nextBtn.addTarget(self, action: #selector(touchNextBtn(_:)), for: .touchUpInside)
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -155,8 +174,8 @@ class LoginThirdVC: UIViewController{
     }
     
     @objc func nextView(){
-        let loginSuccessVC = LoginSuccessVC()
-        self.navigationController?.pushViewController(loginSuccessVC, animated: true)
+        let allowApproachVC = AllowApproachVC()
+        self.navigationController?.pushViewController(allowApproachVC, animated: true)
     }
     
     
