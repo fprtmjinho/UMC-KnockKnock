@@ -8,15 +8,21 @@ import UIKit
 class SearchController : UIViewController{
     //친구 찾기 페이지
     
-    let backgroundView : UIView = {
-       let backgroundView = UIView()
-        backgroundView.backgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+    let backgroundView: UIView = {
+        let backgroundView = UIView()
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = backgroundView.bounds
+        gradientLayer.colors = [UIColor(red: 1.0, green: 0.0, blue: 0.376, alpha: 1.0).cgColor,
+                                UIColor(red: 1.0, green: 0.541, blue: 0.0, alpha: 1.0).cgColor]
+        gradientLayer.locations = [0.0, 1.0]
+        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.0)
+        gradientLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
+        backgroundView.layer.insertSublayer(gradientLayer, at: 0)
         return backgroundView
-        //색깔 수정 필요
     }()
     
     let Label1 : UILabel = {
-       let label1 = UILabel()
+        let label1 = UILabel()
         label1.text = "Name님,\n연락하고 싶은 분이 생겼나요?"
         label1.textColor = .white
         label1.backgroundColor = .clear
@@ -26,7 +32,7 @@ class SearchController : UIViewController{
     }()
     
     let Label2 : UILabel = {
-       let label2 = UILabel()
+        let label2 = UILabel()
         label2.text = "낙낙은 당신이 알고 있는 사람들과의\n재연결 혹은 새시작을 응원합니다"
         label2.textColor = .white
         label2.backgroundColor = .clear
@@ -36,7 +42,7 @@ class SearchController : UIViewController{
     }()
     
     let searchFriendBar : UISearchBar = {
-       let searchFriendBar = UISearchBar()
+        let searchFriendBar = UISearchBar()
         
         searchFriendBar.placeholder = "친구를 검색해주세요!"
         searchFriendBar.backgroundColor = .none
@@ -44,7 +50,7 @@ class SearchController : UIViewController{
         searchFriendBar.searchBarStyle = .minimal
         searchFriendBar.searchTextField.backgroundColor = .white
         
-      
+        
         searchFriendBar.setImage(UIImage(systemName: "magnifyingglass", withConfiguration: UIImage.SymbolConfiguration(paletteColors: [#colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)])),
                                  for: .search, state: .normal)
         
@@ -52,7 +58,7 @@ class SearchController : UIViewController{
     }()
     //custom 필요
     
-   
+    
     
     
     func makeSubView(){
@@ -98,9 +104,9 @@ class SearchController : UIViewController{
         
     }
     
-
     
-
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigationBar()
@@ -113,10 +119,10 @@ class SearchController : UIViewController{
         
         
         
-
+        
         
         let button : UIButton = {
-           //임시로 지정한 friendProfileVC로 넘기기 위한 버튼
+            //임시로 지정한 friendProfileVC로 넘기기 위한 버튼
             let button = UIButton()
             button.backgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
             button.setTitle("Go to FriendProfile", for: .normal)
@@ -134,13 +140,21 @@ class SearchController : UIViewController{
         
     }
     
+    override func viewDidLayoutSubviews() {
+            super.viewDidLayoutSubviews()
+            backgroundView.frame = backgroundView.bounds
+            if let gradientLayer = backgroundView.layer.sublayers?.first as? CAGradientLayer {
+                gradientLayer.frame = backgroundView.bounds
+            }
+        }
+    
     @objc func buttonFunc(_: UIButton) {
         let nextView = FriendProfileVC()
         nextView.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(nextView, animated: true)
     }
     
-
+    
 }
 
 extension SearchController {
@@ -158,13 +172,13 @@ extension SearchController {
             getInformationBtn.tintColor = .white
             return getInformationBtn
         }()
-
+        
         let spacer = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
         spacer.width = 0
         //아이콘 간의 간격 조절을 위한 아아템
         
         navigationItem.rightBarButtonItems = [addFriendBtn, spacer, getInformationBtn]
-    
+        
     }
     
     @objc func addFriendBtnPressed(_: UIButton){
