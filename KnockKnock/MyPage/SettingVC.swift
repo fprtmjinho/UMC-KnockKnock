@@ -90,6 +90,10 @@ extension SettingVC: UITableViewDelegate, UITableViewDataSource {
             let addFriendVC = AddFriendVC()
             addFriendVC.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(addFriendVC, animated: true)
+        case 2:
+            let guideVC = GuideVC()
+            guideVC.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(guideVC, animated: true)
         default:
             break
         }

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		00186ACD2A5BD97F004BE22D /* LoginThirdVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00186ACC2A5BD97F004BE22D /* LoginThirdVC.swift */; };
+		00FD26582A5CE1520013E169 /* GuideVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FD26572A5CE1520013E169 /* GuideVC.swift */; };
 		C93246792A458D9400908D6B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93246782A458D9400908D6B /* AppDelegate.swift */; };
 		C932467B2A458D9400908D6B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C932467A2A458D9400908D6B /* SceneDelegate.swift */; };
 		C93246832A458D9400908D6B /* KnockKnock.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C93246812A458D9400908D6B /* KnockKnock.xcdatamodeld */; };
@@ -56,6 +57,7 @@
 
 /* Begin PBXFileReference section */
 		00186ACC2A5BD97F004BE22D /* LoginThirdVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginThirdVC.swift; sourceTree = "<group>"; };
+		00FD26572A5CE1520013E169 /* GuideVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideVC.swift; sourceTree = "<group>"; };
 		C93246752A458D9400908D6B /* KnockKnock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KnockKnock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C93246782A458D9400908D6B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C932467A2A458D9400908D6B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -209,9 +211,10 @@
 			isa = PBXGroup;
 			children = (
 				C93246C02A48315800908D6B /* MyPageController.swift */,
-				C935FA772A5C01200035FA2C /* SettingVC.swift */,
 				C93246B12A4631E200908D6B /* MyPage.swift */,
 				C935FA1B2A57F1B90035FA2C /* MyProfilePage.swift */,
+				C935FA772A5C01200035FA2C /* SettingVC.swift */,
+				00FD26572A5CE1520013E169 /* GuideVC.swift */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -369,6 +372,7 @@
 				C932467B2A458D9400908D6B /* SceneDelegate.swift in Sources */,
 				C935FA272A59BC840035FA2C /* Extension.swift in Sources */,
 				C935FA1F2A58264B0035FA2C /* LoginFirstVC.swift in Sources */,
+				00FD26582A5CE1520013E169 /* GuideVC.swift in Sources */,
 				00186ACD2A5BD97F004BE22D /* LoginThirdVC.swift in Sources */,
 				C935FA252A59475A0035FA2C /* LoginSuccessVC.swift in Sources */,
 				C93246BF2A48313000908D6B /* SearchController.swift in Sources */,
