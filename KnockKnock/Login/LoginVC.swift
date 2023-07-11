@@ -88,9 +88,10 @@ class LoginVC : UIViewController {
         let ForKakaoBtn : UIButton = {
             let kakao = UIButton()
             kakao.layer.cornerRadius = 32.5
-            
             kakao.backgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-            kakao.setImage(Image.kakaoIMG, for: .normal)
+            
+            var image = UIImage(named: "kakao talk")?.resizeImageTo(size: CGSize(width: 35, height: 35) )
+            kakao.setImage(image, for: .normal)
             return kakao
         }()
         
@@ -98,8 +99,9 @@ class LoginVC : UIViewController {
            let face = UIButton()
             face.layer.cornerRadius = 32.5
             face.backgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-            face.setImage(Image.facebookIMG, for: .normal)
-            //아이콘 수정 필요 -> 세 아이콘 모두
+            
+            var image = UIImage(named: "naver")?.resizeImageTo(size: CGSize(width: 35, height: 35))
+            face.setImage(image, for: .normal)
             return face
         }()
         
@@ -107,7 +109,9 @@ class LoginVC : UIViewController {
             let google = UIButton()
             google.layer.cornerRadius = 32.5
             google.backgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-            google.setImage(Image.googleIMG, for: .normal)
+            
+            var image = UIImage(named: "google")?.resizeImageTo(size: CGSize(width: 35, height: 35))
+            google.setImage(image, for: .normal)
             return google
         }()
         
