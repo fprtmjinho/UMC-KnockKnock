@@ -35,40 +35,19 @@ class AddAlarmVC : UIViewController {
         return alarmTimeLabel
     }()
     
-    let AlarmDatePicker : UIDatePicker = {
-       let alarmDatePicker = UIDatePicker()
-        alarmDatePicker.timeZone = .autoupdatingCurrent
-        //현재 시간으로 업데이트
-        
-        alarmDatePicker.datePickerMode = .dateAndTime
-        alarmDatePicker.preferredDatePickerStyle = .wheels
-        alarmDatePicker.locale = Locale(identifier: "ko_KR")
-        //속성을 영어에서 한글로 변경
-        
-        return alarmDatePicker
-        
-        //글씨 크기 수정 필요
-    }()
     
-    let saveDatePickerBtn : UIButton = {
-       let saveDatePickerBtn = UIButton()
-        saveDatePickerBtn.backgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-        saveDatePickerBtn.setTitle("확인", for: .normal)
-        saveDatePickerBtn.setTitleColor(.white, for: .normal)
-        saveDatePickerBtn.layer.cornerRadius = 25
-        saveDatePickerBtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
-        return saveDatePickerBtn
+    let SetDatePickerBtn : UIButton = {
+        let Btn = UIButton()
+        Btn.setTitle("+ Alarm Date", for: .normal)
+        Btn.backgroundColor = .systemGray6
+        Btn.setTitleColor(.black, for: .normal)
+        Btn.layer.cornerRadius = 25
+        return Btn
     }()
-    
-    let cancelDatePickerBtn : UIButton = {
-       let cancelDatePickerBtn = UIButton()
-        cancelDatePickerBtn.backgroundColor = .systemGray6
-        cancelDatePickerBtn.setTitle("취소하기", for: .normal)
-        cancelDatePickerBtn.setTitleColor(.black, for: .normal)
-        cancelDatePickerBtn.layer.cornerRadius = 25
-        cancelDatePickerBtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
-        return cancelDatePickerBtn
-    }()
+    //DatePicker 팝업 뜨도록
+    //임의로 버튼 지정
+    //추후 디자이너님과 상의 후 변경
+
     
     let loopLabel : UILabel = {
        let loopLabel = UILabel()
@@ -115,9 +94,10 @@ class AddAlarmVC : UIViewController {
         view.addSubview(AlarmMemoLabel)
         view.addSubview(AlarmMemoText)
         view.addSubview(AlarmTimeLabel)
-        view.addSubview(AlarmDatePicker)
-        view.addSubview(saveDatePickerBtn)
-        view.addSubview(cancelDatePickerBtn)
+        
+        view.addSubview(SetDatePickerBtn)
+        //임시 버튼
+       
         view.addSubview(loopLabel)
         view.addSubview(loopOnceBtn)
         view.addSubview(loopBtn)
@@ -129,9 +109,10 @@ class AddAlarmVC : UIViewController {
         AlarmMemoLabel.translatesAutoresizingMaskIntoConstraints = false
         AlarmMemoText.translatesAutoresizingMaskIntoConstraints = false
         AlarmTimeLabel.translatesAutoresizingMaskIntoConstraints = false
-        AlarmDatePicker.translatesAutoresizingMaskIntoConstraints = false
-        saveDatePickerBtn.translatesAutoresizingMaskIntoConstraints = false
-        cancelDatePickerBtn.translatesAutoresizingMaskIntoConstraints = false
+       
+        SetDatePickerBtn.translatesAutoresizingMaskIntoConstraints = false
+        //임시 버튼
+        
         loopLabel.translatesAutoresizingMaskIntoConstraints = false
         loopOnceBtn.translatesAutoresizingMaskIntoConstraints = false
         loopBtn.translatesAutoresizingMaskIntoConstraints = false
@@ -147,21 +128,17 @@ class AddAlarmVC : UIViewController {
             
             AlarmTimeLabel.topAnchor.constraint(equalTo: AlarmMemoText.bottomAnchor, constant: 30),
             AlarmTimeLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            AlarmDatePicker.topAnchor.constraint(equalTo: AlarmTimeLabel.bottomAnchor, constant: 7),
-            AlarmDatePicker.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            AlarmDatePicker.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
-            AlarmDatePicker.heightAnchor.constraint(equalToConstant: 130),
             
-            saveDatePickerBtn.topAnchor.constraint(equalTo: AlarmDatePicker.bottomAnchor, constant: 10),
-            saveDatePickerBtn.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            saveDatePickerBtn.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
-            saveDatePickerBtn.heightAnchor.constraint(equalToConstant: 50),
-            cancelDatePickerBtn.topAnchor.constraint(equalTo: saveDatePickerBtn.bottomAnchor, constant: 10),
-            cancelDatePickerBtn.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            cancelDatePickerBtn.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
-            cancelDatePickerBtn.heightAnchor.constraint(equalToConstant: 50),
             
-            loopLabel.topAnchor.constraint(equalTo: cancelDatePickerBtn.bottomAnchor, constant: 30),
+            
+            SetDatePickerBtn.topAnchor.constraint(equalTo: AlarmTimeLabel.bottomAnchor, constant: 7),
+            SetDatePickerBtn.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            SetDatePickerBtn.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
+            SetDatePickerBtn.heightAnchor.constraint(equalToConstant: 50),
+            //임시 버튼 constraint
+            
+            
+            loopLabel.topAnchor.constraint(equalTo:SetDatePickerBtn.bottomAnchor, constant: 30),
             loopLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             
             loopOnceBtn.topAnchor.constraint(equalTo: loopLabel.bottomAnchor, constant: 7),
@@ -184,11 +161,58 @@ class AddAlarmVC : UIViewController {
     }
     
     func makeAddTarget(){
+        self.SetDatePickerBtn.addTarget(self, action: #selector(setDataPickerBtnFunc(_:)), for: .touchUpInside)
         self.saveBtn.addTarget(self, action: #selector(saveBtnPressed(_:)), for: .touchUpInside)
     }
     
+    @objc func setDataPickerBtnFunc(_: UIButton){
+        alarmDatePicker()
+    }
+    //임시 버튼 addtarget
+    
+    
+    
     @objc func saveBtnPressed(_:UIButton){
         navigationController?.popViewController(animated: true)
+    }
+    
+    
+    //팝업으로 DatePicker 구현
+    func alarmDatePicker(){
+        
+        let alert = UIAlertController(title: "날짜 고르기", message: "날짜를 골라주세요", preferredStyle: .actionSheet)
+        let alarmDatePicker = UIDatePicker()
+        alarmDatePicker.datePickerMode = .dateAndTime
+        alarmDatePicker.timeZone = .autoupdatingCurrent
+        //현재 시간으로 업데이트
+        alarmDatePicker.preferredDatePickerStyle = .wheels
+        alarmDatePicker.locale = Locale(identifier: "ko_KR")
+        
+                
+        
+        let saveBtn = UIAlertAction(title: "확인", style: .default) { action in
+            let dateFormat = DateFormatter()
+            dateFormat.timeStyle = .short
+            dateFormat.dateStyle = .long
+            
+            let AlarmDate = dateFormat.string(from: alarmDatePicker.date)
+            
+            self.SetDatePickerBtn.setTitle("\(AlarmDate)", for: .normal)
+            //DatePicker의 date를 btn의 title로 설정
+        }
+        let cancelBtn = UIAlertAction(title: "취소하기", style: .cancel)
+                        
+        
+        alert.addAction(saveBtn)
+        alert.addAction(cancelBtn)
+                
+        let vc = UIViewController()
+        vc.view = alarmDatePicker
+        
+        
+        alert.setValue(vc, forKey: "contentViewController")
+        self.present(alert, animated: true)
+        
     }
     
     
@@ -200,6 +224,7 @@ class AddAlarmVC : UIViewController {
         makeSubView()
         makeConstraint()
         makeAddTarget()
+      
        
     }
     
