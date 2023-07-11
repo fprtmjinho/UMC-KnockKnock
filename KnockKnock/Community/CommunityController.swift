@@ -67,6 +67,7 @@ class CommunityController: TabmanViewController {
         bar.backgroundView.style = .custom(view: barView)
         bar.buttons.customize { (button) in
             // 버튼 커스텀
+            button.tintColor = #colorLiteral(red: 0.787740171, green: 0.787740171, blue: 0.787740171, alpha: 1)
             button.selectedTintColor = #colorLiteral(red: 1, green: 0.1719063818, blue: 0.4505617023, alpha: 1)
         }
         bar.indicator.tintColor = .clear
