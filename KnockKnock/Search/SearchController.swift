@@ -213,6 +213,4 @@ extension SearchController {
         navigationController?.pushViewController(getInformationVC, animated: true)
         //주소록 불러오기 뷰로 전환
     }
-    
-    
 }
