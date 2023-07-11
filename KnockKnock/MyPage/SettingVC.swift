@@ -87,9 +87,9 @@ extension SettingVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
         case 1:
-            let addFriendVC = AddFriendVC()
-            addFriendVC.hidesBottomBarWhenPushed = true
-            navigationController?.pushViewController(addFriendVC, animated: true)
+            let getInformationVC = GetInformationVC()
+            getInformationVC.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(getInformationVC, animated: true)
         case 2:
             let guideVC = GuideVC()
             guideVC.hidesBottomBarWhenPushed = true
