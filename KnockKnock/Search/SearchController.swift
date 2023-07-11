@@ -22,13 +22,8 @@ class SearchController : UIViewController{
     }()
     
     let Label1 : UILabel = {
-<<<<<<< HEAD
         let label1 = UILabel()
         label1.text = "Name님,\n연락하고 싶은 분이 생겼나요?"
-=======
-       let label1 = UILabel()
-        label1.text = "name님,\n연락하고 싶은 분이 생겼나요?"
->>>>>>> loginAllVC
         label1.textColor = .white
         label1.backgroundColor = .clear
         label1.font = UIFont.boldSystemFont(ofSize: 23)
@@ -112,13 +107,6 @@ class SearchController : UIViewController{
         
         
     }
-<<<<<<< HEAD
-    
-    
-    
-    
-=======
->>>>>>> loginAllVC
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigationBar()
@@ -127,16 +115,8 @@ class SearchController : UIViewController{
         makeSubView()
         makeConstraint()
         makeAddTarget()
-<<<<<<< HEAD
-        
-        
-        
-        
-        
-=======
         setTitle()
         searchFriendBar.searchTextField.addTarget(self, action: #selector(searchFriend(_:)), for: .editingChanged)
->>>>>>> loginAllVC
         
         let button : UIButton = {
             //임시로 지정한 friendProfileVC로 넘기기 위한 버튼
