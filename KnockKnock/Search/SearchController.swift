@@ -46,10 +46,14 @@ class SearchController : UIViewController{
         
         searchFriendBar.placeholder = "친구를 검색해주세요!"
         searchFriendBar.backgroundColor = .none
-        searchFriendBar.isTranslucent = true
+        searchFriendBar.isTranslucent = false
         searchFriendBar.searchBarStyle = .minimal
-        searchFriendBar.searchTextField.backgroundColor = .white
         
+        searchFriendBar.searchTextField.backgroundColor = .white
+        searchFriendBar.layer.cornerRadius = 20
+        searchFriendBar.clipsToBounds = true
+        searchFriendBar.searchBarStyle = .default
+        searchFriendBar.barTintColor = .white
         
         searchFriendBar.setImage(UIImage(systemName: "magnifyingglass", withConfiguration: UIImage.SymbolConfiguration(paletteColors: [#colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)])),
                                  for: .search, state: .normal)
@@ -91,6 +95,7 @@ class SearchController : UIViewController{
             searchFriendBar.topAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: -30),
             searchFriendBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             searchFriendBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
+            searchFriendBar.heightAnchor.constraint(equalToConstant: 45),
             
             
             
