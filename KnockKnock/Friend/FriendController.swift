@@ -89,9 +89,9 @@ extension FriendController: PageboyViewControllerDataSource {
         
         switch index {
         case 0:
-            return GoodVC()
+            return FriendListVC()
         case 1:
-            return BadVC()
+            return GroupVC()
         default:
             return nil
         }
