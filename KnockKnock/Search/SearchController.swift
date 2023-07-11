@@ -22,8 +22,13 @@ class SearchController : UIViewController{
     }()
     
     let Label1 : UILabel = {
+<<<<<<< HEAD
         let label1 = UILabel()
         label1.text = "Name님,\n연락하고 싶은 분이 생겼나요?"
+=======
+       let label1 = UILabel()
+        label1.text = "name님,\n연락하고 싶은 분이 생겼나요?"
+>>>>>>> loginAllVC
         label1.textColor = .white
         label1.backgroundColor = .clear
         label1.font = UIFont.boldSystemFont(ofSize: 23)
@@ -102,16 +107,18 @@ class SearchController : UIViewController{
         ])
         
     }
-    
     func makeAddTarget(){
         
         
         
     }
+<<<<<<< HEAD
     
     
     
     
+=======
+>>>>>>> loginAllVC
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigationBar()
@@ -120,11 +127,16 @@ class SearchController : UIViewController{
         makeSubView()
         makeConstraint()
         makeAddTarget()
+<<<<<<< HEAD
         
         
         
         
         
+=======
+        setTitle()
+        searchFriendBar.searchTextField.addTarget(self, action: #selector(searchFriend(_:)), for: .editingChanged)
+>>>>>>> loginAllVC
         
         let button : UIButton = {
             //임시로 지정한 friendProfileVC로 넘기기 위한 버튼
@@ -143,6 +155,25 @@ class SearchController : UIViewController{
         button.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 300).isActive = true
         button.addTarget(self, action: #selector(buttonFunc(_:)), for: .touchUpInside)
         
+    }
+    @objc func searchFriend(_:UISearchBar){
+        var friendName: String = ""
+        if let name = searchFriendBar.text{
+            friendName = name
+        }
+        loadFriendArray(name: friendName)
+    }
+    @objc func loadFriendArray(name: String){
+        
+    }
+    @objc func setTitle(){
+        var nickName: String = loadNickName()
+        Label1.text = "\(nickName)님,\n연락하고 싶은 분이 생겼나요?"
+    }
+    @objc func loadNickName()->String{
+        var nickName: String = ""
+        //여기에 로그인한 uid로 서버에서 nickName을 불러온다
+        return nickName
     }
     
     override func viewDidLayoutSubviews() {
