@@ -31,6 +31,15 @@ class FriendProfileVC : UIViewController {
         return profileView
     }()
     
+    let editBtn : UIButton = {
+       let btn = UIButton()
+        btn.setTitle("편집 >", for: .normal)
+        btn.setTitleColor(.gray, for: .normal)
+        btn.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        return btn
+    }()
+    
+    
     let textTitle : UILabel = {
        let texttitle =  UILabel()
         texttitle.text = "연락하기"
@@ -113,6 +122,7 @@ class FriendProfileVC : UIViewController {
     func makeSubView(){
         view.addSubview(Number)
         view.addSubview(ProfileView)
+        view.addSubview(editBtn)
         view.addSubview(textTitle)
         view.addSubview(textGuideBtn)
         view.addSubview(myText)
@@ -127,6 +137,7 @@ class FriendProfileVC : UIViewController {
     func makeConstraint(){
         Number.translatesAutoresizingMaskIntoConstraints = false
         ProfileView.translatesAutoresizingMaskIntoConstraints = false
+        editBtn.translatesAutoresizingMaskIntoConstraints = false
         textTitle.translatesAutoresizingMaskIntoConstraints = false
         textGuideBtn.translatesAutoresizingMaskIntoConstraints = false
         myText.translatesAutoresizingMaskIntoConstraints = false
@@ -141,12 +152,16 @@ class FriendProfileVC : UIViewController {
         
         NSLayoutConstraint.activate([
             ProfileView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            ProfileView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50),
+            ProfileView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30),
             ProfileView.widthAnchor.constraint(equalToConstant: 100),
             ProfileView.heightAnchor.constraint(equalToConstant: 100),
             Number.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             Number.topAnchor.constraint(equalTo: ProfileView.bottomAnchor, constant: 10),
-            textTitle.topAnchor.constraint(equalTo: Number.bottomAnchor, constant: 40),
+            editBtn.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            editBtn.topAnchor.constraint(equalTo: Number.bottomAnchor, constant: 3),
+            
+            
+            textTitle.topAnchor.constraint(equalTo: editBtn.bottomAnchor, constant: 40),
             textTitle.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             textGuideBtn.topAnchor.constraint(equalTo: Number.bottomAnchor, constant: 40),
             textGuideBtn.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),

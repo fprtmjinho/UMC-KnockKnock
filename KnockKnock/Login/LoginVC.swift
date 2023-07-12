@@ -15,7 +15,6 @@ class LoginVC : UIViewController {
             //글씨체 수정 필요
             title.textColor = #colorLiteral(red: 1, green: 0.1743352413, blue: 0.4743140936, alpha: 1)
             title.font = UIFont.boldSystemFont(ofSize: 40)
-            
             return title
         }()
         
@@ -25,7 +24,7 @@ class LoginVC : UIViewController {
             emailBtn.addLeftPadding()
             emailBtn.backgroundColor = .systemGray6
             emailBtn.layer.cornerRadius = 25
-            //모서리 둥글게
+        
             emailBtn.clearButtonMode = .whileEditing
             //clear모드 설정
             return emailBtn

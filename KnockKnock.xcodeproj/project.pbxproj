@@ -22,6 +22,7 @@
 		C93246C12A48315800908D6B /* MyPageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93246C02A48315800908D6B /* MyPageController.swift */; };
 		C93246C32A48317800908D6B /* FriendController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93246C22A48317800908D6B /* FriendController.swift */; };
 		C93246C52A48318B00908D6B /* CommunityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93246C42A48318B00908D6B /* CommunityController.swift */; };
+		C933F4552A5EFBBA0089670A /* EditMyPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C933F4542A5EFBBA0089670A /* EditMyPageVC.swift */; };
 		C935FA1C2A57F1B90035FA2C /* MyProfilePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C935FA1B2A57F1B90035FA2C /* MyProfilePage.swift */; };
 		C935FA1F2A58264B0035FA2C /* LoginFirstVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C935FA1E2A58264B0035FA2C /* LoginFirstVC.swift */; };
 		C935FA212A58656C0035FA2C /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C935FA202A58656C0035FA2C /* LoginVC.swift */; };
@@ -77,6 +78,7 @@
 		C93246C02A48315800908D6B /* MyPageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageController.swift; sourceTree = "<group>"; };
 		C93246C22A48317800908D6B /* FriendController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendController.swift; sourceTree = "<group>"; };
 		C93246C42A48318B00908D6B /* CommunityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityController.swift; sourceTree = "<group>"; };
+		C933F4542A5EFBBA0089670A /* EditMyPageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMyPageVC.swift; sourceTree = "<group>"; };
 		C935FA1B2A57F1B90035FA2C /* MyProfilePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfilePage.swift; sourceTree = "<group>"; };
 		C935FA1E2A58264B0035FA2C /* LoginFirstVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFirstVC.swift; sourceTree = "<group>"; };
 		C935FA202A58656C0035FA2C /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
@@ -218,6 +220,7 @@
 			children = (
 				C93246C02A48315800908D6B /* MyPageController.swift */,
 				C93246B12A4631E200908D6B /* MyPage.swift */,
+				C933F4542A5EFBBA0089670A /* EditMyPageVC.swift */,
 				C935FA1B2A57F1B90035FA2C /* MyProfilePage.swift */,
 				C935FA772A5C01200035FA2C /* SettingVC.swift */,
 				00FD26572A5CE1520013E169 /* GuideVC.swift */,
@@ -381,6 +384,7 @@
 				C935FA1F2A58264B0035FA2C /* LoginFirstVC.swift in Sources */,
 				00FD26582A5CE1520013E169 /* GuideVC.swift in Sources */,
 				00186ACD2A5BD97F004BE22D /* LoginThirdVC.swift in Sources */,
+				C933F4552A5EFBBA0089670A /* EditMyPageVC.swift in Sources */,
 				C935FA252A59475A0035FA2C /* LoginSuccessVC.swift in Sources */,
 				C93246BF2A48313000908D6B /* SearchController.swift in Sources */,
 				C935FA802A5D74980035FA2C /* AllowApproachVC.swift in Sources */,

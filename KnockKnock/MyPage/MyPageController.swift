@@ -87,6 +87,7 @@ class MyPageController : UIViewController{
         setScrollView()
        
         
+        
     }
    
 }
