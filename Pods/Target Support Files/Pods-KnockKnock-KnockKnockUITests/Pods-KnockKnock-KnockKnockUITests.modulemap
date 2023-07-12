@@ -1,0 +1,6 @@
+framework module Pods_KnockKnock_KnockKnockUITests {
+  umbrella header "Pods-KnockKnock-KnockKnockUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

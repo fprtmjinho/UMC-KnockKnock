@@ -16,8 +16,11 @@ class GetInformationVC : UIViewController {
         searchFriendBar.backgroundColor = .none
         searchFriendBar.isTranslucent = true
         searchFriendBar.searchBarStyle = .minimal
-        searchFriendBar.searchTextField.backgroundColor = .systemGray6
-        
+        searchFriendBar.searchTextField.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
+        searchFriendBar.layer.cornerRadius = 20
+        searchFriendBar.clipsToBounds = true
+        searchFriendBar.searchBarStyle = .default
+        searchFriendBar.barTintColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
       
         searchFriendBar.setImage(UIImage(systemName: "magnifyingglass", withConfiguration: UIImage.SymbolConfiguration(paletteColors: [#colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)])),
                                  for: .search, state: .normal)
@@ -54,6 +57,7 @@ class GetInformationVC : UIViewController {
             searchFriendBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40),
             searchFriendBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             searchFriendBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
+            searchFriendBar.heightAnchor.constraint(equalToConstant: 45),
             
             addBtn.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
             addBtn.heightAnchor.constraint(equalToConstant: 50),
