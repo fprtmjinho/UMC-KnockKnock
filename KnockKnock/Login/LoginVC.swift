@@ -230,9 +230,11 @@ class LoginVC : UIViewController {
 }
     
     func makeAddTarget(){
+        self.ForgetPassword.addTarget(self, action: #selector(findPasswordFunc(_:)), for: .touchUpInside)
         self.SignUp.addTarget(self, action: #selector(signUpFunc(_:)), for: .touchUpInside)
         self.LoginButton.addTarget(self, action: #selector(loginSuccess(_:)), for: .touchUpInside)
         //회원가입 뷰로 이동
+        
     }
     
         
@@ -245,8 +247,13 @@ class LoginVC : UIViewController {
         
       
         navigationController?.isNavigationBarHidden = true
-        
     }
+    
+    @objc func findPasswordFunc(_: UIButton){
+        let findPasswordVC = FindPassWordVC()
+        navigationController?.pushViewController(findPasswordVC, animated: true)
+    }
+    
     @objc func loginSuccess(_: UIButton){
         //로그인 성공여부 판별하는 로직 짜야함(서버랑 얘기하고 구현)
 //        if(){

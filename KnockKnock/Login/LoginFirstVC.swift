@@ -294,7 +294,7 @@ class LoginFirstVC : UIViewController {
         }
        
         else{
-            manButton.layer.borderWidth = 0
+            womanButton.layer.borderWidth = 0
             manButton.layer.borderWidth = 0
             return false
         }
