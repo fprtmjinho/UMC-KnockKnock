@@ -87,15 +87,10 @@ extension SettingVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
         case 1:
-<<<<<<< HEAD
             let getInfoVC = GetInformationVC()
             getInfoVC.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(getInfoVC, animated: true)
-=======
-            let getInformationVC = GetInformationVC()
-            getInformationVC.hidesBottomBarWhenPushed = true
-            navigationController?.pushViewController(getInformationVC, animated: true)
->>>>>>> CommunityUI
+            
         case 2:
             let guideVC = GuideVC()
             guideVC.hidesBottomBarWhenPushed = true
