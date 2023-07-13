@@ -55,10 +55,12 @@ class GoodVC: UIViewController {
         let lastRow = row.count - 1
         
         if lastVisibleRow == lastRow {
-            //            let newRowText = "Row \(lastRow + 2)"
-            //            let newRowImage = UIImage(named: "placeholder")
-            //            row.append((text: newRowText, image: newRowImage))
-            //            tableView.insertRows(at: [IndexPath(row: lastRow + 1, section: 0)], with: .automatic)
+//            마지막 행에 도달했을 때 하는 동작
+//            아래는 예시
+//            let newRowText = "Row \(lastRow + 2)"
+//            let newRowImage = UIImage(named: "placeholder")
+//            row.append((text: newRowText, image: newRowImage))
+//            tableView.insertRows(at: [IndexPath(row: lastRow + 1, section: 0)], with: .automatic)
         }
     }
     
@@ -90,64 +92,61 @@ class CustomCell: UITableViewCell {
     let customProfileView: UIImageView = { // 프로필 사진
         let imageView = UIImageView()
         imageView.layer.cornerRadius = imageView.frame.width / 2
-            imageView.clipsToBounds = true
-        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.clipsToBounds = true
         return imageView
     }()
     
     let customTitleLabel: UILabel = { // 글 제목
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 16)
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
+    }()
+    
+    let customTextContainerView: UIView = { // 글 내용을 담는 컨테이너
+        let view = UIView()
+        return view
     }()
     
     let customTextLabel: UILabel = { // 글 내용
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16)
         label.numberOfLines = 4
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
-    }()
-    
-    let customTextContainerView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
     }()
     
     let customImageView: UIImageView = { // 글 이미지
         let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
-    let customLikeView: UIImageView = {
+    let customLikeView: UIImageView = { // 좋아요 이미지
         let imageView = UIImageView()
         imageView.image = #imageLiteral(resourceName: "like_ff0060")
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
-    let customLikeNumLabel: UILabel = {
+    let customLikeNumLabel: UILabel = { // 좋아요 개수
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 16)
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    let customChatView: UIImageView = {
+    let customChatView: UIImageView = { // 댓글 이미지
         let imageView = UIImageView()
         imageView.image = #imageLiteral(resourceName: "chat_bubble_c2c2c2")
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
-    let customChatNumLabel: UILabel = {
+    let customChatNumLabel: UILabel = { // 댓글 개수
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 16)
-        label.translatesAutoresizingMaskIntoConstraints = false
         return label
+    }()
+    
+    let shareButton: UIButton = { // 공유 버튼
+        let button = UIButton()
+        button.setImage(UIImage(named: "share_333333"), for: .normal)
+        return button
     }()
     
     func makeSubView() {
@@ -160,9 +159,24 @@ class CustomCell: UITableViewCell {
         contentView.addSubview(customLikeNumLabel)
         contentView.addSubview(customChatView)
         contentView.addSubview(customChatNumLabel)
+        contentView.addSubview(shareButton)
+        
+        shareButton.addTarget(self, action: #selector(shareButtonTapped), for: .touchUpInside)
     }
     
     func makeConstraint() {
+        customProfileView.translatesAutoresizingMaskIntoConstraints = false
+        customTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        customTextLabel.translatesAutoresizingMaskIntoConstraints = false
+        customTextContainerView.translatesAutoresizingMaskIntoConstraints = false
+        customImageView.translatesAutoresizingMaskIntoConstraints = false
+        customLikeView.translatesAutoresizingMaskIntoConstraints = false
+        customLikeNumLabel.translatesAutoresizingMaskIntoConstraints = false
+        customChatView.translatesAutoresizingMaskIntoConstraints = false
+        customChatNumLabel.translatesAutoresizingMaskIntoConstraints = false
+        shareButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        
         NSLayoutConstraint.activate([
             customProfileView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
             customProfileView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 23),
@@ -183,7 +197,7 @@ class CustomCell: UITableViewCell {
             customTextLabel.topAnchor.constraint(equalTo: customTextContainerView.topAnchor),
             customTextLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 90),
             customTextLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -30),
-
+            
             
             customImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 90),
             customImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -30),
@@ -208,6 +222,12 @@ class CustomCell: UITableViewCell {
             customChatNumLabel.topAnchor.constraint(equalTo: customImageView.bottomAnchor, constant: 4),
             customChatNumLabel.leadingAnchor.constraint(equalTo: customChatView.trailingAnchor, constant: 10),
             customChatNumLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
+            
+            shareButton.topAnchor.constraint(equalTo: customImageView.bottomAnchor, constant: 4),
+            shareButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -30),
+            shareButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
+            shareButton.widthAnchor.constraint(equalToConstant: 20),
+            shareButton.heightAnchor.constraint(equalToConstant: 20)
         ])
     }
     
@@ -228,6 +248,10 @@ class CustomCell: UITableViewCell {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc func shareButtonTapped() { // 공유 버튼 눌렀을 때 하는 동작
+        print("버튼 눌렀음")
     }
     
 }
