@@ -116,7 +116,7 @@ class CommunityController: TabmanViewController {
     override func viewDidLayoutSubviews() {
             super.viewDidLayoutSubviews()
             floatingButton.frame = CGRect(x: view.frame.size.width - 60 - 8 - 20, y: view.frame.size.height - 60 - 8 - 90, width: 60, height: 60)
-            writeButton.frame = CGRect(x: view.frame.size.width - 60 - 8 - 20, y: view.frame.size.height - 60 - 80 - 8 - 90, width: 60, height: 60)
+            writeButton.frame = CGRect(x: view.frame.size.width - 60 - 8 - 20, y: view.frame.size.height - 60 - 80 - 8 - 80, width: 60, height: 60)
         }
         
         private func setUI() {
