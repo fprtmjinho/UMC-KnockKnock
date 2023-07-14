@@ -14,16 +14,12 @@ class LoginAddFriendVC : AllowApproachVC {
         let searchFriendBar = UISearchBar()
         
         searchFriendBar.placeholder = "친구를 검색해주세요!"
-        searchFriendBar.backgroundColor = .systemGray6
         searchFriendBar.isTranslucent = false
-        
+        searchFriendBar.searchBarStyle = .minimal
         searchFriendBar.searchTextField.backgroundColor = .systemGray6
-        searchFriendBar.layer.cornerRadius = 25
-        searchFriendBar.clipsToBounds = true
-        searchFriendBar.searchBarStyle = .default
-        searchFriendBar.barTintColor = .systemGray6
-        
-        
+        searchFriendBar.setSearchFieldBackgroundImage(UIImage(), for: .normal)
+        searchFriendBar.searchTextField.layer.cornerRadius = 20
+        searchFriendBar.searchTextField.layer.masksToBounds = true
         searchFriendBar.setImage(UIImage(systemName: "magnifyingglass", withConfiguration: UIImage.SymbolConfiguration(paletteColors: [#colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)])),
                                  for: .search, state: .normal)
         

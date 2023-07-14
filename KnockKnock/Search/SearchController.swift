@@ -45,17 +45,19 @@ class SearchController : UIViewController{
         let searchFriendBar = UISearchBar()
         
         searchFriendBar.placeholder = "친구를 검색해주세요!"
-        searchFriendBar.backgroundColor = .none
         searchFriendBar.isTranslucent = false
-        
+        searchFriendBar.searchBarStyle = .minimal
         searchFriendBar.searchTextField.backgroundColor = .white
-        searchFriendBar.layer.cornerRadius = 25
-        searchFriendBar.clipsToBounds = true
-        searchFriendBar.searchBarStyle = .default
-        searchFriendBar.barTintColor = .white
-        
+        searchFriendBar.setSearchFieldBackgroundImage(UIImage(), for: .normal)
+        searchFriendBar.searchTextField.layer.cornerRadius = 20
+        searchFriendBar.searchTextField.layer.masksToBounds = true
         searchFriendBar.setImage(UIImage(systemName: "magnifyingglass", withConfiguration: UIImage.SymbolConfiguration(paletteColors: [#colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)])),
                                  for: .search, state: .normal)
+        
+        searchFriendBar.layer.shadowColor = UIColor.black.cgColor
+            searchFriendBar.layer.shadowOffset = CGSize(width: 0, height: 2)
+            searchFriendBar.layer.shadowRadius = 4
+            searchFriendBar.layer.shadowOpacity = 0.3
         
         return searchFriendBar
     }()
@@ -91,10 +93,9 @@ class SearchController : UIViewController{
             
             
             searchFriendBar.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            searchFriendBar.topAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: -30),
+            searchFriendBar.centerYAnchor.constraint(equalTo: backgroundView.bottomAnchor),
             searchFriendBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             searchFriendBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
-            searchFriendBar.heightAnchor.constraint(equalToConstant: 45),
             
             
             

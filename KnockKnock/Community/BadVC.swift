@@ -9,6 +9,34 @@ import UIKit
 
 class BadVC: UIViewController {
     
+    let buttonStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 10
+        stackView.alignment = .center
+        return stackView
+    }()
+    
+    let buttonTitles = ["10대", "20대", "30대", "40대~"]
+    
+    let searchBar : UISearchBar = {
+        let searchBar = UISearchBar()
+        
+        searchBar.placeholder = "검색어나 태그를 입력해주세요 :)"
+        searchBar.isTranslucent = false
+        searchBar.searchBarStyle = .minimal
+        searchBar.searchTextField.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
+        searchBar.setSearchFieldBackgroundImage(UIImage(), for: .normal)
+        searchBar.searchTextField.layer.cornerRadius = 20
+        searchBar.searchTextField.layer.masksToBounds = true
+        searchBar.setImage(UIImage(systemName: "magnifyingglass", withConfiguration: UIImage.SymbolConfiguration(paletteColors: [#colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)])),
+                           for: .search, state: .normal)
+        
+        return searchBar
+    }()
+    
+    
+    
     let tableView: UITableView = {
         let tableView = UITableView()
         return tableView
@@ -21,15 +49,30 @@ class BadVC: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
+        view.addSubview(buttonStackView)
+        view.addSubview(searchBar)
         view.addSubview(tableView)
         tableView.register(CustomCell.self, forCellReuseIdentifier: "Cell")
     }
     
     func makeConstraint() {
+        buttonStackView.translatesAutoresizingMaskIntoConstraints = false
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            buttonStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            buttonStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            buttonStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
+            buttonStackView.heightAnchor.constraint(equalToConstant: 50),
+            
+            searchBar.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            searchBar.topAnchor.constraint(equalTo: buttonStackView.bottomAnchor, constant: 10),
+            searchBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            searchBar.heightAnchor.constraint(equalToConstant: 45),
+            
+            tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 15),
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
@@ -43,7 +86,45 @@ class BadVC: UIViewController {
         
         // Scroll dynamically to add new rows when scrolling down
         let contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0) // Content inset to allow scrolling down by 100pt
+        createButtons()
         tableView.contentInset = contentInset
+    }
+    
+    func createButtons() {
+        for title in buttonTitles {
+            let button = UIButton(type: .system)
+            button.setTitle(title, for: .normal)
+            button.setTitleColor(.black, for: .normal)
+            button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
+            button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
+            button.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
+            button.layer.cornerRadius = 16
+            button.widthAnchor.constraint(equalToConstant: 75).isActive = true
+            
+            buttonStackView.addArrangedSubview(button)
+        }
+        
+        buttonStackView.distribution = .equalSpacing
+        buttonStackView.spacing = 5
+    }
+    
+    @objc func buttonTapped(_ sender: UIButton) {
+        guard let title = sender.titleLabel?.text else {
+            return
+        }
+        
+        if sender.isSelected {
+            sender.isSelected = false
+            sender.setTitleColor(.black, for: .normal)
+            sender.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
+        } else {
+            sender.isSelected = true
+            sender.setTitleColor(.white, for: .normal)
+            sender.backgroundColor = #colorLiteral(red: 1, green: 0, blue: 0.3764705882, alpha: 1)
+        }
+        
+        print("Button tapped: \(title)")
+        
     }
     
     @objc func handlePanGesture(_ gestureRecognizer: UIPanGestureRecognizer) {
@@ -55,6 +136,8 @@ class BadVC: UIViewController {
         let lastRow = row.count - 1
         
         if lastVisibleRow == lastRow {
+            //            마지막 행에 도달했을 때 하는 동작
+            //            아래는 예시
             //            let newRowText = "Row \(lastRow + 2)"
             //            let newRowImage = UIImage(named: "placeholder")
             //            row.append((text: newRowText, image: newRowImage))
