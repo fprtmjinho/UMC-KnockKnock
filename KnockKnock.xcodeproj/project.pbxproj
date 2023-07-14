@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00186ACD2A5BD97F004BE22D /* LoginThirdVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00186ACC2A5BD97F004BE22D /* LoginThirdVC.swift */; };
 		00FD26582A5CE1520013E169 /* GuideVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FD26572A5CE1520013E169 /* GuideVC.swift */; };
 		C93246792A458D9400908D6B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93246782A458D9400908D6B /* AppDelegate.swift */; };
 		C932467B2A458D9400908D6B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C932467A2A458D9400908D6B /* SceneDelegate.swift */; };
@@ -60,7 +59,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		00186ACC2A5BD97F004BE22D /* LoginThirdVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginThirdVC.swift; sourceTree = "<group>"; };
 		00FD26572A5CE1520013E169 /* GuideVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideVC.swift; sourceTree = "<group>"; };
 		C93246752A458D9400908D6B /* KnockKnock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KnockKnock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C93246782A458D9400908D6B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -189,7 +187,6 @@
 				C98C4DF92A6120C00001BEAB /* ChangePasswordVC.swift */,
 				C935FA1E2A58264B0035FA2C /* LoginFirstVC.swift */,
 				C935FA222A59357B0035FA2C /* LoginSecondVC.swift */,
-				00186ACC2A5BD97F004BE22D /* LoginThirdVC.swift */,
 				C935FA7F2A5D74980035FA2C /* AllowApproachVC.swift */,
 				C935FA7B2A5D63740035FA2C /* LoginAddFriendVC.swift */,
 				C935FA7D2A5D63840035FA2C /* LoginAddBestFriendVC.swift */,
@@ -388,7 +385,6 @@
 				C935FA272A59BC840035FA2C /* Extension.swift in Sources */,
 				C935FA1F2A58264B0035FA2C /* LoginFirstVC.swift in Sources */,
 				00FD26582A5CE1520013E169 /* GuideVC.swift in Sources */,
-				00186ACD2A5BD97F004BE22D /* LoginThirdVC.swift in Sources */,
 				C935FA252A59475A0035FA2C /* LoginSuccessVC.swift in Sources */,
 				C93246BF2A48313000908D6B /* SearchController.swift in Sources */,
 				C935FA802A5D74980035FA2C /* AllowApproachVC.swift in Sources */,

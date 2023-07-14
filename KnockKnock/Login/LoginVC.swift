@@ -272,7 +272,7 @@ class LoginVC : UIViewController {
     
     @objc func findPasswordFunc(_: UIButton){
         let findPasswordVC = FindPasswordVC()
-        navigationController?.pushViewController(findPasswordVC, animated: true)
+        self.navigationController?.pushViewController(findPasswordVC, animated: true)
     }
     
     @objc func loginSuccess(_: UIButton){

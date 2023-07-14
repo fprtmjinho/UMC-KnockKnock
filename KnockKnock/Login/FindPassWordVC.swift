@@ -8,6 +8,8 @@
 import UIKit
 class FindPasswordVC : UIViewController{
     
+    var nextBtn : UIButton = UIButton()
+    
     let emailLabel : UILabel = {
        let label = UILabel()
         label.text = "이메일 계정"
@@ -17,7 +19,7 @@ class FindPasswordVC : UIViewController{
     
     let emailText : UITextField = {
         let text = UITextField()
-        text.placeholder = "이메일 입력"
+        text.placeholder = "이메일을 입력해주세요"
         text.backgroundColor = .systemGray6
         text.layer.cornerRadius = 20
         text.addLeftPadding()
@@ -27,24 +29,26 @@ class FindPasswordVC : UIViewController{
     
     let emailBtn : UIButton = {
        let btn = UIButton()
-        btn.backgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-        btn.layer.cornerRadius = 20
-        btn.setTitle("인증번호 요청", for: .normal)
-        btn.setTitleColor(.white, for: .normal)
-        btn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        var title = AttributedString("재설정 링크 전송하기")
+        title.font =  UIFont.systemFont(ofSize: 15, weight: .semibold)
+        var config = UIButton.Configuration.filled()
+        config.attributedTitle = title
+        config.baseBackgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+        config.cornerStyle = .capsule
+        btn.configuration = config
         return btn
     }()
     
     let emailCheckLabel : UILabel = {
        let label = UILabel()
-        label.text = "인증번호"
+        label.text = "인증코드"
         label.font = UIFont.boldSystemFont(ofSize: 20)
         return label
     }()
     
     let emailCheckText : UITextField = {
         let text = UITextField()
-        text.placeholder = "인증번호를 입력하세요"
+        text.placeholder = "인증코드를 입력해주세요"
         text.backgroundColor = .systemGray6
         text.layer.cornerRadius = 20
         text.addLeftPadding()
@@ -54,26 +58,17 @@ class FindPasswordVC : UIViewController{
     
     let emailCheckBtn : UIButton = {
        let btn = UIButton()
-        btn.backgroundColor = .systemGray6
-        btn.layer.cornerRadius = 20
-        btn.setTitle("인증번호 확인", for: .normal)
-        btn.setTitleColor(.black, for: .normal)
-        btn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        var title = AttributedString("코드 확인")
+        title.font =  UIFont.systemFont(ofSize: 15, weight: .semibold)
+        var config = UIButton.Configuration.filled()
+        config.attributedTitle = title
+        config.baseBackgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+        config.cornerStyle = .capsule
+        btn.configuration = config
         return btn
     }()
     //인증번호 입력하면 색 변경
-    
-    
-    let findBtn : UIButton = {
-       let btn = UIButton()
-        btn.backgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-        btn.setTitle("비밀번호 찾기", for: .normal)
-        btn.tintColor = .white
-        btn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-        btn.layer.cornerRadius = 25
-        return btn
-    }()
-    
+
     func makeSubView(){
         view.addSubview(emailLabel)
         view.addSubview(emailText)
@@ -81,7 +76,7 @@ class FindPasswordVC : UIViewController{
         view.addSubview(emailCheckLabel)
         view.addSubview(emailCheckText)
         view.addSubview(emailCheckBtn)
-        view.addSubview(findBtn)
+       
     }
     
     func makeConstraint(){
@@ -91,46 +86,47 @@ class FindPasswordVC : UIViewController{
         emailCheckLabel.translatesAutoresizingMaskIntoConstraints = false
         emailCheckText.translatesAutoresizingMaskIntoConstraints = false
         emailCheckBtn.translatesAutoresizingMaskIntoConstraints = false
-        findBtn.translatesAutoresizingMaskIntoConstraints = false
+       
         
         NSLayoutConstraint.activate([
             emailLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40),
             emailLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             emailText.topAnchor.constraint(equalTo: emailLabel.bottomAnchor, constant: 7),
-            emailText.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            emailText.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
             emailText.heightAnchor.constraint(equalToConstant: 40),
-            emailText.widthAnchor.constraint(equalToConstant: 220),
+            emailText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
             
-            emailBtn.topAnchor.constraint(equalTo: emailLabel.bottomAnchor, constant: 7),
+            emailBtn.topAnchor.constraint(equalTo: emailText.bottomAnchor, constant: 7),
+            emailBtn.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
             emailBtn.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
             emailBtn.heightAnchor.constraint(equalToConstant: 40),
-            emailBtn.widthAnchor.constraint(equalTo: emailText.widthAnchor, multiplier: 0.4),
             
-            emailCheckLabel.topAnchor.constraint(equalTo: emailText.bottomAnchor, constant: 40),
+            emailCheckLabel.topAnchor.constraint(equalTo: emailBtn.bottomAnchor, constant: 40),
             emailCheckLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            
             emailCheckText.topAnchor.constraint(equalTo: emailCheckLabel.bottomAnchor, constant: 7),
             emailCheckText.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             emailCheckText.heightAnchor.constraint(equalToConstant: 40),
             emailCheckText.widthAnchor.constraint(equalToConstant: 220),
             
+            
             emailCheckBtn.topAnchor.constraint(equalTo: emailCheckLabel.bottomAnchor, constant: 7),
             emailCheckBtn.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
+            
             emailCheckBtn.heightAnchor.constraint(equalToConstant: 40),
-            emailCheckBtn.widthAnchor.constraint(equalTo: emailCheckText.widthAnchor, multiplier: 0.4),
-            
-            
-            findBtn.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
-            findBtn.heightAnchor.constraint(equalToConstant: 50),
-            findBtn.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            findBtn.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30)
-            
+            emailCheckBtn.leadingAnchor.constraint(equalTo: emailCheckText.trailingAnchor, constant: 5)
+         
         ])
         
     }
     
     func makeAddTarget(){
-        
-        
+        self.nextBtn.addTarget(self, action: #selector(nextView(_:)), for: .touchUpInside)
+    }
+    
+    @objc func nextView(_: UIButton){
+        let ChangePasswordVC = ChangePasswordVC()
+        self.navigationController?.pushViewController(ChangePasswordVC, animated: true)
     }
     
     override func viewDidLoad() {
@@ -140,6 +136,7 @@ class FindPasswordVC : UIViewController{
         self.title = "비밀번호 찾기"
         view.backgroundColor = .white
         
+        nextBtn = setNextBtn(view: self, title: "다음")
         makeSubView()
         makeConstraint()
         makeAddTarget()

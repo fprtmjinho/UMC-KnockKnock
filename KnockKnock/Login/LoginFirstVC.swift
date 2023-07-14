@@ -149,33 +149,34 @@ class LoginFirstVC : UIViewController {
             nameText.heightAnchor.constraint(equalToConstant: 45),
             
             num2.topAnchor.constraint(equalTo: nameText.bottomAnchor, constant: 40),
+            num2.bottomAnchor.constraint(equalTo: sexLabel.topAnchor, constant: -5),
             num2.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             num2.widthAnchor.constraint(equalToConstant: 25),
             num2.heightAnchor.constraint(equalToConstant: 25),
-            sexLabel.topAnchor.constraint(equalTo: num2.bottomAnchor, constant: 5),
+            sexLabel.bottomAnchor.constraint(equalTo: manButton.topAnchor, constant: -5),
             sexLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             sexLabel.heightAnchor.constraint(equalToConstant: 40),
-            manButton.topAnchor.constraint(equalTo: sexLabel.bottomAnchor, constant: 5),
+            
+            
+            manButton.bottomAnchor.constraint(lessThanOrEqualTo: num3.topAnchor, constant: -40),
             manButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             manButton.widthAnchor.constraint(equalToConstant: 160),
-            manButton.heightAnchor.constraint(equalToConstant: 45),
-            womanButton.topAnchor.constraint(equalTo: sexLabel.bottomAnchor, constant: 5),
+            manButton.heightAnchor.constraint(equalTo : nameText.heightAnchor),
+            womanButton.bottomAnchor.constraint(equalTo: manButton.bottomAnchor),
             womanButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
             womanButton.widthAnchor.constraint(equalToConstant: 160),
-            womanButton.heightAnchor.constraint(equalToConstant: 45),
+            womanButton.heightAnchor.constraint(equalTo : nameText.heightAnchor),
             
-            num3.topAnchor.constraint(equalTo: manButton.bottomAnchor, constant: 40),
+            num3.bottomAnchor.constraint(equalTo: birthdayLabel.topAnchor, constant: -5),
             num3.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             num3.widthAnchor.constraint(equalToConstant: 25),
             num3.heightAnchor.constraint(equalToConstant: 25),
-            birthdayLabel.topAnchor.constraint(equalTo: num3.bottomAnchor, constant: 5),
+            birthdayLabel.topAnchor.constraint(equalTo: view.centerYAnchor, constant: 50),
             birthdayLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             birthdayText.topAnchor.constraint(equalTo: birthdayLabel.bottomAnchor, constant: 10),
             birthdayText.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             birthdayText.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
-            birthdayText.heightAnchor.constraint(equalToConstant: 45),
-            
-            
+            birthdayText.heightAnchor.constraint(equalTo : nameText.heightAnchor),
             
         ])
         
