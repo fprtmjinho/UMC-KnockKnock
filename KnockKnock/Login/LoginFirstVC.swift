@@ -108,11 +108,16 @@ class LoginFirstVC : UIViewController {
     
     let nextBtn : UIButton = {
        let nextbtn = UIButton()
-        nextbtn.backgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-        nextbtn.setTitle("다음", for: .normal)
+        var title = AttributedString("다음")
+        title.font = UIFont.boldSystemFont(ofSize: 20)
+        
+        var config = UIButton.Configuration.filled()
+        config.baseBackgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+        config.cornerStyle = .capsule
+        config.attributedTitle = title
+        
         nextbtn.tintColor = .white
-        nextbtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-        nextbtn.layer.cornerRadius = 25
+        nextbtn.configuration = config
         return nextbtn
     }()
       

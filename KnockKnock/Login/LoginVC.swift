@@ -24,7 +24,7 @@ class LoginVC : UIViewController {
             emailBtn.placeholder = "이메일 주소"
             emailBtn.addLeftPadding()
             emailBtn.backgroundColor = .systemGray6
-            emailBtn.layer.cornerRadius = 25
+            emailBtn.layer.cornerRadius = 20
             //모서리 둥글게
             emailBtn.clearButtonMode = .whileEditing
             //clear모드 설정
@@ -37,7 +37,7 @@ class LoginVC : UIViewController {
             passwordBtn.placeholder = "비밀번호"
             passwordBtn.addLeftPadding()
             passwordBtn.backgroundColor = .systemGray6
-            passwordBtn.layer.cornerRadius = 25
+            passwordBtn.layer.cornerRadius = 20
             passwordBtn.clearButtonMode = .whileEditing
             passwordBtn.isSecureTextEntry = true
             return passwordBtn
@@ -45,23 +45,27 @@ class LoginVC : UIViewController {
     //image 첨부 필요
         
         let LoginButton : UIButton={
-            let loginBtn = UIButton()
-            loginBtn.setTitle("로그인", for: .normal)
-            loginBtn.backgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-            loginBtn.layer.cornerRadius = 25
-            loginBtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-            return loginBtn
+            let btn = UIButton()
+            var title = AttributedString("로그인")
+            title.font = UIFont.boldSystemFont(ofSize: 20)
+            
+            var config = UIButton.Configuration.filled()
+            config.cornerStyle = .capsule
+            config.baseBackgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+            config.attributedTitle = title
+            
+            btn.configuration = config
+            return btn
         }()
         
         let ForgetPassword : UIButton = {
             let FpBtn =  UIButton()
            FpBtn.setTitle("비밀번호를 잊으셨나요?", for: .normal)
             FpBtn.setTitleColor(UIColor.systemGray, for: .normal)
-            FpBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+            FpBtn.titleLabel?.font = UIFont.systemFont(ofSize: 13)
            
             FpBtn.setUnderLine()
-            //setUnderLine extension으로 설정
-            
+           
             return FpBtn
         }()
         
@@ -88,33 +92,34 @@ class LoginVC : UIViewController {
         
         
         let ForKakaoBtn : UIButton = {
-            let kakao = UIButton()
-            kakao.layer.cornerRadius = 32.5
-            kakao.backgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-            
-            var image = UIImage(named: "kakao talk")?.resizeImageTo(size: CGSize(width: 35, height: 35) )
-            kakao.setImage(image, for: .normal)
-            return kakao
+            let btn = UIButton()
+            var config = UIButton.Configuration.filled()
+            config.cornerStyle = .capsule
+            config.baseBackgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+            config.image = UIImage(named: "kakao talk")?.resizeImageTo(size: CGSize(width: 30, height: 30) )
+            btn.configuration = config
+            return btn
         }()
+    
         
-        let ForFaceBtn : UIButton = {
-           let face = UIButton()
-            face.layer.cornerRadius = 32.5
-            face.backgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-            
-            var image = UIImage(named: "naver")?.resizeImageTo(size: CGSize(width: 35, height: 35))
-            face.setImage(image, for: .normal)
-            return face
+        let ForNaverBtn : UIButton = {
+            let btn = UIButton()
+            var config = UIButton.Configuration.filled()
+            config.cornerStyle = .capsule
+            config.baseBackgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+            config.image = UIImage(named: "naver")?.resizeImageTo(size: CGSize(width: 30, height: 30) )
+            btn.configuration = config
+            return btn
         }()
         
         let ForGoogleBtn : UIButton = {
-            let google = UIButton()
-            google.layer.cornerRadius = 32.5
-            google.backgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-            
-            var image = UIImage(named: "google")?.resizeImageTo(size: CGSize(width: 35, height: 35))
-            google.setImage(image, for: .normal)
-            return google
+            let btn = UIButton()
+            var config = UIButton.Configuration.filled()
+            config.cornerStyle = .capsule
+            config.baseBackgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+            config.image = UIImage(named: "google")?.resizeImageTo(size: CGSize(width: 30, height: 30) )
+            btn.configuration = config
+            return btn
         }()
         
         let NotYet : UIButton = {
@@ -140,7 +145,7 @@ class LoginVC : UIViewController {
         PasswordText.translatesAutoresizingMaskIntoConstraints = false
         ForgetPassword.translatesAutoresizingMaskIntoConstraints = false
         ForKakaoBtn.translatesAutoresizingMaskIntoConstraints = false
-        ForFaceBtn.translatesAutoresizingMaskIntoConstraints = false
+        ForNaverBtn.translatesAutoresizingMaskIntoConstraints = false
         ForGoogleBtn.translatesAutoresizingMaskIntoConstraints = false
         EasyLogin.translatesAutoresizingMaskIntoConstraints = false
         LoginGuide_1.translatesAutoresizingMaskIntoConstraints = false
@@ -150,61 +155,77 @@ class LoginVC : UIViewController {
             
             
         NSLayoutConstraint.activate([
-            Title.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 90),
+            Title.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 80),
             Title.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             Title.heightAnchor.constraint(equalToConstant: 80),
             
-            EmailText.topAnchor.constraint(equalTo: Title.bottomAnchor, constant: 80),
-            EmailText.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            EmailText.widthAnchor.constraint(equalToConstant: 330),
-            EmailText.heightAnchor.constraint(equalToConstant: 50),
-            PasswordText.topAnchor.constraint(equalTo: EmailText.bottomAnchor, constant: 10),
+            //y축 고정
+            PasswordText.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -20),
             PasswordText.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            PasswordText.widthAnchor.constraint(equalToConstant: 330),
-            PasswordText.heightAnchor.constraint(equalToConstant: 50),
+            PasswordText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            PasswordText.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            
+            EmailText.bottomAnchor.constraint(equalTo: PasswordText.topAnchor, constant: -10),
+            EmailText.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            EmailText.widthAnchor.constraint(equalTo: PasswordText.widthAnchor),
+            EmailText.heightAnchor.constraint(equalTo: PasswordText.heightAnchor),
+            EmailText.heightAnchor.constraint(equalToConstant: 45),
+            
+            
             LoginButton.topAnchor.constraint(equalTo: PasswordText.bottomAnchor, constant: 20),
             LoginButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            LoginButton.widthAnchor.constraint(equalToConstant: 330),
-            LoginButton.heightAnchor.constraint(equalToConstant: 50),
+            LoginButton.widthAnchor.constraint(equalTo: EmailText.widthAnchor),
+            LoginButton.heightAnchor.constraint(equalTo: EmailText.heightAnchor),
+            
+            
             ForgetPassword.topAnchor.constraint(equalTo: LoginButton.bottomAnchor, constant: 20),
             ForgetPassword.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             ForgetPassword.widthAnchor.constraint(equalToConstant: 180),
             ForgetPassword.heightAnchor.constraint(equalToConstant: 20),
-                
             
-            ForFaceBtn.topAnchor.constraint(equalTo: ForgetPassword.bottomAnchor, constant: 130),
-            ForFaceBtn.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            ForFaceBtn.widthAnchor.constraint(equalToConstant: 65),
-            ForFaceBtn.heightAnchor.constraint(equalToConstant: 65),
-
-            ForKakaoBtn.topAnchor.constraint(equalTo: ForgetPassword.bottomAnchor, constant: 130),
-            ForKakaoBtn.trailingAnchor.constraint(equalTo: ForFaceBtn.leadingAnchor, constant: -20),
-            ForKakaoBtn.widthAnchor.constraint(equalToConstant: 65),
-            ForKakaoBtn.heightAnchor.constraint(equalToConstant: 65),
-
-            ForGoogleBtn.topAnchor.constraint(equalTo: ForgetPassword.bottomAnchor, constant: 130),
-            ForGoogleBtn.leadingAnchor.constraint(equalTo: ForFaceBtn.trailingAnchor, constant: 20),
-            ForGoogleBtn.widthAnchor.constraint(equalToConstant: 65),
-            ForGoogleBtn.heightAnchor.constraint(equalToConstant: 65),
-                
-                
+            
             EasyLogin.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            EasyLogin.topAnchor.constraint(equalTo: ForgetPassword.bottomAnchor, constant: 90),
+            EasyLogin.topAnchor.constraint(equalTo: ForgetPassword.bottomAnchor, constant: 70),
             LoginGuide_1.trailingAnchor.constraint(equalTo: EasyLogin.leadingAnchor, constant: -20),
-            LoginGuide_1.topAnchor.constraint(equalTo: ForgetPassword.bottomAnchor, constant: 100),
+            LoginGuide_1.topAnchor.constraint(equalTo: ForgetPassword.bottomAnchor, constant: 80),
             LoginGuide_1.heightAnchor.constraint(equalToConstant: 1),
             LoginGuide_1.widthAnchor.constraint(equalToConstant: 105),
             LoginGuide_2.leadingAnchor.constraint(equalTo: EasyLogin.trailingAnchor, constant: 20),
-            LoginGuide_2.topAnchor.constraint(equalTo: ForgetPassword.bottomAnchor, constant: 100),
+            LoginGuide_2.topAnchor.constraint(equalTo: ForgetPassword.bottomAnchor, constant: 80),
             LoginGuide_2.heightAnchor.constraint(equalToConstant: 1),
             LoginGuide_2.widthAnchor.constraint(equalToConstant: 105),
+            
+            
+            
+          
+            
+            
+            ForNaverBtn.topAnchor.constraint(equalTo: EasyLogin.bottomAnchor, constant: 20),
+            ForNaverBtn.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            ForNaverBtn.widthAnchor.constraint(equalToConstant: 50),
+            ForNaverBtn.heightAnchor.constraint(equalToConstant: 50),
+            
+            
+            ForKakaoBtn.topAnchor.constraint(equalTo: EasyLogin.bottomAnchor, constant: 20),
+            ForKakaoBtn.trailingAnchor.constraint(equalTo: ForNaverBtn.leadingAnchor, constant: -20),
+            ForKakaoBtn.widthAnchor.constraint(equalTo : ForNaverBtn.widthAnchor),
+            ForKakaoBtn.heightAnchor.constraint(equalTo : ForNaverBtn.heightAnchor),
+                
+            
+
+            ForGoogleBtn.topAnchor.constraint(equalTo: EasyLogin.bottomAnchor, constant: 20),
+            ForGoogleBtn.leadingAnchor.constraint(equalTo: ForNaverBtn.trailingAnchor, constant: 20),
+            ForGoogleBtn.widthAnchor.constraint(equalTo : ForNaverBtn.widthAnchor),
+            ForGoogleBtn.heightAnchor.constraint(equalTo : ForNaverBtn.heightAnchor),
                 
                 
-            NotYet.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 90),
-            NotYet.topAnchor.constraint(equalTo: ForFaceBtn.bottomAnchor, constant: 55),
-            SignUp.topAnchor.constraint(equalTo: ForFaceBtn.bottomAnchor, constant: 55),
-            SignUp.leadingAnchor.constraint(equalTo: NotYet.trailingAnchor, constant: 5),
-            SignUp.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -90)
+                
+                
+            NotYet.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 70),
+            NotYet.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20),
+            SignUp.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20),
+            SignUp.leadingAnchor.constraint(equalTo: NotYet.trailingAnchor),
+            SignUp.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -70)
         ])
             
         
@@ -218,7 +239,7 @@ class LoginVC : UIViewController {
         view.addSubview(ForgetPassword)
         
         view.addSubview(ForKakaoBtn)
-        view.addSubview(ForFaceBtn)
+        view.addSubview(ForNaverBtn)
         view.addSubview(ForGoogleBtn)
             
         view.addSubview(EasyLogin)
@@ -250,7 +271,7 @@ class LoginVC : UIViewController {
     }
     
     @objc func findPasswordFunc(_: UIButton){
-        let findPasswordVC = FindPassWordVC()
+        let findPasswordVC = FindPasswordVC()
         navigationController?.pushViewController(findPasswordVC, animated: true)
     }
     
