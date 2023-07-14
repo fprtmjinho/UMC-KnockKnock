@@ -9,6 +9,8 @@ import UIKit
 
 class FriendListVC: UIViewController {
     
+    var addFriendBtn : UIButton = UIButton()
+    
     func makeSubView() {
         
     }
@@ -17,8 +19,24 @@ class FriendListVC: UIViewController {
         
     }
     
+    func makeAddTarget(){
+        self.addFriendBtn.addTarget(self, action: #selector(addFriendFunc(_:)), for: .touchUpInside)
+    }
+    
+    @objc func addFriendFunc(_: UIButton){
+        let addBFVC = AddBFVC()
+        //찐친 추가하기
+        addBFVC.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(addBFVC, animated: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        addFriendBtn = setNextBtn(view: self, title: "찐친 추가하기")
+        
+        makeSubView()
+        makeConstraint()
+        makeAddTarget()
     }
     
 }

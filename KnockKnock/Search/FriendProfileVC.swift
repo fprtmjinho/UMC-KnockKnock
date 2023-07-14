@@ -14,10 +14,6 @@ class FriendProfileVC : UIViewController {
         number.text = "010-0000-0000"
         number.textAlignment = .center
         number.font = .systemFont(ofSize: 16)
-        //두께 및 크기 조정
-        number.backgroundColor = .white
-        number.textColor = .black
-
         return number
     }()
     
@@ -72,22 +68,28 @@ class FriendProfileVC : UIViewController {
     }()
     
     let sendMessageBtn : UIButton = {
-       let sendMessagebtn = UIButton()
-        sendMessagebtn.backgroundColor = .systemGray6
-        sendMessagebtn.setTitle("문자하기", for: .normal)
-        sendMessagebtn.setTitleColor(.black, for: .normal)
-        sendMessagebtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-        sendMessagebtn.layer.cornerRadius = 15
-        return sendMessagebtn
+       let btn = UIButton()
+        var title = AttributedString("문자하기")
+        title.font = UIFont.systemFont(ofSize: 15)
+        title.foregroundColor = .black
+        var config = UIButton.Configuration.filled()
+        config.cornerStyle = .capsule
+        config.baseBackgroundColor = .systemGray6
+        config.attributedTitle = title
+        btn.configuration = config
+        return btn
     }()
     
     let copyBtn : UIButton = {
-       let copybtn = UIButton()
-        copybtn.backgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-        copybtn.setTitle("글 전체 복사", for: .normal)
-        copybtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-        copybtn.layer.cornerRadius = 15
-        return copybtn
+       let btn = UIButton()
+        var title = AttributedString("글 전체 복사")
+        title.font = UIFont.systemFont(ofSize: 15)
+        var config = UIButton.Configuration.filled()
+        config.cornerStyle = .capsule
+        config.baseBackgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+        config.attributedTitle = title
+        btn.configuration = config
+        return btn
     }()
     
     let AlarmLabel : UILabel = {
@@ -98,13 +100,17 @@ class FriendProfileVC : UIViewController {
     }()
     
     let addAlarmBtn : UIButton = {
-       let addAlarm = UIButton()
-        addAlarm.backgroundColor = .systemGray6
-        addAlarm.setTitle("+ 연락 알림 추가", for: .normal)
-        addAlarm.setTitleColor(.black, for: .normal)
-        addAlarm.titleLabel?.font = UIFont.systemFont(ofSize: 18)
-        addAlarm.layer.cornerRadius = 25
-        return addAlarm
+        let btn = UIButton()
+        var title = AttributedString("+ 연락 알림 추가")
+        title.font = UIFont.systemFont(ofSize: 18)
+        title.foregroundColor = .black
+        var config = UIButton.Configuration.filled()
+        config.cornerStyle = .capsule
+        config.baseBackgroundColor = .systemGray6
+        config.attributedTitle = title
+        btn.configuration = config
+        return btn
+        
     }()
     
     let setBFLabel : UILabel = {
@@ -161,42 +167,48 @@ class FriendProfileVC : UIViewController {
             editBtn.topAnchor.constraint(equalTo: Number.bottomAnchor, constant: 3),
             
             
-            textTitle.topAnchor.constraint(equalTo: editBtn.bottomAnchor, constant: 40),
+            textTitle.bottomAnchor.constraint(equalTo: myText.topAnchor, constant: -7),
             textTitle.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            textGuideBtn.topAnchor.constraint(equalTo: Number.bottomAnchor, constant: 40),
+            textGuideBtn.bottomAnchor.constraint(equalTo: textTitle.bottomAnchor),
             textGuideBtn.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
             
-            myText.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            myText.topAnchor.constraint(equalTo: textTitle.bottomAnchor, constant: 8),
+            
+            myText.bottomAnchor.constraint(equalTo: sendMessageBtn.topAnchor, constant: -10),
             myText.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             myText.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
-            myText.heightAnchor.constraint(equalToConstant: 120),
-            sendMessageBtn.topAnchor.constraint(equalTo: myText.bottomAnchor, constant: 10),
+            myText.heightAnchor.constraint(equalToConstant: 110),
+            sendMessageBtn.topAnchor.constraint(equalTo: view.centerYAnchor, constant: 60),
             sendMessageBtn.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             sendMessageBtn.widthAnchor.constraint(equalToConstant: 110),
             sendMessageBtn.heightAnchor.constraint(equalToConstant: 30),
-            copyBtn.topAnchor.constraint(equalTo: myText.bottomAnchor, constant: 10),
+            copyBtn.topAnchor.constraint(equalTo: sendMessageBtn.topAnchor),
             copyBtn.leadingAnchor.constraint(equalTo: sendMessageBtn.trailingAnchor, constant: 10),
-            copyBtn.widthAnchor.constraint(equalToConstant: 110),
-            copyBtn.heightAnchor.constraint(equalToConstant: 30),
+            copyBtn.widthAnchor.constraint(equalTo : sendMessageBtn.widthAnchor),
+            copyBtn.heightAnchor.constraint(equalTo : sendMessageBtn.heightAnchor),
             
            AlarmLabel.topAnchor.constraint(equalTo: copyBtn.bottomAnchor, constant: 40),
             AlarmLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             addAlarmBtn.topAnchor.constraint(equalTo: AlarmLabel.bottomAnchor, constant: 10),
-            addAlarmBtn.heightAnchor.constraint(equalToConstant: 50),
+            addAlarmBtn.heightAnchor.constraint(equalToConstant: 40),
             addAlarmBtn.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             addAlarmBtn.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
             
             setBFLabel.topAnchor.constraint(equalTo: addAlarmBtn.bottomAnchor, constant: 40),
             setBFLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            BfSwitch.topAnchor.constraint(equalTo: addAlarmBtn.bottomAnchor, constant: 40),
+            BfSwitch.topAnchor.constraint(equalTo: setBFLabel.topAnchor),
             BfSwitch.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30)
         ])
     }
     
     func makeAddTarget(){
+        self.editBtn.addTarget(self, action: #selector(editBtnFunc(_:)), for: .touchUpInside)
         self.addAlarmBtn.addTarget(self, action: #selector(addAlarmFunc(_:)), for: .touchUpInside)
         self.textGuideBtn.addTarget(self, action: #selector(textGuideFunc(_:)), for: .touchUpInside)
+    }
+    @objc func editBtnFunc(_: UIButton){
+        let editProfileVC = EditProfileVC()
+        editProfileVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(editProfileVC, animated: true)
     }
     
     @objc func addAlarmFunc(_:UIButton){

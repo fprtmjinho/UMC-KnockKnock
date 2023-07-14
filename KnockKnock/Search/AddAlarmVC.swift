@@ -38,12 +38,15 @@ class AddAlarmVC : UIViewController {
     
     
     let SetDatePickerBtn : UIButton = {
-        let Btn = UIButton()
-        Btn.setTitle("+ Alarm Date", for: .normal)
-        Btn.backgroundColor = .systemGray6
-        Btn.setTitleColor(.black, for: .normal)
-        Btn.layer.cornerRadius = 25
-        return Btn
+        let btn = UIButton()
+        var title = AttributedString("+ Alarm Date")
+        title.foregroundColor = .black
+        var config = UIButton.Configuration.filled()
+        config.cornerStyle = .capsule
+        config.baseBackgroundColor = .systemGray6
+        config.attributedTitle = title
+        btn.configuration = config
+        return btn
     }()
     //DatePicker 팝업 뜨도록
     //임의로 버튼 지정
@@ -58,23 +61,28 @@ class AddAlarmVC : UIViewController {
     }()
     
     let loopOnceBtn : UIButton = {
-       let loopOnceBtn = UIButton()
-        loopOnceBtn.backgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-        loopOnceBtn.setTitle("한 번만 알림", for: .normal)
-        loopOnceBtn.setTitleColor(.white, for: .normal)
-        loopOnceBtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
-        loopOnceBtn.layer.cornerRadius = 20
-        return loopOnceBtn
+        let btn = UIButton()
+        var title = AttributedString("한 번만 알림")
+        title.font = UIFont.boldSystemFont(ofSize: 17)
+        title.foregroundColor = .black
+        var config = UIButton.Configuration.filled()
+        config.cornerStyle = .capsule
+        config.baseBackgroundColor = .systemGray6
+        config.attributedTitle = title
+        btn.configuration = config
+        return btn
     }()
     
     let loopBtn : UIButton = {
-       let loopBtn = UIButton()
-        loopBtn.backgroundColor = .systemGray6
-        loopBtn.setTitle("매년 알림", for: .normal)
-        loopBtn.setTitleColor(.black, for: .normal)
-        loopBtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 17)
-        loopBtn.layer.cornerRadius = 20
-        return loopBtn
+        let btn = UIButton()
+        var title = AttributedString("매년 알림")
+        title.font = UIFont.boldSystemFont(ofSize: 17)
+        var config = UIButton.Configuration.filled()
+        config.cornerStyle = .capsule
+        config.baseBackgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+        config.attributedTitle = title
+        btn.configuration = config
+        return btn
     }()
     
 
@@ -113,29 +121,27 @@ class AddAlarmVC : UIViewController {
             AlarmMemoText.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
             AlarmMemoText.heightAnchor.constraint(equalToConstant: 120),
             
-            AlarmTimeLabel.topAnchor.constraint(equalTo: AlarmMemoText.bottomAnchor, constant: 30),
+            AlarmTimeLabel.topAnchor.constraint(equalTo: AlarmMemoText.bottomAnchor, constant: 40),
             AlarmTimeLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            
-            
             
             SetDatePickerBtn.topAnchor.constraint(equalTo: AlarmTimeLabel.bottomAnchor, constant: 7),
             SetDatePickerBtn.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             SetDatePickerBtn.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
-            SetDatePickerBtn.heightAnchor.constraint(equalToConstant: 50),
+            SetDatePickerBtn.heightAnchor.constraint(equalToConstant: 40),
             //임시 버튼 constraint
             
             
-            loopLabel.topAnchor.constraint(equalTo:SetDatePickerBtn.bottomAnchor, constant: 30),
+            loopLabel.topAnchor.constraint(equalTo:SetDatePickerBtn.bottomAnchor, constant: 40),
             loopLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             
             loopOnceBtn.topAnchor.constraint(equalTo: loopLabel.bottomAnchor, constant: 7),
             loopOnceBtn.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             loopOnceBtn.widthAnchor.constraint(equalToConstant: 160),
-            loopOnceBtn.heightAnchor.constraint(equalToConstant: 45),
-            loopBtn.topAnchor.constraint(equalTo: loopLabel.bottomAnchor, constant: 7),
+            loopOnceBtn.heightAnchor.constraint(equalToConstant: 40),
+            loopBtn.topAnchor.constraint(equalTo: loopOnceBtn.topAnchor),
             loopBtn.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
-            loopBtn.widthAnchor.constraint(equalToConstant: 160),
-            loopBtn.heightAnchor.constraint(equalToConstant: 45),
+            loopBtn.leadingAnchor.constraint(equalTo: loopOnceBtn.trailingAnchor, constant: 10),
+            loopBtn.heightAnchor.constraint(equalToConstant: 40),
             
             
         ])

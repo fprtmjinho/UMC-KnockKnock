@@ -55,9 +55,25 @@ class AddFriendVC : UIViewController {
         nametext.addLeftPadding()
         return nametext
     }()
+    
+    let nicknameLabel : UILabel = {
+       let label = UILabel()
+        label.text = "닉네임(선택)"
+        label.font = UIFont.boldSystemFont(ofSize: 17)
+        return label
+    }()
+    
+    let nicknameText : UITextField = {
+       let text = UITextField()
+        text.placeholder = "입력해주세요!"
+        text.backgroundColor = .systemGray6
+        text.layer.cornerRadius = 10
+        text.addLeftPadding()
+        return text
+    }()
 
     let numberLabel : UILabel = {
-       let numberlabel = UILabel()
+        let numberlabel = UILabel()
         numberlabel.text = "전화번호(선택)"
         numberlabel.font = UIFont.boldSystemFont(ofSize: 17)
         return numberlabel
@@ -80,6 +96,8 @@ class AddFriendVC : UIViewController {
         view.addSubview(WarningLabel)
         view.addSubview(nameLabel)
         view.addSubview(nameText)
+        view.addSubview(nicknameLabel)
+        view.addSubview(nicknameText)
         view.addSubview(numberLabel)
         view.addSubview(numberText)
         
@@ -91,6 +109,8 @@ class AddFriendVC : UIViewController {
         WarningLabel.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         nameText.translatesAutoresizingMaskIntoConstraints = false
+        nicknameLabel.translatesAutoresizingMaskIntoConstraints = false
+        nicknameText.translatesAutoresizingMaskIntoConstraints = false
         numberLabel.translatesAutoresizingMaskIntoConstraints = false
         numberText.translatesAutoresizingMaskIntoConstraints = false
         
@@ -100,7 +120,7 @@ class AddFriendVC : UIViewController {
             ProfileView.widthAnchor.constraint(equalToConstant: 110),
             ProfileView.heightAnchor.constraint(equalToConstant: 110),
             Name.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            Name.topAnchor.constraint(equalTo: ProfileView.bottomAnchor, constant: 3),
+            Name.topAnchor.constraint(equalTo: ProfileView.bottomAnchor, constant: 2),
             Name.heightAnchor.constraint(equalToConstant: 40),
             
             WarningLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
@@ -109,26 +129,33 @@ class AddFriendVC : UIViewController {
             WarningLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
             
             
-            nameLabel.topAnchor.constraint(equalTo: ProfileView.bottomAnchor, constant: 140),
+            nameLabel.topAnchor.constraint(equalTo: view.centerYAnchor, constant: -30),
             nameLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            nameLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
             nameLabel.heightAnchor.constraint(equalToConstant: 30),
             
             nameText.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 7),
             nameText.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             nameText.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
-            nameText.heightAnchor.constraint(equalToConstant: 50),
+            nameText.heightAnchor.constraint(equalToConstant: 45),
+            
+            nicknameLabel.topAnchor.constraint(equalTo: nameText.bottomAnchor, constant: 20),
+            nicknameLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            nicknameLabel.heightAnchor.constraint(equalToConstant: 30),
+            
+            nicknameText.topAnchor.constraint(equalTo: nicknameLabel.bottomAnchor, constant: 7),
+            nicknameText.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            nicknameText.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
+            nicknameText.heightAnchor.constraint(equalToConstant: 45),
             
             
-            numberLabel.topAnchor.constraint(equalTo: nameText.bottomAnchor, constant: 30),
+            numberLabel.topAnchor.constraint(equalTo: nicknameText.bottomAnchor, constant: 20),
             numberLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            numberLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
             numberLabel.heightAnchor.constraint(equalToConstant: 30),
             
             numberText.topAnchor.constraint(equalTo: numberLabel.bottomAnchor, constant: 7),
             numberText.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             numberText.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
-            numberText.heightAnchor.constraint(equalToConstant: 50),
+            numberText.heightAnchor.constraint(equalToConstant: 45),
             
             
         ])
