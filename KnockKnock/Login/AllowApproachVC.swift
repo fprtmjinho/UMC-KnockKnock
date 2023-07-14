@@ -8,6 +8,8 @@
 import UIKit
 class AllowApproachVC : UIViewController {
     
+    var nextBtn : UIButton = UIButton()
+    
     let titleLabel : UILabel = {
        let label = UILabel()
         label.text = "연락처 권한을\n허락해주세요!"
@@ -45,28 +47,17 @@ class AllowApproachVC : UIViewController {
     }()
     //코드 수정 필요
     
-    
-    let nextBtn: UIButton = {
-        let nextbtn = UIButton()
-        nextbtn.backgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-        nextbtn.setTitle("다음", for: .normal)
-        nextbtn.tintColor = .white
-        nextbtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-        nextbtn.layer.cornerRadius = 25
-        return nextbtn
-    }()
+
     
     func makeSubView(){
         view.addSubview(titleLabel)
         view.addSubview(subtitleLabel)
-        view.addSubview(nextBtn)
         view.addSubview(stepGuide)
     }
     
     func makeConstraint(){
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        nextBtn.translatesAutoresizingMaskIntoConstraints = false
         stepGuide.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -74,11 +65,7 @@ class AllowApproachVC : UIViewController {
             titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 15),
             subtitleLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
-            
-            nextBtn.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
-            nextBtn.heightAnchor.constraint(equalToConstant: 50),
-            nextBtn.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-             nextBtn.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
+        
             
             stepGuide.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             stepGuide.bottomAnchor.constraint(equalTo: nextBtn.topAnchor, constant: -5)
@@ -124,6 +111,7 @@ class AllowApproachVC : UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setNavigationBar()
+        nextBtn = setNextBtn(view: self, title: "다음")
         makeSubView()
         makeConstraint()
         makeAddTarget()

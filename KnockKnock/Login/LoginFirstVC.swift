@@ -9,6 +9,8 @@ import UIKit
 import CoreData
 class LoginFirstVC : UIViewController {
     
+    var nextBtn : UIButton = UIButton()
+    
     let num1 : UILabel = {
        let num1 = UILabel()
         num1.backgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
@@ -106,20 +108,6 @@ class LoginFirstVC : UIViewController {
         return thirdtext
     }()
     
-    let nextBtn : UIButton = {
-       let nextbtn = UIButton()
-        var title = AttributedString("다음")
-        title.font = UIFont.boldSystemFont(ofSize: 20)
-        
-        var config = UIButton.Configuration.filled()
-        config.baseBackgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-        config.cornerStyle = .capsule
-        config.attributedTitle = title
-        
-        nextbtn.tintColor = .white
-        nextbtn.configuration = config
-        return nextbtn
-    }()
       
     func makeSubView(){
         view.addSubview(num1)
@@ -132,7 +120,6 @@ class LoginFirstVC : UIViewController {
         view.addSubview(num3)
         view.addSubview(birthdayLabel)
         view.addSubview(birthdayText)
-        view.addSubview(nextBtn)
     }
     
     
@@ -147,7 +134,6 @@ class LoginFirstVC : UIViewController {
         womanButton.translatesAutoresizingMaskIntoConstraints = false
         birthdayText.translatesAutoresizingMaskIntoConstraints = false
         birthdayLabel.translatesAutoresizingMaskIntoConstraints = false
-        nextBtn.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             num1.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
@@ -188,18 +174,18 @@ class LoginFirstVC : UIViewController {
             birthdayText.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             birthdayText.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
             birthdayText.heightAnchor.constraint(equalToConstant: 45),
-            nextBtn.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
-            nextBtn.heightAnchor.constraint(equalToConstant: 50),
-            nextBtn.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            nextBtn.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30)
+            
             
             
         ])
         
     }
+    
     var nickName: String = ""
     var sex: String = ""
     var birthday: String = ""
+    
+   
     
     func makeAddTarget(){
         self.nextBtn.addTarget(self, action: #selector(touchNextBtn(_:)), for: .touchUpInside)
@@ -210,6 +196,7 @@ class LoginFirstVC : UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setNavigationBar()
+        nextBtn = setNextBtn(view: self, title: "다음")
         makeSubView()
         makeConstraint()
         makeAddTarget()

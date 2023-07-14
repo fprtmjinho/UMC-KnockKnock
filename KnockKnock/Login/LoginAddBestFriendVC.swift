@@ -15,14 +15,12 @@ class LoginAddBestFriendVC : LoginAddFriendVC {
         view.addSubview(titleLabel)
         view.addSubview(subtitleLabel)
         view.addSubview(searchFriendBar)
-         view.addSubview(nextBtn)
     }
     
     override func makeConstraint(){
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         searchFriendBar.translatesAutoresizingMaskIntoConstraints = false
-        nextBtn.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             titleLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
@@ -35,11 +33,6 @@ class LoginAddBestFriendVC : LoginAddFriendVC {
             searchFriendBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             searchFriendBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
             
-            nextBtn.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
-            nextBtn.heightAnchor.constraint(equalToConstant: 50),
-            nextBtn.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-             nextBtn.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30)
-        
         ])
     }
     
@@ -67,6 +60,7 @@ class LoginAddBestFriendVC : LoginAddFriendVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigationBar()
+        nextBtn = setNextBtn(view: self, title: "다음")
         makeSubView()
         makeConstraint()
         makeAddTarget()

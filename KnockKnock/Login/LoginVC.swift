@@ -222,8 +222,8 @@ class LoginVC : UIViewController {
                 
                 
             NotYet.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 70),
-            NotYet.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20),
-            SignUp.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20),
+            NotYet.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30),
+            SignUp.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30),
             SignUp.leadingAnchor.constraint(equalTo: NotYet.trailingAnchor),
             SignUp.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -70)
         ])

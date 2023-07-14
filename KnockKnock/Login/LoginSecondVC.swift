@@ -9,6 +9,8 @@ import UIKit
 import CoreData
 class LoginSecondVC : UIViewController{
     
+    var nextBtn : UIButton = UIButton()
+    
     let num4 : UILabel = {
        let num4 = UILabel()
         num4.backgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
@@ -39,28 +41,19 @@ class LoginSecondVC : UIViewController{
         return forthtext
     }()
     
-    let nextBtn : UIButton = {
-       let nextbtn = UIButton()
-        nextbtn.backgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-        nextbtn.setTitle("다음", for: .normal)
-        nextbtn.tintColor = .white
-        nextbtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-        nextbtn.layer.cornerRadius = 25
-        return nextbtn
-    }()
     
     func makeSubView(){
         view.addSubview(num4)
         view.addSubview(emailLabel)
         view.addSubview(emailText)
-        view.addSubview(nextBtn)
+        
     }
     
     func makeConstraint(){
         num4.translatesAutoresizingMaskIntoConstraints = false
         emailLabel.translatesAutoresizingMaskIntoConstraints = false
         emailText.translatesAutoresizingMaskIntoConstraints = false
-        nextBtn.translatesAutoresizingMaskIntoConstraints = false
+        
         
         NSLayoutConstraint.activate([
         
@@ -74,11 +67,7 @@ class LoginSecondVC : UIViewController{
             emailText.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             emailText.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
             emailText.heightAnchor.constraint(equalToConstant: 45),
-            
-            nextBtn.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
-            nextBtn.heightAnchor.constraint(equalToConstant: 50),
-            nextBtn.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            nextBtn.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30)
+
         ])
         
     }
@@ -90,6 +79,7 @@ class LoginSecondVC : UIViewController{
         super.viewDidLoad()
         view.backgroundColor = .white
         setNavigationBar()
+        nextBtn = setNextBtn(view: self, title: "다음")
         makeSubView()
         makeConstraint()
         makeAddTarget()

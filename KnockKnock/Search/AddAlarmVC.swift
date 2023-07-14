@@ -8,6 +8,7 @@
 import UIKit
 class AddAlarmVC : UIViewController {
     
+    var saveBtn : UIButton = UIButton()
     
     let AlarmMemoLabel : UILabel = {
        let alarmMemoLabel = UILabel()
@@ -76,19 +77,7 @@ class AddAlarmVC : UIViewController {
         return loopBtn
     }()
     
-    
-    
-    
-    let saveBtn : UIButton = {
-       let savebtn = UIButton()
-        savebtn.backgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-        savebtn.setTitle("저장하기", for: .normal)
-        savebtn.tintColor = .white
-        savebtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-        savebtn.layer.cornerRadius = 25
-        return savebtn
-    }()
-    
+
     
     func makeSubView(){
         view.addSubview(AlarmMemoLabel)
@@ -101,8 +90,7 @@ class AddAlarmVC : UIViewController {
         view.addSubview(loopLabel)
         view.addSubview(loopOnceBtn)
         view.addSubview(loopBtn)
-        
-        view.addSubview(saveBtn)
+      
     }
     
     func makeConstraint(){
@@ -116,7 +104,6 @@ class AddAlarmVC : UIViewController {
         loopLabel.translatesAutoresizingMaskIntoConstraints = false
         loopOnceBtn.translatesAutoresizingMaskIntoConstraints = false
         loopBtn.translatesAutoresizingMaskIntoConstraints = false
-        saveBtn.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             AlarmMemoLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40),
@@ -150,11 +137,6 @@ class AddAlarmVC : UIViewController {
             loopBtn.widthAnchor.constraint(equalToConstant: 160),
             loopBtn.heightAnchor.constraint(equalToConstant: 45),
             
-        
-            saveBtn.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
-            saveBtn.heightAnchor.constraint(equalToConstant: 50),
-            saveBtn.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            saveBtn.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30)
             
         ])
         
@@ -221,6 +203,7 @@ class AddAlarmVC : UIViewController {
         view.backgroundColor = .white
         self.title = "연락 주기 및 예정 알림"
         setNavigationBar()
+        saveBtn = setNextBtn(view: self, title: "저장하기")
         makeSubView()
         makeConstraint()
         makeAddTarget()

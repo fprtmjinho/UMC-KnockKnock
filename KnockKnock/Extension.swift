@@ -63,3 +63,35 @@ extension UIImage {
         return resizedImage
     }
 }
+
+extension UIViewController {
+    func setNextBtn(view : UIViewController, title : String) -> UIButton{
+        let nextBtn : UIButton = {
+           let nextbtn = UIButton()
+            var title = AttributedString(title)
+            title.font = UIFont.boldSystemFont(ofSize: 20)
+            
+            var config = UIButton.Configuration.filled()
+            config.baseBackgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+            config.cornerStyle = .capsule
+            config.attributedTitle = title
+            
+            nextbtn.tintColor = .white
+            nextbtn.configuration = config
+            return nextbtn
+        }()
+        
+        self.view.addSubview(nextBtn)
+        
+        nextBtn.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            nextBtn.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
+            nextBtn.heightAnchor.constraint(equalToConstant: 50),
+            nextBtn.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            nextBtn.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -30)
+        ])
+        
+        return nextBtn
+    }
+    
+}

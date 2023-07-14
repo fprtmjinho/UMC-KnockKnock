@@ -9,6 +9,8 @@ import UIKit
 import CoreData
 class LoginThirdVC: UIViewController{
     
+    var nextBtn : UIButton = UIButton()
+    
     let num5: UILabel = {
         let num5 = UILabel()
         num5.backgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
@@ -69,17 +71,7 @@ class LoginThirdVC: UIViewController{
         label.font = UIFont.systemFont(ofSize: 14)
         return label
     }()
-    
-    let nextBtn: UIButton = {
-        let nextbtn = UIButton()
-        nextbtn.backgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-        nextbtn.setTitle("다음", for: .normal)
-        nextbtn.tintColor = .white
-        nextbtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-        nextbtn.layer.cornerRadius = 25
-        return nextbtn
-    }()
-    
+
     func makeSubView(){
         view.addSubview(num5)
         view.addSubview(passwordLabel)
@@ -87,7 +79,6 @@ class LoginThirdVC: UIViewController{
         view.addSubview(passwordCheckLabel)
         view.addSubview(passwordCheckText)
         view.addSubview(lastLabel)
-        view.addSubview(nextBtn)
     }
     
     func makeConstraint(){
@@ -97,7 +88,6 @@ class LoginThirdVC: UIViewController{
         passwordCheckLabel.translatesAutoresizingMaskIntoConstraints = false
         passwordCheckText.translatesAutoresizingMaskIntoConstraints = false
         lastLabel.translatesAutoresizingMaskIntoConstraints = false
-        nextBtn.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             num5.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 70),
@@ -119,10 +109,7 @@ class LoginThirdVC: UIViewController{
             
             lastLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             lastLabel.bottomAnchor.constraint(equalTo: nextBtn.topAnchor, constant: -10),
-            nextBtn.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
-            nextBtn.heightAnchor.constraint(equalToConstant: 50),
-            nextBtn.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-             nextBtn.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30)])
+   ])
         
     }
     var password: String = ""
@@ -134,6 +121,7 @@ class LoginThirdVC: UIViewController{
         super.viewDidLoad()
         view.backgroundColor = .white
         setNavigationBar()
+        nextBtn = setNextBtn(view: self, title: "다음")
         makeSubView()
         makeConstraint()
         makeAddTarget()
