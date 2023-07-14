@@ -70,6 +70,25 @@ class LoginAddFriendVC : AllowApproachVC {
     
     
     @objc func nextView(_: UIButton){
+        //연락처 목록에 추가할 사람들의 목록을 다시 만들어주는 for문 (LoginAddBestFriendVC의 tableView를 구성하는 요소)
+        var i=0
+        var j=0
+        for check in checked{
+            if check == true{
+                addFriendList.append(familyNameList[i]+nameList[i])
+                addNumberList.append(numberList[i])
+                j=j+1
+            }
+            i=i+1
+        }
+        UserDefaults.standard.set(nameList, forKey: "nameList")
+        UserDefaults.standard.set(familyNameList, forKey: "familyNameList")
+        UserDefaults.standard.set(numberList, forKey: "numberList")
+        UserDefaults.standard.set(addFriendList, forKey: "addFrinedList")
+        UserDefaults.standard.set(addNumberList, forKey: "addNumberList")
+
+        // 데이터 동기화
+        UserDefaults.standard.synchronize()
         let loginAddBFVC = LoginAddBestFriendVC()
         self.navigationController?.pushViewController(loginAddBFVC, animated: true)
     }
@@ -92,11 +111,12 @@ class LoginAddFriendVC : AllowApproachVC {
     
     //numberArray
     var contacts: NSMutableArray = NSMutableArray()
-    
-    
-    var test : Array = ["가나다", "나다라", "다라마", "라마바", "마바사", "바사아", "사아자", "아자차 ", "자차카", "차카타", "김 안드레아", "황인호", "최지웅"]
-    //test용 array
-    // -> titleLabel.text랑 test.count 변경 필요
+    var nameList: Array<String> = []
+    var familyNameList: Array<String> = []
+    var numberList: Array<String> = []
+    var checked: Array<Bool> = []
+    var addFriendList: Array<String> = []
+    var addNumberList: Array<String> = []
     
     
     
@@ -119,49 +139,41 @@ class LoginAddFriendVC : AllowApproachVC {
 extension LoginAddFriendVC : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return test.count
+        return nameList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Address")
-        
-        
-        
-        /*
-        // 셀 구성
-        if let contact = contacts[indexPath.row] as? CNContact {
-            cell?.textLabel?.text = CNContactFormatter.string(from: contact, style: .fullName)
-            if let phoneNumber = contact.phoneNumbers.first?.value {
-                cell?.detailTextLabel?.text = phoneNumber.stringValue
-            } else {
-                cell?.detailTextLabel?.text = ""
-            }
-        } else {
-            cell?.textLabel?.text = ""
-            cell?.detailTextLabel?.text = ""
-        }
-        
-        */
-         
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "numberBook")
         var image = UIImage(named: "UnselectedCheckCircle")?.resizeImageTo(size: CGSize(width: 30, height: 30))
         cell?.accessoryView = UIImageView(image:image)
-        //touch event 어떻게 처리할건지 고민해야 함
-        //touch되면 SelectedCheckCircle로 이미지 변경
-        // 그냥 sf-symbol로 버튼 구현 후 tintcolor 변경해도 괜찮을듯
-        //상의 후 결정
-        
-        
-        
-        cell?.textLabel?.text = test[indexPath.row]
+        cell?.textLabel?.text = familyNameList[indexPath.row]+nameList[indexPath.row]
+        //전화번호가 안나타남...
+        //cell?.detailTextLabel?.text = numberList[indexPath.row]
         
         cell?.textLabel?.font = UIFont.systemFont(ofSize: 16)
         cell?.textLabel?.textColor = UIColor.black
         cell?.detailTextLabel?.font = UIFont.systemFont(ofSize: 13)
-        cell?.detailTextLabel?.textColor = UIColor.gray
+        cell?.detailTextLabel?.textColor = UIColor.black
         
         return cell!
     }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let unSelectedImage = UIImage(named: "UnselectedCheckCircle")?.resizeImageTo(size: CGSize(width: 30, height: 30))
+        let selectedImage = UIImage(named: "SelectedCheckCircle")?.resizeImageTo(size: CGSize(width: 30, height: 30))
+        let cell = tableView.cellForRow(at: indexPath)
+        
+        //cell 클릭시 체크가 안되어있으면 체크, 체크가 되어있으면 체크풀기
+        if (checked[indexPath.row]==false) {
+            print("unSelected")
+            cell?.accessoryView = UIImageView(image:selectedImage)
+            checked[indexPath.row]=true
+        } else {
+            print("selected")
+            cell?.accessoryView = UIImageView(image:unSelectedImage)
+            checked[indexPath.row]=false
+        }
+    }
+    
     
     func tableView(_: UITableView, heightForRowAt: IndexPath) -> CGFloat{
         return 60
@@ -173,7 +185,7 @@ extension LoginAddFriendVC : UITableViewDelegate, UITableViewDataSource {
         view.addSubview(tableView)
         tableView.backgroundColor = .white
         tableView.separatorStyle = .none
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Address")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "numberBook")
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -195,89 +207,106 @@ extension LoginAddFriendVC : UITableViewDelegate, UITableViewDataSource {
 
 extension LoginAddFriendVC {
     //주소록 읽어오기
-
-        private func readContacts() {
-            let store = CNContactStore()
-            
-            // Permission 획득
-            store.requestAccess(for: .contacts) { (granted, error) in
-                guard granted else {
-                    return;
-                }
-                // Request 생성
-                let request: CNContactFetchRequest = self.getCNContactFetchRequest()
-                
-                // 주소록 읽을 때 정렬해서 읽어오도록 설정
-                request.sortOrder = CNContactSortOrder.userDefault
-                
-                // Contacts 읽기
-                // 주소록이 1개씩 읽혀서 usingBlock으로 들어온다.
-                try! store.enumerateContacts(with: request, usingBlock: { (contact, stop) in
-                    
-                    // Phone No가 없을때 return
-                    if contact.phoneNumbers.isEmpty {
-                        return
-                    }
-                    
-                    // NSMutableArray Add contact
-                    // 읽어온 주소록을 NSMutableArray에 저장
-                    self.contacts.add(contact)
-                })
-                self.saveContact()
-            }
-        }
-    private func saveContact() {
-            
-            let store = CNContactStore()
-            
-            // Permission 획득
-            store.requestAccess(for: .contacts) { (granted, error) in
-                guard granted else {
-                    return;
-                }
-                
-                let contact:CNMutableContact = self.getNewContact()
-                
-                let request = CNSaveRequest()
-                request.add(contact, toContainerWithIdentifier:nil)
-                
-                // 저장
-                try! store.execute(request)
-            }
-        }
-        
-        // 새로 등록할 주소록 생성
-        private func getNewContact() -> CNMutableContact {
-            let contact = CNMutableContact()
-            contact.givenName = "name"
-            contact.familyName = "familyName"
-            
-            let phone = CNLabeledValue(label:CNLabelPhoneNumberMobile,
-                                       value:CNPhoneNumber(stringValue:"010-0000-0000"))
-            let tel = CNLabeledValue(label:CNLabelPhoneNumberMain,
-                                     value:CNPhoneNumber(stringValue:"02-0000-0000"))
-            contact.phoneNumbers = [phone, tel]
-            
-            let email: NSString = "bizCard@gmail.com"
-            contact.emailAddresses = [CNLabeledValue(label:CNLabelWork, value:email)]
-            
-            return contact
-        }
-        
-
-        // Request 생성
-        private func getCNContactFetchRequest() -> CNContactFetchRequest {
-            // 주소록에서 읽어올 key 설정
-            let keys: [CNKeyDescriptor] = [CNContactFormatter.descriptorForRequiredKeys(for: .fullName),
-                                           CNContactPhoneNumbersKey,
-                                           CNContactEmailAddressesKey,
-                                           CNContactJobTitleKey,
-                                           CNContactPostalAddressesKey] as! [CNKeyDescriptor]
-            
-            return CNContactFetchRequest(keysToFetch: keys)
-        }
     
+    private func readContacts() {
+        let store = CNContactStore()
+        
+        // Permission 획득
+        store.requestAccess(for: .contacts) { (granted, error) in
+            guard granted else {
+                return;
+            }
+            // Request 생성
+            let request: CNContactFetchRequest = self.getCNContactFetchRequest()
+            
+            // 주소록 읽을 때 정렬해서 읽어오도록 설정
+            request.sortOrder = CNContactSortOrder.userDefault
+            
+            // Contacts 읽기
+            // 주소록이 1개씩 읽혀서 usingBlock으로 들어온다.
+            try! store.enumerateContacts(with: request, usingBlock: { (contact, stop) in
+                
+                // Phone No가 없을때 return
+                if contact.phoneNumbers.isEmpty {
+                    return
+                }
+                
+                // NSMutableArray Add contact
+                // 읽어온 주소록을 NSMutableArray에 저장
+                self.contacts.add(contact)
+            })
+            self.saveContact()
+        }
+    }
+    private func saveContact() {
+        
+        let store = CNContactStore()
+        
+        // Permission 획득
+        store.requestAccess(for: .contacts) { (granted, error) in
+            guard granted else {
+                return;
+            }
+            
+            let contact:CNMutableContact = self.getNewContact()
+            
+            let request = CNSaveRequest()
+            request.add(contact, toContainerWithIdentifier:nil)
+            
+            // 저장
+            try! store.execute(request)
+        }
+    }
+    
+    // 새로 등록할 주소록 생성
+    private func getNewContact() -> CNMutableContact {
+        let contact = CNMutableContact()
+        contact.givenName = "name"
+        contact.familyName = "familyName"
+        
+        let phone = CNLabeledValue(label:CNLabelPhoneNumberMobile,
+                                   value:CNPhoneNumber(stringValue:"010-0000-0000"))
+        let tel = CNLabeledValue(label:CNLabelPhoneNumberMain,
+                                 value:CNPhoneNumber(stringValue:"02-0000-0000"))
+        contact.phoneNumbers = [phone, tel]
+        
+        let email: NSString = "bizCard@gmail.com"
+        contact.emailAddresses = [CNLabeledValue(label:CNLabelWork, value:email)]
+        
+        return contact
+    }
+    
+    
+    // Request 생성
+    private func getCNContactFetchRequest() -> CNContactFetchRequest {
+        // 주소록에서 읽어올 key 설정
+        let keys: [CNKeyDescriptor] = [CNContactFormatter.descriptorForRequiredKeys(for: .fullName),
+                                       CNContactPhoneNumbersKey,
+                                       CNContactEmailAddressesKey,
+                                       CNContactJobTitleKey,
+                                       CNContactPostalAddressesKey] as! [CNKeyDescriptor]
+        
+        return CNContactFetchRequest(keysToFetch: keys)
+    }
+    @objc func getFriendInfo(){
+        for contact in contacts {
+            if let contact = contact as? CNContact {
+                // CNContact에서 원하는 데이터 추출
+                let givenName = contact.givenName
+                let familyName = contact.familyName
+                let phoneNumbers = contact.phoneNumbers.map { $0.value.stringValue }[0]
+                nameList.append(givenName)
+                familyNameList.append(familyName)
+                numberList.append(phoneNumbers)
+                checked.append(false)
+                print(givenName)
+                print(familyName)
+                print(phoneNumbers)
+            }
+        }
+    }
     @objc func downloadNumberBook(){
         readContacts()
+        getFriendInfo()
     }
 }

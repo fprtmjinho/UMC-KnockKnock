@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import CoreData
 class LoginFirstVC : UIViewController {
     
     let num1 : UILabel = {
