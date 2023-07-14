@@ -7,7 +7,6 @@
 
 import UIKit
 class FriendProfileVC : UIViewController {
-
     
     let Number : UILabel = {
         let number = UILabel()
@@ -197,6 +196,7 @@ class FriendProfileVC : UIViewController {
     func makeAddTarget(){
         self.addAlarmBtn.addTarget(self, action: #selector(addAlarmFunc(_:)), for: .touchUpInside)
         self.textGuideBtn.addTarget(self, action: #selector(textGuideFunc(_:)), for: .touchUpInside)
+        self.BfSwitch.addTarget(self, action: #selector(switchChange(Switch: )), for: .valueChanged)
     }
     
     @objc func addAlarmFunc(_:UIButton){
@@ -210,7 +210,13 @@ class FriendProfileVC : UIViewController {
         navigationController?.pushViewController(textGuideVC, animated: true)
     }
     
+    let friendData = Friends.shared
     
+    var name: String = ""
+    var number: String = ""
+    var best: Bool?
+    var index: IndexPath?
+
   
     
     override func viewDidLoad() {
@@ -219,12 +225,39 @@ class FriendProfileVC : UIViewController {
         self.title = "Name"
         //title은 cell 따라 변경 필요
         //임의 지정
-        
         setNavigationBar()
         makeSubView()
         makeConstraint()
+        getData()
         makeAddTarget()
+        setLabel()
        
+    }
+    @objc func switchChange(Switch:UISwitch){
+        print("switch")
+        if (BfSwitch.isOn){
+            BfSwitch.isOn = true
+            best = true
+        }else{
+            BfSwitch.isOn = false
+            best = false
+        }
+        friendData.bestFriend[index!.row] = best!
+    }
+    @objc func setLabel(){
+        Number.text = number
+        self.title = name
+        if (best!){
+            BfSwitch.isOn = true
+        }else{
+            BfSwitch.isOn = false
+        }
+    }
+    @objc func getData(){
+        index = friendData.choiceIndex
+        name = friendData.name[index!.row]
+        number = friendData.number[index!.row]
+        best = friendData.bestFriend[index!.row]
     }
     
 }

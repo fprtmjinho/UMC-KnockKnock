@@ -102,38 +102,30 @@ class SearchController : UIViewController{
         ])
         
     }
+    var tableView = UITableView(frame: .zero, style: .plain)
+    
+    let friendData = Friends.shared
+    
+    var checked: Array<Bool> = []
+    var nameList: Array<String> = []
+    var numberList: Array<String> = []
+    var date: Array<String> = []
+    
     func makeAddTarget(){
-        
-        
-        
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigationBar()
         view.backgroundColor = .white
+        getData()
         customNavigationBar()
+        
         makeSubView()
         makeConstraint()
+        setTableView()
         makeAddTarget()
         setTitle()
         searchFriendBar.searchTextField.addTarget(self, action: #selector(searchFriend(_:)), for: .editingChanged)
-        
-        let button : UIButton = {
-            //임시로 지정한 friendProfileVC로 넘기기 위한 버튼
-            let button = UIButton()
-            button.backgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-            button.setTitle("Go to FriendProfile", for: .normal)
-            return button
-        }()
-        
-        //button 임시 지정
-        view.addSubview(button)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
-        button.widthAnchor.constraint(equalToConstant: 150).isActive = true
-        button.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        button.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 300).isActive = true
-        button.addTarget(self, action: #selector(buttonFunc(_:)), for: .touchUpInside)
         
     }
     @objc func searchFriend(_:UISearchBar){
@@ -164,13 +156,31 @@ class SearchController : UIViewController{
             }
         }
     
-    @objc func buttonFunc(_: UIButton) {
+    @objc func nextView(index:IndexPath) {
         let nextView = FriendProfileVC()
+        friendData.choiceIndex = index
         nextView.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(nextView, animated: true)
     }
-    
-    
+    @objc func getData(){
+        nameList = friendData.name
+        numberList = friendData.number
+        checked = friendData.bestFriend
+    }
+    /*@objc func setFriendData(){
+        let fre = Friends.shared
+        fre.bestFriend = checked
+        var i=0
+        var formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        for check in checked{
+            if (check==true){
+                date[i]=formatter.string(from: Date())
+            }
+            i=i+1
+        }
+        fre.time = date
+    }*/
 }
 
 extension SearchController {
@@ -214,5 +224,63 @@ extension SearchController {
         //주소록 불러오기 뷰로 전환
     }
     
+    
+}
+extension SearchController : UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return nameList.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "friendList")
+        var image = UIImage(named: "SelectedCheckCircle")?.resizeImageTo(size: CGSize(width: 30, height: 30))
+        if checked[indexPath.row] == true{
+            cell?.accessoryView = UIImageView(image:image)
+        }
+        cell?.textLabel?.text = nameList[indexPath.row]
+        //전화번호가 안나타남...
+        //cell?.detailTextLabel?.text = numberList[indexPath.row]
+        
+        cell?.textLabel?.font = UIFont.systemFont(ofSize: 16)
+        cell?.textLabel?.textColor = UIColor.black
+        cell?.detailTextLabel?.font = UIFont.systemFont(ofSize: 13)
+        cell?.detailTextLabel?.textColor = UIColor.black
+        
+        return cell!
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        nextView(index:indexPath)
+        
+        //cell 클릭시 체크가 안되어있으면 체크, 체크가 되어있으면 체크풀기
+        
+    }
+    
+    
+    func tableView(_: UITableView, heightForRowAt: IndexPath) -> CGFloat{
+        return 60
+        //row 두께 설정
+    }
+    
+    
+    func setTableView(){
+        view.addSubview(tableView)
+        tableView.backgroundColor = .white
+        tableView.separatorStyle = .none
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "friendList")
+        
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: searchFriendBar.bottomAnchor, constant: 10),
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant:-10)
+        ])
+       
+        
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
+    }
     
 }

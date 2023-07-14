@@ -14,8 +14,9 @@ class LoginAddFriendVC : AllowApproachVC {
         let searchFriendBar = UISearchBar()
         
         searchFriendBar.placeholder = "친구를 검색해주세요!"
+        searchFriendBar.backgroundColor = .systemGray6
         searchFriendBar.isTranslucent = false
-        searchFriendBar.searchBarStyle = .minimal
+        
         searchFriendBar.searchTextField.backgroundColor = .systemGray6
         searchFriendBar.setSearchFieldBackgroundImage(UIImage(), for: .normal)
         searchFriendBar.searchTextField.layer.cornerRadius = 20
@@ -61,25 +62,7 @@ class LoginAddFriendVC : AllowApproachVC {
     
     
     @objc func nextView(_: UIButton){
-        //연락처 목록에 추가할 사람들의 목록을 다시 만들어주는 for문 (LoginAddBestFriendVC의 tableView를 구성하는 요소)
-        var i=0
-        var j=0
-        for check in checked{
-            if check == true{
-                addFriendList.append(familyNameList[i]+nameList[i])
-                addNumberList.append(numberList[i])
-                j=j+1
-            }
-            i=i+1
-        }
-        UserDefaults.standard.set(nameList, forKey: "nameList")
-        UserDefaults.standard.set(familyNameList, forKey: "familyNameList")
-        UserDefaults.standard.set(numberList, forKey: "numberList")
-        UserDefaults.standard.set(addFriendList, forKey: "addFrinedList")
-        UserDefaults.standard.set(addNumberList, forKey: "addNumberList")
-
-        // 데이터 동기화
-        UserDefaults.standard.synchronize()
+        setFriendData()
         let loginAddBFVC = LoginAddBestFriendVC()
         self.navigationController?.pushViewController(loginAddBFVC, animated: true)
     }
@@ -93,10 +76,27 @@ class LoginAddFriendVC : AllowApproachVC {
         subtitleLabel.text = "시기와 상관없이 언젠가 연락할 사람의 연락처를\n추가해주세요.\n\n6개월에 한 번씩 알림을 보내드릴게요.\n연락 주기는 추후에 변경이 가능합니다!"
     }
     //일부 글씨만 두껍게 수정해야 함
-    
-    
-    
-    
+    @objc func setFriendData(){
+        var formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        var i=0
+        var j=0
+        for check in checked{
+            if check == true{
+                addFriendList.append(familyNameList[i]+nameList[i])
+                addNumberList.append(numberList[i])
+                alram.append(true)
+                date.append(formatter.string(from: Date()))
+                j=j+1
+            }
+            i=i+1
+        }
+        let fre = Friends.shared
+        fre.name = addFriendList
+        fre.number = addNumberList
+        fre.alram = alram
+        fre.time = date
+    }
     //tableView
     var tableView = UITableView(frame: .zero, style: .plain)
     
@@ -106,6 +106,8 @@ class LoginAddFriendVC : AllowApproachVC {
     var familyNameList: Array<String> = []
     var numberList: Array<String> = []
     var checked: Array<Bool> = []
+    var alram: Array<Bool> = []
+    var date: Array<String> = []
     var addFriendList: Array<String> = []
     var addNumberList: Array<String> = []
     
@@ -156,11 +158,9 @@ extension LoginAddFriendVC : UITableViewDelegate, UITableViewDataSource {
         
         //cell 클릭시 체크가 안되어있으면 체크, 체크가 되어있으면 체크풀기
         if (checked[indexPath.row]==false) {
-            print("unSelected")
             cell?.accessoryView = UIImageView(image:selectedImage)
             checked[indexPath.row]=true
         } else {
-            print("selected")
             cell?.accessoryView = UIImageView(image:unSelectedImage)
             checked[indexPath.row]=false
         }
