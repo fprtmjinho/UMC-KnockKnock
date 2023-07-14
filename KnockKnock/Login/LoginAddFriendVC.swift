@@ -92,6 +92,9 @@ class LoginAddFriendVC : AllowApproachVC {
     
     //numberArray
     var contacts: NSMutableArray = NSMutableArray()
+    var nameList: Array<String> = []
+    var familyNameList: Array<String> = []
+    var numberList: Array<String> = []
     
     
     var test : Array = ["가나다", "나다라", "다라마", "라마바", "마바사", "바사아", "사아자", "아자차 ", "자차카", "차카타", "김 안드레아", "황인호", "최지웅"]
@@ -127,6 +130,8 @@ extension LoginAddFriendVC : UITableViewDelegate, UITableViewDataSource {
         
         
         
+        
+        
         /*
         // 셀 구성
         if let contact = contacts[indexPath.row] as? CNContact {
@@ -153,12 +158,14 @@ extension LoginAddFriendVC : UITableViewDelegate, UITableViewDataSource {
         
         
         
-        cell?.textLabel?.text = test[indexPath.row]
+        cell?.textLabel?.text = familyNameList[indexPath.row]+nameList[indexPath.row]
+        //전화번호가 안나타남...
+        //cell?.detailTextLabel?.text = numberList[indexPath.row]
         
         cell?.textLabel?.font = UIFont.systemFont(ofSize: 16)
         cell?.textLabel?.textColor = UIColor.black
         cell?.detailTextLabel?.font = UIFont.systemFont(ofSize: 13)
-        cell?.detailTextLabel?.textColor = UIColor.gray
+        cell?.detailTextLabel?.textColor = UIColor.black
         
         return cell!
     }
@@ -195,89 +202,105 @@ extension LoginAddFriendVC : UITableViewDelegate, UITableViewDataSource {
 
 extension LoginAddFriendVC {
     //주소록 읽어오기
-
-        private func readContacts() {
-            let store = CNContactStore()
-            
-            // Permission 획득
-            store.requestAccess(for: .contacts) { (granted, error) in
-                guard granted else {
-                    return;
-                }
-                // Request 생성
-                let request: CNContactFetchRequest = self.getCNContactFetchRequest()
-                
-                // 주소록 읽을 때 정렬해서 읽어오도록 설정
-                request.sortOrder = CNContactSortOrder.userDefault
-                
-                // Contacts 읽기
-                // 주소록이 1개씩 읽혀서 usingBlock으로 들어온다.
-                try! store.enumerateContacts(with: request, usingBlock: { (contact, stop) in
-                    
-                    // Phone No가 없을때 return
-                    if contact.phoneNumbers.isEmpty {
-                        return
-                    }
-                    
-                    // NSMutableArray Add contact
-                    // 읽어온 주소록을 NSMutableArray에 저장
-                    self.contacts.add(contact)
-                })
-                self.saveContact()
-            }
-        }
-    private func saveContact() {
-            
-            let store = CNContactStore()
-            
-            // Permission 획득
-            store.requestAccess(for: .contacts) { (granted, error) in
-                guard granted else {
-                    return;
-                }
-                
-                let contact:CNMutableContact = self.getNewContact()
-                
-                let request = CNSaveRequest()
-                request.add(contact, toContainerWithIdentifier:nil)
-                
-                // 저장
-                try! store.execute(request)
-            }
-        }
-        
-        // 새로 등록할 주소록 생성
-        private func getNewContact() -> CNMutableContact {
-            let contact = CNMutableContact()
-            contact.givenName = "name"
-            contact.familyName = "familyName"
-            
-            let phone = CNLabeledValue(label:CNLabelPhoneNumberMobile,
-                                       value:CNPhoneNumber(stringValue:"010-0000-0000"))
-            let tel = CNLabeledValue(label:CNLabelPhoneNumberMain,
-                                     value:CNPhoneNumber(stringValue:"02-0000-0000"))
-            contact.phoneNumbers = [phone, tel]
-            
-            let email: NSString = "bizCard@gmail.com"
-            contact.emailAddresses = [CNLabeledValue(label:CNLabelWork, value:email)]
-            
-            return contact
-        }
-        
-
-        // Request 생성
-        private func getCNContactFetchRequest() -> CNContactFetchRequest {
-            // 주소록에서 읽어올 key 설정
-            let keys: [CNKeyDescriptor] = [CNContactFormatter.descriptorForRequiredKeys(for: .fullName),
-                                           CNContactPhoneNumbersKey,
-                                           CNContactEmailAddressesKey,
-                                           CNContactJobTitleKey,
-                                           CNContactPostalAddressesKey] as! [CNKeyDescriptor]
-            
-            return CNContactFetchRequest(keysToFetch: keys)
-        }
     
+    private func readContacts() {
+        let store = CNContactStore()
+        
+        // Permission 획득
+        store.requestAccess(for: .contacts) { (granted, error) in
+            guard granted else {
+                return;
+            }
+            // Request 생성
+            let request: CNContactFetchRequest = self.getCNContactFetchRequest()
+            
+            // 주소록 읽을 때 정렬해서 읽어오도록 설정
+            request.sortOrder = CNContactSortOrder.userDefault
+            
+            // Contacts 읽기
+            // 주소록이 1개씩 읽혀서 usingBlock으로 들어온다.
+            try! store.enumerateContacts(with: request, usingBlock: { (contact, stop) in
+                
+                // Phone No가 없을때 return
+                if contact.phoneNumbers.isEmpty {
+                    return
+                }
+                
+                // NSMutableArray Add contact
+                // 읽어온 주소록을 NSMutableArray에 저장
+                self.contacts.add(contact)
+            })
+            self.saveContact()
+        }
+    }
+    private func saveContact() {
+        
+        let store = CNContactStore()
+        
+        // Permission 획득
+        store.requestAccess(for: .contacts) { (granted, error) in
+            guard granted else {
+                return;
+            }
+            
+            let contact:CNMutableContact = self.getNewContact()
+            
+            let request = CNSaveRequest()
+            request.add(contact, toContainerWithIdentifier:nil)
+            
+            // 저장
+            try! store.execute(request)
+        }
+    }
+    
+    // 새로 등록할 주소록 생성
+    private func getNewContact() -> CNMutableContact {
+        let contact = CNMutableContact()
+        contact.givenName = "name"
+        contact.familyName = "familyName"
+        
+        let phone = CNLabeledValue(label:CNLabelPhoneNumberMobile,
+                                   value:CNPhoneNumber(stringValue:"010-0000-0000"))
+        let tel = CNLabeledValue(label:CNLabelPhoneNumberMain,
+                                 value:CNPhoneNumber(stringValue:"02-0000-0000"))
+        contact.phoneNumbers = [phone, tel]
+        
+        let email: NSString = "bizCard@gmail.com"
+        contact.emailAddresses = [CNLabeledValue(label:CNLabelWork, value:email)]
+        
+        return contact
+    }
+    
+    
+    // Request 생성
+    private func getCNContactFetchRequest() -> CNContactFetchRequest {
+        // 주소록에서 읽어올 key 설정
+        let keys: [CNKeyDescriptor] = [CNContactFormatter.descriptorForRequiredKeys(for: .fullName),
+                                       CNContactPhoneNumbersKey,
+                                       CNContactEmailAddressesKey,
+                                       CNContactJobTitleKey,
+                                       CNContactPostalAddressesKey] as! [CNKeyDescriptor]
+        
+        return CNContactFetchRequest(keysToFetch: keys)
+    }
+    @objc func getFriendInfo(){
+        for contact in contacts {
+            if let contact = contact as? CNContact {
+                // CNContact에서 원하는 데이터 추출
+                let givenName = contact.givenName
+                let familyName = contact.familyName
+                let phoneNumbers = contact.phoneNumbers.map { $0.value.stringValue }[0]
+                nameList.append(givenName)
+                familyNameList.append(familyName)
+                numberList.append(phoneNumbers)
+                print(givenName)
+                print(familyName)
+                print(phoneNumbers)
+            }
+        }
+    }
     @objc func downloadNumberBook(){
         readContacts()
+        getFriendInfo()
     }
 }
