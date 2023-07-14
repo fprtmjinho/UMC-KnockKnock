@@ -12,7 +12,7 @@ class FriendListVC: UIViewController {
     var addFriendBtn : UIButton = UIButton()
     
     func makeSubView() {
-        
+        addFriendBtn = setNextBtn(view: self, title: "찐친 추가하기")
     }
     
     func makeConstraint() {
@@ -32,7 +32,6 @@ class FriendListVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        addFriendBtn = setNextBtn(view: self, title: "찐친 추가하기")
         
         makeSubView()
         makeConstraint()

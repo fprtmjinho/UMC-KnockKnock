@@ -204,7 +204,13 @@ class FriendProfileVC : UIViewController {
         self.editBtn.addTarget(self, action: #selector(editBtnFunc(_:)), for: .touchUpInside)
         self.addAlarmBtn.addTarget(self, action: #selector(addAlarmFunc(_:)), for: .touchUpInside)
         self.textGuideBtn.addTarget(self, action: #selector(textGuideFunc(_:)), for: .touchUpInside)
+        self.copyBtn.addTarget(self, action: #selector(pasteText(_:)), for: .touchUpInside)
     }
+    
+    @objc func pasteText(_ sender: Any) {
+          UIPasteboard.general.string = myText.text
+      }
+    
     @objc func editBtnFunc(_: UIButton){
         let editProfileVC = EditProfileVC()
         editProfileVC.hidesBottomBarWhenPushed = true

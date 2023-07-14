@@ -12,7 +12,7 @@ class AddGroupVC : UIViewController {
     
     
     private func makeSubView(){
-        
+        addBtn = setNextBtn(view: self, title: "추가하기")
     }
     private func makeConstraint(){
         
@@ -31,7 +31,6 @@ class AddGroupVC : UIViewController {
         view.backgroundColor = .white
         setNavigationBar()
         self.title = "모임 추가하기"
-        addBtn = setNextBtn(view: self, title: "추가하기")
         
         makeSubView()
         makeConstraint()

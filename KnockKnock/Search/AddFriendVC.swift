@@ -101,6 +101,7 @@ class AddFriendVC : UIViewController {
         view.addSubview(numberLabel)
         view.addSubview(numberText)
         
+        saveBtn = setNextBtn(view: self, title: "저장하기")
     }
     
     func makeConstraint(){
@@ -176,7 +177,7 @@ class AddFriendVC : UIViewController {
         view.backgroundColor = .white
         setNavigationBar()
         self.title = "연락처 추가"
-        saveBtn = setNextBtn(view: self, title: "저장하기")
+        
        
         makeSubView()
         makeConstraint()

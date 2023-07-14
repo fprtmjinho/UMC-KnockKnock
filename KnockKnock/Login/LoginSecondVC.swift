@@ -113,6 +113,7 @@ class LoginSecondVC : UIViewController{
         view.addSubview(passwordCheckText)
         view.addSubview(lastLabel)
         
+        nextBtn = setNextBtn(view: self, title: "다음")
     }
     
     func makeConstraint(){
@@ -178,7 +179,6 @@ class LoginSecondVC : UIViewController{
         super.viewDidLoad()
         view.backgroundColor = .white
         setNavigationBar()
-        nextBtn = setNextBtn(view: self, title: "다음")
         makeSubView()
         makeConstraint()
         makeAddTarget()

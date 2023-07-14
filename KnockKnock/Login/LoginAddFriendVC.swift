@@ -10,34 +10,20 @@ import Contacts
 class LoginAddFriendVC : AllowApproachVC {
 
 
-    let searchFriendBar : UISearchBar = {
-        let searchFriendBar = UISearchBar()
-        
-        searchFriendBar.placeholder = "친구를 검색해주세요!"
-        searchFriendBar.isTranslucent = false
-        searchFriendBar.searchBarStyle = .minimal
-        searchFriendBar.searchTextField.backgroundColor = .systemGray6
-        searchFriendBar.setSearchFieldBackgroundImage(UIImage(), for: .normal)
-        searchFriendBar.searchTextField.layer.cornerRadius = 20
-        searchFriendBar.searchTextField.layer.masksToBounds = true
-        searchFriendBar.setImage(UIImage(systemName: "magnifyingglass", withConfiguration: UIImage.SymbolConfiguration(paletteColors: [#colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)])),
-                                 for: .search, state: .normal)
-        
-        return searchFriendBar
-    }()
+    var searchFriendBar : UISearchBar = UISearchBar()
     
    override func makeSubView(){
        view.addSubview(titleLabel)
        view.addSubview(subtitleLabel)
-       view.addSubview(searchFriendBar)
        
+       searchFriendBar = setSearchBar(VC: self, title: "친구를 입력해주세요")
+       nextBtn = setNextBtn(view: self, title: "다음")
     }
     
     override func makeConstraint(){
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        searchFriendBar.translatesAutoresizingMaskIntoConstraints = false
-       
+     
         
         NSLayoutConstraint.activate([
             titleLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
@@ -45,8 +31,7 @@ class LoginAddFriendVC : AllowApproachVC {
             subtitleLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
             
-            searchFriendBar.topAnchor.constraint(greaterThanOrEqualTo: subtitleLabel.bottomAnchor),
-            searchFriendBar.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -70),
+            searchFriendBar.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: 40),
             searchFriendBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             searchFriendBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
         
@@ -117,7 +102,6 @@ class LoginAddFriendVC : AllowApproachVC {
         downloadNumberBook()
         
         setTableView()
-        nextBtn = setNextBtn(view: self, title: "다음")
         makeSubView()
         makeConstraint()
         makeAddTarget()

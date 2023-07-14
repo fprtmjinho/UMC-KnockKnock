@@ -15,6 +15,9 @@ class LoginAddBestFriendVC : LoginAddFriendVC {
         view.addSubview(titleLabel)
         view.addSubview(subtitleLabel)
         view.addSubview(searchFriendBar)
+        
+        nextBtn = setNextBtn(view: self, title: "다음")
+        searchFriendBar = setSearchBar(VC: self, title: "친구를 입력해주세요")
     }
     
     override func makeConstraint(){
@@ -60,7 +63,6 @@ class LoginAddBestFriendVC : LoginAddFriendVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigationBar()
-        nextBtn = setNextBtn(view: self, title: "다음")
         makeSubView()
         makeConstraint()
         makeAddTarget()

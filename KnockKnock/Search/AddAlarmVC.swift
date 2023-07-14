@@ -98,7 +98,8 @@ class AddAlarmVC : UIViewController {
         view.addSubview(loopLabel)
         view.addSubview(loopOnceBtn)
         view.addSubview(loopBtn)
-      
+        
+        saveBtn = setNextBtn(view: self, title: "저장하기")
     }
     
     func makeConstraint(){
@@ -186,6 +187,7 @@ class AddAlarmVC : UIViewController {
             let AlarmDate = dateFormat.string(from: alarmDatePicker.date)
             
             self.SetDatePickerBtn.setTitle("\(AlarmDate)", for: .normal)
+            self.SetDatePickerBtn.setTitleColor(.black, for: .normal)
             //DatePicker의 date를 btn의 title로 설정
         }
         let cancelBtn = UIAlertAction(title: "취소하기", style: .cancel)
@@ -209,7 +211,7 @@ class AddAlarmVC : UIViewController {
         view.backgroundColor = .white
         self.title = "연락 주기 및 예정 알림"
         setNavigationBar()
-        saveBtn = setNextBtn(view: self, title: "저장하기")
+     
         makeSubView()
         makeConstraint()
         makeAddTarget()

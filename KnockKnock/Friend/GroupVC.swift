@@ -12,7 +12,7 @@ class GroupVC: UIViewController {
     var addGroupBtn : UIButton = UIButton()
     
     private func makeSubView() {
-        
+        addGroupBtn = setNextBtn(view: self, title: "그룹 추가하기")
     }
     
     private func makeConstraint() {
@@ -32,7 +32,6 @@ class GroupVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        addGroupBtn = setNextBtn(view: self, title: "그룹 추가하기")
         
         makeSubView()
         makeConstraint()

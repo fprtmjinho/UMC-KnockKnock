@@ -76,10 +76,12 @@ class FindPasswordVC : UIViewController{
         view.addSubview(emailCheckLabel)
         view.addSubview(emailCheckText)
         view.addSubview(emailCheckBtn)
-       
+     
+        nextBtn = setNextBtn(view: self, title: "다음")
     }
     
     func makeConstraint(){
+        
         emailLabel.translatesAutoresizingMaskIntoConstraints = false
         emailText.translatesAutoresizingMaskIntoConstraints = false
         emailBtn.translatesAutoresizingMaskIntoConstraints = false
@@ -136,7 +138,6 @@ class FindPasswordVC : UIViewController{
         self.title = "비밀번호 찾기"
         view.backgroundColor = .white
         
-        nextBtn = setNextBtn(view: self, title: "다음")
         makeSubView()
         makeConstraint()
         makeAddTarget()

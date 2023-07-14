@@ -53,6 +53,8 @@ class AllowApproachVC : UIViewController {
         view.addSubview(titleLabel)
         view.addSubview(subtitleLabel)
         view.addSubview(stepGuide)
+        
+        nextBtn = setNextBtn(view: self, title: "다음")
     }
     
     func makeConstraint(){
@@ -111,7 +113,6 @@ class AllowApproachVC : UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setNavigationBar()
-        nextBtn = setNextBtn(view: self, title: "다음")
         makeSubView()
         makeConstraint()
         makeAddTarget()

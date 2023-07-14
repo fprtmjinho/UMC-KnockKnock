@@ -118,7 +118,12 @@ class MyPage : UIView{
     
     func makeAddTarget(){
         self.editBtn.addTarget(self, action: #selector(editBtnPressed(_:)), for: .touchUpInside)
+        self.copyBtn.addTarget(self, action: #selector(pasteText(_:)), for: .touchUpInside)
     }
+    
+    @objc func pasteText(_ sender: Any) {
+          UIPasteboard.general.string = myText.text
+      }
     
     @objc func editBtnPressed(_: UIButton) {
         let editVC = EditMyPageVC()
