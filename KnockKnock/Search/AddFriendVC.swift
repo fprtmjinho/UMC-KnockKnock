@@ -8,6 +8,8 @@
 import UIKit
 class AddFriendVC : UIViewController {
     
+    var saveBtn : UIButton = UIButton()
+    
     let ProfileView : UIImageView = {
        var profileView = UIImageView()
         let config = UIImage.SymbolConfiguration(paletteColors: [.systemGray5])
@@ -70,15 +72,7 @@ class AddFriendVC : UIViewController {
         return numbertext
     }()
     
-    let saveBtn : UIButton = {
-       let savebtn = UIButton()
-        savebtn.backgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-        savebtn.setTitle("저장하기", for: .normal)
-        savebtn.tintColor = .white
-        savebtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-        savebtn.layer.cornerRadius = 25
-        return savebtn
-    }()
+ 
     
     func makeSubView(){
         view.addSubview(ProfileView)
@@ -88,7 +82,6 @@ class AddFriendVC : UIViewController {
         view.addSubview(nameText)
         view.addSubview(numberLabel)
         view.addSubview(numberText)
-        view.addSubview(saveBtn)
         
     }
     
@@ -100,7 +93,6 @@ class AddFriendVC : UIViewController {
         nameText.translatesAutoresizingMaskIntoConstraints = false
         numberLabel.translatesAutoresizingMaskIntoConstraints = false
         numberText.translatesAutoresizingMaskIntoConstraints = false
-        saveBtn.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             ProfileView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
@@ -139,11 +131,6 @@ class AddFriendVC : UIViewController {
             numberText.heightAnchor.constraint(equalToConstant: 50),
             
             
-            
-            saveBtn.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
-            saveBtn.heightAnchor.constraint(equalToConstant: 50),
-            saveBtn.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            saveBtn.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30)
         ])
         
     }
@@ -162,8 +149,8 @@ class AddFriendVC : UIViewController {
         view.backgroundColor = .white
         setNavigationBar()
         self.title = "연락처 추가"
-        
-        
+        saveBtn = setNextBtn(view: self, title: "저장하기")
+       
         makeSubView()
         makeConstraint()
         makeAddTarget()

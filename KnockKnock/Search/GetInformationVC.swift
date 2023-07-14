@@ -9,6 +9,8 @@ import UIKit
 import Contacts
 class GetInformationVC : UIViewController {
     
+    var addBtn : UIButton = UIButton()
+    
     let searchFriendBar : UISearchBar = {
        let searchFriendBar = UISearchBar()
         
@@ -28,29 +30,15 @@ class GetInformationVC : UIViewController {
       
         return searchFriendBar
     }()
-  
-    
-    let addBtn : UIButton = {
-       let addBtn = UIButton()
-        addBtn.backgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-        addBtn.setTitle("추가하기", for: .normal)
-        addBtn.tintColor = .white
-        addBtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-        addBtn.layer.cornerRadius = 25
-        
-        return addBtn
-    }()
-    
+
     
     
     func makeSubView(){
         view.addSubview(searchFriendBar)
-        view.addSubview(addBtn)
     }
     
     func makeConstraint(){
         searchFriendBar.translatesAutoresizingMaskIntoConstraints = false
-        addBtn.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             searchFriendBar.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -153,6 +141,7 @@ class GetInformationVC : UIViewController {
         view.backgroundColor = .white
         self.title = "주소록 불러오기"
         setNavigationBar()
+        addBtn = setNextBtn(view: self, title: "추가하기")
         makeSubView()
         makeConstraint()
         downloadNumberBook()

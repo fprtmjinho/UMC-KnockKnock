@@ -8,6 +8,8 @@
 import UIKit
 class LoginSuccessVC : UIViewController {
     
+    var startBtn : UIButton = UIButton()
+    
     let checkIMg : UIImageView = {
         let checkImg = UIImageView()
         let config = UIImage.SymbolConfiguration(paletteColors: [#colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)])
@@ -31,30 +33,20 @@ class LoginSuccessVC : UIViewController {
         label.font = UIFont.systemFont(ofSize: 20)
         return label
     }()
-    
-    let startBtn : UIButton = {
-        let startbtn = UIButton()
-        startbtn.backgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-        startbtn.setTitle("시작하기", for: .normal)
-        startbtn.tintColor = .white
-        startbtn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-        startbtn.layer.cornerRadius = 25
-        return startbtn
-    }()
+
     
     
     func makeSubView(){
         view.addSubview(checkIMg)
         view.addSubview(welcomeLabel)
         view.addSubview(signInLabel)
-        view.addSubview(startBtn)
+        
     }
     
     func makeConstraint(){
         checkIMg.translatesAutoresizingMaskIntoConstraints = false
         welcomeLabel.translatesAutoresizingMaskIntoConstraints = false
         signInLabel.translatesAutoresizingMaskIntoConstraints = false
-        startBtn.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             checkIMg.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
@@ -71,11 +63,7 @@ class LoginSuccessVC : UIViewController {
             signInLabel.widthAnchor.constraint(equalToConstant: 40),
             signInLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             signInLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
-            
-            startBtn.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
-            startBtn.heightAnchor.constraint(equalToConstant: 50),
-            startBtn.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            startBtn.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30)
+           
         ])
         
     }
@@ -92,11 +80,14 @@ class LoginSuccessVC : UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setNavigationBar()
+        startBtn = setNextBtn(view: self, title: "시작하기")
+       
         makeSubView()
         makeConstraint()
         makeAddTarget()
         debugingFunction()
     }
+    
     func debugingFunction(){
         // 데이터 가져오기
         if let nickName = UserDefaults.standard.string(forKey: "nickName"),
