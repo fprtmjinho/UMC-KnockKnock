@@ -15,18 +15,14 @@ class GetInformationVC : UIViewController {
        let searchFriendBar = UISearchBar()
         
         searchFriendBar.placeholder = "친구를 검색해주세요!"
-        searchFriendBar.backgroundColor = .none
-        searchFriendBar.isTranslucent = true
+        searchFriendBar.isTranslucent = false
         searchFriendBar.searchBarStyle = .minimal
         searchFriendBar.searchTextField.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
-        searchFriendBar.layer.cornerRadius = 20
-        searchFriendBar.clipsToBounds = true
-        searchFriendBar.searchBarStyle = .default
-        searchFriendBar.barTintColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
-      
+        searchFriendBar.setSearchFieldBackgroundImage(UIImage(), for: .normal)
+        searchFriendBar.searchTextField.layer.cornerRadius = 20
+        searchFriendBar.searchTextField.layer.masksToBounds = true
         searchFriendBar.setImage(UIImage(systemName: "magnifyingglass", withConfiguration: UIImage.SymbolConfiguration(paletteColors: [#colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)])),
                                  for: .search, state: .normal)
-        
       
         return searchFriendBar
     }()
