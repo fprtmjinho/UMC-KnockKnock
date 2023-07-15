@@ -92,7 +92,7 @@ class BadVC: UIViewController {
     
     func createButtons() {
         for title in buttonTitles {
-            let button = UIButton(type: .system)
+            let button = UIButton(type: .custom)
             button.setTitle(title, for: .normal)
             button.setTitleColor(.black, for: .normal)
             button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
