@@ -74,7 +74,7 @@ class WriteVC: UIViewController {
     
     let anonymousImageButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.setImage(UIImage(named: "check_ffffff"), for: .normal)
+        button.setImage(UIImage(named: "check_anony_no"), for: .normal)
         button.addTarget(self, action: #selector(anonymousImageButtonTapped(_:)), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -154,13 +154,13 @@ class WriteVC: UIViewController {
             
             anonymousImageButton.bottomAnchor.constraint(equalTo: contentContainerView.bottomAnchor, constant: -8),
             anonymousImageButton.trailingAnchor.constraint(equalTo: contentContainerView.trailingAnchor, constant: -8),
-            anonymousImageButton.widthAnchor.constraint(equalToConstant: 30),
-            anonymousImageButton.heightAnchor.constraint(equalToConstant: 30),
+            anonymousImageButton.widthAnchor.constraint(equalToConstant: 45),
+            anonymousImageButton.heightAnchor.constraint(equalToConstant: 20),
             
             contentTextView.topAnchor.constraint(equalTo: contentContainerView.topAnchor, constant: 8),
             contentTextView.leadingAnchor.constraint(equalTo: contentContainerView.leadingAnchor, constant: 8),
             contentTextView.trailingAnchor.constraint(equalTo: contentContainerView.trailingAnchor, constant: -8),
-            contentTextView.bottomAnchor.constraint(equalTo: contentContainerView.bottomAnchor, constant: -35),
+            contentTextView.bottomAnchor.constraint(equalTo: contentContainerView.bottomAnchor, constant: -30),
             
             ruleLabel.topAnchor.constraint(equalTo: contentContainerView.bottomAnchor, constant: verticalMargin),
             ruleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: horizontalMargin),
@@ -193,7 +193,7 @@ class WriteVC: UIViewController {
     
     @objc func anonymousImageButtonTapped(_ sender: UIButton) {
         isAnonymousSelected.toggle()
-        let imageName = isAnonymousSelected ? "check_box" : "check_ffffff"
+        let imageName = isAnonymousSelected ? "check_anony_yes" : "check_anony_no"
         anonymousImageButton.setImage(UIImage(named: imageName), for: .normal)
     }
     
