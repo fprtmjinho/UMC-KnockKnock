@@ -119,7 +119,6 @@ class SearchController : UIViewController{
         view.backgroundColor = .white
         getData()
         customNavigationBar()
-        
         makeSubView()
         makeConstraint()
         setTableView()
@@ -127,6 +126,12 @@ class SearchController : UIViewController{
         setTitle()
         searchFriendBar.searchTextField.addTarget(self, action: #selector(searchFriend(_:)), for: .editingChanged)
         
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        getData()
+        tableView.reloadData()
+        setTableView()
     }
     @objc func searchFriend(_:UISearchBar){
         var friendName: String = ""
@@ -234,9 +239,12 @@ extension SearchController : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "friendList")
-        var image = UIImage(named: "SelectedCheckCircle")?.resizeImageTo(size: CGSize(width: 30, height: 30))
+        var selected = UIImage(named: "SelectedCheckCircle")?.resizeImageTo(size: CGSize(width: 30, height: 30))
+        var unSelected = UIImage(named: "UnselectedCheckCircle")?.resizeImageTo(size: CGSize(width: 30, height:30))
         if checked[indexPath.row] == true{
-            cell?.accessoryView = UIImageView(image:image)
+            cell?.accessoryView = UIImageView(image:selected)
+        }else{
+            cell?.accessoryView = UIImageView(image:unSelected)
         }
         cell?.textLabel?.text = nameList[indexPath.row]
         //전화번호가 안나타남...
@@ -252,7 +260,6 @@ extension SearchController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
         nextView(index:indexPath)
-        
         //cell 클릭시 체크가 안되어있으면 체크, 체크가 되어있으면 체크풀기
         
     }
