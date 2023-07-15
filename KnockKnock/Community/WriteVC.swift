@@ -27,11 +27,12 @@ class WriteVC: UIViewController {
         return scrollView
     }()
     
-    let imageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "camera")
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
+    let cameraButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(named: "camera"), for: .normal)
+        button.addTarget(self, action: #selector(cameraButtonTapped(_:)), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
     
     let titleLabel: UILabel = {
@@ -74,8 +75,8 @@ class WriteVC: UIViewController {
     let anonymousImageButton: UIButton = {
         let button = UIButton(type: .custom)
         button.setImage(UIImage(named: "check_ffffff"), for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(anonymousImageButtonTapped(_:)), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
@@ -103,7 +104,7 @@ class WriteVC: UIViewController {
     }()
     
     func makeSubView() {
-        scrollView.addSubview(imageView)
+        scrollView.addSubview(cameraButton)
         scrollView.addSubview(titleLabel)
         scrollView.addSubview(titleContainerView)
         titleContainerView.addSubview(titleTextField)
@@ -125,12 +126,12 @@ class WriteVC: UIViewController {
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
-            imageView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: verticalMargin),
-            imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: horizontalMargin),
-            imageView.widthAnchor.constraint(equalToConstant: 35),
-            imageView.heightAnchor.constraint(equalToConstant: 35),
+            cameraButton.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: verticalMargin),
+            cameraButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: horizontalMargin),
+            cameraButton.widthAnchor.constraint(equalToConstant: 35),
+            cameraButton.heightAnchor.constraint(equalToConstant: 35),
             
-            titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: verticalMargin),
+            titleLabel.topAnchor.constraint(equalTo: cameraButton.bottomAnchor, constant: verticalMargin),
             titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: horizontalMargin),
             
             titleContainerView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5),
@@ -152,14 +153,14 @@ class WriteVC: UIViewController {
             contentContainerView.heightAnchor.constraint(equalToConstant: 300),
             
             anonymousImageButton.bottomAnchor.constraint(equalTo: contentContainerView.bottomAnchor, constant: -8),
-                anonymousImageButton.trailingAnchor.constraint(equalTo: contentContainerView.trailingAnchor, constant: -8),
-                anonymousImageButton.widthAnchor.constraint(equalToConstant: 30),
+            anonymousImageButton.trailingAnchor.constraint(equalTo: contentContainerView.trailingAnchor, constant: -8),
+            anonymousImageButton.widthAnchor.constraint(equalToConstant: 30),
             anonymousImageButton.heightAnchor.constraint(equalToConstant: 30),
             
             contentTextView.topAnchor.constraint(equalTo: contentContainerView.topAnchor, constant: 8),
             contentTextView.leadingAnchor.constraint(equalTo: contentContainerView.leadingAnchor, constant: 8),
             contentTextView.trailingAnchor.constraint(equalTo: contentContainerView.trailingAnchor, constant: -8),
-            contentTextView.bottomAnchor.constraint(equalTo: contentContainerView.bottomAnchor, constant: -16),
+            contentTextView.bottomAnchor.constraint(equalTo: contentContainerView.bottomAnchor, constant: -35),
             
             ruleLabel.topAnchor.constraint(equalTo: contentContainerView.bottomAnchor, constant: verticalMargin),
             ruleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: horizontalMargin),
@@ -167,8 +168,8 @@ class WriteVC: UIViewController {
             ruleLabel.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -verticalMargin)
         ])
     }
-
-
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -186,12 +187,16 @@ class WriteVC: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
+    @objc func cameraButtonTapped(_ sender: UIButton) {
+            print("카메라 버튼 탭하였음.")
+    }
+    
     @objc func anonymousImageButtonTapped(_ sender: UIButton) {
         isAnonymousSelected.toggle()
         let imageName = isAnonymousSelected ? "check_box" : "check_ffffff"
         anonymousImageButton.setImage(UIImage(named: imageName), for: .normal)
     }
-
+    
 }
 
 extension WriteVC: UITextViewDelegate {
