@@ -71,6 +71,16 @@ class WriteVC: UIViewController {
         return view
     }()
     
+    let anonymousImageButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(named: "check_ffffff"), for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(anonymousImageButtonTapped(_:)), for: .touchUpInside)
+        return button
+    }()
+    
+    var isAnonymousSelected = false // 익명 체크표시 상태
+    
     private lazy var contentTextView: UITextView = {
         let textView = UITextView()
         textView.font = UIFont.systemFont(ofSize: 15)
@@ -100,6 +110,7 @@ class WriteVC: UIViewController {
         scrollView.addSubview(contentLabel)
         scrollView.addSubview(contentContainerView)
         contentContainerView.addSubview(contentTextView)
+        contentContainerView.addSubview(anonymousImageButton)
         scrollView.addSubview(ruleLabel)
         view.addSubview(scrollView)
     }
@@ -140,10 +151,15 @@ class WriteVC: UIViewController {
             contentContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -horizontalMargin),
             contentContainerView.heightAnchor.constraint(equalToConstant: 300),
             
+            anonymousImageButton.bottomAnchor.constraint(equalTo: contentContainerView.bottomAnchor, constant: -8),
+                anonymousImageButton.trailingAnchor.constraint(equalTo: contentContainerView.trailingAnchor, constant: -8),
+                anonymousImageButton.widthAnchor.constraint(equalToConstant: 30),
+            anonymousImageButton.heightAnchor.constraint(equalToConstant: 30),
+            
             contentTextView.topAnchor.constraint(equalTo: contentContainerView.topAnchor, constant: 8),
             contentTextView.leadingAnchor.constraint(equalTo: contentContainerView.leadingAnchor, constant: 8),
             contentTextView.trailingAnchor.constraint(equalTo: contentContainerView.trailingAnchor, constant: -8),
-            contentTextView.bottomAnchor.constraint(equalTo: contentContainerView.bottomAnchor, constant: -8),
+            contentTextView.bottomAnchor.constraint(equalTo: contentContainerView.bottomAnchor, constant: -16),
             
             ruleLabel.topAnchor.constraint(equalTo: contentContainerView.bottomAnchor, constant: verticalMargin),
             ruleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: horizontalMargin),
@@ -169,6 +185,13 @@ class WriteVC: UIViewController {
     @objc func completeButtonTapped() {
         navigationController?.popViewController(animated: true)
     }
+    
+    @objc func anonymousImageButtonTapped(_ sender: UIButton) {
+        isAnonymousSelected.toggle()
+        let imageName = isAnonymousSelected ? "check_box" : "check_ffffff"
+        anonymousImageButton.setImage(UIImage(named: imageName), for: .normal)
+    }
+
 }
 
 extension WriteVC: UITextViewDelegate {
