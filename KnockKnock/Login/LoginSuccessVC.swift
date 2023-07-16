@@ -96,11 +96,6 @@ class LoginSuccessVC : UIViewController {
            let email = UserDefaults.standard.string(forKey: "email"),
            let password = UserDefaults.standard.string(forKey: "password"){
             // 가져온 값 사용
-            print(nickName)
-            print(sex)
-            print(birthday)
-            print(email)
-            print(password)
         } else {
             // 저장된 데이터가 없을 경우 기본값 또는 처리할 로직 설정
             print("No data found.")

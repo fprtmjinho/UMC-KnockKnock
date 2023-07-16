@@ -291,9 +291,6 @@ extension LoginAddFriendVC {
                 familyNameList.append(familyName)
                 numberList.append(phoneNumbers)
                 checked.append(false)
-                print(givenName)
-                print(familyName)
-                print(phoneNumbers)
             }
         }
     }

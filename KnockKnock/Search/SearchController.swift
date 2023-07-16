@@ -109,9 +109,9 @@ class SearchController : UIViewController{
     var checked: Array<Bool> = []
     var nameList: Array<String> = []
     var numberList: Array<String> = []
-    var date: Array<String> = []
     
     func makeAddTarget(){
+        searchFriendBar.searchTextField.addTarget(self, action: #selector(searchFriend(_:)), for: .editingChanged)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -124,14 +124,30 @@ class SearchController : UIViewController{
         setTableView()
         makeAddTarget()
         setTitle()
-        searchFriendBar.searchTextField.addTarget(self, action: #selector(searchFriend(_:)), for: .editingChanged)
         
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         getData()
+        sortData()
         tableView.reloadData()
         setTableView()
+    }
+    @objc func sortData(){
+
+        // 이름, 전화번호, 나이를 튜플로 묶은 배열 생성
+        var combinedList = zip(nameList, zip(numberList, checked).map{($0,$1)}).map { ($0, $1) }
+
+        // 이름을 기준으로 오름차순 정렬
+        combinedList.sort { $0.0 < $1.0 }
+
+        // 혹은 이렇게도 가능합니다.
+        // combinedList = combinedList.sorted { $0.0 < $1.0 }
+
+        // 정렬된 결과를 다시 리스트로 분리
+        nameList = combinedList.map { $0.0 }
+        numberList = combinedList.map { $0.1.0 }
+        checked = combinedList.map { $0.1.1 }
     }
     @objc func searchFriend(_:UISearchBar){
         var friendName: String = ""
@@ -172,20 +188,6 @@ class SearchController : UIViewController{
         numberList = friendData.number
         checked = friendData.bestFriend
     }
-    /*@objc func setFriendData(){
-        let fre = Friends.shared
-        fre.bestFriend = checked
-        var i=0
-        var formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        for check in checked{
-            if (check==true){
-                date[i]=formatter.string(from: Date())
-            }
-            i=i+1
-        }
-        fre.time = date
-    }*/
 }
 
 extension SearchController {
