@@ -20,8 +20,8 @@ class MyPageController : UIViewController{
     }()
     
     func makeSubView(){
-        self.view.addSubview(myPage)
         self.view.addSubview(scrollView)
+        scrollView.addSubview(myPage)
         scrollView.addSubview(myProfilePage)
     }
     
@@ -30,7 +30,13 @@ class MyPageController : UIViewController{
     }
     
     func makeAddTarget(){
-        
+        self.myPage.editBtn.addTarget(self, action: #selector(editBtnFunc(_:)), for: .touchUpInside)
+    }
+    
+    @objc func editBtnFunc(_: UIButton){
+        let editMypageVC = EditMyPageVC()
+        editMypageVC.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(editMypageVC, animated: true)
     }
     
  
@@ -43,25 +49,23 @@ class MyPageController : UIViewController{
         myProfilePage.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            myPage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            myPage.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            myPage.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            myPage.heightAnchor.constraint(equalToConstant: 420),
-            
-            
-            
-            scrollView.topAnchor.constraint(equalTo: myPage.bottomAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scrollView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
             scrollView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
             //scrollView constraint safeArea와 맞추기
             
-            myProfilePage.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
+            myPage.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
+            myPage.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
+            myPage.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
+            myPage.heightAnchor.constraint(equalToConstant: 420),
+            myPage.widthAnchor.constraint(equalTo : scrollView.widthAnchor),
+            
+            myProfilePage.topAnchor.constraint(equalTo: myPage.bottomAnchor),
             myProfilePage.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
             myProfilePage.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
             myProfilePage.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
             //ContentView(myPage)의 Constraint를 scrollView의 contentLayoutGuide와 맞춤
-            
             myProfilePage.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
             //scrollview의 width와 contentview의 width 동일시함
         ])

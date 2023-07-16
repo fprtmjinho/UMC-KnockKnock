@@ -56,14 +56,9 @@ class LoginSuccessVC : UIViewController {
             welcomeLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             welcomeLabel.topAnchor.constraint(equalTo: checkIMg.bottomAnchor, constant: 20),
             welcomeLabel.widthAnchor.constraint(equalToConstant: 40),
-            welcomeLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            welcomeLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
             signInLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             signInLabel.topAnchor.constraint(equalTo: welcomeLabel.bottomAnchor, constant: 5),
             signInLabel.widthAnchor.constraint(equalToConstant: 40),
-            signInLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            signInLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
-           
         ])
         
     }

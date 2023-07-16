@@ -19,7 +19,7 @@ class ChangePasswordVC : UIViewController {
     
     let passwordText: UITextField = {
         let fourthText1 = UITextField()
-        fourthText1.placeholder = "6자리 이상 입력해 주세요."
+        fourthText1.placeholder = "6자리 이상 입력해주세요."
         fourthText1.backgroundColor = .systemGray6
         fourthText1.layer.cornerRadius = 20
         fourthText1.addLeftPadding()
@@ -41,7 +41,7 @@ class ChangePasswordVC : UIViewController {
     
     let passwordCheckText: UITextField = {
         let fourthText2 = UITextField()
-        fourthText2.placeholder = "다시 한번 입력해 주세요."
+        fourthText2.placeholder = "다시 입력해주세요."
         fourthText2.backgroundColor = .systemGray6
         fourthText2.layer.cornerRadius = 20
         fourthText2.addLeftPadding()
@@ -88,6 +88,7 @@ class ChangePasswordVC : UIViewController {
     }
     
     @objc func changePasswordFunc(_: UIButton){
+        
         //비밀번호 변경
     }
     

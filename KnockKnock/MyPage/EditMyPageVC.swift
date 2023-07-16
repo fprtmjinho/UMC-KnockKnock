@@ -7,6 +7,7 @@
 
 import UIKit
 class EditMyPageVC : EditProfileVC {
+    //EditProfileVC 상속
     
     override func viewDidLoad() {
         super.viewDidLoad()

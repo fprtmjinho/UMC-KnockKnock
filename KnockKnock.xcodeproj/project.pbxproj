@@ -48,6 +48,7 @@
 		C98C4E002A61A5C10001BEAB /* EditProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C4DFF2A61A5C10001BEAB /* EditProfileVC.swift */; };
 		C98C4E022A61ABBF0001BEAB /* AddBFVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C4E012A61ABBF0001BEAB /* AddBFVC.swift */; };
 		C98C4E042A61AD800001BEAB /* AddGroupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C4E032A61AD800001BEAB /* AddGroupVC.swift */; };
+		C98C4E062A642A1C0001BEAB /* ToChangePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C4E052A642A1C0001BEAB /* ToChangePasswordVC.swift */; };
 		E91EE27E2A5C9B24003D6E5C /* GetInformationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91EE27D2A5C9B24003D6E5C /* GetInformationVC.swift */; };
 		FC5D9EDAF4673A283007CBC3 /* Pods_KnockKnockTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D943A7024EF348CF136AAB58 /* Pods_KnockKnockTests.framework */; };
 /* End PBXBuildFile section */
@@ -120,6 +121,7 @@
 		C98C4DFF2A61A5C10001BEAB /* EditProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileVC.swift; sourceTree = "<group>"; };
 		C98C4E012A61ABBF0001BEAB /* AddBFVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBFVC.swift; sourceTree = "<group>"; };
 		C98C4E032A61AD800001BEAB /* AddGroupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupVC.swift; sourceTree = "<group>"; };
+		C98C4E052A642A1C0001BEAB /* ToChangePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToChangePasswordVC.swift; sourceTree = "<group>"; };
 		D943A7024EF348CF136AAB58 /* Pods_KnockKnockTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KnockKnockTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E91EE27D2A5C9B24003D6E5C /* GetInformationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetInformationVC.swift; sourceTree = "<group>"; };
 		F3F24E5ED8023B461FD03653 /* Pods-KnockKnockTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KnockKnockTests.release.xcconfig"; path = "Target Support Files/Pods-KnockKnockTests/Pods-KnockKnockTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -230,6 +232,7 @@
 			children = (
 				C935FA202A58656C0035FA2C /* LoginVC.swift */,
 				C935FA852A5EB6010035FA2C /* FindPasswordVC.swift */,
+				C98C4E052A642A1C0001BEAB /* ToChangePasswordVC.swift */,
 				C98C4DF92A6120C00001BEAB /* ChangePasswordVC.swift */,
 				C935FA1E2A58264B0035FA2C /* LoginFirstVC.swift */,
 				C935FA222A59357B0035FA2C /* LoginSecondVC.swift */,
@@ -558,6 +561,7 @@
 				C935FA7C2A5D63740035FA2C /* LoginAddFriendVC.swift in Sources */,
 				C935FA272A59BC840035FA2C /* Extension.swift in Sources */,
 				C935FA1F2A58264B0035FA2C /* LoginFirstVC.swift in Sources */,
+				C98C4E062A642A1C0001BEAB /* ToChangePasswordVC.swift in Sources */,
 				00FD26582A5CE1520013E169 /* GuideVC.swift in Sources */,
 				C933F4552A5EFBBA0089670A /* EditMyPageVC.swift in Sources */,
 				C935FA252A59475A0035FA2C /* LoginSuccessVC.swift in Sources */,
