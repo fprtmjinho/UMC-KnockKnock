@@ -20,24 +20,6 @@ extension UIButton {
 }
 
 
-extension UIViewController{
-    func setNavigationBar(){
-        //UINavigationBar.appearance().isTranslucent = false
-        self.navigationController?.navigationBar.topItem?.backButtonTitle = ""
-        self.navigationController?.navigationBar.tintColor = .black
-        
-        //let navigationBar = self.navigationController!.navigationBar
-        //let appearance = UINavigationBarAppearance()
-        //appearance.titleTextAttributes = [.font: UIFont.boldSystemFont(ofSize: 20)]
-        
-        //navigationBar.standardAppearance = appearance
-        //navigationBar.compactAppearance = appearance
-        //navigationBar.scrollEdgeAppearance = appearance
-        
-        //navigatioinBar Custom 필요 -> 크기 수정
-    }
-}
-
 
 extension UITextField {
   func addLeftPadding() {
@@ -65,6 +47,24 @@ extension UIImage {
 }
 
 extension UIViewController {
+    
+    func setNavigationBar(){
+        //UINavigationBar.appearance().isTranslucent = false
+        self.navigationController?.navigationBar.topItem?.backButtonTitle = ""
+        self.navigationController?.navigationBar.tintColor = .black
+        
+        //let navigationBar = self.navigationController!.navigationBar
+        //let appearance = UINavigationBarAppearance()
+        //appearance.titleTextAttributes = [.font: UIFont.boldSystemFont(ofSize: 20)]
+        
+        //navigationBar.standardAppearance = appearance
+        //navigationBar.compactAppearance = appearance
+        //navigationBar.scrollEdgeAppearance = appearance
+        
+        //navigatioinBar Custom 필요 -> 크기 수정
+    }
+    
+    
     func setNextBtn(view : UIViewController, title : String) -> UIButton{
         let nextBtn : UIButton = {
            let nextbtn = UIButton()
@@ -94,4 +94,52 @@ extension UIViewController {
         return nextBtn
     }
     
+
+    func setSearchBar(VC : UIViewController, title : String) -> UISearchBar{
+        let searchBar : UISearchBar = {
+            let searchBar = UISearchBar()
+
+            searchBar.placeholder = "친구를 검색해주세요!"
+            searchBar.isTranslucent = false
+            searchBar.searchBarStyle = .minimal
+            searchBar.searchTextField.backgroundColor = .white
+            searchBar.setSearchFieldBackgroundImage(UIImage(), for: .normal)
+            searchBar.searchTextField.layer.cornerRadius = 20
+            searchBar.searchTextField.layer.masksToBounds = true
+            searchBar.setImage(UIImage(systemName: "magnifyingglass", withConfiguration: UIImage.SymbolConfiguration(paletteColors: [#colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)])),
+                                     for: .search, state: .normal)
+
+            searchBar.layer.shadowColor = UIColor.black.cgColor
+            searchBar.layer.shadowOffset = CGSize(width: 0, height: 2)
+            searchBar.layer.shadowRadius = 4
+            searchBar.layer.shadowOpacity = 0.3
+            return searchBar
+        }()
+
+        VC.view.addSubview(searchBar)
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
+
+        return searchBar
+    }
+
+}
+
+
+extension UILabel {
+    //템플릿에 사용
+    //라벨 누르면 텍스트 복사
+    
+    func CopyOnLabel() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(labelTapped(sender:)))
+        
+        self.isUserInteractionEnabled = true
+        self.addGestureRecognizer(tapGesture) // tapGestureRecognizer를 라벨에 붙인다.
+    }
+    
+    @objc private func labelTapped(sender: UITapGestureRecognizer) {
+        guard let label = sender.view as? UILabel else {
+            return
+        }
+        UIPasteboard.general.string = label.text // 텍스트가 복사됨
+    }
 }

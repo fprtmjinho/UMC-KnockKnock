@@ -10,44 +10,22 @@ import Contacts
 class GetInformationVC : UIViewController {
     
     var addBtn : UIButton = UIButton()
-    
-    let searchFriendBar : UISearchBar = {
-       let searchFriendBar = UISearchBar()
-        
-        searchFriendBar.placeholder = "친구를 검색해주세요!"
-        searchFriendBar.isTranslucent = false
-        searchFriendBar.searchBarStyle = .minimal
-        searchFriendBar.searchTextField.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
-        searchFriendBar.setSearchFieldBackgroundImage(UIImage(), for: .normal)
-        searchFriendBar.searchTextField.layer.cornerRadius = 20
-        searchFriendBar.searchTextField.layer.masksToBounds = true
-        searchFriendBar.setImage(UIImage(systemName: "magnifyingglass", withConfiguration: UIImage.SymbolConfiguration(paletteColors: [#colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)])),
-                                 for: .search, state: .normal)
-      
-        return searchFriendBar
-    }()
-
-    
+    var searchFriendBar : UISearchBar = UISearchBar()
+ 
     
     func makeSubView(){
-        view.addSubview(searchFriendBar)
+        addBtn = setNextBtn(view: self, title: "추가하기")
+        searchFriendBar = setSearchBar(VC: self, title: "친구를 입력해주세요!")
     }
     
     func makeConstraint(){
-        searchFriendBar.translatesAutoresizingMaskIntoConstraints = false
-        
+       
         NSLayoutConstraint.activate([
-            searchFriendBar.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             searchFriendBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40),
             searchFriendBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             searchFriendBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
             searchFriendBar.heightAnchor.constraint(equalToConstant: 45),
-            
-            addBtn.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
-            addBtn.heightAnchor.constraint(equalToConstant: 50),
-            addBtn.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            addBtn.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30)
-        ])
+            ])
     }
     var contacts: NSMutableArray = NSMutableArray()
 
@@ -137,7 +115,6 @@ class GetInformationVC : UIViewController {
         view.backgroundColor = .white
         self.title = "주소록 불러오기"
         setNavigationBar()
-        addBtn = setNextBtn(view: self, title: "추가하기")
         makeSubView()
         makeConstraint()
         downloadNumberBook()

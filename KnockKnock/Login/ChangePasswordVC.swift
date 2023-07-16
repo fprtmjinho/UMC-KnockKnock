@@ -55,6 +55,7 @@ class ChangePasswordVC : UIViewController {
         view.addSubview(passwordText)
         view.addSubview(passwordCheckLabel)
         view.addSubview(passwordCheckText)
+        changePasswordBtn = setNextBtn(view: self, title: "비밀번호 변경")
     }
     
     func makeConstraint(){
@@ -95,7 +96,6 @@ class ChangePasswordVC : UIViewController {
         view.backgroundColor = .white
         setNavigationBar()
         self.title = "비밀번호 변경"
-        changePasswordBtn = setNextBtn(view: self, title: "비밀번호 변경")
         
         makeSubView()
         makeConstraint()

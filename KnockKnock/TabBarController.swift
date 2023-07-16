@@ -20,10 +20,9 @@ class TabBarController : UITabBarController {
             items[0].image = UIImage(named: "SearchUnselected")?.resizeImageTo(size: CGSize(width: 35, height: 35))
             items[1].image = UIImage(named: "FriendUnselected")?.resizeImageTo(size: CGSize(width: 35, height: 35))
             items[2].image = UIImage(named: "CommunityUnselected")?.resizeImageTo(size: CGSize(width: 35, height: 35))
-            items[3].image = UIImage(named: "MyPageUnselected")?.resizeImageTo(size: CGSize(width: 35, height: 35))
+            items[3].image = UIImage(systemName: "person.crop.circle")?.resizeImageTo(size: CGSize(width: 35, height: 35))
             //items[1].image = UIImage(systemName: "person.2")
             //items[2].image = UIImage(systemName: "list.clipboard")
-            //items[3].image = UIImage(systemName: "person.crop.square")
             
             items[0].title = "친구찾기"
             items[1].title = "찐친관리"

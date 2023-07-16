@@ -14,10 +14,8 @@ class MyPage : UIView{
         name.text = "Name"
         name.textAlignment = .center
         name.font = .systemFont(ofSize: 16)
-        //두께 및 크기 조정
         name.backgroundColor = .white
         name.textColor = .black
-
         return name
     }()
     
@@ -26,10 +24,7 @@ class MyPage : UIView{
        var profileView = UIImageView()
         let config = UIImage.SymbolConfiguration(paletteColors: [#colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)])
         profileView.image = UIImage(systemName: "person.circle.fill", withConfiguration: config)
-        
-        //profileView.image!.withTintColor(UIColor.systemGray2)
         profileView.layer.cornerRadius = 40
-        
         return profileView
     }()
     
@@ -122,7 +117,12 @@ class MyPage : UIView{
     
     func makeAddTarget(){
         self.editBtn.addTarget(self, action: #selector(editBtnPressed(_:)), for: .touchUpInside)
+        self.copyBtn.addTarget(self, action: #selector(pasteText(_:)), for: .touchUpInside)
     }
+    
+    @objc func pasteText(_ sender: Any) {
+              UIPasteboard.general.string = myText.text
+          }
     
     @objc func editBtnPressed(_: UIButton) {
         let editVC = EditMyPageVC()

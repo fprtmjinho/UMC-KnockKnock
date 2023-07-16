@@ -31,7 +31,7 @@ class LoginAddFriendVC : AllowApproachVC {
        view.addSubview(titleLabel)
        view.addSubview(subtitleLabel)
        view.addSubview(searchFriendBar)
-       
+       nextBtn = setNextBtn(view: self, title: "다음")
     }
     
     override func makeConstraint(){
@@ -119,7 +119,6 @@ class LoginAddFriendVC : AllowApproachVC {
         downloadNumberBook()
         
         setTableView()
-        nextBtn = setNextBtn(view: self, title: "다음")
         makeSubView()
         makeConstraint()
         makeAddTarget()

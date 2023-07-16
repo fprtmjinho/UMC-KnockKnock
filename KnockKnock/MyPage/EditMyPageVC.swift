@@ -6,13 +6,10 @@
 //
 
 import UIKit
-class EditMyPageVC : UIViewController {
+class EditMyPageVC : EditProfileVC {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setNavigationBar()
-        view.backgroundColor = .white
-        self.title = "편집"
         
         
     }

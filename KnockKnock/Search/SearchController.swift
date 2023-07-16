@@ -8,6 +8,8 @@ import UIKit
 class SearchController : UIViewController{
     //친구 찾기 페이지
     
+    var searchFriendBar : UISearchBar = UISearchBar()
+    
     let backgroundView: UIView = {
         let backgroundView = UIView()
         let gradientLayer = CAGradientLayer()
@@ -41,36 +43,13 @@ class SearchController : UIViewController{
         return label2
     }()
     
-    let searchFriendBar : UISearchBar = {
-        let searchFriendBar = UISearchBar()
-        
-        searchFriendBar.placeholder = "친구를 검색해주세요!"
-        searchFriendBar.isTranslucent = false
-        searchFriendBar.searchBarStyle = .minimal
-        searchFriendBar.searchTextField.backgroundColor = .white
-        searchFriendBar.setSearchFieldBackgroundImage(UIImage(), for: .normal)
-        searchFriendBar.searchTextField.layer.cornerRadius = 20
-        searchFriendBar.searchTextField.layer.masksToBounds = true
-        searchFriendBar.setImage(UIImage(systemName: "magnifyingglass", withConfiguration: UIImage.SymbolConfiguration(paletteColors: [#colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)])),
-                                 for: .search, state: .normal)
-        
-        searchFriendBar.layer.shadowColor = UIColor.black.cgColor
-            searchFriendBar.layer.shadowOffset = CGSize(width: 0, height: 2)
-            searchFriendBar.layer.shadowRadius = 4
-            searchFriendBar.layer.shadowOpacity = 0.3
-        
-        return searchFriendBar
-    }()
-    //custom 필요
-    
-    
     
     
     func makeSubView(){
         view.addSubview(backgroundView)
         view.addSubview(Label1)
         view.addSubview(Label2)
-        view.addSubview(searchFriendBar)
+        searchFriendBar = setSearchBar(VC: self, title: "친구를 검색해주세요!")
         
     }
     
@@ -78,7 +57,6 @@ class SearchController : UIViewController{
         backgroundView.translatesAutoresizingMaskIntoConstraints = false
         Label1.translatesAutoresizingMaskIntoConstraints = false
         Label2.translatesAutoresizingMaskIntoConstraints = false
-        searchFriendBar.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             backgroundView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -91,13 +69,9 @@ class SearchController : UIViewController{
             Label2.topAnchor.constraint(equalTo: Label1.bottomAnchor, constant: 10),
             Label2.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             
-            
-            searchFriendBar.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             searchFriendBar.centerYAnchor.constraint(equalTo: backgroundView.bottomAnchor),
             searchFriendBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             searchFriendBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
-            
-            
             
         ])
         
@@ -112,7 +86,9 @@ class SearchController : UIViewController{
     var date: Array<String> = []
     
     func makeAddTarget(){
+        searchFriendBar.searchTextField.addTarget(self, action: #selector(searchFriend(_:)), for: .editingChanged)
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigationBar()
@@ -124,7 +100,6 @@ class SearchController : UIViewController{
         setTableView()
         makeAddTarget()
         setTitle()
-        searchFriendBar.searchTextField.addTarget(self, action: #selector(searchFriend(_:)), for: .editingChanged)
         
     }
     override func viewWillAppear(_ animated: Bool) {

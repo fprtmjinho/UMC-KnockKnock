@@ -119,6 +119,7 @@ class LoginFirstVC : UIViewController {
         view.addSubview(num3)
         view.addSubview(birthdayLabel)
         view.addSubview(birthdayText)
+        nextBtn = setNextBtn(view: self, title: "다음")
     }
     
     
@@ -196,7 +197,6 @@ class LoginFirstVC : UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setNavigationBar()
-        nextBtn = setNextBtn(view: self, title: "다음")
         makeSubView()
         makeConstraint()
         makeAddTarget()
