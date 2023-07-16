@@ -163,9 +163,15 @@ extension GoodVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 300 // Set the height of each row, can be modified as needed
+        return 300 // 행 높이
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let postVC = PostVC()
+        postVC.categoryValue = true // 선 게시판
+        postVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(postVC, animated: true)
+        }
 }
 
 class CustomCell: UITableViewCell {
@@ -325,6 +331,8 @@ class CustomCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         makeSubView()
         makeConstraint()
+        
+        self.selectionStyle = .none
     }
     
     required init?(coder aDecoder: NSCoder) {

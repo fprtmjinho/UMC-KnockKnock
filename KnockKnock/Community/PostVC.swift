@@ -9,6 +9,8 @@ import UIKit
 
 class PostVC: UIViewController {
     
+    var categoryValue: Bool! // 게시판 종류
+    
     // 테이블 뷰 관련: post, comment, tableView
     // post(스트럭트 맨아래 있음)
     var post: Post = Post(profile: UIImage(named: "karim")!,
@@ -145,9 +147,8 @@ class PostVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "게시판"
+        self.title = categoryValue ? "선 게시판" : "악 게시판"
         view.backgroundColor = .white
-        
         makeSubView()
         makeConstraint()
     }
@@ -180,6 +181,7 @@ extension PostVC: UITableViewDelegate, UITableViewDataSource {
             cell.configureCell(with: post)
             cell.makeSubView()
             cell.makeConstraint()
+            cell.selectionStyle = .none
             return cell
         } else {
             // 나머지 index일 때는 댓글
@@ -188,6 +190,7 @@ extension PostVC: UITableViewDelegate, UITableViewDataSource {
             cell.configureCell(with: comment)
             cell.makeSubView()
             cell.makeConstraint()
+            cell.selectionStyle = .none
             return cell
         }
     }
@@ -430,23 +433,4 @@ class CustomCommentCell: UITableViewCell { // 댓글 커스텀
         commentLabel.text = comment.text
         timeLabel.text = comment.time
     }
-}
-
-// 게시글, 댓글 스트럭트
-struct Post {
-    let profile: UIImage
-    let name: String
-    var title: String
-    var content: String
-    var image: UIImage?
-    let time: String
-    var likes: Int
-    var comments: Int
-}
-
-struct Comment {
-    let profile: UIImage
-    let name: String
-    var text: String
-    var time: String
 }
