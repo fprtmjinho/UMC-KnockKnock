@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00124F1B2A63CB6000536EAD /* PostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00124F1A2A63CB6000536EAD /* PostVC.swift */; };
 		0041A6ED2A61A2BF008A5048 /* WriteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0041A6EC2A61A2BF008A5048 /* WriteVC.swift */; };
 		008463F92A5D56FC009F4033 /* GoodVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008463F82A5D56FC009F4033 /* GoodVC.swift */; };
 		008463FB2A5D5713009F4033 /* BadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008463FA2A5D5713009F4033 /* BadVC.swift */; };
@@ -68,6 +69,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		00124F1A2A63CB6000536EAD /* PostVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostVC.swift; sourceTree = "<group>"; };
 		0041A6EC2A61A2BF008A5048 /* WriteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteVC.swift; sourceTree = "<group>"; };
 		008463F82A5D56FC009F4033 /* GoodVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodVC.swift; sourceTree = "<group>"; };
 		008463FA2A5D5713009F4033 /* BadVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadVC.swift; sourceTree = "<group>"; };
@@ -280,6 +282,7 @@
 				008463F82A5D56FC009F4033 /* GoodVC.swift */,
 				008463FA2A5D5713009F4033 /* BadVC.swift */,
 				0041A6EC2A61A2BF008A5048 /* WriteVC.swift */,
+				00124F1A2A63CB6000536EAD /* PostVC.swift */,
 			);
 			path = Community;
 			sourceTree = "<group>";
@@ -550,6 +553,7 @@
 				C932467B2A458D9400908D6B /* SceneDelegate.swift in Sources */,
 				C935FA7C2A5D63740035FA2C /* LoginAddFriendVC.swift in Sources */,
 				C935FA272A59BC840035FA2C /* Extension.swift in Sources */,
+				00124F1B2A63CB6000536EAD /* PostVC.swift in Sources */,
 				C935FA1F2A58264B0035FA2C /* LoginFirstVC.swift in Sources */,
 				00FD26582A5CE1520013E169 /* GuideVC.swift in Sources */,
 				C933F4552A5EFBBA0089670A /* EditMyPageVC.swift in Sources */,
