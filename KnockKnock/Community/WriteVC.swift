@@ -9,6 +9,10 @@ import UIKit
 
 class WriteVC: UIViewController {
     
+    var titleText: String? // 제목
+    var contentText: String? // 내용
+    var isAnonymousSelected = false // 익명 체크표시 상태
+    
     lazy var completeButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("완료", for: .normal)
@@ -79,8 +83,6 @@ class WriteVC: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    
-    var isAnonymousSelected = false // 익명 체크표시 상태
     
     private lazy var contentTextView: UITextView = {
         let textView = UITextView()
@@ -184,11 +186,13 @@ class WriteVC: UIViewController {
     }
     
     @objc func completeButtonTapped() {
+        titleText = titleTextField.text
+        contentText = contentTextView.text
         navigationController?.popViewController(animated: true)
     }
     
     @objc func cameraButtonTapped(_ sender: UIButton) {
-            print("카메라 버튼 탭하였음.")
+        print("카메라 버튼 탭하였음.")
     }
     
     @objc func anonymousImageButtonTapped(_ sender: UIButton) {
