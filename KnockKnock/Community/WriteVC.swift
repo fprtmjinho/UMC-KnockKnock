@@ -12,6 +12,7 @@ class WriteVC: UIViewController {
     var titleText: String? // 제목
     var contentText: String? // 내용
     var isAnonymousSelected = false // 익명 체크표시 상태
+    var index: Int? // 게시판 종류
     
     lazy var completeButton: UIButton = {
         let button = UIButton(type: .system)

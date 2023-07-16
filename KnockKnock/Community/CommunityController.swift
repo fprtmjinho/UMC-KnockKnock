@@ -168,6 +168,7 @@ class CommunityController: TabmanViewController {
     
     @objc func writeButtonTapped(_ sender: UIButton) {
         let writeVC = WriteVC()
+        writeVC.index = currentIndex
         writeVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(writeVC, animated: true)
     }
