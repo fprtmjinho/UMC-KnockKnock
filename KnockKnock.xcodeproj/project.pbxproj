@@ -19,7 +19,6 @@
 		A03FCBDF335C0C3DB9E2996A /* Pods_KnockKnock_KnockKnockUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CCA9364B9CDF4746D0ED496 /* Pods_KnockKnock_KnockKnockUITests.framework */; };
 		C9229C8C2A6441A70017A45C /* AddBFVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9229C8B2A6441A70017A45C /* AddBFVC.swift */; };
 		C9229C8E2A6441DB0017A45C /* AddGroupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9229C8D2A6441DB0017A45C /* AddGroupVC.swift */; };
-		C9229C902A6445C10017A45C /* EditProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9229C8F2A6445C10017A45C /* EditProfileVC.swift */; };
 		C9229C922A644B270017A45C /* ToChangePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9229C912A644B270017A45C /* ToChangePasswordVC.swift */; };
 		C93246792A458D9400908D6B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93246782A458D9400908D6B /* AppDelegate.swift */; };
 		C932467B2A458D9400908D6B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C932467A2A458D9400908D6B /* SceneDelegate.swift */; };
@@ -92,7 +91,6 @@
 		9F6EB3B7CE57E21F8C0FA341 /* Pods-KnockKnockTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KnockKnockTests.debug.xcconfig"; path = "Target Support Files/Pods-KnockKnockTests/Pods-KnockKnockTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C9229C8B2A6441A70017A45C /* AddBFVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBFVC.swift; sourceTree = "<group>"; };
 		C9229C8D2A6441DB0017A45C /* AddGroupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupVC.swift; sourceTree = "<group>"; };
-		C9229C8F2A6445C10017A45C /* EditProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileVC.swift; sourceTree = "<group>"; };
 		C9229C912A644B270017A45C /* ToChangePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToChangePasswordVC.swift; sourceTree = "<group>"; };
 		C93246752A458D9400908D6B /* KnockKnock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KnockKnock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C93246782A458D9400908D6B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -280,7 +278,6 @@
 				C93246BE2A48313000908D6B /* SearchController.swift */,
 				C935FA2E2A59D0EA0035FA2C /* AddFriendVC.swift */,
 				C935FA302A5A52730035FA2C /* FriendProfileVC.swift */,
-				C9229C8F2A6445C10017A45C /* EditProfileVC.swift */,
 				C935FA322A5BC6C50035FA2C /* AddAlarmVC.swift */,
 				C935FA732A5BE56D0035FA2C /* TextGuideVC.swift */,
 				E91EE27D2A5C9B24003D6E5C /* GetInformationVC.swift */,
@@ -587,7 +584,6 @@
 				C935FA1F2A58264B0035FA2C /* LoginFirstVC.swift in Sources */,
 				00FD26582A5CE1520013E169 /* GuideVC.swift in Sources */,
 				C933F4552A5EFBBA0089670A /* EditMyPageVC.swift in Sources */,
-				C9229C902A6445C10017A45C /* EditProfileVC.swift in Sources */,
 				C935FA252A59475A0035FA2C /* LoginSuccessVC.swift in Sources */,
 				C93246BF2A48313000908D6B /* SearchController.swift in Sources */,
 				C935FA802A5D74980035FA2C /* AllowApproachVC.swift in Sources */,
