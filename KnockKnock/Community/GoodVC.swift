@@ -42,7 +42,7 @@ class GoodVC: UIViewController {
         return tableView
     }()
     
-    var row: [(profile: UIImage?, title: String, text: String, image: UIImage?, like: Int, chat: Int)] = [(#imageLiteral(resourceName: "kb9"), "혼자 방콕여행 어떻게 생각해?", "긴 문장 테스트: 성수는 기독교에서 중요한 예식인 세례를 위해 성별되도록 성직자가 축복한 물이다. 원래 초기 보편교회 시절에는 세례수만을 의미했지만 현재는 동방교회와 서방교회에서", #imageLiteral(resourceName: "beach"), 17, 7), (#imageLiteral(resourceName: "kb9"), "혼자 미국여행 어떻게 생각해?", "짧은 문장 테스트", #imageLiteral(resourceName: "beach"), 10, 5), (#imageLiteral(resourceName: "kb9"), "긴 제목 테스트: 혼자 일본여행 어떻게 생각해?", "성수는 기독교에서 중요한 예식인 세례를 위해 성별되도록 성직자가 축복한 물이다. 원래 초기 보편교회 시절에는 세례수만을 의미했지만 현재는 동방교회와 서방교회에서", #imageLiteral(resourceName: "beach"), 13, 2)] // Updated row data
+    var row: [(profile: UIImage?, title: String, text: String, image: UIImage?, like: Int, chat: Int)] = [(UIImage(named: "karim"), "혼자 방콕여행 어떻게 생각해?", "긴 문장 테스트: 성수는 기독교에서 중요한 예식인 세례를 위해 성별되도록 성직자가 축복한 물이다. 원래 초기 보편교회 시절에는 세례수만을 의미했지만 현재는 동방교회와 서방교회에서", #imageLiteral(resourceName: "beach"), 17, 7), (UIImage(named: "toni"), "혼자 미국여행 어떻게 생각해?", "짧은 문장 테스트", #imageLiteral(resourceName: "beach"), 10, 5), (UIImage(named: "sergio"), "긴 제목 테스트: 혼자 일본여행 어떻게 생각해?", "성수는 기독교에서 중요한 예식인 세례를 위해 성별되도록 성직자가 축복한 물이다. 원래 초기 보편교회 시절에는 세례수만을 의미했지만 현재는 동방교회와 서방교회에서", #imageLiteral(resourceName: "beach"), 13, 2)]
     
     
     func makeSubView() {
@@ -163,9 +163,15 @@ extension GoodVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 300 // Set the height of each row, can be modified as needed
+        return 300 // 행 높이
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let postVC = PostVC()
+        postVC.categoryValue = true // 선 게시판
+        postVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(postVC, animated: true)
+        }
 }
 
 class CustomCell: UITableViewCell {
@@ -325,6 +331,8 @@ class CustomCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         makeSubView()
         makeConstraint()
+        
+        self.selectionStyle = .none
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00124F1B2A63CB6000536EAD /* PostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00124F1A2A63CB6000536EAD /* PostVC.swift */; };
+		00124F1E2A643B7600536EAD /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00124F1D2A643B7600536EAD /* Post.swift */; };
+		0041A6ED2A61A2BF008A5048 /* WriteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0041A6EC2A61A2BF008A5048 /* WriteVC.swift */; };
 		008463F92A5D56FC009F4033 /* GoodVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008463F82A5D56FC009F4033 /* GoodVC.swift */; };
 		008463FB2A5D5713009F4033 /* BadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008463FA2A5D5713009F4033 /* BadVC.swift */; };
 		008463FD2A5D93BF009F4033 /* FriendListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008463FC2A5D93BF009F4033 /* FriendListVC.swift */; };
@@ -72,6 +75,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		00124F1A2A63CB6000536EAD /* PostVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostVC.swift; sourceTree = "<group>"; };
+		00124F1D2A643B7600536EAD /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		0041A6EC2A61A2BF008A5048 /* WriteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteVC.swift; sourceTree = "<group>"; };
 		008463F82A5D56FC009F4033 /* GoodVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodVC.swift; sourceTree = "<group>"; };
 		008463FA2A5D5713009F4033 /* BadVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadVC.swift; sourceTree = "<group>"; };
 		008463FC2A5D93BF009F4033 /* FriendListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListVC.swift; sourceTree = "<group>"; };
@@ -157,6 +163,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		00124F1C2A643ABA00536EAD /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				00124F1D2A643B7600536EAD /* Post.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		A9947B0D0B86855B34D2DECF /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -205,6 +219,7 @@
 				C935FA282A59BD860035FA2C /* Friend */,
 				C935FA2B2A59BDE10035FA2C /* Community */,
 				C935FA2A2A59BDD90035FA2C /* MyPage */,
+				00124F1C2A643ABA00536EAD /* Model */,
 				C93246842A458D9600908D6B /* Assets.xcassets */,
 				C93246862A458D9600908D6B /* LaunchScreen.storyboard */,
 				C93246892A458D9600908D6B /* Info.plist */,
@@ -292,6 +307,8 @@
 				C93246C42A48318B00908D6B /* CommunityController.swift */,
 				008463F82A5D56FC009F4033 /* GoodVC.swift */,
 				008463FA2A5D5713009F4033 /* BadVC.swift */,
+				0041A6EC2A61A2BF008A5048 /* WriteVC.swift */,
+				00124F1A2A63CB6000536EAD /* PostVC.swift */,
 			);
 			path = Community;
 			sourceTree = "<group>";
@@ -547,6 +564,7 @@
 				C9229C8C2A6441A70017A45C /* AddBFVC.swift in Sources */,
 				E91EE27E2A5C9B24003D6E5C /* GetInformationVC.swift in Sources */,
 				C935FA742A5BE56D0035FA2C /* TextGuideVC.swift in Sources */,
+				0041A6ED2A61A2BF008A5048 /* WriteVC.swift in Sources */,
 				C935FA232A59357B0035FA2C /* LoginSecondVC.swift in Sources */,
 				C935FA2D2A59C1B30035FA2C /* TabBarController.swift in Sources */,
 				C935FA312A5A52730035FA2C /* FriendProfileVC.swift in Sources */,
@@ -564,6 +582,8 @@
 				C932467B2A458D9400908D6B /* SceneDelegate.swift in Sources */,
 				C935FA7C2A5D63740035FA2C /* LoginAddFriendVC.swift in Sources */,
 				C935FA272A59BC840035FA2C /* Extension.swift in Sources */,
+				00124F1B2A63CB6000536EAD /* PostVC.swift in Sources */,
+				00124F1E2A643B7600536EAD /* Post.swift in Sources */,
 				C935FA1F2A58264B0035FA2C /* LoginFirstVC.swift in Sources */,
 				00FD26582A5CE1520013E169 /* GuideVC.swift in Sources */,
 				C933F4552A5EFBBA0089670A /* EditMyPageVC.swift in Sources */,
