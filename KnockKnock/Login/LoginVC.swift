@@ -155,7 +155,7 @@ class LoginVC : UIViewController {
             
             
         NSLayoutConstraint.activate([
-            Title.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 80),
+            Title.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 90),
             Title.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             Title.heightAnchor.constraint(equalToConstant: 80),
             
@@ -194,38 +194,28 @@ class LoginVC : UIViewController {
             LoginGuide_2.topAnchor.constraint(equalTo: ForgetPassword.bottomAnchor, constant: 80),
             LoginGuide_2.heightAnchor.constraint(equalToConstant: 1),
             LoginGuide_2.widthAnchor.constraint(equalToConstant: 105),
-            
-            
-            
-          
-            
-            
+         
             ForNaverBtn.topAnchor.constraint(equalTo: EasyLogin.bottomAnchor, constant: 20),
             ForNaverBtn.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             ForNaverBtn.widthAnchor.constraint(equalToConstant: 50),
             ForNaverBtn.heightAnchor.constraint(equalToConstant: 50),
-            
             
             ForKakaoBtn.topAnchor.constraint(equalTo: EasyLogin.bottomAnchor, constant: 20),
             ForKakaoBtn.trailingAnchor.constraint(equalTo: ForNaverBtn.leadingAnchor, constant: -20),
             ForKakaoBtn.widthAnchor.constraint(equalTo : ForNaverBtn.widthAnchor),
             ForKakaoBtn.heightAnchor.constraint(equalTo : ForNaverBtn.heightAnchor),
                 
-            
-
             ForGoogleBtn.topAnchor.constraint(equalTo: EasyLogin.bottomAnchor, constant: 20),
             ForGoogleBtn.leadingAnchor.constraint(equalTo: ForNaverBtn.trailingAnchor, constant: 20),
             ForGoogleBtn.widthAnchor.constraint(equalTo : ForNaverBtn.widthAnchor),
             ForGoogleBtn.heightAnchor.constraint(equalTo : ForNaverBtn.heightAnchor),
                 
                 
-                
-                
-            NotYet.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 70),
+            NotYet.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 90),
             NotYet.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30),
             SignUp.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30),
             SignUp.leadingAnchor.constraint(equalTo: NotYet.trailingAnchor),
-            SignUp.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -70)
+            SignUp.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -90)
         ])
             
         

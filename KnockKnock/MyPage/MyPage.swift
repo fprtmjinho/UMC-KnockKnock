@@ -86,12 +86,10 @@ class MyPage : UIView{
         Name.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
         Name.topAnchor.constraint(equalTo: ProfileView.bottomAnchor, constant: 7),
         editBtn.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-        editBtn.topAnchor.constraint(equalTo: Name.bottomAnchor, constant: 3),
-        //editBtn.heightAnchor.constraint(equalToConstant: 10),
+        editBtn.topAnchor.constraint(equalTo: Name.bottomAnchor, constant: 2),
         
         textTitle.topAnchor.constraint(equalTo: editBtn.bottomAnchor, constant: 40),
         textTitle.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 30),
-        myText.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
         myText.topAnchor.constraint(equalTo: textTitle.bottomAnchor, constant: 8),
         myText.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 30),
         myText.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -30),
@@ -116,18 +114,12 @@ class MyPage : UIView{
     }
     
     func makeAddTarget(){
-        self.editBtn.addTarget(self, action: #selector(editBtnPressed(_:)), for: .touchUpInside)
         self.copyBtn.addTarget(self, action: #selector(pasteText(_:)), for: .touchUpInside)
     }
     
     @objc func pasteText(_ sender: Any) {
               UIPasteboard.general.string = myText.text
           }
-    
-    @objc func editBtnPressed(_: UIButton) {
-        let editVC = EditMyPageVC()
-       
-    }
    
     
     override init(frame: CGRect) {

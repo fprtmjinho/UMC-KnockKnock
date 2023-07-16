@@ -29,7 +29,7 @@ class FindPasswordVC : UIViewController{
     
     let emailBtn : UIButton = {
        let btn = UIButton()
-        var title = AttributedString("재설정 링크 전송하기")
+        var title = AttributedString("이메일로 인증코드 보내기")
         title.font =  UIFont.systemFont(ofSize: 15, weight: .semibold)
         var config = UIButton.Configuration.filled()
         config.attributedTitle = title
@@ -58,11 +58,12 @@ class FindPasswordVC : UIViewController{
     
     let emailCheckBtn : UIButton = {
        let btn = UIButton()
-        var title = AttributedString("코드 확인")
+        var title = AttributedString("확인하기")
         title.font =  UIFont.systemFont(ofSize: 15, weight: .semibold)
         var config = UIButton.Configuration.filled()
         config.attributedTitle = title
-        config.baseBackgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+        config.baseBackgroundColor = .systemGray6
+        config.baseForegroundColor = .systemGray
         config.cornerStyle = .capsule
         btn.configuration = config
         return btn
@@ -121,13 +122,9 @@ class FindPasswordVC : UIViewController{
     }
     
     func makeAddTarget(){
-        self.nextBtn.addTarget(self, action: #selector(nextView(_:)), for: .touchUpInside)
+        self.nextBtn.addTarget(self, action: #selector(touchNextBtn(_:)), for: .touchUpInside)
     }
-    
-    @objc func nextView(_: UIButton){
-        let ChangePasswordVC = ChangePasswordVC()
-        self.navigationController?.pushViewController(ChangePasswordVC, animated: true)
-    }
+ 
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -139,6 +136,73 @@ class FindPasswordVC : UIViewController{
         makeSubView()
         makeConstraint()
         makeAddTarget()
+    }
+    
+    var emailForCode : String = ""
+       var code : String = ""
+
+
+       @objc func touchNextBtn(_: UIButton){
+
+           if let emailtext = emailText.text{
+               emailForCode = emailtext
+           }
+           if let codetext = emailCheckText.text{
+               code = codetext
+           }
+
+           let checkOne: Bool = emailCheck()
+           let checkTwo: Bool = codeCheck()
+           if(checkOne||checkTwo){
+               return
+           }
+
+           // 데이터 저장
+           //UserDefaults.standard.set(emailForCode, forKey: "email")
+           //UserDefaults.standard.set(code, forKey: "code")
+           // 데이터 동기화
+           UserDefaults.standard.synchronize()
+
+           nextView()
+           //인증 완료해야 다음 버튼 활성화
+       }
+
+       //emailCheck
+       func emailCheck() -> Bool{
+           if(emailForCode == ""){
+               emailBtn.configuration?.baseBackgroundColor = .systemGray6
+               emailBtn.configuration?.baseForegroundColor = .systemGray
+               return true
+           }
+           else{
+               emailBtn.configuration?.baseBackgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+               emailBtn.configuration?.baseForegroundColor = .white
+               return false
+           }
+
+       }
+
+       //codeCheck
+       func codeCheck() -> Bool{
+           if(code == ""){
+               //코드 입력 전
+               emailCheckBtn.configuration?.baseBackgroundColor = .systemGray6
+               emailCheckBtn.configuration?.baseForegroundColor = .systemGray
+               return true
+           }
+           else{
+               //코드가 일치하면
+               emailCheckBtn.configuration?.baseBackgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+               emailCheckBtn.configuration?.baseForegroundColor = .white
+               return false
+           }
+
+       }
+    
+    
+    @objc func nextView(){
+        let ChangePasswordVC = ChangePasswordVC()
+        self.navigationController?.pushViewController(ChangePasswordVC, animated: true)
     }
     
 }

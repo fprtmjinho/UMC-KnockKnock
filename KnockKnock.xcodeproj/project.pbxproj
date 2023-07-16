@@ -17,6 +17,7 @@
 		C9229C8C2A6441A70017A45C /* AddBFVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9229C8B2A6441A70017A45C /* AddBFVC.swift */; };
 		C9229C8E2A6441DB0017A45C /* AddGroupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9229C8D2A6441DB0017A45C /* AddGroupVC.swift */; };
 		C9229C902A6445C10017A45C /* EditProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9229C8F2A6445C10017A45C /* EditProfileVC.swift */; };
+		C9229C922A644B270017A45C /* ToChangePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9229C912A644B270017A45C /* ToChangePasswordVC.swift */; };
 		C93246792A458D9400908D6B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93246782A458D9400908D6B /* AppDelegate.swift */; };
 		C932467B2A458D9400908D6B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C932467A2A458D9400908D6B /* SceneDelegate.swift */; };
 		C93246832A458D9400908D6B /* KnockKnock.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C93246812A458D9400908D6B /* KnockKnock.xcdatamodeld */; };
@@ -86,6 +87,7 @@
 		C9229C8B2A6441A70017A45C /* AddBFVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBFVC.swift; sourceTree = "<group>"; };
 		C9229C8D2A6441DB0017A45C /* AddGroupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupVC.swift; sourceTree = "<group>"; };
 		C9229C8F2A6445C10017A45C /* EditProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileVC.swift; sourceTree = "<group>"; };
+		C9229C912A644B270017A45C /* ToChangePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToChangePasswordVC.swift; sourceTree = "<group>"; };
 		C93246752A458D9400908D6B /* KnockKnock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KnockKnock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C93246782A458D9400908D6B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C932467A2A458D9400908D6B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 			children = (
 				C935FA202A58656C0035FA2C /* LoginVC.swift */,
 				C935FA852A5EB6010035FA2C /* FindPasswordVC.swift */,
+				C9229C912A644B270017A45C /* ToChangePasswordVC.swift */,
 				C98C4DF92A6120C00001BEAB /* ChangePasswordVC.swift */,
 				C935FA1E2A58264B0035FA2C /* LoginFirstVC.swift */,
 				C935FA222A59357B0035FA2C /* LoginSecondVC.swift */,
@@ -557,6 +560,7 @@
 				C93246C32A48317800908D6B /* FriendController.swift in Sources */,
 				C935FA7E2A5D63840035FA2C /* LoginAddBestFriendVC.swift in Sources */,
 				C93246792A458D9400908D6B /* AppDelegate.swift in Sources */,
+				C9229C922A644B270017A45C /* ToChangePasswordVC.swift in Sources */,
 				C932467B2A458D9400908D6B /* SceneDelegate.swift in Sources */,
 				C935FA7C2A5D63740035FA2C /* LoginAddFriendVC.swift in Sources */,
 				C935FA272A59BC840035FA2C /* Extension.swift in Sources */,
