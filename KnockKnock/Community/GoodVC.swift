@@ -170,6 +170,8 @@ extension GoodVC: UITableViewDelegate, UITableViewDataSource {
         postVC.post.title = post[indexPath.row].title
         postVC.post.content = post[indexPath.row].content
         postVC.post.image = post[indexPath.row].image
+        postVC.post.likes = post[indexPath.row].likes
+        postVC.post.likes = post[indexPath.row].likes
         postVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(postVC, animated: true)
     }
