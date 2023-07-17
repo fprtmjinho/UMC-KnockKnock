@@ -48,6 +48,7 @@ class GetInformationVC : UIViewController {
     let fre = Friends.shared
     
     var friendName: Array<String> = []
+    var friendNickName: Array<String> = []
     var friendNumber: Array<String> = []
     var friendBest: Array<Bool> = []
     var friendAlram: Array<Bool> = []
@@ -56,6 +57,7 @@ class GetInformationVC : UIViewController {
     //numberArray
     var contacts: NSMutableArray = NSMutableArray()
     var nameList: Array<String> = []
+    var nickNameList: Array<String> = []
     var familyNameList: Array<String> = []
     var numberList: Array<String> = []
     var checked: Array<Bool> = []
@@ -82,8 +84,11 @@ class GetInformationVC : UIViewController {
     }
     @objc func getData(){
         friendName = fre.name
+        friendNickName = fre.nickName
         friendNumber = fre.number
         friendBest = fre.bestFriend
+        friendAlram = fre.alram
+        friendTime = fre.time
     }
 }
 extension GetInformationVC : UITableViewDelegate, UITableViewDataSource {
@@ -117,6 +122,7 @@ extension GetInformationVC : UITableViewDelegate, UITableViewDataSource {
             cell?.accessoryView = UIImageView(image:selectedImage)
             checked[indexPath.row]=true
             friendName.append(familyNameList[indexPath.row]+nameList[indexPath.row])
+            friendNickName.append("")
             friendNumber.append(numberList[indexPath.row])
             friendBest.append(false)
             friendAlram.append(true)
@@ -126,11 +132,18 @@ extension GetInformationVC : UITableViewDelegate, UITableViewDataSource {
             checked[indexPath.row]=false
             var index = friendNumber.firstIndex(of: numberList[indexPath.row])
             friendName.remove(at: index!)
+            friendNickName.remove(at: index!)
             friendNumber.remove(at: index!)
             friendBest.remove(at: index!)
             friendTime.remove(at: index!)
             friendAlram.remove(at: index!)
         }
+        //아래는 추가버튼 보이면 없앨 예정
+        fre.name = friendName
+        fre.number = friendNumber
+        fre.bestFriend = friendBest
+        fre.time = friendTime
+        fre.alram = friendAlram
     }
     
     

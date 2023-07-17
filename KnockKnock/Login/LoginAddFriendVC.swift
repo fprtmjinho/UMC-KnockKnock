@@ -76,6 +76,7 @@ class LoginAddFriendVC : AllowApproachVC {
         }
         let fre = Friends.shared
         fre.name = addFriendList
+        fre.nickName = nickNameList
         fre.number = addNumberList
         fre.alram = alram
         fre.time = date
@@ -88,6 +89,7 @@ class LoginAddFriendVC : AllowApproachVC {
     var nameList: Array<String> = []
     var familyNameList: Array<String> = []
     var numberList: Array<String> = []
+    var nickNameList: Array<String> = []
     var checked: Array<Bool> = []
     var alram: Array<Bool> = []
     var date: Array<String> = []
@@ -270,6 +272,7 @@ extension LoginAddFriendVC {
                 let familyName = contact.familyName
                 let phoneNumbers = contact.phoneNumbers.map { $0.value.stringValue }[0]
                 nameList.append(givenName)
+                nickNameList.append("")
                 familyNameList.append(familyName)
                 numberList.append(phoneNumbers)
                 checked.append(false)

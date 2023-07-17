@@ -10,6 +10,7 @@ class Friends {
     static let shared = Friends()
     
     var name: Array<String> = []
+    var nickName: Array<String> = []
     var number: Array<String> = []
     var bestFriend: Array<Bool> = []
     var alram: Array<Bool> = []
