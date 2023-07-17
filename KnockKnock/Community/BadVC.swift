@@ -163,7 +163,14 @@ extension BadVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 300 // 행 높이
+        let rowData = row[indexPath.row]
+        
+        // 만약 cell.imageView가 nil일 때
+        if rowData.image == nil {
+            return 135
+        } else { // nil이 아닐 때
+            return 300
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -171,5 +178,5 @@ extension BadVC: UITableViewDelegate, UITableViewDataSource {
         postVC.categoryValue = false // 악 게시판
         postVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(postVC, animated: true)
-        }
+    }
 }
