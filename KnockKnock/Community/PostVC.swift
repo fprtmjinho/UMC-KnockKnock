@@ -38,7 +38,7 @@ class PostVC: UIViewController {
     ]
     
     let tableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .grouped)
+        let tableView = UITableView()
         tableView.backgroundColor = .white
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
@@ -111,7 +111,6 @@ class PostVC: UIViewController {
         let horizontalMargin: CGFloat = 30
         
         NSLayoutConstraint.activate([
-            
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -141,7 +140,6 @@ class PostVC: UIViewController {
             makeCommentImageButton.centerYAnchor.constraint(equalTo: commentContainerView2.centerYAnchor),
             makeCommentImageButton.widthAnchor.constraint(equalToConstant: 30),
             makeCommentImageButton.heightAnchor.constraint(equalToConstant: 30),
-            
         ])
     }
     
@@ -197,6 +195,7 @@ extension PostVC: UITableViewDelegate, UITableViewDataSource {
 }
 
 class CustomPostCell: UITableViewCell { // 게시글 커스텀
+    
     let profileImageView: UIImageView = { // 프로필 사진
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -346,7 +345,6 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
             shareButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
             shareButton.widthAnchor.constraint(equalToConstant: 20),
             shareButton.heightAnchor.constraint(equalToConstant: 20)
-            
         ])
         
     }
@@ -361,9 +359,11 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
         likesLabel.text = "\(post.likes)"
         commentsLabel.text = "\(post.comments)"
     }
+    
 }
 
 class CustomCommentCell: UITableViewCell { // 댓글 커스텀
+    
     let profileImageView: UIImageView = { // 프로필 사진
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -433,4 +433,5 @@ class CustomCommentCell: UITableViewCell { // 댓글 커스텀
         commentLabel.text = comment.text
         timeLabel.text = comment.time
     }
+    
 }
