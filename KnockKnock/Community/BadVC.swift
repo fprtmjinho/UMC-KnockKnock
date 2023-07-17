@@ -165,7 +165,11 @@ extension BadVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let postVC = PostVC()
-        postVC.categoryValue = true // 선 게시판
+        postVC.categoryValue = false // 악 게시판
+        postVC.post.profile = post[indexPath.row].profile
+        postVC.post.title = post[indexPath.row].title
+        postVC.post.content = post[indexPath.row].content
+        postVC.post.image = post[indexPath.row].image
         postVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(postVC, animated: true)
     }

@@ -92,13 +92,6 @@ class PostVC: UIViewController {
         tableView.register(CustomCommentCell.self, forCellReuseIdentifier: "CommentCell")
         tableView.rowHeight = UITableView.automaticDimension
         
-        if let postCell = tableView.dequeueReusableCell(withIdentifier: "PostCell") as? CustomPostCell {
-            postCell.makeSubView()
-        }
-        if let commentCell = tableView.dequeueReusableCell(withIdentifier: "CommentCell") as? CustomCommentCell {
-            commentCell.makeSubView()
-        }
-        
         view.addSubview(tableView)
         view.addSubview(commentContainerView1)
         commentContainerView1.addSubview(commentContainerView2)
@@ -177,8 +170,15 @@ extension PostVC: UITableViewDelegate, UITableViewDataSource {
             // 행의 index가 0일 때는 게시글
             let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! CustomPostCell
             cell.configureCell(with: post)
-            cell.makeSubView()
-            cell.makeConstraint()
+            cell.makeSubView1()
+            cell.makeConstraint1()
+            if post.image != nil {
+                cell.makeSubView1()
+                cell.makeConstraint1()
+            } else {
+                cell.makeSubView2()
+                cell.makeConstraint2()
+            }
             cell.selectionStyle = .none
             return cell
         } else {
@@ -275,7 +275,7 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
     }()
     
     
-    func makeSubView() {
+    func makeSubView1() { // 사진이 있는 경우
         addSubview(profileImageView)
         addSubview(nameLabel)
         addSubview(titleLabel)
@@ -288,8 +288,20 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
         addSubview(commentsLabel)
         addSubview(shareButton)
     }
+    func makeSubView2() { // 사진이 없는 경우
+        addSubview(profileImageView)
+        addSubview(nameLabel)
+        addSubview(titleLabel)
+        addSubview(contentLabel)
+        addSubview(timeLabel)
+        addSubview(likesView)
+        addSubview(likesLabel)
+        addSubview(commentsView)
+        addSubview(commentsLabel)
+        addSubview(shareButton)
+    }
     
-    func makeConstraint() {
+    func makeConstraint1() { // 사진이 있는 경우
         
         let horizontalMargin: CGFloat = 30
         let verticalMargin: CGFloat = 10
@@ -341,6 +353,61 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
             commentsLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
             
             shareButton.topAnchor.constraint(equalTo: imagesView.bottomAnchor, constant: verticalMargin),
+            shareButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -horizontalMargin),
+            shareButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
+            shareButton.widthAnchor.constraint(equalToConstant: 20),
+            shareButton.heightAnchor.constraint(equalToConstant: 20)
+        ])
+        
+    }
+    
+    func makeConstraint2() { // 사진이 없는 경우
+        
+        let horizontalMargin: CGFloat = 30
+        let verticalMargin: CGFloat = 10
+        
+        NSLayoutConstraint.activate([
+            profileImageView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+            profileImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: horizontalMargin),
+            profileImageView.widthAnchor.constraint(equalToConstant: 45),
+            profileImageView.heightAnchor.constraint(equalToConstant: 45),
+            
+            nameLabel.topAnchor.constraint(equalTo: profileImageView.topAnchor, constant: 5),
+            nameLabel.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 8),
+            nameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -horizontalMargin),
+            
+            timeLabel.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 8),
+            timeLabel.bottomAnchor.constraint(equalTo: profileImageView.bottomAnchor),
+            
+            titleLabel.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: verticalMargin),
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: horizontalMargin),
+            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -horizontalMargin),
+            
+            contentLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: verticalMargin),
+            contentLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: horizontalMargin),
+            contentLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -horizontalMargin),
+            
+            likesView.topAnchor.constraint(equalTo: contentLabel.bottomAnchor, constant: verticalMargin),
+            likesView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: horizontalMargin),
+            likesView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
+            likesView.widthAnchor.constraint(equalToConstant: 20),
+            likesView.heightAnchor.constraint(equalToConstant: 20),
+            
+            likesLabel.topAnchor.constraint(equalTo: contentLabel.bottomAnchor, constant: verticalMargin),
+            likesLabel.leadingAnchor.constraint(equalTo: likesView.trailingAnchor, constant: 10),
+            likesLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
+            
+            commentsView.topAnchor.constraint(equalTo: contentLabel.bottomAnchor, constant: verticalMargin),
+            commentsView.leadingAnchor.constraint(equalTo: likesLabel.trailingAnchor, constant: 20),
+            commentsView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
+            commentsView.widthAnchor.constraint(equalToConstant: 20),
+            commentsView.heightAnchor.constraint(equalToConstant: 20),
+            
+            commentsLabel.topAnchor.constraint(equalTo: contentLabel.bottomAnchor, constant: verticalMargin),
+            commentsLabel.leadingAnchor.constraint(equalTo: commentsView.trailingAnchor, constant: 10),
+            commentsLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
+            
+            shareButton.topAnchor.constraint(equalTo: contentLabel.bottomAnchor, constant: verticalMargin),
             shareButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -horizontalMargin),
             shareButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
             shareButton.widthAnchor.constraint(equalToConstant: 20),

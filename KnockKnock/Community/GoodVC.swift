@@ -15,7 +15,7 @@ class GoodVC: UIViewController {
         PostCategory(profile: UIImage(named: "karim")!, title: "휴가 시작!", content: "휴가 시작 와#@!#@!$!@#$#!@#!@#!@#!@#!@#!#!@#!@#!@#!@#!@#!#!@#!#@!#!@#!#@!#!#@!#!@#!#!@#!@#!#!@#!#@!#!@#!@#!@#@!#!@#!@#!#@!#@#!@#!@#!@#@!#@!#!", image: nil, likes: 7, comments: 3),
         PostCategory(profile: UIImage(named: "mesut")!, title: "성수동 카페 추천", content: "@#@!#!@#!#@!#!@#@!#!@#!#!#@#!@#!@#!#!@#!#!@#!@#!@#!#!#@!#!#!@#!@#!@#!#!#!@#!#", image: UIImage(named: "seongsu"),likes: 10, comments: 3),
         PostCategory(profile: UIImage(named: "toni")!, title: "강남역 놀거리 추천합니다", content: "@#@!#!@#!#@!#!@#@!#!@#!#!#@#!@#!@#!#!@#!#!@#!@#!@#!#!#@!#!#!@#!@#!@#!#!#!@#!#", image: UIImage(named: "gangnam"),likes: 8, comments: 3),
-        PostCategory(profile: UIImage(named: "sergio")!, title: "파리에 왔어요", content: "파리에 여행 왔어요!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!@#@!#!@#!#@!#!@#@!#!@#!#!#@#!@#!@#!#!@#!#!@#!@#!@#!#!#@!#!#!@#!@#!@#!#!#!@#!#", image: UIImage(named: "paris"),likes: 4, comments: 3),
+        PostCategory(profile: UIImage(named: "sergio")!, title: "파리에 왔어요", content: "파리에 여행왔어요!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!@#@!#!@#!#@!#!@#@!#!@#!#!#@#!@#!@#!#!@#!#!@#!@#!@#!#!#@!#!#!@#!@#!@#!#!#!@#!#", image: UIImage(named: "paris"),likes: 4, comments: 3),
     ]
     
     // 나이대 버튼 관련: buttonStackView, buttonTitles, createButtons
@@ -82,7 +82,7 @@ class GoodVC: UIViewController {
         if let postCell = tableView.dequeueReusableCell(withIdentifier: "PostCell") as? CustomCell {
             postCell.makeSubView()
         }
-            
+        
         view.addSubview(buttonStackView)
         view.addSubview(searchBar)
         view.addSubview(tableView)
@@ -166,6 +166,10 @@ extension GoodVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let postVC = PostVC()
         postVC.categoryValue = true // 선 게시판
+        postVC.post.profile = post[indexPath.row].profile
+        postVC.post.title = post[indexPath.row].title
+        postVC.post.content = post[indexPath.row].content
+        postVC.post.image = post[indexPath.row].image
         postVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(postVC, animated: true)
     }
