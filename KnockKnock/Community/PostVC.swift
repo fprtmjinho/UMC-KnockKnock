@@ -9,6 +9,9 @@ import UIKit
 
 class PostVC: UIViewController {
     
+    var myPost: Bool = true // 자신 글 여부
+
+    
     var categoryValue: Bool! // 게시판 종류
     
     // 테이블 뷰 관련: post, comment, tableView
@@ -19,7 +22,7 @@ class PostVC: UIViewController {
                           content: "안녕 친구들 바닷가에 왔는데 날이 너무 좋아! 여기 바다 정말 추천해",
                           image: UIImage(named: "beach"),
                           time: "07/08 22:17",
-    likes: 17, comments: 3)
+                          likes: 17, comments: 3)
     
     // comment(스트럭트 맨아래 있음)
     var comments: [Comment] = [
@@ -140,9 +143,41 @@ class PostVC: UIViewController {
         super.viewDidLoad()
         self.title = categoryValue ? "선 게시판" : "악 게시판"
         view.backgroundColor = .white
+        let rightBarButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(showActionSheet))
+        navigationItem.rightBarButtonItem = rightBarButton
+        
         makeSubView()
         makeConstraint()
     }
+    
+    @objc func showActionSheet() {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        if myPost {
+            // 자신의 글일 때
+            let action1 = UIAlertAction(title: "수정", style: .default) { _ in
+                // Handle Action 1
+            }
+            let action2 = UIAlertAction(title: "삭제", style: .default) { _ in
+                // Handle Action 2
+            }
+            actionSheet.addAction(action1)
+            actionSheet.addAction(action2)
+        } else {
+            // 자신의 글이 아닐 때
+            let action1 = UIAlertAction(title: "신고", style: .default) { _ in
+                // Handle Action 1
+            }
+            actionSheet.addAction(action1)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        actionSheet.addAction(cancelAction)
+        // On iPad, the action sheet should be presented as a popover.
+        if let popoverController = actionSheet.popoverPresentationController {
+            popoverController.barButtonItem = navigationItem.rightBarButtonItem
+        }
+        present(actionSheet, animated: true)
+    }
+
     
     @objc func anonymousImageButtonTapped(_ sender: UIButton) {
         isAnonymousSelected.toggle()
