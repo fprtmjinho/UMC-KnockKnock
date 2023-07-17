@@ -306,7 +306,14 @@ class LoginFirstVC : UIViewController {
     }
     @objc func nextView(){
         let loginSecondVC = LoginSecondVC()
+        setMyData()
         self.navigationController?.pushViewController(loginSecondVC, animated: true)
+    }
+    @objc func setMyData(){
+        let me = MyData.shared
+        me.name = nickName
+        me.sex = sex
+        me.birthday = birthday
     }
 }
 

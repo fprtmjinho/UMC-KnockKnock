@@ -70,15 +70,18 @@ class LoginAddFriendVC : AllowApproachVC {
                 addNumberList.append(numberList[i])
                 alram.append(true)
                 date.append(formatter.string(from: Date()))
+                hidden.append(false)
                 j=j+1
             }
             i=i+1
         }
         let fre = Friends.shared
         fre.name = addFriendList
+        fre.nickName = nickNameList
         fre.number = addNumberList
         fre.alram = alram
         fre.time = date
+        fre.hidden = hidden
     }
     //tableView
     var tableView = UITableView(frame: .zero, style: .plain)
@@ -88,9 +91,11 @@ class LoginAddFriendVC : AllowApproachVC {
     var nameList: Array<String> = []
     var familyNameList: Array<String> = []
     var numberList: Array<String> = []
+    var nickNameList: Array<String> = []
     var checked: Array<Bool> = []
     var alram: Array<Bool> = []
     var date: Array<String> = []
+    var hidden: Array<Bool> = []
     var addFriendList: Array<String> = []
     var addNumberList: Array<String> = []
     
@@ -270,6 +275,7 @@ extension LoginAddFriendVC {
                 let familyName = contact.familyName
                 let phoneNumbers = contact.phoneNumbers.map { $0.value.stringValue }[0]
                 nameList.append(givenName)
+                nickNameList.append("")
                 familyNameList.append(familyName)
                 numberList.append(phoneNumbers)
                 checked.append(false)

@@ -160,15 +160,34 @@ class AddFriendVC : UIViewController {
         ])
         
     }
-    
     func makeAddTarget(){
         saveBtn.addTarget(self, action: #selector(saveBtnPressed(_:)), for: .touchUpInside)
     }
     
     @objc func saveBtnPressed(_: UIButton){
+        setData()
         navigationController?.popViewController(animated: true)
     }
-    
+    @objc func setData(){
+        let fre = Friends.shared
+        if let name = nameText.text{
+            fre.name.append(name)
+        }
+        if let nickName = nicknameText.text{
+            fre.nickName.append(nickName)
+        }
+        if let phoneNumber = numberText.text{
+            fre.number.append(phoneNumber)
+        }else{
+            fre.number.append("")
+        }
+        fre.bestFriend.append(false)
+        fre.alram.append(true)
+        var formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        fre.time.append(formatter.string(from: Date()))
+        fre.hidden.append(false)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

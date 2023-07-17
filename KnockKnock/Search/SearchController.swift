@@ -83,6 +83,10 @@ class SearchController : UIViewController{
     var checked: Array<Bool> = []
     var nameList: Array<String> = []
     var numberList: Array<String> = []
+    var nickNameList: Array<String> = []
+    var alramList: Array<Bool> = []
+    var timeList: Array<String> = []
+    var hiddenList: Array<Bool> = []
     
     func makeAddTarget(){
         searchFriendBar.searchTextField.addTarget(self, action: #selector(searchFriend(_:)), for: .editingChanged)
@@ -99,7 +103,6 @@ class SearchController : UIViewController{
         setTableView()
         makeAddTarget()
         setTitle()
-        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -111,7 +114,7 @@ class SearchController : UIViewController{
     @objc func sortData(){
 
         // 이름, 전화번호, 나이를 튜플로 묶은 배열 생성
-        var combinedList = zip(nameList, zip(numberList, checked).map{($0,$1)}).map { ($0, $1) }
+        var combinedList = zip(nameList, zip(nickNameList,zip(numberList, zip(checked,zip(alramList,timeList).map{($0,$1)}).map{($0, $1)}).map{($0, $1)}).map{($0, $1)}).map{($0,$1)}
 
         // 이름을 기준으로 오름차순 정렬
         combinedList.sort { $0.0 < $1.0 }
@@ -121,10 +124,19 @@ class SearchController : UIViewController{
 
         // 정렬된 결과를 다시 리스트로 분리
         nameList = combinedList.map { $0.0 }
-        numberList = combinedList.map { $0.1.0 }
-        checked = combinedList.map { $0.1.1 }
+        nickNameList = combinedList.map {$0.1.0}
+        numberList = combinedList.map { $0.1.1.0 }
+        checked = combinedList.map { $0.1.1.1.0 }
+        alramList = combinedList.map {$0.1.1.1.1.0}
+        timeList = combinedList.map{$0.1.1.1.1.1}
+        friendData.name = nameList
+        friendData.number = numberList
+        friendData.bestFriend = checked
+        friendData.alram = alramList
+        friendData.time = timeList
     }
     @objc func searchFriend(_:UISearchBar){
+        print("searchFriend")
         var friendName: String = ""
         if let name = searchFriendBar.text{
             friendName = name
@@ -132,11 +144,32 @@ class SearchController : UIViewController{
         loadFriendArray(name: friendName)
     }
     @objc func loadFriendArray(name: String){
+        if name == ""{
+            hiddenList = friendData.hidden
+        }else{
+            var i=0;
+            for listName in nameList{
+                if !listName.contains(name){
+                    var index = nameList.firstIndex(of: listName)
+                    hiddenList[index!] = true
+                }else{
+                    hiddenList[i] = false
+                }
+                i=i+1
+            }
+        }
+        print(hiddenList)
+        tableView.reloadData()
+        //hidden에 의한 업데이트는 됨 근데 tableview를 클릭시 리스트가 뒤죽박죽임
         
     }
     @objc func setTitle(){
-        var nickName: String = loadNickName()
+        var nickName: String = loadLocalName()//loadNickName()
         Label1.text = "\(nickName)님,\n연락하고 싶은 분이 생겼나요?"
+    }
+    @objc func loadLocalName()->String{
+        var me = MyData.shared
+        return me.name
     }
     @objc func loadNickName()->String{
         var nickName: String = ""
@@ -160,8 +193,12 @@ class SearchController : UIViewController{
     }
     @objc func getData(){
         nameList = friendData.name
+        nickNameList = friendData.nickName
         numberList = friendData.number
         checked = friendData.bestFriend
+        alramList = friendData.alram
+        timeList = friendData.time
+        hiddenList = friendData.hidden
     }
 }
 
@@ -224,15 +261,15 @@ extension SearchController : UITableViewDelegate, UITableViewDataSource {
             cell?.accessoryView = UIImageView(image:unSelected)
         }
         cell?.textLabel?.text = nameList[indexPath.row]
+        print(nameList[indexPath.row])
         //전화번호가 안나타남...
         //cell?.detailTextLabel?.text = numberList[indexPath.row]
-        
         cell?.textLabel?.font = UIFont.systemFont(ofSize: 16)
         cell?.textLabel?.textColor = UIColor.black
         cell?.detailTextLabel?.font = UIFont.systemFont(ofSize: 13)
         cell?.detailTextLabel?.textColor = UIColor.black
-        
         return cell!
+       
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
