@@ -86,6 +86,7 @@ class SearchController : UIViewController{
     var nickNameList: Array<String> = []
     var alramList: Array<Bool> = []
     var timeList: Array<String> = []
+    var hiddenList: Array<Bool> = []
     
     func makeAddTarget(){
         searchFriendBar.searchTextField.addTarget(self, action: #selector(searchFriend(_:)), for: .editingChanged)
@@ -135,6 +136,7 @@ class SearchController : UIViewController{
         friendData.time = timeList
     }
     @objc func searchFriend(_:UISearchBar){
+        print("searchFriend")
         var friendName: String = ""
         if let name = searchFriendBar.text{
             friendName = name
@@ -142,7 +144,24 @@ class SearchController : UIViewController{
         loadFriendArray(name: friendName)
     }
     @objc func loadFriendArray(name: String){
-        //검색
+        if name == ""{
+            hiddenList = friendData.hidden
+        }else{
+            var i=0;
+            for listName in nameList{
+                if !listName.contains(name){
+                    var index = nameList.firstIndex(of: listName)
+                    hiddenList[index!] = true
+                }else{
+                    hiddenList[i] = false
+                }
+                i=i+1
+            }
+        }
+        print(hiddenList)
+        tableView.reloadData()
+        //hidden에 의한 업데이트는 됨 근데 tableview를 클릭시 리스트가 뒤죽박죽임
+        
     }
     @objc func setTitle(){
         var nickName: String = loadLocalName()//loadNickName()
@@ -179,6 +198,7 @@ class SearchController : UIViewController{
         checked = friendData.bestFriend
         alramList = friendData.alram
         timeList = friendData.time
+        hiddenList = friendData.hidden
     }
 }
 
@@ -241,14 +261,15 @@ extension SearchController : UITableViewDelegate, UITableViewDataSource {
             cell?.accessoryView = UIImageView(image:unSelected)
         }
         cell?.textLabel?.text = nameList[indexPath.row]
+        print(nameList[indexPath.row])
         //전화번호가 안나타남...
         //cell?.detailTextLabel?.text = numberList[indexPath.row]
         cell?.textLabel?.font = UIFont.systemFont(ofSize: 16)
         cell?.textLabel?.textColor = UIColor.black
         cell?.detailTextLabel?.font = UIFont.systemFont(ofSize: 13)
         cell?.detailTextLabel?.textColor = UIColor.black
-        
         return cell!
+       
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)

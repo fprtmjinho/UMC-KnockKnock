@@ -16,6 +16,8 @@ class Friends {
     var alram: Array<Bool> = []
     var time: Array<String> = []
     
+    var hidden: Array<Bool> = []
+    
     var choiceIndex: IndexPath?
     
     

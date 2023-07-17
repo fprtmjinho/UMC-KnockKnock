@@ -70,6 +70,7 @@ class LoginAddFriendVC : AllowApproachVC {
                 addNumberList.append(numberList[i])
                 alram.append(true)
                 date.append(formatter.string(from: Date()))
+                hidden.append(false)
                 j=j+1
             }
             i=i+1
@@ -80,6 +81,7 @@ class LoginAddFriendVC : AllowApproachVC {
         fre.number = addNumberList
         fre.alram = alram
         fre.time = date
+        fre.hidden = hidden
     }
     //tableView
     var tableView = UITableView(frame: .zero, style: .plain)
@@ -93,6 +95,7 @@ class LoginAddFriendVC : AllowApproachVC {
     var checked: Array<Bool> = []
     var alram: Array<Bool> = []
     var date: Array<String> = []
+    var hidden: Array<Bool> = []
     var addFriendList: Array<String> = []
     var addNumberList: Array<String> = []
     

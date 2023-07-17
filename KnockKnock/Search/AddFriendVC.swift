@@ -186,6 +186,7 @@ class AddFriendVC : UIViewController {
         var formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         fre.time.append(formatter.string(from: Date()))
+        fre.hidden.append(false)
     }
     
     override func viewDidLoad() {

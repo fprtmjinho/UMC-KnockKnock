@@ -53,6 +53,7 @@ class GetInformationVC : UIViewController {
     var friendBest: Array<Bool> = []
     var friendAlram: Array<Bool> = []
     var friendTime: Array<String> = []
+    var friendHidden: Array<Bool> = []
     
     //numberArray
     var contacts: NSMutableArray = NSMutableArray()
@@ -63,6 +64,7 @@ class GetInformationVC : UIViewController {
     var checked: Array<Bool> = []
     var alram: Array<Bool> = []
     var date: Array<String> = []
+    var hidden: Array<Bool> = []
     var addFriendList: Array<String> = []
     var addNumberList: Array<String> = []
     
@@ -126,6 +128,7 @@ extension GetInformationVC : UITableViewDelegate, UITableViewDataSource {
             friendNumber.append(numberList[indexPath.row])
             friendBest.append(false)
             friendAlram.append(true)
+            friendHidden.append(false)
             setTime()
         } else {
             cell?.accessoryView = UIImageView(image:unSelectedImage)
@@ -137,6 +140,7 @@ extension GetInformationVC : UITableViewDelegate, UITableViewDataSource {
             friendBest.remove(at: index!)
             friendTime.remove(at: index!)
             friendAlram.remove(at: index!)
+            friendHidden.remove(at: index!)
         }
         //아래는 추가버튼 보이면 없앨 예정
         fre.name = friendName
@@ -144,6 +148,7 @@ extension GetInformationVC : UITableViewDelegate, UITableViewDataSource {
         fre.bestFriend = friendBest
         fre.time = friendTime
         fre.alram = friendAlram
+        fre.hidden = friendHidden
     }
     
     
