@@ -12,7 +12,7 @@ class PostVC: UIViewController {
     var myPost: Bool = true // 자신 글 여부
 
     
-    var categoryValue: Bool! // 게시판 종류
+    var categoryValue: Int! // 게시판 종류
     
     // 테이블 뷰 관련: post, comment, tableView
     // post(스트럭트 맨아래 있음)
@@ -141,7 +141,7 @@ class PostVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = categoryValue ? "선 게시판" : "악 게시판"
+        self.title = categoryValue == 0 ? "선 게시판" : "악 게시판"
         view.backgroundColor = .white
         var image = UIImage(named: "more_vert")?.resizeImageTo(size: CGSize(width: 30, height: 30))
         let rightBarButton = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(showActionSheet))
@@ -156,7 +156,10 @@ class PostVC: UIViewController {
         if myPost {
             // 자신의 글일 때
             let action1 = UIAlertAction(title: "수정", style: .default) { _ in
-                // Handle Action 1
+                let writeVC = WriteVC()
+                writeVC.index = self.categoryValue
+                writeVC.hidesBottomBarWhenPushed = true
+                self.navigationController?.pushViewController(writeVC, animated: true)
             }
             let action2 = UIAlertAction(title: "삭제", style: .default) { _ in
                 // Handle Action 2
