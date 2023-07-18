@@ -11,7 +11,7 @@ class MyPage : UIView{
     
     let Name : UILabel = {
         let name = UILabel()
-        name.text = "Name"
+        name.text = MyData.shared.name
         name.textAlignment = .center
         name.font = .systemFont(ofSize: 16)
         name.backgroundColor = .white

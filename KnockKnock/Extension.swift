@@ -27,6 +27,16 @@ extension UITextField {
     self.leftView = paddingView
     self.leftViewMode = ViewMode.always
   }
+    
+    func addLeftImage(image : UIImage){
+        
+        let imageView = UIImageView(frame: CGRect(x: 10, y: 0, width: image.size.width, height: image.size.height))
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: image.size.width + 20, height: image.size.height))
+        imageView.image = image
+        view.addSubview(imageView)
+        self.leftView = view
+        self.leftViewMode = .always
+    }
  
 }
 

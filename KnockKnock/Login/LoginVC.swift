@@ -21,9 +21,10 @@ class LoginVC : UIViewController {
         let EmailText : UITextField = {
             let emailBtn = UITextField()
             emailBtn.placeholder = "이메일 주소"
-            emailBtn.addLeftPadding()
             emailBtn.backgroundColor = .systemGray6
-
+            
+            let emailimage = UIImage(named: "mail")?.resizeImageTo(size: CGSize(width: 25, height: 25))
+            emailBtn.addLeftImage(image: emailimage!)
             emailBtn.layer.cornerRadius = 20
             //모서리 둥글게
             emailBtn.clearButtonMode = .whileEditing
@@ -35,7 +36,9 @@ class LoginVC : UIViewController {
         let PasswordText : UITextField = {
             let passwordBtn = UITextField()
             passwordBtn.placeholder = "비밀번호"
-            passwordBtn.addLeftPadding()
+            
+            let passwordimage = UIImage(named: "key")?.resizeImageTo(size: CGSize(width: 25, height: 25))
+            passwordBtn.addLeftImage(image: passwordimage!)
             passwordBtn.backgroundColor = .systemGray6
             passwordBtn.layer.cornerRadius = 20
             passwordBtn.clearButtonMode = .whileEditing
@@ -211,11 +214,11 @@ class LoginVC : UIViewController {
             ForGoogleBtn.heightAnchor.constraint(equalTo : ForNaverBtn.heightAnchor),
                 
                 
-            NotYet.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 90),
+            NotYet.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 80),
             NotYet.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30),
             SignUp.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30),
             SignUp.leadingAnchor.constraint(equalTo: NotYet.trailingAnchor),
-            SignUp.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -90)
+            SignUp.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -80)
         ])
             
         
