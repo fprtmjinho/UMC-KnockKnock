@@ -82,7 +82,7 @@ class PostVC: UIViewController {
     
     let makeCommentImageButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.setImage(UIImage(named: "writing_ ff0060"), for: .normal)
+        button.setImage(UIImage(named: "send"), for: .normal)
         button.addTarget(self, action: #selector(makeCommentImageButtonTapped(_:)), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -98,9 +98,9 @@ class PostVC: UIViewController {
         view.addSubview(tableView)
         view.addSubview(commentContainerView1)
         commentContainerView1.addSubview(commentContainerView2)
+        commentContainerView1.addSubview(makeCommentImageButton)
         commentContainerView2.addSubview(commentTextField)
         commentContainerView2.addSubview(anonymousImageButton)
-        commentContainerView2.addSubview(makeCommentImageButton)
     }
     
     func makeConstraint() {
@@ -118,7 +118,7 @@ class PostVC: UIViewController {
             commentContainerView1.heightAnchor.constraint(equalToConstant: 65),
             
             commentContainerView2.leadingAnchor.constraint(equalTo: commentContainerView1.leadingAnchor, constant: horizontalMargin),
-            commentContainerView2.trailingAnchor.constraint(equalTo: commentContainerView1.trailingAnchor, constant: -horizontalMargin),
+            commentContainerView2.trailingAnchor.constraint(equalTo: makeCommentImageButton.leadingAnchor, constant: -5),
             commentContainerView2.topAnchor.constraint(equalTo: commentContainerView1.topAnchor, constant: 15),
             commentContainerView2.bottomAnchor.constraint(equalTo: commentContainerView1.bottomAnchor, constant: -15),
             
@@ -127,15 +127,15 @@ class PostVC: UIViewController {
             commentTextField.topAnchor.constraint(equalTo: commentContainerView2.topAnchor, constant: 10),
             commentTextField.bottomAnchor.constraint(equalTo: commentContainerView2.bottomAnchor, constant: -10),
             
-            anonymousImageButton.trailingAnchor.constraint(equalTo: makeCommentImageButton.leadingAnchor, constant: -5),
+            anonymousImageButton.trailingAnchor.constraint(equalTo: commentContainerView2.trailingAnchor, constant: -10),
             anonymousImageButton.centerYAnchor.constraint(equalTo: commentContainerView2.centerYAnchor),
             anonymousImageButton.widthAnchor.constraint(equalToConstant: 45),
             anonymousImageButton.heightAnchor.constraint(equalToConstant: 20),
             
-            makeCommentImageButton.trailingAnchor.constraint(equalTo: commentContainerView2.trailingAnchor, constant: -10),
-            makeCommentImageButton.centerYAnchor.constraint(equalTo: commentContainerView2.centerYAnchor),
-            makeCommentImageButton.widthAnchor.constraint(equalToConstant: 30),
-            makeCommentImageButton.heightAnchor.constraint(equalToConstant: 30),
+            makeCommentImageButton.trailingAnchor.constraint(equalTo: commentContainerView1.trailingAnchor, constant: -horizontalMargin),
+            makeCommentImageButton.centerYAnchor.constraint(equalTo: commentContainerView1.centerYAnchor),
+            makeCommentImageButton.widthAnchor.constraint(equalToConstant: 25),
+            makeCommentImageButton.heightAnchor.constraint(equalToConstant: 25),
         ])
     }
     
@@ -143,7 +143,8 @@ class PostVC: UIViewController {
         super.viewDidLoad()
         self.title = categoryValue ? "선 게시판" : "악 게시판"
         view.backgroundColor = .white
-        let rightBarButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(showActionSheet))
+        var image = UIImage(named: "more_vert")?.resizeImageTo(size: CGSize(width: 30, height: 30))
+        let rightBarButton = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(showActionSheet))
         navigationItem.rightBarButtonItem = rightBarButton
         
         makeSubView()
