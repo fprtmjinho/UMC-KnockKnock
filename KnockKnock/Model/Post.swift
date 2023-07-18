@@ -8,9 +8,18 @@
 import UIKit
 import Foundation
 
-struct Post { // 게시글
+struct PostCategory { // 카테고리에서 보이는 게시글
     let profile: UIImage
-    let name: String
+    var title: String
+    var content: String
+    var image: UIImage?
+    var likes: Int
+    var comments: Int
+}
+
+struct Post { // 게시글
+    var profile: UIImage
+    var name: String
     var title: String
     var content: String
     var image: UIImage?

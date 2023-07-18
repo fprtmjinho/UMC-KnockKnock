@@ -9,6 +9,9 @@ import UIKit
 
 class PostVC: UIViewController {
     
+    var myPost: Bool = true // 자신 글 여부
+
+    
     var categoryValue: Bool! // 게시판 종류
     
     // 테이블 뷰 관련: post, comment, tableView
@@ -19,7 +22,7 @@ class PostVC: UIViewController {
                           content: "안녕 친구들 바닷가에 왔는데 날이 너무 좋아! 여기 바다 정말 추천해",
                           image: UIImage(named: "beach"),
                           time: "07/08 22:17",
-    likes: 17, comments: 3)
+                          likes: 17, comments: 3)
     
     // comment(스트럭트 맨아래 있음)
     var comments: [Comment] = [
@@ -38,7 +41,7 @@ class PostVC: UIViewController {
     ]
     
     let tableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .grouped)
+        let tableView = UITableView()
         tableView.backgroundColor = .white
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
@@ -79,7 +82,7 @@ class PostVC: UIViewController {
     
     let makeCommentImageButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.setImage(UIImage(named: "writing_ ff0060"), for: .normal)
+        button.setImage(UIImage(named: "send"), for: .normal)
         button.addTarget(self, action: #selector(makeCommentImageButtonTapped(_:)), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -92,26 +95,18 @@ class PostVC: UIViewController {
         tableView.register(CustomCommentCell.self, forCellReuseIdentifier: "CommentCell")
         tableView.rowHeight = UITableView.automaticDimension
         
-        if let postCell = tableView.dequeueReusableCell(withIdentifier: "PostCell") as? CustomPostCell {
-            postCell.makeSubView()
-        }
-        if let commentCell = tableView.dequeueReusableCell(withIdentifier: "CommentCell") as? CustomCommentCell {
-            commentCell.makeSubView()
-        }
-        
         view.addSubview(tableView)
         view.addSubview(commentContainerView1)
         commentContainerView1.addSubview(commentContainerView2)
+        commentContainerView1.addSubview(makeCommentImageButton)
         commentContainerView2.addSubview(commentTextField)
         commentContainerView2.addSubview(anonymousImageButton)
-        commentContainerView2.addSubview(makeCommentImageButton)
     }
     
     func makeConstraint() {
         let horizontalMargin: CGFloat = 30
         
         NSLayoutConstraint.activate([
-            
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -123,7 +118,7 @@ class PostVC: UIViewController {
             commentContainerView1.heightAnchor.constraint(equalToConstant: 65),
             
             commentContainerView2.leadingAnchor.constraint(equalTo: commentContainerView1.leadingAnchor, constant: horizontalMargin),
-            commentContainerView2.trailingAnchor.constraint(equalTo: commentContainerView1.trailingAnchor, constant: -horizontalMargin),
+            commentContainerView2.trailingAnchor.constraint(equalTo: makeCommentImageButton.leadingAnchor, constant: -5),
             commentContainerView2.topAnchor.constraint(equalTo: commentContainerView1.topAnchor, constant: 15),
             commentContainerView2.bottomAnchor.constraint(equalTo: commentContainerView1.bottomAnchor, constant: -15),
             
@@ -132,16 +127,15 @@ class PostVC: UIViewController {
             commentTextField.topAnchor.constraint(equalTo: commentContainerView2.topAnchor, constant: 10),
             commentTextField.bottomAnchor.constraint(equalTo: commentContainerView2.bottomAnchor, constant: -10),
             
-            anonymousImageButton.trailingAnchor.constraint(equalTo: makeCommentImageButton.leadingAnchor, constant: -5),
+            anonymousImageButton.trailingAnchor.constraint(equalTo: commentContainerView2.trailingAnchor, constant: -10),
             anonymousImageButton.centerYAnchor.constraint(equalTo: commentContainerView2.centerYAnchor),
             anonymousImageButton.widthAnchor.constraint(equalToConstant: 45),
             anonymousImageButton.heightAnchor.constraint(equalToConstant: 20),
             
-            makeCommentImageButton.trailingAnchor.constraint(equalTo: commentContainerView2.trailingAnchor, constant: -10),
-            makeCommentImageButton.centerYAnchor.constraint(equalTo: commentContainerView2.centerYAnchor),
-            makeCommentImageButton.widthAnchor.constraint(equalToConstant: 30),
-            makeCommentImageButton.heightAnchor.constraint(equalToConstant: 30),
-            
+            makeCommentImageButton.trailingAnchor.constraint(equalTo: commentContainerView1.trailingAnchor, constant: -horizontalMargin),
+            makeCommentImageButton.centerYAnchor.constraint(equalTo: commentContainerView1.centerYAnchor),
+            makeCommentImageButton.widthAnchor.constraint(equalToConstant: 25),
+            makeCommentImageButton.heightAnchor.constraint(equalToConstant: 25),
         ])
     }
     
@@ -149,9 +143,42 @@ class PostVC: UIViewController {
         super.viewDidLoad()
         self.title = categoryValue ? "선 게시판" : "악 게시판"
         view.backgroundColor = .white
+        var image = UIImage(named: "more_vert")?.resizeImageTo(size: CGSize(width: 30, height: 30))
+        let rightBarButton = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(showActionSheet))
+        navigationItem.rightBarButtonItem = rightBarButton
+        
         makeSubView()
         makeConstraint()
     }
+    
+    @objc func showActionSheet() {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        if myPost {
+            // 자신의 글일 때
+            let action1 = UIAlertAction(title: "수정", style: .default) { _ in
+                // Handle Action 1
+            }
+            let action2 = UIAlertAction(title: "삭제", style: .default) { _ in
+                // Handle Action 2
+            }
+            actionSheet.addAction(action1)
+            actionSheet.addAction(action2)
+        } else {
+            // 자신의 글이 아닐 때
+            let action1 = UIAlertAction(title: "신고", style: .default) { _ in
+                // Handle Action 1
+            }
+            actionSheet.addAction(action1)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        actionSheet.addAction(cancelAction)
+        // On iPad, the action sheet should be presented as a popover.
+        if let popoverController = actionSheet.popoverPresentationController {
+            popoverController.barButtonItem = navigationItem.rightBarButtonItem
+        }
+        present(actionSheet, animated: true)
+    }
+
     
     @objc func anonymousImageButtonTapped(_ sender: UIButton) {
         isAnonymousSelected.toggle()
@@ -179,8 +206,15 @@ extension PostVC: UITableViewDelegate, UITableViewDataSource {
             // 행의 index가 0일 때는 게시글
             let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! CustomPostCell
             cell.configureCell(with: post)
-            cell.makeSubView()
-            cell.makeConstraint()
+            cell.makeSubView1()
+            cell.makeConstraint1()
+            if post.image != nil {
+                cell.makeSubView1()
+                cell.makeConstraint1()
+            } else {
+                cell.makeSubView2()
+                cell.makeConstraint2()
+            }
             cell.selectionStyle = .none
             return cell
         } else {
@@ -197,6 +231,7 @@ extension PostVC: UITableViewDelegate, UITableViewDataSource {
 }
 
 class CustomPostCell: UITableViewCell { // 게시글 커스텀
+    
     let profileImageView: UIImageView = { // 프로필 사진
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -276,7 +311,7 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
     }()
     
     
-    func makeSubView() {
+    func makeSubView1() { // 사진이 있는 경우
         addSubview(profileImageView)
         addSubview(nameLabel)
         addSubview(titleLabel)
@@ -289,8 +324,20 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
         addSubview(commentsLabel)
         addSubview(shareButton)
     }
+    func makeSubView2() { // 사진이 없는 경우
+        addSubview(profileImageView)
+        addSubview(nameLabel)
+        addSubview(titleLabel)
+        addSubview(contentLabel)
+        addSubview(timeLabel)
+        addSubview(likesView)
+        addSubview(likesLabel)
+        addSubview(commentsView)
+        addSubview(commentsLabel)
+        addSubview(shareButton)
+    }
     
-    func makeConstraint() {
+    func makeConstraint1() { // 사진이 있는 경우
         
         let horizontalMargin: CGFloat = 30
         let verticalMargin: CGFloat = 10
@@ -346,7 +393,61 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
             shareButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
             shareButton.widthAnchor.constraint(equalToConstant: 20),
             shareButton.heightAnchor.constraint(equalToConstant: 20)
+        ])
+        
+    }
+    
+    func makeConstraint2() { // 사진이 없는 경우
+        
+        let horizontalMargin: CGFloat = 30
+        let verticalMargin: CGFloat = 10
+        
+        NSLayoutConstraint.activate([
+            profileImageView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+            profileImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: horizontalMargin),
+            profileImageView.widthAnchor.constraint(equalToConstant: 45),
+            profileImageView.heightAnchor.constraint(equalToConstant: 45),
             
+            nameLabel.topAnchor.constraint(equalTo: profileImageView.topAnchor, constant: 5),
+            nameLabel.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 8),
+            nameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -horizontalMargin),
+            
+            timeLabel.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 8),
+            timeLabel.bottomAnchor.constraint(equalTo: profileImageView.bottomAnchor),
+            
+            titleLabel.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: verticalMargin),
+            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: horizontalMargin),
+            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -horizontalMargin),
+            
+            contentLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: verticalMargin),
+            contentLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: horizontalMargin),
+            contentLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -horizontalMargin),
+            
+            likesView.topAnchor.constraint(equalTo: contentLabel.bottomAnchor, constant: verticalMargin),
+            likesView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: horizontalMargin),
+            likesView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
+            likesView.widthAnchor.constraint(equalToConstant: 20),
+            likesView.heightAnchor.constraint(equalToConstant: 20),
+            
+            likesLabel.topAnchor.constraint(equalTo: contentLabel.bottomAnchor, constant: verticalMargin),
+            likesLabel.leadingAnchor.constraint(equalTo: likesView.trailingAnchor, constant: 10),
+            likesLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
+            
+            commentsView.topAnchor.constraint(equalTo: contentLabel.bottomAnchor, constant: verticalMargin),
+            commentsView.leadingAnchor.constraint(equalTo: likesLabel.trailingAnchor, constant: 20),
+            commentsView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
+            commentsView.widthAnchor.constraint(equalToConstant: 20),
+            commentsView.heightAnchor.constraint(equalToConstant: 20),
+            
+            commentsLabel.topAnchor.constraint(equalTo: contentLabel.bottomAnchor, constant: verticalMargin),
+            commentsLabel.leadingAnchor.constraint(equalTo: commentsView.trailingAnchor, constant: 10),
+            commentsLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
+            
+            shareButton.topAnchor.constraint(equalTo: contentLabel.bottomAnchor, constant: verticalMargin),
+            shareButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -horizontalMargin),
+            shareButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
+            shareButton.widthAnchor.constraint(equalToConstant: 20),
+            shareButton.heightAnchor.constraint(equalToConstant: 20)
         ])
         
     }
@@ -361,9 +462,11 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
         likesLabel.text = "\(post.likes)"
         commentsLabel.text = "\(post.comments)"
     }
+    
 }
 
 class CustomCommentCell: UITableViewCell { // 댓글 커스텀
+    
     let profileImageView: UIImageView = { // 프로필 사진
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -433,4 +536,5 @@ class CustomCommentCell: UITableViewCell { // 댓글 커스텀
         commentLabel.text = comment.text
         timeLabel.text = comment.time
     }
+    
 }
