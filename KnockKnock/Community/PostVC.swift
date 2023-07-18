@@ -158,6 +158,10 @@ class PostVC: UIViewController {
             let action1 = UIAlertAction(title: "수정", style: .default) { _ in
                 let writeVC = WriteVC()
                 writeVC.index = self.categoryValue
+                writeVC.modify = true
+                writeVC.titleTextField.text = self.post.title
+                writeVC.contentTextView.text = self.post.content
+                writeVC.contentTextView.textColor = .label
                 writeVC.hidesBottomBarWhenPushed = true
                 self.navigationController?.pushViewController(writeVC, animated: true)
             }
