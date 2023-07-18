@@ -102,21 +102,21 @@ extension LoginAddBestFriendVC : UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "friendList")
-        var image = UIImage(named: "UnselectedCheckCircle")?.resizeImageTo(size: CGSize(width: 30, height: 30))
-        cell?.accessoryView = UIImageView(image:image)
-        cell?.textLabel?.text = nameList[indexPath.row]
-        //전화번호가 안나타남...
-        //cell?.detailTextLabel?.text = numberList[indexPath.row]
-        
-        cell?.textLabel?.font = UIFont.systemFont(ofSize: 16)
-        cell?.textLabel?.textColor = UIColor.black
-        cell?.detailTextLabel?.font = UIFont.systemFont(ofSize: 13)
-        cell?.detailTextLabel?.textColor = UIColor.black
-        checked.append(false)
-        
-        return cell!
-    }
+            let cell = tableView.dequeueReusableCell(withIdentifier: "friendList") ?? UITableViewCell(style: .subtitle, reuseIdentifier: "friendList")
+            var image = UIImage(named: "UnselectedCheckCircle")?.resizeImageTo(size: CGSize(width: 30, height: 30))
+            cell.accessoryView = UIImageView(image:image)
+            cell.textLabel?.text = nameList[indexPath.row]
+            cell.detailTextLabel?.text = numberList[indexPath.row]
+            
+            cell.textLabel?.font = UIFont.systemFont(ofSize: 15)
+            cell.textLabel?.textColor = UIColor.black
+            cell.detailTextLabel?.font = UIFont.systemFont(ofSize: 12)
+            cell.detailTextLabel?.textColor = UIColor.black
+            checked.append(false)
+            
+            return cell
+        }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let unSelectedImage = UIImage(named: "UnselectedCheckCircle")?.resizeImageTo(size: CGSize(width: 30, height: 30))
         let selectedImage = UIImage(named: "SelectedCheckCircle")?.resizeImageTo(size: CGSize(width: 30, height: 30))
@@ -143,12 +143,11 @@ extension LoginAddBestFriendVC : UITableViewDelegate, UITableViewDataSource {
         view.addSubview(tableView)
         tableView.backgroundColor = .white
         tableView.separatorStyle = .none
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "friendList")
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: searchFriendBar.bottomAnchor, constant: 3),
-            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])

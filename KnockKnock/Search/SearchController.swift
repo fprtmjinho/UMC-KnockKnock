@@ -252,23 +252,22 @@ extension SearchController : UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "friendList")
+        let cell = tableView.dequeueReusableCell(withIdentifier: "friendList") ?? UITableViewCell(style: .subtitle, reuseIdentifier: "friendList")
         var selected = UIImage(named: "SelectedCheckCircle")?.resizeImageTo(size: CGSize(width: 30, height: 30))
         var unSelected = UIImage(named: "UnselectedCheckCircle")?.resizeImageTo(size: CGSize(width: 30, height:30))
         if checked[indexPath.row] == true{
-            cell?.accessoryView = UIImageView(image:selected)
+            cell.accessoryView = UIImageView(image:selected)
         }else{
-            cell?.accessoryView = UIImageView(image:unSelected)
+            cell.accessoryView = UIImageView(image:unSelected)
         }
-        cell?.textLabel?.text = nameList[indexPath.row]
-        print(nameList[indexPath.row])
-        //전화번호가 안나타남...
-        //cell?.detailTextLabel?.text = numberList[indexPath.row]
-        cell?.textLabel?.font = UIFont.systemFont(ofSize: 16)
-        cell?.textLabel?.textColor = UIColor.black
-        cell?.detailTextLabel?.font = UIFont.systemFont(ofSize: 13)
-        cell?.detailTextLabel?.textColor = UIColor.black
-        return cell!
+        cell.backgroundColor = .systemGray6
+        cell.textLabel?.text = nameList[indexPath.row]
+        cell.detailTextLabel?.text = numberList[indexPath.row]
+        cell.textLabel?.font = UIFont.systemFont(ofSize: 16)
+        cell.textLabel?.textColor = UIColor.black
+        cell.detailTextLabel?.font = UIFont.systemFont(ofSize: 13)
+        cell.detailTextLabel?.textColor = UIColor.gray
+        return cell
        
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -289,7 +288,6 @@ extension SearchController : UITableViewDelegate, UITableViewDataSource {
         view.addSubview(tableView)
         tableView.backgroundColor = .white
         tableView.separatorStyle = .none
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "friendList")
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
