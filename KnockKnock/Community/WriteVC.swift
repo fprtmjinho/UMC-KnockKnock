@@ -35,7 +35,7 @@ class WriteVC: UIViewController {
         return scrollView
     }()
     
-    // 사진 선택 기능: cameraButton, imagesStackView, addSelectedImage
+    // 사진 선택 기능: cameraButton, imagesStackView, addRemoveSelectedImage
     let cameraButton: UIButton = {
         let button = UIButton(type: .custom)
         button.setImage(UIImage(named: "camera"), for: .normal)
@@ -53,8 +53,8 @@ class WriteVC: UIViewController {
         return stackView
     }()
     
-    func addSelectedImage(_ image: UIImage) {
-        
+    // 탭한 이미지 추가/삭제
+    func addRemoveSelectedImage(_ image: UIImage) {
         let imageView = UIImageView(image: image)
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
@@ -62,11 +62,15 @@ class WriteVC: UIViewController {
         imageView.heightAnchor.constraint(equalToConstant: 35).isActive = false
         imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: 1.0).isActive = true
         
+        // 이미지뷰에 탭 제스처를 추가 -> 이미지를 탭할 수 있음
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(removeSelectedImage(_:)))
+        imageView.isUserInteractionEnabled = true
+        imageView.addGestureRecognizer(tapGestureRecognizer)
+        
         imagesStackView.addArrangedSubview(imageView)
-        
         selectedImages.append(image)
-        
     }
+
     
     let titleLabel: UILabel = {
         let label = UILabel()
@@ -233,6 +237,21 @@ class WriteVC: UIViewController {
         anonymousImageButton.setImage(UIImage(named: imageName), for: .normal)
     }
     
+    @objc func removeSelectedImage(_ sender: UITapGestureRecognizer) { // 탭한 사진 삭제
+            guard let tappedImageView = sender.view as? UIImageView else { return }
+            if let index = imagesStackView.arrangedSubviews.firstIndex(of: tappedImageView) {
+                imagesStackView.removeArrangedSubview(tappedImageView)
+                tappedImageView.removeFromSuperview()
+
+                // 이미지가 1개인 경우, Index out of range 에러가 발생하지 않도록 예외 처리
+                if selectedImages.count == 1 {
+                    selectedImages.removeAll()
+                } else if index < selectedImages.count {
+                    selectedImages.remove(at: index)
+                }
+            }
+        }
+    
 }
 
 extension WriteVC: UITextViewDelegate {
@@ -282,7 +301,7 @@ extension WriteVC: UIImagePickerControllerDelegate, UINavigationControllerDelega
     // UIImagePickerControllerDelegate 메서드를 구현하여 사용자가 이미지를 선택했을 때 처리
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let selectedImage = info[.originalImage] as? UIImage {
-            addSelectedImage(selectedImage)
+            addRemoveSelectedImage(selectedImage)
         }
         picker.dismiss(animated: true, completion: nil)
     }
