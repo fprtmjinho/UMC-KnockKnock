@@ -77,11 +77,12 @@ class GetInformationVC : UIViewController {
         setNavigationBar()
         
         makeSubView()
-        
-        addBtn = setNextBtn(view: self, title: "추가하기")
         makeConstraint()
-        makeAddTarget()
         setTableView()
+        addBtn = setNextBtn(view: self, title: "추가하기")
+        
+        makeAddTarget()
+        
         getData()
     }
     @objc func getData(){
