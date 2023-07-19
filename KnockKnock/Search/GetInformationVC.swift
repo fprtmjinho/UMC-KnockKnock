@@ -99,22 +99,22 @@ extension GetInformationVC : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "numberBook") ?? UITableViewCell(style: .subtitle, reuseIdentifier: "numberBook")
-        var image = UIImage(named: "UnselectedCheckCircle")?.resizeImageTo(size: CGSize(width: 30, height: 30))
+        var image = UIImage(named: "UnselectedCheckCircle")?.resizeImageTo(size: CGSize(width: 25, height: 25))
         
         cell.accessoryView = UIImageView(image:image)
         cell.textLabel?.text = familyNameList[indexPath.row]+nameList[indexPath.row]
         cell.detailTextLabel?.text = numberList[indexPath.row]
         
-        cell.textLabel?.font = UIFont.systemFont(ofSize: 16)
+        cell.textLabel?.font = UIFont.systemFont(ofSize: 15)
         cell.textLabel?.textColor = UIColor.black
-        cell.detailTextLabel?.font = UIFont.systemFont(ofSize: 13)
-        cell.detailTextLabel?.textColor = UIColor.black
+        cell.detailTextLabel?.font = UIFont.systemFont(ofSize: 12)
+        cell.detailTextLabel?.textColor = UIColor.systemGray2
         
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let unSelectedImage = UIImage(named: "UnselectedCheckCircle")?.resizeImageTo(size: CGSize(width: 30, height: 30))
-        let selectedImage = UIImage(named: "SelectedCheckCircle")?.resizeImageTo(size: CGSize(width: 30, height: 30))
+        let unSelectedImage = UIImage(named: "UnselectedCheckCircle")?.resizeImageTo(size: CGSize(width: 25, height: 25))
+        let selectedImage = UIImage(named: "SelectedCheckCircle")?.resizeImageTo(size: CGSize(width: 25, height: 25))
         let cell = tableView.cellForRow(at: indexPath)
         
         //cell 클릭시 체크가 안되어있으면 체크, 체크가 되어있으면 체크풀기
@@ -164,8 +164,8 @@ extension GetInformationVC : UITableViewDelegate, UITableViewDataSource {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: searchFriendBar.bottomAnchor, constant: 3),
-            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
-            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
        

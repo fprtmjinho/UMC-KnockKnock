@@ -109,20 +109,16 @@ extension UIViewController {
         let searchBar : UISearchBar = {
             let searchBar = UISearchBar()
 
-            searchBar.placeholder = "친구를 검색해주세요!"
+            searchBar.placeholder = title
             searchBar.isTranslucent = false
             searchBar.searchBarStyle = .minimal
-            searchBar.searchTextField.backgroundColor = .white
+            searchBar.searchTextField.backgroundColor = .systemGray6
             searchBar.setSearchFieldBackgroundImage(UIImage(), for: .normal)
             searchBar.searchTextField.layer.cornerRadius = 20
             searchBar.searchTextField.layer.masksToBounds = true
             searchBar.setImage(UIImage(systemName: "magnifyingglass", withConfiguration: UIImage.SymbolConfiguration(paletteColors: [#colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)])),
                                      for: .search, state: .normal)
 
-            searchBar.layer.shadowColor = UIColor.black.cgColor
-            searchBar.layer.shadowOffset = CGSize(width: 0, height: 2)
-            searchBar.layer.shadowRadius = 4
-            searchBar.layer.shadowOpacity = 0.3
             return searchBar
         }()
 

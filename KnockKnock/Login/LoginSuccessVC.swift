@@ -19,8 +19,6 @@ class LoginSuccessVC : UIViewController {
     
     let welcomeLabel : UILabel = {
         let label = UILabel()
-        label.text = "환영합니다!"
-        //nickname 넣어야 함
         label.textAlignment = .center
         label.font = UIFont.boldSystemFont(ofSize: 25)
         return label
@@ -79,11 +77,11 @@ class LoginSuccessVC : UIViewController {
         view.backgroundColor = .white
         setNavigationBar()
         startBtn = setNextBtn(view: self, title: "시작하기")
-       
+        debugingFunction()
         makeSubView()
         makeConstraint()
         makeAddTarget()
-        debugingFunction()
+        
     }
     
     func debugingFunction(){
@@ -98,6 +96,12 @@ class LoginSuccessVC : UIViewController {
             // 저장된 데이터가 없을 경우 기본값 또는 처리할 로직 설정
             print("No data found.")
         }
+        setName()
+    }
+    
+    @objc func setName(){
+        welcomeLabel.text = "\(nickName)님 환영합니다!"
+        //nickName이 안뜸 흠
     }
     @objc func nextView(_: UIButton){
         let tabBarController = TabBarController()

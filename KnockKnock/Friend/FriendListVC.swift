@@ -81,10 +81,10 @@ extension FriendListVC : UITableViewDelegate, UITableViewDataSource {
         
         cell.textLabel?.text = nameList[indexPath.row]
         cell.detailTextLabel?.text = numberList[indexPath.row]
-        cell.textLabel!.font = UIFont.systemFont(ofSize: 14)
+        cell.textLabel!.font = UIFont.systemFont(ofSize: 15)
         cell.textLabel!.textColor = UIColor.black
-        cell.detailTextLabel!.font = UIFont.systemFont(ofSize: 10)
-        cell.detailTextLabel!.textColor = UIColor.gray
+        cell.detailTextLabel!.font = UIFont.systemFont(ofSize: 12)
+        cell.detailTextLabel!.textColor = UIColor.systemGray2
         
         
         return cell

@@ -8,7 +8,25 @@ import UIKit
 class SearchController : UIViewController{
     //친구 찾기 페이지
     
-    var searchFriendBar : UISearchBar = UISearchBar()
+    let searchBar : UISearchBar = {
+        let searchBar = UISearchBar()
+
+        searchBar.placeholder = "친구를 검색해주세요!"
+        searchBar.isTranslucent = false
+        searchBar.searchBarStyle = .minimal
+        searchBar.searchTextField.backgroundColor = .white
+        searchBar.setSearchFieldBackgroundImage(UIImage(), for: .normal)
+        searchBar.searchTextField.layer.cornerRadius = 20
+        searchBar.searchTextField.layer.masksToBounds = true
+        searchBar.setImage(UIImage(systemName: "magnifyingglass", withConfiguration: UIImage.SymbolConfiguration(paletteColors: [#colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)])),
+                                 for: .search, state: .normal)
+
+        searchBar.layer.shadowColor = UIColor.black.cgColor
+        searchBar.layer.shadowOffset = CGSize(width: 0, height: 2)
+        searchBar.layer.shadowRadius = 4
+        searchBar.layer.shadowOpacity = 0.3
+        return searchBar
+    }()
     
     let backgroundView: UIView = {
         let backgroundView = UIView()
@@ -49,7 +67,7 @@ class SearchController : UIViewController{
         view.addSubview(backgroundView)
         view.addSubview(Label1)
         view.addSubview(Label2)
-        searchFriendBar = setSearchBar(VC: self, title: "친구를 검색해주세요!")
+        view.addSubview(searchBar)
         
     }
     
@@ -57,6 +75,7 @@ class SearchController : UIViewController{
         backgroundView.translatesAutoresizingMaskIntoConstraints = false
         Label1.translatesAutoresizingMaskIntoConstraints = false
         Label2.translatesAutoresizingMaskIntoConstraints = false
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             backgroundView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -69,9 +88,9 @@ class SearchController : UIViewController{
             Label2.topAnchor.constraint(equalTo: Label1.bottomAnchor, constant: 10),
             Label2.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             
-            searchFriendBar.centerYAnchor.constraint(equalTo: backgroundView.bottomAnchor),
-            searchFriendBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            searchFriendBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
+            searchBar.centerYAnchor.constraint(equalTo: backgroundView.bottomAnchor),
+            searchBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            searchBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
             
         ])
         
@@ -89,7 +108,7 @@ class SearchController : UIViewController{
     var hiddenList: Array<Bool> = []
     
     func makeAddTarget(){
-        searchFriendBar.searchTextField.addTarget(self, action: #selector(searchFriend(_:)), for: .editingChanged)
+        searchBar.searchTextField.addTarget(self, action: #selector(searchFriend(_:)), for: .editingChanged)
     }
     
     override func viewDidLoad() {
@@ -138,7 +157,7 @@ class SearchController : UIViewController{
     @objc func searchFriend(_:UISearchBar){
         print("searchFriend")
         var friendName: String = ""
-        if let name = searchFriendBar.text{
+        if let name = searchBar.text{
             friendName = name
         }
         loadFriendArray(name: friendName)
@@ -253,8 +272,8 @@ extension SearchController : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "friendList") ?? UITableViewCell(style: .subtitle, reuseIdentifier: "friendList")
-        var selected = UIImage(named: "SelectedCheckCircle")?.resizeImageTo(size: CGSize(width: 30, height: 30))
-        var unSelected = UIImage(named: "UnselectedCheckCircle")?.resizeImageTo(size: CGSize(width: 30, height:30))
+        var selected = UIImage(named: "SelectedCheckCircle")?.resizeImageTo(size: CGSize(width: 25, height: 25))
+        var unSelected = UIImage(named: "UnselectedCheckCircle")?.resizeImageTo(size: CGSize(width: 25, height:25))
         if checked[indexPath.row] == true{
             cell.accessoryView = UIImageView(image:selected)
         }else{
@@ -263,10 +282,10 @@ extension SearchController : UITableViewDelegate, UITableViewDataSource {
         cell.backgroundColor = .systemGray6
         cell.textLabel?.text = nameList[indexPath.row]
         cell.detailTextLabel?.text = numberList[indexPath.row]
-        cell.textLabel?.font = UIFont.systemFont(ofSize: 16)
+        cell.textLabel?.font = UIFont.systemFont(ofSize: 15)
         cell.textLabel?.textColor = UIColor.black
-        cell.detailTextLabel?.font = UIFont.systemFont(ofSize: 13)
-        cell.detailTextLabel?.textColor = UIColor.gray
+        cell.detailTextLabel?.font = UIFont.systemFont(ofSize: 12)
+        cell.detailTextLabel?.textColor = UIColor.systemGray2
         return cell
        
     }
@@ -291,7 +310,7 @@ extension SearchController : UITableViewDelegate, UITableViewDataSource {
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: searchFriendBar.bottomAnchor, constant: 10),
+            tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 15),
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant:-10)
