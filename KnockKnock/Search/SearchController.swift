@@ -97,12 +97,20 @@ class SearchController : UIViewController{
         setNavigationBar()
         view.backgroundColor = .white
         getData()
+        sortData()
         customNavigationBar()
         makeSubView()
         makeConstraint()
         setTableView()
         makeAddTarget()
         setTitle()
+        print(nameList)
+        print(numberList)
+        print(nickNameList)
+        print(checked)
+        print(alramList)
+        print(timeList)
+        print(hiddenList)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)

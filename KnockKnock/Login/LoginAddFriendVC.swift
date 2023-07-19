@@ -68,6 +68,7 @@ class LoginAddFriendVC : AllowApproachVC {
             if check == true{
                 addFriendList.append(familyNameList[i]+nameList[i])
                 addNumberList.append(numberList[i])
+                nickNameList.append("")
                 alram.append(true)
                 date.append(formatter.string(from: Date()))
                 hidden.append(false)
@@ -275,7 +276,6 @@ extension LoginAddFriendVC {
                 let familyName = contact.familyName
                 let phoneNumbers = contact.phoneNumbers.map { $0.value.stringValue }[0]
                 nameList.append(givenName)
-                nickNameList.append("")
                 familyNameList.append(familyName)
                 numberList.append(phoneNumbers)
                 checked.append(false)

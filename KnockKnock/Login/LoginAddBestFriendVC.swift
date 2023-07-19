@@ -46,8 +46,17 @@ class LoginAddBestFriendVC : AllowApproachVC {
         self.navigationController?.pushViewController(loginSuccessVC, animated: true)
     }
     @objc override func skipBtnFunc(_: UIBarButtonItem){
-         let loginSuccessView = LoginSuccessVC()
+        setEmptyChecked()
+        let loginSuccessView = LoginSuccessVC()
         navigationController?.pushViewController(loginSuccessView, animated: true)
+    }
+    @objc func setEmptyChecked(){
+        var i=0;
+        for n in nameList{
+            checked[0]=false
+            i+=1
+        }
+        friendData.bestFriend = checked
     }
     
     @objc func setLabel(){
