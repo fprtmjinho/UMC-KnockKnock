@@ -39,20 +39,16 @@ class AddGroupVC : UIViewController {
             addGroupView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
             addGroupView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
             addGroupView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
-            addGroupView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor)
+            addGroupView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
+            addGroupView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
         ])
-      
-    }
-    /*
-    func setScrollHeight(){
-        let contentViewHeight = myProfilePage.heightAnchor.constraint(greaterThanOrEqualTo: view.heightAnchor)
+        
+        //수직 스크롤을 위해 height 조정
+        let contentViewHeight = addGroupView.heightAnchor.constraint(greaterThanOrEqualTo: view.heightAnchor)
         contentViewHeight.priority = .defaultLow
         contentViewHeight.isActive = true
-        
-        let height = placetext.heightAnchor.constraint(greaterThanOrEqualTo: view.heightAnchor)
-        
-        
-    }*/
+      
+    }
     
     private func makeAddTarget(){
         self.addGroupView.addmemberBtn.addTarget(self, action: #selector(addmemberFunc(_:)), for: .touchUpInside)
@@ -74,7 +70,6 @@ class AddGroupVC : UIViewController {
         setNavigationBar()
         self.title = "모임 추가하기"
         setScrollView()
-        //setScrollHeight()
         
         makeSubView()
         makeConstraint()
