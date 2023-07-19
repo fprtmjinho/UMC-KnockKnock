@@ -42,6 +42,8 @@ class GetInformationVC : UIViewController {
         fre.bestFriend = friendBest
         fre.time = friendTime
         fre.alram = friendAlram
+        
+        navigationController?.popViewController(animated: true)
     }
     //tableView
     var tableView = UITableView(frame: .zero, style: .plain)
