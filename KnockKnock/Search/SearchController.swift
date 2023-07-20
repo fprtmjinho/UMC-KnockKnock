@@ -88,6 +88,10 @@ class SearchController : UIViewController{
     var timeList: Array<String> = []
     var hiddenList: Array<Bool> = []
     
+    var searchName: Array<String> = []
+    var searchNumber: Array<String> = []
+    var searchBest: Array<Bool> = []
+    var indexList: Array<Int> = []
     func makeAddTarget(){
         searchFriendBar.searchTextField.addTarget(self, action: #selector(searchFriend(_:)), for: .editingChanged)
     }
@@ -97,7 +101,7 @@ class SearchController : UIViewController{
         setNavigationBar()
         view.backgroundColor = .white
         getData()
-        sortData()
+        //sortData()
         customNavigationBar()
         makeSubView()
         makeConstraint()
@@ -153,20 +157,34 @@ class SearchController : UIViewController{
     }
     @objc func loadFriendArray(name: String){
         if name == ""{
+            searchName = nameList
+            searchNumber = numberList
+            searchBest = checked
+            var index: Array<Int> = []
+            var i=0
+            for name in nameList{
+                index.append(i)
+                i+=1
+            }
+            indexList=index
             hiddenList = friendData.hidden
         }else{
-            var i=0;
+            var i=0
             for listName in nameList{
                 if !listName.contains(name){
-                    var index = nameList.firstIndex(of: listName)
-                    hiddenList[index!] = true
+                    hiddenList[i] = true
                 }else{
                     hiddenList[i] = false
+                    searchName.append(nameList[i])
+                    searchNumber.append(numberList[i])
+                    searchBest.append(checked[i])
+                    indexList.append(i)
                 }
                 i=i+1
             }
         }
         print(hiddenList)
+        
         tableView.reloadData()
         //hidden에 의한 업데이트는 됨 근데 tableview를 클릭시 리스트가 뒤죽박죽임
         
@@ -195,7 +213,7 @@ class SearchController : UIViewController{
     
     @objc func nextView(index:IndexPath) {
         let nextView = FriendProfileVC()
-        friendData.choiceIndex = index
+        friendData.choiceIndex = indexList[index.row]
         nextView.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(nextView, animated: true)
     }
@@ -207,6 +225,17 @@ class SearchController : UIViewController{
         alramList = friendData.alram
         timeList = friendData.time
         hiddenList = friendData.hidden
+        searchName = friendData.name
+        searchNumber = friendData.number
+        searchBest = friendData.bestFriend
+        var i=0
+        for name in nameList{
+            indexList.append(i)
+            i+=1
+        }
+        print(searchName)
+        print(searchNumber)
+        print(searchBest)
     }
 }
 
@@ -256,27 +285,26 @@ extension SearchController {
 extension SearchController : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return nameList.count
+        return searchName.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "friendList")
+        let cell = tableView.dequeueReusableCell(withIdentifier: "friendList") ?? UITableViewCell(style: .subtitle, reuseIdentifier: "friendList")
         var selected = UIImage(named: "SelectedCheckCircle")?.resizeImageTo(size: CGSize(width: 30, height: 30))
         var unSelected = UIImage(named: "UnselectedCheckCircle")?.resizeImageTo(size: CGSize(width: 30, height:30))
-        if checked[indexPath.row] == true{
-            cell?.accessoryView = UIImageView(image:selected)
+        if searchBest[indexPath.row] == true{
+            cell.accessoryView = UIImageView(image:selected)
         }else{
-            cell?.accessoryView = UIImageView(image:unSelected)
+            cell.accessoryView = UIImageView(image:unSelected)
         }
-        cell?.textLabel?.text = nameList[indexPath.row]
-        print(nameList[indexPath.row])
-        //전화번호가 안나타남...
-        //cell?.detailTextLabel?.text = numberList[indexPath.row]
-        cell?.textLabel?.font = UIFont.systemFont(ofSize: 16)
-        cell?.textLabel?.textColor = UIColor.black
-        cell?.detailTextLabel?.font = UIFont.systemFont(ofSize: 13)
-        cell?.detailTextLabel?.textColor = UIColor.black
-        return cell!
+        
+        cell.textLabel?.text = searchName[indexPath.row]
+        cell.detailTextLabel?.text = searchNumber[indexPath.row]
+        cell.textLabel!.font = UIFont.systemFont(ofSize: 15)
+        cell.textLabel!.textColor = UIColor.black
+        cell.detailTextLabel!.font = UIFont.systemFont(ofSize: 12)
+        cell.detailTextLabel!.textColor = UIColor.systemGray2
+        return cell
        
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

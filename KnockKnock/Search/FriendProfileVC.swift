@@ -230,7 +230,7 @@ class FriendProfileVC : UIViewController {
     var name: String = ""
     var number: String = ""
     var best: Bool?
-    var index: IndexPath?
+    var index: Int?
 
   
     
@@ -257,7 +257,7 @@ class FriendProfileVC : UIViewController {
             BfSwitch.isOn = false
             best = false
         }
-        friendData.bestFriend[index!.row] = best!
+        friendData.bestFriend[index!] = best!
     }
     @objc func setLabel(){
         Number.text = number
@@ -270,9 +270,9 @@ class FriendProfileVC : UIViewController {
     }
     @objc func getData(){
         index = friendData.choiceIndex
-        name = friendData.name[index!.row]
-        number = friendData.number[index!.row]
-        best = friendData.bestFriend[index!.row]
+        name = friendData.name[index!]
+        number = friendData.number[index!]
+        best = friendData.bestFriend[index!]
     }
     
 }

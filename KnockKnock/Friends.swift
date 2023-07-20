@@ -18,7 +18,7 @@ class Friends {
     
     var hidden: Array<Bool> = []
     
-    var choiceIndex: IndexPath?
+    var choiceIndex: Int?
     
     
     private func Init() {}
