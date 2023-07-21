@@ -11,7 +11,6 @@ class PostVC: UIViewController {
     
     var myPost: Bool = true // 자신 글 여부
     
-    
     var categoryValue: Int! // 게시판 종류
     
     // 테이블 뷰 관련: post, comment, tableView
@@ -180,7 +179,8 @@ class PostVC: UIViewController {
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         actionSheet.addAction(cancelAction)
-        // On iPad, the action sheet should be presented as a popover.
+        
+        // 아이패드에서 팝오버 방식으로 하기 위함
         if let popoverController = actionSheet.popoverPresentationController {
             popoverController.barButtonItem = navigationItem.rightBarButtonItem
         }
@@ -332,7 +332,7 @@ class CustomPostCell: UITableViewCell, UICollectionViewDelegate, UICollectionVie
     
     func makeSubView() {
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal // Set the scroll direction to horizontal
+        layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 0
         
         imagesCollectionView.collectionViewLayout = layout
@@ -340,6 +340,10 @@ class CustomPostCell: UITableViewCell, UICollectionViewDelegate, UICollectionVie
         imagesCollectionView.delegate = self
         imagesCollectionView.dataSource = self
         imagesCollectionView.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: "ImageCell")
+        imagesCollectionView.isUserInteractionEnabled = true
+        imagesCollectionView.isScrollEnabled = true
+
+        
         addSubview(imagesCollectionView)
         addSubview(imagesPageControl)
         
@@ -353,8 +357,6 @@ class CustomPostCell: UITableViewCell, UICollectionViewDelegate, UICollectionVie
         addSubview(commentsView)
         addSubview(commentsLabel)
         addSubview(shareButton)
-        
-        imagesCollectionView.isUserInteractionEnabled = true
         
     }
     
