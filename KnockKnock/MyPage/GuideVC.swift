@@ -95,6 +95,19 @@ class GuideVC: UIViewController {
         return containerView
     }
 
+    
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.title = "낙낙 사용법"
+        view.backgroundColor = .white
+        makeSubView()
+        makeConstraint()
+        setNavigationBar()
+    }
+}
+
+extension GuideVC {
     func makeSubView() {
         contentView.addSubview(label1)
         contentView.addSubview(containerView1)
@@ -139,14 +152,5 @@ class GuideVC: UIViewController {
             containerView4.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -25),
             containerView4.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
         ])
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.title = "낙낙 사용법"
-        view.backgroundColor = .white
-        makeSubView()
-        makeConstraint()
-        setNavigationBar()
     }
 }

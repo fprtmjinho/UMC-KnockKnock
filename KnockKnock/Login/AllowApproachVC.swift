@@ -47,8 +47,6 @@ class AllowApproachVC : UIViewController {
     }()
     //코드 수정 필요
     
-
-    
     func makeSubView(){
         view.addSubview(titleLabel)
         view.addSubview(subtitleLabel)
@@ -104,9 +102,7 @@ class AllowApproachVC : UIViewController {
         let loginSuccessView = LoginSuccessVC()
         navigationController?.pushViewController(loginSuccessView, animated: true)
     }
-    
-    
-  
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -116,7 +112,6 @@ class AllowApproachVC : UIViewController {
         makeConstraint()
         makeAddTarget()
         
-        
-        
     }
 }
+

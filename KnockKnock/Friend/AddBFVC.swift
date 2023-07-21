@@ -6,13 +6,24 @@
 //
 
 import UIKit
-class AddBFVC : GetInformationVC{
-    //주소록 불러오기 VC 상속
-    //인데 하면 안됨
-    //수정 필요
+class AddBFVC : UIViewController{
+   
+    var addBtn : UIButton = UIButton()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.title = "찐친 추가하기"
+    
+        makeAddTarget()
+    }
+}
 
- 
-    override func makeAddTarget(){
+extension AddBFVC {
+    func makeSubView(){
+        addBtn = setNextBtn(view: self, title: "추가하기")
+    }
+    
+    func makeAddTarget(){
         self.addBtn.addTarget(self, action: #selector(addBtnFunc(_:)) , for: .touchUpInside)
     }
 
@@ -20,10 +31,4 @@ class AddBFVC : GetInformationVC{
         self.navigationController?.popViewController(animated: true)
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.title = "찐친 추가하기"
-    
-        makeAddTarget()
-    }
 }

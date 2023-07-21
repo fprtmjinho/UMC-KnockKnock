@@ -59,8 +59,20 @@ class EditProfileVC : UIViewController {
          text.addLeftPadding()
          return text
      }()
-
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        
+        setNavigationBar()
+        self.title = "편집"
+        makeSubView()
+        makeConstraint()
+        makeAddTarget()
+    }
+}
+
+extension EditProfileVC {
     func makeSubView(){
         view.addSubview(ProfileView)
         view.addSubview(editLabel)
@@ -113,16 +125,5 @@ class EditProfileVC : UIViewController {
     
     func makeAddTarget(){
         
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .white
-        
-        setNavigationBar()
-        self.title = "편집"
-        makeSubView()
-        makeConstraint()
-        makeAddTarget()
     }
 }

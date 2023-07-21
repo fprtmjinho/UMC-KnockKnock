@@ -69,6 +69,24 @@ class MyPage : UIView{
     }()
     
     
+    
+   
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        makeSubView()
+        makeConstraint()
+        makeAddTarget()
+      
+    }
+    
+    required init?(coder _: NSCoder) {
+        fatalError("Error")
+    }
+    
+}
+
+extension MyPage {
     func makeConstraint(){
         Name.translatesAutoresizingMaskIntoConstraints = false
         ProfileView.translatesAutoresizingMaskIntoConstraints = false
@@ -120,18 +138,4 @@ class MyPage : UIView{
     @objc func pasteText(_ sender: Any) {
               UIPasteboard.general.string = myText.text
           }
-   
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        makeSubView()
-        makeConstraint()
-        makeAddTarget()
-      
-    }
-    
-    required init?(coder _: NSCoder) {
-        fatalError("Error")
-    }
-    
 }

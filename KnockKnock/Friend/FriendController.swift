@@ -29,27 +29,7 @@ class FriendController: TabmanViewController {
         return bottomLine
     }()
     
-    func makeSubView() {
-        barView.addSubview(topLine)
-        barView.addSubview(bottomLine)
-    }
     
-    func makeConstraint() {
-        topLine.translatesAutoresizingMaskIntoConstraints = false
-        bottomLine.translatesAutoresizingMaskIntoConstraints = false
-        
-        
-        NSLayoutConstraint.activate([
-            topLine.topAnchor.constraint(equalTo: barView.topAnchor),
-            topLine.leadingAnchor.constraint(equalTo: barView.leadingAnchor),
-            topLine.trailingAnchor.constraint(equalTo: barView.trailingAnchor),
-            topLine.heightAnchor.constraint(equalToConstant: 1.0),
-            bottomLine.bottomAnchor.constraint(equalTo: barView.bottomAnchor),
-            bottomLine.leadingAnchor.constraint(equalTo: barView.leadingAnchor),
-            bottomLine.trailingAnchor.constraint(equalTo: barView.trailingAnchor),
-            bottomLine.heightAnchor.constraint(equalToConstant: 1.0),
-        ])
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -110,5 +90,29 @@ extension FriendController: TMBarDataSource {
         } else {
             return TMBarItem(title: "내 모임")
         }
+    }
+}
+
+extension FriendController {
+    func makeSubView() {
+        barView.addSubview(topLine)
+        barView.addSubview(bottomLine)
+    }
+    
+    func makeConstraint() {
+        topLine.translatesAutoresizingMaskIntoConstraints = false
+        bottomLine.translatesAutoresizingMaskIntoConstraints = false
+        
+        
+        NSLayoutConstraint.activate([
+            topLine.topAnchor.constraint(equalTo: barView.topAnchor),
+            topLine.leadingAnchor.constraint(equalTo: barView.leadingAnchor),
+            topLine.trailingAnchor.constraint(equalTo: barView.trailingAnchor),
+            topLine.heightAnchor.constraint(equalToConstant: 1.0),
+            bottomLine.bottomAnchor.constraint(equalTo: barView.bottomAnchor),
+            bottomLine.leadingAnchor.constraint(equalTo: barView.leadingAnchor),
+            bottomLine.trailingAnchor.constraint(equalTo: barView.trailingAnchor),
+            bottomLine.heightAnchor.constraint(equalToConstant: 1.0),
+        ])
     }
 }

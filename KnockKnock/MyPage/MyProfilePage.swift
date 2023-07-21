@@ -29,6 +29,22 @@ class MyProfilePage : UIView {
         return editbtn
     }()
     
+
+     override init(frame: CGRect) {
+         super.init(frame: frame)
+         makeSubView()
+         makeConstraint()
+         
+       
+     }
+     
+     required init?(coder _: NSCoder) {
+         fatalError("Error")
+     }
+    
+}
+
+extension MyProfilePage {
     func makeConstraint(){
         GuideLine.translatesAutoresizingMaskIntoConstraints = false
         profileInformation.translatesAutoresizingMaskIntoConstraints = false
@@ -55,19 +71,4 @@ class MyProfilePage : UIView {
         self.addSubview(profileInformation)
         self.addSubview(editBtn)
     }
-    
-    
-     
-     override init(frame: CGRect) {
-         super.init(frame: frame)
-         makeSubView()
-         makeConstraint()
-         
-       
-     }
-     
-     required init?(coder _: NSCoder) {
-         fatalError("Error")
-     }
-    
 }

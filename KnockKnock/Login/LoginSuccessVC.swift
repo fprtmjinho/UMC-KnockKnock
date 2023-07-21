@@ -34,6 +34,29 @@ class LoginSuccessVC : UIViewController {
 
     
     
+    
+    var nickName: String = ""
+    var sex: String = ""
+    var birthday: String = ""
+    var email: String = ""
+    var password: String = ""
+    
+   
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        setNavigationBar()
+        startBtn = setNextBtn(view: self, title: "시작하기")
+        debugingFunction()
+        makeSubView()
+        makeConstraint()
+        makeAddTarget()
+        
+    }
+    
+}
+
+extension LoginSuccessVC {
     func makeSubView(){
         view.addSubview(checkIMg)
         view.addSubview(welcomeLabel)
@@ -63,25 +86,8 @@ class LoginSuccessVC : UIViewController {
         ])
         
     }
-    var nickName: String = ""
-    var sex: String = ""
-    var birthday: String = ""
-    var email: String = ""
-    var password: String = ""
-    
     func makeAddTarget(){
         self.startBtn.addTarget(self, action: #selector(nextView(_:)), for: .touchUpInside)
-    }
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .white
-        setNavigationBar()
-        startBtn = setNextBtn(view: self, title: "시작하기")
-        debugingFunction()
-        makeSubView()
-        makeConstraint()
-        makeAddTarget()
-        
     }
     
     func debugingFunction(){

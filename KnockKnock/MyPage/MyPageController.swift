@@ -19,6 +19,40 @@ class MyPageController : UIViewController{
         return myProfilePg
     }()
     
+    
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.view.backgroundColor = .white
+        self.title = "내 페이지"
+        setNavigationBar()
+        customNavigationBar()
+        
+        makeSubView()
+        makeConstraint()
+        makeAddTarget()
+        setScrollView()
+    }
+   
+}
+
+
+extension MyPageController {
+    func customNavigationBar(){
+        let settingBtn : UIBarButtonItem = {
+            let settingBtn = UIBarButtonItem(image: UIImage(systemName: "gearshape"), style: .plain, target: self, action: #selector(settingBtnPressed(_:)))
+            return settingBtn
+        }()
+        navigationItem.rightBarButtonItem = settingBtn
+    }
+    
+    @objc func settingBtnPressed(_: UIBarButtonItem){
+        let settingVC = SettingVC()
+        settingVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(settingVC, animated: true)
+    }
+    
     func makeSubView(){
         self.view.addSubview(scrollView)
         scrollView.addSubview(myPage)
@@ -76,41 +110,6 @@ class MyPageController : UIViewController{
         contentViewHeight.priority = .defaultLow
         contentViewHeight.isActive = true
     
-    }
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.view.backgroundColor = .white
-        self.title = "내 페이지"
-        setNavigationBar()
-        customNavigationBar()
-        
-        makeSubView()
-        makeConstraint()
-        makeAddTarget()
-        setScrollView()
-       
-        
-        
-    }
-   
-}
-
-
-extension MyPageController {
-    func customNavigationBar(){
-        let settingBtn : UIBarButtonItem = {
-            let settingBtn = UIBarButtonItem(image: UIImage(systemName: "gearshape"), style: .plain, target: self, action: #selector(settingBtnPressed(_:)))
-            return settingBtn
-        }()
-        navigationItem.rightBarButtonItem = settingBtn
-    }
-    
-    @objc func settingBtnPressed(_: UIBarButtonItem){
-        let settingVC = SettingVC()
-        settingVC.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(settingVC, animated: true)
     }
 }
 

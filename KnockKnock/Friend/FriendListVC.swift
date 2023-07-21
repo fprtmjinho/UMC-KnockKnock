@@ -9,35 +9,6 @@ import UIKit
 class FriendListVC: UIViewController {
     var addFriendBtn : UIButton = UIButton()
     
-    func makeSubView() {
-        addFriendBtn = setNextBtn(view: self, title: "찐친 추가하기")
-    }
-    
-    func makeConstraint() {
-        
-    }
-    func makeAddTarget(){
-          self.addFriendBtn.addTarget(self, action: #selector(addFriendFunc(_:)), for: .touchUpInside)
-      }
-
-      @objc func addFriendFunc(_: UIButton){
-          let addBFVC = AddBFVC()
-          //찐친 추가하기
-          addBFVC.hidesBottomBarWhenPushed = true
-          self.navigationController?.pushViewController(addBFVC, animated: true)
-      }
-    @objc func nextView(index:IndexPath) {
-        let nextView = FriendProfileVC()
-        friendData.choiceIndex = index
-        nextView.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(nextView, animated: true)
-    }
-    
-    @objc func getData(){
-        nameList = friendData.name
-        numberList = friendData.number
-        checked = friendData.bestFriend
-    }
     
     
     var tableView = UITableView(frame: .zero, style: .plain)
@@ -101,7 +72,6 @@ extension FriendListVC : UITableViewDelegate, UITableViewDataSource {
         //row 두께 설정
     }
  
-   
     
     func setTableView(){
         view.addSubview(tableView)
@@ -119,5 +89,36 @@ extension FriendListVC : UITableViewDelegate, UITableViewDataSource {
         
         self.tableView.dataSource = self
         self.tableView.delegate = self
+    }
+    
+    //ui extension
+    func makeSubView() {
+        addFriendBtn = setNextBtn(view: self, title: "찐친 추가하기")
+    }
+    
+    func makeConstraint() {
+        
+    }
+    func makeAddTarget(){
+          self.addFriendBtn.addTarget(self, action: #selector(addFriendFunc(_:)), for: .touchUpInside)
+      }
+
+      @objc func addFriendFunc(_: UIButton){
+          let addBFVC = AddBFVC()
+          //찐친 추가하기
+          addBFVC.hidesBottomBarWhenPushed = true
+          self.navigationController?.pushViewController(addBFVC, animated: true)
+      }
+    @objc func nextView(index:IndexPath) {
+        let nextView = FriendProfileVC()
+        friendData.choiceIndex = index
+        nextView.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(nextView, animated: true)
+    }
+    
+    @objc func getData(){
+        nameList = friendData.name
+        numberList = friendData.number
+        checked = friendData.bestFriend
     }
 }

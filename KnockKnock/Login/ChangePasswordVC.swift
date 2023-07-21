@@ -50,6 +50,24 @@ class ChangePasswordVC : UIViewController {
         return fourthText2
     }()
     
+    
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        setNavigationBar()
+        self.title = "비밀번호 변경"
+        
+        makeSubView()
+        makeConstraint()
+        makeAddTarget()
+        
+        
+    }
+}
+
+extension ChangePasswordVC {
     func makeSubView(){
         view.addSubview(passwordLabel)
         view.addSubview(passwordText)
@@ -88,20 +106,5 @@ class ChangePasswordVC : UIViewController {
     
     @objc func changePasswordFunc(_: UIButton){
         //비밀번호 변경
-    }
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .white
-        setNavigationBar()
-        self.title = "비밀번호 변경"
-        
-        makeSubView()
-        makeConstraint()
-        makeAddTarget()
-        
-        
-        
     }
 }
