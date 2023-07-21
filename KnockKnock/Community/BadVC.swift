@@ -181,4 +181,45 @@ extension BadVC {
         print("Button tapped: \(title)")
         
     }
+<<<<<<< HEAD
+=======
+    
+}
+
+extension BadVC: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return post.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! CustomCell
+        let post = post[indexPath.row]
+        cell.configureCell(with: post)
+        cell.makeSubView()
+        cell.makeConstraint()
+        cell.selectionStyle = .none
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if post[indexPath.row].image == nil { // 게시글에 사진이 없을 때
+            return 135
+        } else { // 게시글에 사진이 있을 때
+            return 300
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let postVC = PostVC()
+        postVC.categoryValue = 1 // 악 게시판
+        postVC.post.profile = post[indexPath.row].profile
+        postVC.post.title = post[indexPath.row].title
+        postVC.post.content = post[indexPath.row].content
+        postVC.post.likes = post[indexPath.row].likes
+        postVC.post.likes = post[indexPath.row].likes
+        postVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(postVC, animated: true)
+    }
+>>>>>>> CommunityUICustom4
 }
