@@ -18,14 +18,13 @@ class AddBFVC : UIViewController{
     let friendData = Friends.shared
     
     var checked: Array<Bool> = []
-    var indexList: Array<Int> = []
+    
     var nameList: Array<String> = []
     var numberList: Array<String> = []
     var nickNameList: Array<String> = []
-    var best: Array<Bool> = []
+    var bestFriend: Array<Bool> = []
     var alramList: Array<Bool> = []
     var timeList: Array<String> = []
-    var hiddenList: Array<Bool> = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -134,7 +133,15 @@ extension AddBFVC {
         var i=0
         for check in checked{
             if check == true{
-                friendData.bestFriend[indexList[i]] = true
+                var formatter = DateFormatter()
+                formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                var info: Info = Info(
+                    name: nameList[i],
+                    nickName: nickNameList[i],
+                    bestFriend: true,
+                    alram: true,
+                    time:formatter.string(from: Date()))
+                friendData.dic[numberList[i]] = info
             }
             i+=1
         }
@@ -142,23 +149,18 @@ extension AddBFVC {
     }
     
     @objc func getData(){
-        var i=0
-        best = friendData.bestFriend
-        print(best)
-        for check in best{
-            if check == false{
-                nameList.append(friendData.name[i])
-                nickNameList.append(friendData.nickName[i])
-                numberList.append(friendData.number[i])
+        for key in friendData.dic.keys{
+            let dic = friendData.dic[key]
+            if dic?.bestFriend == false{
+                nameList.append(dic!.name)
+                numberList.append(key)
+                nickNameList.append(dic!.nickName)
+                bestFriend.append(dic!.bestFriend)
                 checked.append(false)
-                alramList.append(friendData.alram[i])
-                timeList.append(friendData.time[i])
-                hiddenList.append(friendData.hidden[i])
-                indexList.append(i)
+                alramList.append(dic!.alram)
+                timeList.append(dic!.time)
             }
-            i+=1
         }
-        print(nameList)
     }
 
 }

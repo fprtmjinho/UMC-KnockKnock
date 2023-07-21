@@ -10,6 +10,7 @@ class MyData {
     static let shared = MyData()
     
     var name: String = ""
+    var nickName: String = ""
     var sex: String = ""
     var birthday: String = ""
     

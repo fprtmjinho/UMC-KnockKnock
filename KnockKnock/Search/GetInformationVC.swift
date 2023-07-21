@@ -18,16 +18,9 @@ class GetInformationVC : UIViewController {
     var tableView = UITableView(frame: .zero, style: .plain)
     let fre = Friends.shared
     
-    var friendName: Array<String> = []
-    var friendNickName: Array<String> = []
-    var friendNumber: Array<String> = []
-    var friendBest: Array<Bool> = []
-    var friendAlram: Array<Bool> = []
-    var friendTime: Array<String> = []
-    var friendHidden: Array<Bool> = []
-    
     //numberArray
     var contacts: NSMutableArray = NSMutableArray()
+    
     var nameList: Array<String> = []
     var nickNameList: Array<String> = []
     var familyNameList: Array<String> = []
@@ -50,16 +43,6 @@ class GetInformationVC : UIViewController {
         setTableView()
         addBtn = setNextBtn(view: self, title: "추가하기")
         makeAddTarget()
-        getData()
-        
-    }
-    @objc func getData(){
-        friendName = fre.name
-        friendNickName = fre.nickName
-        friendNumber = fre.number
-        friendBest = fre.bestFriend
-        friendAlram = fre.alram
-        friendTime = fre.time
     }
 }
 extension GetInformationVC : UITableViewDelegate, UITableViewDataSource {
@@ -92,32 +75,12 @@ extension GetInformationVC : UITableViewDelegate, UITableViewDataSource {
         if (checked[indexPath.row]==false) {
             cell?.accessoryView = UIImageView(image:selectedImage)
             checked[indexPath.row]=true
-            friendName.append(familyNameList[indexPath.row]+nameList[indexPath.row])
-            friendNickName.append("")
-            friendNumber.append(numberList[indexPath.row])
-            friendBest.append(false)
-            friendAlram.append(true)
-            friendHidden.append(false)
-            setTime()
         } else {
             cell?.accessoryView = UIImageView(image:unSelectedImage)
             checked[indexPath.row]=false
-            var index = friendNumber.firstIndex(of: numberList[indexPath.row])
-            friendName.remove(at: index!)
-            friendNickName.remove(at: index!)
-            friendNumber.remove(at: index!)
-            friendBest.remove(at: index!)
-            friendTime.remove(at: index!)
-            friendAlram.remove(at: index!)
-            friendHidden.remove(at: index!)
         }
         //아래는 추가버튼 보이면 없앨 예정
-        fre.name = friendName
-        fre.number = friendNumber
-        fre.bestFriend = friendBest
-        fre.time = friendTime
-        fre.alram = friendAlram
-        fre.hidden = friendHidden
+        
     }
     
     
@@ -250,9 +213,8 @@ extension GetInformationVC {
     // 친구 목록에 있는 번호와 중복되면 true
     @objc func checkDouble(phoneNumber:String) -> Bool{
         let fre = Friends.shared
-        let numberList = fre.number
-        for check in numberList{
-            if check == phoneNumber{
+        for key in fre.dic.keys{
+            if key == phoneNumber{
                 return true;
             }
         }
@@ -279,22 +241,27 @@ extension GetInformationVC {
             searchFriendBar.heightAnchor.constraint(equalToConstant: 45),
             ])
     }
-    @objc func setTime(){
-        var formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        friendTime.append(formatter.string(from: Date()))
-    }
     
     @objc func makeAddTarget(){
         addBtn.addTarget(self, action: #selector(setData(_:)), for: .touchUpInside)
     }
     @objc func setData(_:UIButton){
-        fre.name = friendName
-        fre.number = friendNumber
-        fre.bestFriend = friendBest
-        fre.time = friendTime
-        fre.alram = friendAlram
-        
+        var i=0
+        for check in checked{
+            if check == true{
+                var formatter = DateFormatter()
+                formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                var addInfo: Info = Info(
+                    name:familyNameList[i]+nameList[i],
+                    nickName: "",
+                    bestFriend: false,
+                    alram: true,
+                    time:formatter.string(from: Date())
+                    )
+                fre.dic[numberList[i]] = addInfo
+            }
+            i+=1
+        }
         navigationController?.popViewController(animated: true)
     }
 }

@@ -63,42 +63,44 @@ class LoginAddFriendVC : AllowApproachVC {
         var formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         var i=0
-        var j=0
         for check in checked{
             if check == true{
-                addFriendList.append(familyNameList[i]+nameList[i])
-                addNumberList.append(numberList[i])
-                nickNameList.append("")
-                alram.append(true)
-                date.append(formatter.string(from: Date()))
-                hidden.append(false)
-                j=j+1
+                if !fre.dic.keys.contains(numberList[i]){
+                    var addInfo: Info = Info(
+                        name:familyNameList[i]+nameList[i],
+                        nickName: "",
+                        bestFriend: false,
+                        alram: true,
+                        time:formatter.string(from: Date())
+                    )
+                    fre.dic[numberList[i]] = addInfo
+                }
             }
             i=i+1
         }
-        let fre = Friends.shared
-        fre.name = addFriendList
-        fre.nickName = nickNameList
-        fre.number = addNumberList
-        fre.alram = alram
-        fre.time = date
-        fre.hidden = hidden
+        for key in fre.dic.keys{
+            print(fre.dic[key])
+        }
     }
     //tableView
     var tableView = UITableView(frame: .zero, style: .plain)
     
     //numberArray
+    let fre = Friends.shared
     var contacts: NSMutableArray = NSMutableArray()
+    
     var nameList: Array<String> = []
     var familyNameList: Array<String> = []
     var numberList: Array<String> = []
+    
+    var addFriendList: Array<String> = []
+    var addNumberList: Array<String> = []
     var nickNameList: Array<String> = []
+    var bestFriendList: Array<Bool> = []
     var checked: Array<Bool> = []
     var alram: Array<Bool> = []
     var date: Array<String> = []
     var hidden: Array<Bool> = []
-    var addFriendList: Array<String> = []
-    var addNumberList: Array<String> = []
     
     
     

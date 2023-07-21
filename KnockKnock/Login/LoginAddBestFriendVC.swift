@@ -46,17 +46,8 @@ class LoginAddBestFriendVC : AllowApproachVC {
         self.navigationController?.pushViewController(loginSuccessVC, animated: true)
     }
     @objc override func skipBtnFunc(_: UIBarButtonItem){
-        setEmptyChecked()
         let loginSuccessView = LoginSuccessVC()
         navigationController?.pushViewController(loginSuccessView, animated: true)
-    }
-    @objc func setEmptyChecked(){
-        var i=0;
-        for n in nameList{
-            checked[0]=false
-            i+=1
-        }
-        friendData.bestFriend = checked
     }
     
     @objc func setLabel(){
@@ -84,23 +75,33 @@ class LoginAddBestFriendVC : AllowApproachVC {
         setLabel()
     }
     @objc func getData(){
-        nameList = friendData.name
-        numberList = friendData.number
-        date = friendData.time
+        for key in friendData.dic.keys{
+            nameList.append(friendData.dic[key]!.name)
+            numberList.append(key)
+            date.append(friendData.dic[key]!.time)
+        }
+//        nameList = friendData.name
+//        numberList = friendData.number
+//        date = friendData.time
     }
     @objc func setFriendData(){
         let fre = Friends.shared
-        fre.bestFriend = checked
         var i=0
         var formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         for check in checked{
             if (check==true){
-                date[i]=formatter.string(from: Date())
+                var addInfo: Info = Info(
+                    name:nameList[i],
+                    nickName: "",
+                    bestFriend: true,
+                    alram: true,
+                    time:formatter.string(from: Date())
+                )
+                fre.dic[numberList[i]] = addInfo
             }
             i=i+1
         }
-        fre.time = date
     }
     
 }

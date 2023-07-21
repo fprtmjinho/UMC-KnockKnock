@@ -127,10 +127,13 @@ class FriendProfileVC : UIViewController {
     
     let friendData = Friends.shared
     
-    var name: String = ""
+    var names: String = ""
     var number: String = ""
+    var nickNames: String = ""
     var best: Bool?
-    var index: Int?
+    var alrams: Bool?
+    var times: String = ""
+    var hiddens: Bool?
 
   
     
@@ -262,11 +265,20 @@ extension FriendProfileVC {
             BfSwitch.isOn = false
             best = false
         }
-        friendData.bestFriend[index!] = best!
+        var dic = friendData.dic[number]
+        var info: Info = Info (
+                name:names,
+                nickName:nickNames,
+                bestFriend:best!,
+                alram:alrams!,
+                time:times
+            )
+        friendData.dic[number] = info
+        print(friendData.dic[number])
     }
     @objc func setLabel(){
         Number.text = number
-        self.title = name
+        self.title = names
         if (best!){
             BfSwitch.isOn = true
         }else{
@@ -274,10 +286,13 @@ extension FriendProfileVC {
         }
     }
     @objc func getData(){
-        index = friendData.choiceIndex
-        name = friendData.name[index!]
-        number = friendData.number[index!]
-        best = friendData.bestFriend[index!]
+        number = friendData.choiceNumber!
+        var dic = friendData.dic[number]
+        names = dic!.name
+        nickNames = dic!.nickName
+        best = dic!.bestFriend
+        alrams = dic!.alram
+        times = dic!.time
     }
     
 }

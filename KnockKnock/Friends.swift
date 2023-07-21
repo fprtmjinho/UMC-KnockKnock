@@ -8,18 +8,18 @@
 import Foundation
 class Friends {
     static let shared = Friends()
+    var dic: [String:Info] = [:]
     
-    var name: Array<String> = []
-    var nickName: Array<String> = []
-    var number: Array<String> = []
-    var bestFriend: Array<Bool> = []
-    var alram: Array<Bool> = []
-    var time: Array<String> = []
-    
-    var hidden: Array<Bool> = []
-    
-    var choiceIndex: Int?
+    var choiceNumber: String?
     
     
     private func Init() {}
+}
+
+struct Info{
+    var name: String
+    var nickName: String
+    var bestFriend: Bool
+    var alram: Bool
+    var time: String
 }
