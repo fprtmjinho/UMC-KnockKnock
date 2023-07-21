@@ -86,12 +86,13 @@ class LoginSuccessVC : UIViewController {
     
     func debugingFunction(){
         // 데이터 가져오기
-        if let nickName = UserDefaults.standard.string(forKey: "nickName"),
+        if let nickNames = UserDefaults.standard.string(forKey: "nickName"),
            let sex = UserDefaults.standard.string(forKey: "sex"),
            let birthday = UserDefaults.standard.string(forKey: "birthday"),
            let email = UserDefaults.standard.string(forKey: "email"),
            let password = UserDefaults.standard.string(forKey: "password"){
             // 가져온 값 사용
+            nickName=nickNames
         } else {
             // 저장된 데이터가 없을 경우 기본값 또는 처리할 로직 설정
             print("No data found.")
