@@ -213,7 +213,7 @@ class SearchController : UIViewController{
     
     @objc func nextView(index:IndexPath) {
         let nextView = FriendProfileVC()
-        friendData.choiceIndex = indexList[index.row]
+        friendData.choiceIndex = index.row//indexList[index.row]
         nextView.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(nextView, animated: true)
     }
@@ -225,14 +225,14 @@ class SearchController : UIViewController{
         alramList = friendData.alram
         timeList = friendData.time
         hiddenList = friendData.hidden
-        searchName = friendData.name
-        searchNumber = friendData.number
-        searchBest = friendData.bestFriend
-        var i=0
-        for name in nameList{
-            indexList.append(i)
-            i+=1
-        }
+//        searchName = friendData.name
+//        searchNumber = friendData.number
+//        searchBest = friendData.bestFriend
+//        var i=0
+//        for name in nameList{
+//            indexList.append(i)
+//            i+=1
+//        }
         print(searchName)
         print(searchNumber)
         print(searchBest)
@@ -285,25 +285,26 @@ extension SearchController {
 extension SearchController : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return searchName.count
+        return nameList.count
+        //return searchName.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "friendList") ?? UITableViewCell(style: .subtitle, reuseIdentifier: "friendList")
         var selected = UIImage(named: "SelectedCheckCircle")?.resizeImageTo(size: CGSize(width: 30, height: 30))
         var unSelected = UIImage(named: "UnselectedCheckCircle")?.resizeImageTo(size: CGSize(width: 30, height:30))
-        if searchBest[indexPath.row] == true{
+        if checked[indexPath.row] == true{
             cell.accessoryView = UIImageView(image:selected)
         }else{
             cell.accessoryView = UIImageView(image:unSelected)
         }
         
-        cell.textLabel?.text = searchName[indexPath.row]
-        cell.detailTextLabel?.text = searchNumber[indexPath.row]
-        cell.textLabel!.font = UIFont.systemFont(ofSize: 15)
-        cell.textLabel!.textColor = UIColor.black
-        cell.detailTextLabel!.font = UIFont.systemFont(ofSize: 12)
-        cell.detailTextLabel!.textColor = UIColor.systemGray2
+        cell.textLabel?.text = nameList[indexPath.row]
+        cell.detailTextLabel?.text = numberList[indexPath.row]
+        cell.textLabel?.font = UIFont.systemFont(ofSize: 15)
+        cell.textLabel?.textColor = UIColor.black
+        cell.detailTextLabel?.font = UIFont.systemFont(ofSize: 12)
+        cell.detailTextLabel?.textColor = UIColor.systemGray2
         return cell
        
     }
