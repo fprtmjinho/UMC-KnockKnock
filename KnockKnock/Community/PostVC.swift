@@ -10,7 +10,7 @@ import UIKit
 class PostVC: UIViewController {
     
     var myPost: Bool = true // 자신 글 여부
-
+    
     
     var categoryValue: Int! // 게시판 종류
     
@@ -20,7 +20,7 @@ class PostVC: UIViewController {
                           name: "카림",
                           title: "바다에 놀러왔어~!",
                           content: "안녕 친구들 바닷가에 왔는데 날이 너무 좋아! 여기 바다 정말 추천해",
-                          image: UIImage(named: "beach"),
+                          images: [UIImage(named: "beach"), UIImage(named: "paris"), UIImage(named: "sanfrancisco")],
                           time: "07/08 22:17",
                           likes: 17, comments: 3)
     
@@ -185,7 +185,7 @@ class PostVC: UIViewController {
         }
         present(actionSheet, animated: true)
     }
-
+    
     
     @objc func anonymousImageButtonTapped(_ sender: UIButton) {
         isAnonymousSelected.toggle()
@@ -213,9 +213,7 @@ extension PostVC: UITableViewDelegate, UITableViewDataSource {
             // 행의 index가 0일 때는 게시글
             let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! CustomPostCell
             cell.configureCell(with: post)
-            cell.makeSubView1()
-            cell.makeConstraint1()
-            if post.image != nil {
+            if post.images != nil {
                 cell.makeSubView1()
                 cell.makeConstraint1()
             } else {
@@ -238,6 +236,23 @@ extension PostVC: UITableViewDelegate, UITableViewDataSource {
 }
 
 class CustomPostCell: UITableViewCell { // 게시글 커스텀
+    var post: Post?
+    
+    let prevImageButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "prev"), for: .normal)
+        button.addTarget(self, action: #selector(prevImageButtonTapped(_:)), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    let nextImageButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "next"), for: .normal)
+        button.addTarget(self, action: #selector(nextImageButtonTapped(_:)), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
     
     let profileImageView: UIImageView = { // 프로필 사진
         let imageView = UIImageView()
@@ -319,6 +334,9 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
     
     
     func makeSubView1() { // 사진이 있는 경우
+        imagesView.addSubview(prevImageButton)
+        imagesView.addSubview(nextImageButton)
+        
         addSubview(profileImageView)
         addSubview(nameLabel)
         addSubview(titleLabel)
@@ -350,6 +368,16 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
         let verticalMargin: CGFloat = 10
         
         NSLayoutConstraint.activate([
+            prevImageButton.leadingAnchor.constraint(equalTo: imagesView.leadingAnchor, constant: 8),
+            prevImageButton.centerYAnchor.constraint(equalTo: imagesView.centerYAnchor),
+            prevImageButton.widthAnchor.constraint(equalToConstant: 30),
+            prevImageButton.heightAnchor.constraint(equalToConstant: 30),
+            
+            nextImageButton.trailingAnchor.constraint(equalTo: imagesView.trailingAnchor, constant: -8),
+            nextImageButton.centerYAnchor.constraint(equalTo: imagesView.centerYAnchor),
+            nextImageButton.widthAnchor.constraint(equalToConstant: 30),
+            nextImageButton.heightAnchor.constraint(equalToConstant: 30),
+            
             profileImageView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
             profileImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: horizontalMargin),
             profileImageView.widthAnchor.constraint(equalToConstant: 45),
@@ -371,8 +399,8 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
             contentLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -horizontalMargin),
             
             imagesView.topAnchor.constraint(equalTo: contentLabel.bottomAnchor, constant: verticalMargin),
-            imagesView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: horizontalMargin),
-            imagesView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -horizontalMargin),
+            imagesView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            imagesView.trailingAnchor.constraint(equalTo: trailingAnchor),
             imagesView.heightAnchor.constraint(equalToConstant: 200),
             
             likesView.topAnchor.constraint(equalTo: imagesView.bottomAnchor, constant: verticalMargin),
@@ -459,12 +487,42 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
         
     }
     
+    @objc func prevImageButtonTapped(_ sender: UIButton) {
+        guard let images = post?.images, !images.isEmpty else { return }
+        if let currentImageIndex = images.firstIndex(of: imagesView.image!) {
+            let prevIndex = (currentImageIndex - 1 + images.count) % images.count
+            imagesView.image = images[prevIndex]
+        }
+    }
+    
+    @objc func nextImageButtonTapped(_ sender: UIButton) {
+        guard let images = post?.images, !images.isEmpty else { return }
+        if let currentImageIndex = images.firstIndex(of: imagesView.image!) {
+            let nextIndex = (currentImageIndex + 1) % images.count
+            imagesView.image = images[nextIndex]
+        }
+    }
+    
+    // (매우 중요)테이블뷰 셀의 터치 이벤트를 해당 버튼으로 전달
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+            if let view = prevImageButton.hitTest(convert(point, to: prevImageButton), with: event) {
+                return view
+            }
+        
+            if let view = nextImageButton.hitTest(convert(point, to: nextImageButton), with: event) {
+                return view
+            }
+        
+            return super.hitTest(point, with: event)
+        }
+    
     func configureCell(with post: Post) {
+        self.post = post
         profileImageView.image = post.profile
         nameLabel.text = post.name
         titleLabel.text = post.title
         contentLabel.text = post.content
-        imagesView.image = post.image
+        imagesView.image = post.images[0]
         timeLabel.text = post.time
         likesLabel.text = "\(post.likes)"
         commentsLabel.text = "\(post.comments)"
