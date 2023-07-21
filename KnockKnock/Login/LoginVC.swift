@@ -140,7 +140,63 @@ class LoginVC : UIViewController {
             enternew.setUnderLine()
             return enternew
         }()
+    
         
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        makeSubView()
+        makeConstraint()
+        makeAddTarget()
+        
+      
+        navigationController?.isNavigationBarHidden = true
+    }
+    
+    @objc func findPasswordFunc(_: UIButton){
+        let findPasswordVC = FindPasswordVC()
+        self.navigationController?.pushViewController(findPasswordVC, animated: true)
+    }
+    
+    @objc func loginSuccess(_: UIButton){
+        //로그인 성공여부 판별하는 로직 짜야함(서버랑 얘기하고 구현)
+//        if(){
+//            nextView()
+//        }else{
+//            return
+//        }
+    }
+  
+    @objc func signUpFunc(_:UIButton){
+        let loginFirstVC = LoginFirstVC()
+        
+        self.navigationController?.pushViewController(loginFirstVC, animated: true)
+    }
+        
+    }
+
+
+extension LoginVC {
+    func makeSubView(){
+        view.addSubview(Title)
+                
+        view.addSubview(EmailText)
+        view.addSubview(PasswordText)
+        view.addSubview(LoginButton)
+        view.addSubview(ForgetPassword)
+        
+        view.addSubview(ForKakaoBtn)
+        view.addSubview(ForNaverBtn)
+        view.addSubview(ForGoogleBtn)
+            
+        view.addSubview(EasyLogin)
+        view.addSubview(LoginGuide_1)
+        view.addSubview(LoginGuide_2)
+            
+        view.addSubview(NotYet)
+        view.addSubview(SignUp)
+}
+    
     func makeConstraint(){
         Title.translatesAutoresizingMaskIntoConstraints = false
         EmailText.translatesAutoresizingMaskIntoConstraints = false
@@ -155,8 +211,8 @@ class LoginVC : UIViewController {
         LoginGuide_2.translatesAutoresizingMaskIntoConstraints = false
         NotYet.translatesAutoresizingMaskIntoConstraints = false
         SignUp.translatesAutoresizingMaskIntoConstraints = false
-            
-            
+        
+        
         NSLayoutConstraint.activate([
             Title.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 90),
             Title.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
@@ -197,7 +253,7 @@ class LoginVC : UIViewController {
             LoginGuide_2.topAnchor.constraint(equalTo: ForgetPassword.bottomAnchor, constant: 80),
             LoginGuide_2.heightAnchor.constraint(equalToConstant: 1),
             LoginGuide_2.widthAnchor.constraint(equalToConstant: 105),
-         
+            
             ForNaverBtn.topAnchor.constraint(equalTo: EasyLogin.bottomAnchor, constant: 20),
             ForNaverBtn.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             ForNaverBtn.widthAnchor.constraint(equalToConstant: 50),
@@ -207,83 +263,31 @@ class LoginVC : UIViewController {
             ForKakaoBtn.trailingAnchor.constraint(equalTo: ForNaverBtn.leadingAnchor, constant: -20),
             ForKakaoBtn.widthAnchor.constraint(equalTo : ForNaverBtn.widthAnchor),
             ForKakaoBtn.heightAnchor.constraint(equalTo : ForNaverBtn.heightAnchor),
-                
+            
             ForGoogleBtn.topAnchor.constraint(equalTo: EasyLogin.bottomAnchor, constant: 20),
             ForGoogleBtn.leadingAnchor.constraint(equalTo: ForNaverBtn.trailingAnchor, constant: 20),
             ForGoogleBtn.widthAnchor.constraint(equalTo : ForNaverBtn.widthAnchor),
             ForGoogleBtn.heightAnchor.constraint(equalTo : ForNaverBtn.heightAnchor),
-                
-                
+            
+            
             NotYet.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 80),
             NotYet.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30),
             SignUp.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30),
             SignUp.leadingAnchor.constraint(equalTo: NotYet.trailingAnchor),
             SignUp.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -80)
         ])
+    }
+        
+        func makeAddTarget(){
+            self.ForgetPassword.addTarget(self, action: #selector(findPasswordFunc(_:)), for: .touchUpInside)
+            self.SignUp.addTarget(self, action: #selector(signUpFunc(_:)), for: .touchUpInside)
+            self.LoginButton.addTarget(self, action: #selector(loginSuccess(_:)), for: .touchUpInside)
+            //회원가입 뷰로 이동
             
-        
-    }
-    func makeSubView(){
-        view.addSubview(Title)
-                
-        view.addSubview(EmailText)
-        view.addSubview(PasswordText)
-        view.addSubview(LoginButton)
-        view.addSubview(ForgetPassword)
-        
-        view.addSubview(ForKakaoBtn)
-        view.addSubview(ForNaverBtn)
-        view.addSubview(ForGoogleBtn)
-            
-        view.addSubview(EasyLogin)
-        view.addSubview(LoginGuide_1)
-        view.addSubview(LoginGuide_2)
-            
-        view.addSubview(NotYet)
-        view.addSubview(SignUp)
-}
-    
-    func makeAddTarget(){
-        self.ForgetPassword.addTarget(self, action: #selector(findPasswordFunc(_:)), for: .touchUpInside)
-        self.SignUp.addTarget(self, action: #selector(signUpFunc(_:)), for: .touchUpInside)
-        self.LoginButton.addTarget(self, action: #selector(loginSuccess(_:)), for: .touchUpInside)
-        //회원가입 뷰로 이동
-        
+        }
     }
     
-        
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .white
-        makeSubView()
-        makeConstraint()
-        makeAddTarget()
-        
-      
-        navigationController?.isNavigationBarHidden = true
-    }
-    
-    @objc func findPasswordFunc(_: UIButton){
-        let findPasswordVC = FindPasswordVC()
-        self.navigationController?.pushViewController(findPasswordVC, animated: true)
-    }
-    
-    @objc func loginSuccess(_: UIButton){
-        //로그인 성공여부 판별하는 로직 짜야함(서버랑 얘기하고 구현)
-//        if(){
-//            nextView()
-//        }else{
-//            return
-//        }
-    }
-  
-    @objc func signUpFunc(_:UIButton){
-        let loginFirstVC = LoginFirstVC()
-        
-        self.navigationController?.pushViewController(loginFirstVC, animated: true)
-    }
-        
-    }
+
 
 
 

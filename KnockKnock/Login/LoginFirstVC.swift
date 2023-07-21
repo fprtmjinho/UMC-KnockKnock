@@ -108,6 +108,30 @@ class LoginFirstVC : UIViewController {
     }()
     
       
+    
+    
+    var nickName: String = ""
+    var sex: String = ""
+    var birthday: String = ""
+    
+   
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        setNavigationBar()
+        makeSubView()
+        makeConstraint()
+        makeAddTarget()
+        
+        navigationController?.isNavigationBarHidden = false
+        
+    }
+   
+}
+
+extension LoginFirstVC {
     func makeSubView(){
         view.addSubview(num1)
         view.addSubview(nameLabel)
@@ -182,27 +206,10 @@ class LoginFirstVC : UIViewController {
         
     }
     
-    var nickName: String = ""
-    var sex: String = ""
-    var birthday: String = ""
-    
-   
-    
     func makeAddTarget(){
         self.nextBtn.addTarget(self, action: #selector(touchNextBtn(_:)), for: .touchUpInside)
         self.manButton.addTarget(self, action: #selector(choiceMan(_:)), for: .touchUpInside)
         self.womanButton.addTarget(self, action: #selector(choiceWoman(_:)), for: .touchUpInside)
-    }
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .white
-        setNavigationBar()
-        makeSubView()
-        makeConstraint()
-        makeAddTarget()
-        
-        navigationController?.isNavigationBarHidden = false
-        
     }
     @objc func choiceMan(_:UIButton){
         let color = manButton.backgroundColor

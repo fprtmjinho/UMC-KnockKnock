@@ -53,23 +53,7 @@ class WriteVC: UIViewController {
         return stackView
     }()
     
-    // 탭한 이미지 추가/삭제
-    func addRemoveSelectedImage(_ image: UIImage) {
-        let imageView = UIImageView(image: image)
-        imageView.contentMode = .scaleAspectFit
-        imageView.clipsToBounds = true
-        imageView.widthAnchor.constraint(equalToConstant: 35).isActive = false
-        imageView.heightAnchor.constraint(equalToConstant: 35).isActive = false
-        imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: 1.0).isActive = true
-        
-        // 이미지뷰에 탭 제스처를 추가 -> 이미지를 탭할 수 있음
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(removeSelectedImage(_:)))
-        imageView.isUserInteractionEnabled = true
-        imageView.addGestureRecognizer(tapGestureRecognizer)
-        
-        imagesStackView.addArrangedSubview(imageView)
-        selectedImages.append(image)
-    }
+    
 
     
     let titleLabel: UILabel = {
@@ -137,6 +121,102 @@ class WriteVC: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
+    
+    
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.title = "글 쓰기"
+        view.backgroundColor = .white
+        
+        makeSubView()
+        makeConstraint()
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: completeButton
+        )
+    }
+    
+    
+}
+
+extension WriteVC: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        guard textView.textColor == .placeholderText else { return }
+        textView.textColor = .label
+        textView.text = nil
+    }
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.text = "내용을 입력하세요."
+            textView.textColor = .placeholderText
+        }
+    }
+}
+
+extension WriteVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    @objc func cameraButtonTapped(_ sender: UIButton) {
+        if selectedImages.count < 6 {
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = .photoLibrary
+            
+            if PHPhotoLibrary.authorizationStatus() == .authorized {
+                present(imagePicker, animated: true, completion: nil)
+            } else {
+                PHPhotoLibrary.requestAuthorization { status in
+                    if status == .authorized {
+                        DispatchQueue.main.async {
+                            self.present(imagePicker, animated: true, completion: nil)
+                        }
+                    } else {
+                        let alert = UIAlertController(title: "Error", message: "사진 앱에 접근 권한을 허용해주세요.", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                }
+            }
+        } else {
+            let alert = UIAlertController(title: "경고", message: "사진은 최대 6장까지 업로드할 수 있습니다.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    // UIImagePickerControllerDelegate 메서드를 구현하여 사용자가 이미지를 선택했을 때 처리
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let selectedImage = info[.originalImage] as? UIImage {
+            addRemoveSelectedImage(selectedImage)
+        }
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+}
+
+extension WriteVC {
+    // 탭한 이미지 추가/삭제
+    func addRemoveSelectedImage(_ image: UIImage) {
+        let imageView = UIImageView(image: image)
+        imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = true
+        imageView.widthAnchor.constraint(equalToConstant: 35).isActive = false
+        imageView.heightAnchor.constraint(equalToConstant: 35).isActive = false
+        imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: 1.0).isActive = true
+        
+        // 이미지뷰에 탭 제스처를 추가 -> 이미지를 탭할 수 있음
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(removeSelectedImage(_:)))
+        imageView.isUserInteractionEnabled = true
+        imageView.addGestureRecognizer(tapGestureRecognizer)
+        
+        imagesStackView.addArrangedSubview(imageView)
+        selectedImages.append(image)
+    }
     
     func makeSubView() {
         scrollView.addSubview(cameraButton)
@@ -211,20 +291,6 @@ class WriteVC: UIViewController {
         ])
     }
     
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.title = "글 쓰기"
-        view.backgroundColor = .white
-        
-        makeSubView()
-        makeConstraint()
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: completeButton
-        )
-    }
-    
     @objc func completeButtonTapped() {
         titleText = titleTextField.text
         contentText = contentTextView.text
@@ -251,63 +317,4 @@ class WriteVC: UIViewController {
                 }
             }
         }
-    
-}
-
-extension WriteVC: UITextViewDelegate {
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        guard textView.textColor == .placeholderText else { return }
-        textView.textColor = .label
-        textView.text = nil
-    }
-    func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text.isEmpty {
-            textView.text = "내용을 입력하세요."
-            textView.textColor = .placeholderText
-        }
-    }
-}
-
-extension WriteVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
-    @objc func cameraButtonTapped(_ sender: UIButton) {
-        if selectedImages.count < 6 {
-            let imagePicker = UIImagePickerController()
-            imagePicker.delegate = self
-            imagePicker.sourceType = .photoLibrary
-            
-            if PHPhotoLibrary.authorizationStatus() == .authorized {
-                present(imagePicker, animated: true, completion: nil)
-            } else {
-                PHPhotoLibrary.requestAuthorization { status in
-                    if status == .authorized {
-                        DispatchQueue.main.async {
-                            self.present(imagePicker, animated: true, completion: nil)
-                        }
-                    } else {
-                        let alert = UIAlertController(title: "Error", message: "사진 앱에 접근 권한을 허용해주세요.", preferredStyle: .alert)
-                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                        self.present(alert, animated: true, completion: nil)
-                    }
-                }
-            }
-        } else {
-            let alert = UIAlertController(title: "경고", message: "사진은 최대 6장까지 업로드할 수 있습니다.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-        }
-    }
-    
-    // UIImagePickerControllerDelegate 메서드를 구현하여 사용자가 이미지를 선택했을 때 처리
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let selectedImage = info[.originalImage] as? UIImage {
-            addRemoveSelectedImage(selectedImage)
-        }
-        picker.dismiss(animated: true, completion: nil)
-    }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true, completion: nil)
-    }
-    
 }

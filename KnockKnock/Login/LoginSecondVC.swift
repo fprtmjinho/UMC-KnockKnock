@@ -102,6 +102,24 @@ class LoginSecondVC : UIViewController{
     }()
     
     
+    
+    var email: String = ""
+    var password: String = ""
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        setNavigationBar()
+        makeSubView()
+        makeConstraint()
+        makeAddTarget()
+    }
+    
+    
+    }
+
+extension LoginSecondVC {
     func makeSubView(){
         view.addSubview(num4)
         view.addSubview(emailLabel)
@@ -167,20 +185,8 @@ class LoginSecondVC : UIViewController{
         
     }
     
-    var email: String = ""
-    var password: String = ""
-    
     func makeAddTarget(){
         self.nextBtn.addTarget(self, action: #selector(touchNextBtn(_:)), for: .touchUpInside)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .white
-        setNavigationBar()
-        makeSubView()
-        makeConstraint()
-        makeAddTarget()
     }
     
     @objc func touchNextBtn(_:UIButton){
@@ -249,5 +255,5 @@ class LoginSecondVC : UIViewController{
             let allowApproachVC = AllowApproachVC()
             self.navigationController?.pushViewController(allowApproachVC, animated: true)
         }
-    }
+}
 

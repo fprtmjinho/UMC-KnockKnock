@@ -63,38 +63,6 @@ class SearchController : UIViewController{
     
     
     
-    func makeSubView(){
-        view.addSubview(backgroundView)
-        view.addSubview(Label1)
-        view.addSubview(Label2)
-        view.addSubview(searchBar)
-        
-    }
-    
-    func makeConstraint(){
-        backgroundView.translatesAutoresizingMaskIntoConstraints = false
-        Label1.translatesAutoresizingMaskIntoConstraints = false
-        Label2.translatesAutoresizingMaskIntoConstraints = false
-        searchBar.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            backgroundView.topAnchor.constraint(equalTo: view.topAnchor),
-            backgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            backgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            backgroundView.heightAnchor.constraint(equalToConstant: 250),
-            
-            Label1.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 7),
-            Label1.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            Label2.topAnchor.constraint(equalTo: Label1.bottomAnchor, constant: 10),
-            Label2.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            
-            searchBar.centerYAnchor.constraint(equalTo: backgroundView.bottomAnchor),
-            searchBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            searchBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
-            
-        ])
-        
-    }
     var tableView = UITableView(frame: .zero, style: .plain)
     
     let friendData = Friends.shared
@@ -106,14 +74,10 @@ class SearchController : UIViewController{
     var alramList: Array<Bool> = []
     var timeList: Array<String> = []
     var hiddenList: Array<Bool> = []
-    
     var searchName: Array<String> = []
     var searchNumber: Array<String> = []
     var searchBest: Array<Bool> = []
     var indexList: Array<Int> = []
-    func makeAddTarget(){
-        searchBar.searchTextField.addTarget(self, action: #selector(searchFriend(_:)), for: .editingChanged)
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -141,120 +105,6 @@ class SearchController : UIViewController{
         sortData()
         tableView.reloadData()
         setTableView()
-    }
-    @objc func sortData(){
-
-        // 이름, 전화번호, 나이를 튜플로 묶은 배열 생성
-        var combinedList = zip(nameList, zip(nickNameList,zip(numberList, zip(checked,zip(alramList,timeList).map{($0,$1)}).map{($0, $1)}).map{($0, $1)}).map{($0, $1)}).map{($0,$1)}
-
-        // 이름을 기준으로 오름차순 정렬
-        combinedList.sort { $0.0 < $1.0 }
-
-        // 혹은 이렇게도 가능합니다.
-        // combinedList = combinedList.sorted { $0.0 < $1.0 }
-
-        // 정렬된 결과를 다시 리스트로 분리
-        nameList = combinedList.map { $0.0 }
-        nickNameList = combinedList.map {$0.1.0}
-        numberList = combinedList.map { $0.1.1.0 }
-        checked = combinedList.map { $0.1.1.1.0 }
-        alramList = combinedList.map {$0.1.1.1.1.0}
-        timeList = combinedList.map{$0.1.1.1.1.1}
-        friendData.name = nameList
-        friendData.number = numberList
-        friendData.bestFriend = checked
-        friendData.alram = alramList
-        friendData.time = timeList
-    }
-    @objc func searchFriend(_:UISearchBar){
-        print("searchFriend")
-        var friendName: String = ""
-        if let name = searchBar.text{
-            friendName = name
-        }
-        loadFriendArray(name: friendName)
-    }
-    @objc func loadFriendArray(name: String){
-        if name == ""{
-            searchName = nameList
-            searchNumber = numberList
-            searchBest = checked
-            var index: Array<Int> = []
-            var i=0
-            for name in nameList{
-                index.append(i)
-                i+=1
-            }
-            indexList=index
-            hiddenList = friendData.hidden
-        }else{
-            var i=0
-            for listName in nameList{
-                if !listName.contains(name){
-                    hiddenList[i] = true
-                }else{
-                    hiddenList[i] = false
-                    searchName.append(nameList[i])
-                    searchNumber.append(numberList[i])
-                    searchBest.append(checked[i])
-                    indexList.append(i)
-                }
-                i=i+1
-            }
-        }
-        print(hiddenList)
-        
-        tableView.reloadData()
-        //hidden에 의한 업데이트는 됨 근데 tableview를 클릭시 리스트가 뒤죽박죽임
-        
-    }
-    @objc func setTitle(){
-        var nickName: String = loadLocalName()//loadNickName()
-        Label1.text = "\(nickName)님,\n연락하고 싶은 분이 생겼나요?"
-    }
-    @objc func loadLocalName()->String{
-        var me = MyData.shared
-        return me.name
-    }
-    @objc func loadNickName()->String{
-        var nickName: String = ""
-        //여기에 로그인한 uid로 서버에서 nickName을 불러온다
-        return nickName
-    }
-    
-    override func viewDidLayoutSubviews() {
-            super.viewDidLayoutSubviews()
-            backgroundView.frame = backgroundView.bounds
-            if let gradientLayer = backgroundView.layer.sublayers?.first as? CAGradientLayer {
-                gradientLayer.frame = backgroundView.bounds
-            }
-        }
-    
-    @objc func nextView(index:IndexPath) {
-        let nextView = FriendProfileVC()
-        friendData.choiceIndex = index.row//indexList[index.row]
-        nextView.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(nextView, animated: true)
-    }
-    @objc func getData(){
-        nameList = friendData.name
-        nickNameList = friendData.nickName
-        numberList = friendData.number
-        checked = friendData.bestFriend
-        alramList = friendData.alram
-        timeList = friendData.time
-        hiddenList = friendData.hidden
-//        searchName = friendData.name
-//        searchNumber = friendData.number
-//        searchBest = friendData.bestFriend
-//        var i=0
-//        for name in nameList{
-//            indexList.append(i)
-//            i+=1
-//        }
-        print(searchName)
-        print(searchNumber)
-        print(searchBest)
     }
 }
 
@@ -359,4 +209,132 @@ extension SearchController : UITableViewDelegate, UITableViewDataSource {
         self.tableView.delegate = self
     }
     
+}
+
+extension SearchController {
+    func makeSubView(){
+        view.addSubview(backgroundView)
+        view.addSubview(Label1)
+        view.addSubview(Label2)
+        view.addSubview(searchBar)
+        
+    }
+    
+    func makeConstraint(){
+        backgroundView.translatesAutoresizingMaskIntoConstraints = false
+        Label1.translatesAutoresizingMaskIntoConstraints = false
+        Label2.translatesAutoresizingMaskIntoConstraints = false
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            backgroundView.topAnchor.constraint(equalTo: view.topAnchor),
+            backgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            backgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            backgroundView.heightAnchor.constraint(equalToConstant: 250),
+            
+            Label1.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 7),
+            Label1.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            Label2.topAnchor.constraint(equalTo: Label1.bottomAnchor, constant: 10),
+            Label2.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            
+            searchBar.centerYAnchor.constraint(equalTo: backgroundView.bottomAnchor),
+            searchBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            searchBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
+            
+        ])
+        
+    }
+    func makeAddTarget(){
+        searchBar.searchTextField.addTarget(self, action: #selector(searchFriend(_:)), for: .editingChanged)
+    }
+    
+    @objc func sortData(){
+
+        // 이름, 전화번호, 나이를 튜플로 묶은 배열 생성
+        var combinedList = zip(nameList, zip(nickNameList,zip(numberList, zip(checked,zip(alramList,timeList).map{($0,$1)}).map{($0, $1)}).map{($0, $1)}).map{($0, $1)}).map{($0,$1)}
+
+        // 이름을 기준으로 오름차순 정렬
+        combinedList.sort { $0.0 < $1.0 }
+
+        // 혹은 이렇게도 가능합니다.
+        // combinedList = combinedList.sorted { $0.0 < $1.0 }
+
+        // 정렬된 결과를 다시 리스트로 분리
+        nameList = combinedList.map { $0.0 }
+        nickNameList = combinedList.map {$0.1.0}
+        numberList = combinedList.map { $0.1.1.0 }
+        checked = combinedList.map { $0.1.1.1.0 }
+        alramList = combinedList.map {$0.1.1.1.1.0}
+        timeList = combinedList.map{$0.1.1.1.1.1}
+        friendData.name = nameList
+        friendData.number = numberList
+        friendData.bestFriend = checked
+        friendData.alram = alramList
+        friendData.time = timeList
+    }
+    @objc func searchFriend(_:UISearchBar){
+        print("searchFriend")
+        var friendName: String = ""
+        if let name = searchBar.text{
+            friendName = name
+        }
+        loadFriendArray(name: friendName)
+    }
+    @objc func loadFriendArray(name: String){
+        if name == ""{
+            hiddenList = friendData.hidden
+        }else{
+            var i=0;
+            for listName in nameList{
+                if !listName.contains(name){
+                    var index = nameList.firstIndex(of: listName)
+                    hiddenList[index!] = true
+                }else{
+                    hiddenList[i] = false
+                }
+                i=i+1
+            }
+        }
+        print(hiddenList)
+        tableView.reloadData()
+        //hidden에 의한 업데이트는 됨 근데 tableview를 클릭시 리스트가 뒤죽박죽임
+        
+    }
+    @objc func setTitle(){
+        var nickName: String = loadLocalName()//loadNickName()
+        Label1.text = "\(nickName)님,\n연락하고 싶은 분이 생겼나요?"
+    }
+    @objc func loadLocalName()->String{
+        var me = MyData.shared
+        return me.name
+    }
+    @objc func loadNickName()->String{
+        var nickName: String = ""
+        //여기에 로그인한 uid로 서버에서 nickName을 불러온다
+        return nickName
+    }
+    
+    override func viewDidLayoutSubviews() {
+            super.viewDidLayoutSubviews()
+            backgroundView.frame = backgroundView.bounds
+            if let gradientLayer = backgroundView.layer.sublayers?.first as? CAGradientLayer {
+                gradientLayer.frame = backgroundView.bounds
+            }
+        }
+    
+    @objc func nextView(index:IndexPath) {
+        let nextView = FriendProfileVC()
+        friendData.choiceIndex = index.row
+        nextView.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(nextView, animated: true)
+    }
+    @objc func getData(){
+        nameList = friendData.name
+        nickNameList = friendData.nickName
+        numberList = friendData.number
+        checked = friendData.bestFriend
+        alramList = friendData.alram
+        timeList = friendData.time
+        hiddenList = friendData.hidden
+    }
 }

@@ -123,6 +123,35 @@ class FriendProfileVC : UIViewController {
         return bfSwitch
     }()
     
+    
+    
+    let friendData = Friends.shared
+    
+    var name: String = ""
+    var number: String = ""
+    var best: Bool?
+    var index: Int?
+
+  
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.view.backgroundColor = .white
+        self.title = "Name"
+        //title은 cell 따라 변경 필요
+        //임의 지정
+        setNavigationBar()
+        makeSubView()
+        makeConstraint()
+        getData()
+        makeAddTarget()
+        setLabel()
+       
+    }
+    
+}
+
+extension FriendProfileVC {
     func makeSubView(){
         view.addSubview(Number)
         view.addSubview(ProfileView)
@@ -223,30 +252,6 @@ class FriendProfileVC : UIViewController {
         let textGuideVC = TextGuideVC()
         textGuideVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(textGuideVC, animated: true)
-    }
-    
-    let friendData = Friends.shared
-    
-    var name: String = ""
-    var number: String = ""
-    var best: Bool?
-    var index: Int?
-
-  
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.view.backgroundColor = .white
-        self.title = "Name"
-        //title은 cell 따라 변경 필요
-        //임의 지정
-        setNavigationBar()
-        makeSubView()
-        makeConstraint()
-        getData()
-        makeAddTarget()
-        setLabel()
-       
     }
     @objc func switchChange(Switch:UISwitch){
         print("switch")

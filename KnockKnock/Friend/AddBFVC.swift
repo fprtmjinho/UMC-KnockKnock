@@ -7,40 +7,11 @@
 
 import UIKit
 class AddBFVC : UIViewController{
-    //주소록 불러오기 VC 상속
-    //인데 하면 안됨
-    //수정 필요
 
     var addBtn : UIButton = UIButton()
     var searchFriendBar : UISearchBar = UISearchBar()
 
 
-    private func makeSubView(){
-        searchFriendBar = setSearchBar(VC: self, title: "친구를 입력해주세요!")
-    }
-    private func makeConstraint(){
-        NSLayoutConstraint.activate([
-            searchFriendBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40),
-            searchFriendBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            searchFriendBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
-            searchFriendBar.heightAnchor.constraint(equalToConstant: 45),
-        ])
-
-    }
-    private func makeAddTarget(){
-        self.addBtn.addTarget(self, action: #selector(addBtnFunc(_:)) , for: .touchUpInside)
-    }
-
-    @objc func addBtnFunc(_: UIButton){
-        var i=0
-        for check in checked{
-            if check == true{
-                friendData.bestFriend[indexList[i]] = true
-            }
-            i+=1
-        }
-        self.navigationController?.popViewController(animated: true)
-    }
     
     var tableView = UITableView(frame: .zero, style: .plain)
     
@@ -69,26 +40,7 @@ class AddBFVC : UIViewController{
         makeAddTarget()
     }
     
-    
-    @objc func getData(){
-        var i=0
-        best = friendData.bestFriend
-        print(best)
-        for check in best{
-            if check == false{
-                nameList.append(friendData.name[i])
-                nickNameList.append(friendData.nickName[i])
-                numberList.append(friendData.number[i])
-                checked.append(false)
-                alramList.append(friendData.alram[i])
-                timeList.append(friendData.time[i])
-                hiddenList.append(friendData.hidden[i])
-                indexList.append(i)
-            }
-            i+=1
-        }
-        print(nameList)
-    }
+ 
 }
 extension AddBFVC : UITableViewDelegate, UITableViewDataSource {
     
@@ -157,4 +109,56 @@ extension AddBFVC : UITableViewDelegate, UITableViewDataSource {
         self.tableView.delegate = self
     }
     
+}
+
+extension AddBFVC {
+    func makeSubView(){
+        addBtn = setNextBtn(view: self, title: "추가하기")
+        searchFriendBar = setSearchBar(VC: self, title: "친구를 입력해주세요")
+    }
+    private func makeConstraint(){
+        NSLayoutConstraint.activate([
+            searchFriendBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40),
+            searchFriendBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            searchFriendBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
+            searchFriendBar.heightAnchor.constraint(equalToConstant: 45),
+        ])
+
+    }
+    
+    func makeAddTarget(){
+        self.addBtn.addTarget(self, action: #selector(addBtnFunc(_:)) , for: .touchUpInside)
+    }
+
+    @objc func addBtnFunc(_: UIButton){
+        var i=0
+        for check in checked{
+            if check == true{
+                friendData.bestFriend[indexList[i]] = true
+            }
+            i+=1
+        }
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func getData(){
+        var i=0
+        best = friendData.bestFriend
+        print(best)
+        for check in best{
+            if check == false{
+                nameList.append(friendData.name[i])
+                nickNameList.append(friendData.nickName[i])
+                numberList.append(friendData.number[i])
+                checked.append(false)
+                alramList.append(friendData.alram[i])
+                timeList.append(friendData.time[i])
+                hiddenList.append(friendData.hidden[i])
+                indexList.append(i)
+            }
+            i+=1
+        }
+        print(nameList)
+    }
+
 }

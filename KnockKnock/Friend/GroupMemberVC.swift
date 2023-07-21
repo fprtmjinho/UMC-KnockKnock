@@ -10,6 +10,21 @@ class GroupMemberVC : UIViewController {
     
     var addBtn : UIButton = UIButton()
     
+   
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        setNavigationBar()
+        self.title = "그룹 구성원"
+        makeSubView()
+        makeConstraint()
+        makeAddTarget()
+    }
+    
+}
+
+extension GroupMemberVC {
     func makeSubView(){
         addBtn = setNextBtn(view: self, title: "추가하기")
     }
@@ -25,15 +40,4 @@ class GroupMemberVC : UIViewController {
     @objc func addBtnFunc(_: UIButton){
         navigationController?.popViewController(animated: true)
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .white
-        setNavigationBar()
-        self.title = "그룹 구성원"
-        makeSubView()
-        makeConstraint()
-        makeAddTarget()
-    }
-    
 }

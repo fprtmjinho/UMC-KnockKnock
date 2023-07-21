@@ -69,61 +69,6 @@ class FindPasswordVC : UIViewController{
         return btn
     }()
     //인증번호 입력하면 색 변경
-
-    func makeSubView(){
-        view.addSubview(emailLabel)
-        view.addSubview(emailText)
-        view.addSubview(emailBtn)
-        view.addSubview(emailCheckLabel)
-        view.addSubview(emailCheckText)
-        view.addSubview(emailCheckBtn)
-        nextBtn = setNextBtn(view: self, title: "다음")
-    }
-    
-    func makeConstraint(){
-        emailLabel.translatesAutoresizingMaskIntoConstraints = false
-        emailText.translatesAutoresizingMaskIntoConstraints = false
-        emailBtn.translatesAutoresizingMaskIntoConstraints = false
-        emailCheckLabel.translatesAutoresizingMaskIntoConstraints = false
-        emailCheckText.translatesAutoresizingMaskIntoConstraints = false
-        emailCheckBtn.translatesAutoresizingMaskIntoConstraints = false
-       
-        
-        NSLayoutConstraint.activate([
-            emailLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40),
-            emailLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            emailText.topAnchor.constraint(equalTo: emailLabel.bottomAnchor, constant: 7),
-            emailText.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
-            emailText.heightAnchor.constraint(equalToConstant: 40),
-            emailText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
-            
-            emailBtn.topAnchor.constraint(equalTo: emailText.bottomAnchor, constant: 7),
-            emailBtn.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
-            emailBtn.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
-            emailBtn.heightAnchor.constraint(equalToConstant: 40),
-            
-            emailCheckLabel.topAnchor.constraint(equalTo: emailBtn.bottomAnchor, constant: 40),
-            emailCheckLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            
-            emailCheckText.topAnchor.constraint(equalTo: emailCheckLabel.bottomAnchor, constant: 7),
-            emailCheckText.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            emailCheckText.heightAnchor.constraint(equalToConstant: 40),
-            emailCheckText.widthAnchor.constraint(equalToConstant: 220),
-            
-            
-            emailCheckBtn.topAnchor.constraint(equalTo: emailCheckLabel.bottomAnchor, constant: 7),
-            emailCheckBtn.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
-            
-            emailCheckBtn.heightAnchor.constraint(equalToConstant: 40),
-            emailCheckBtn.leadingAnchor.constraint(equalTo: emailCheckText.trailingAnchor, constant: 5)
-         
-        ])
-        
-    }
-    
-    func makeAddTarget(){
-        self.nextBtn.addTarget(self, action: #selector(touchNextBtn(_:)), for: .touchUpInside)
-    }
  
     
     override func viewDidLoad() {
@@ -199,6 +144,66 @@ class FindPasswordVC : UIViewController{
 
        }
     
+    
+ 
+    
+}
+
+extension FindPasswordVC {
+    func makeSubView(){
+        view.addSubview(emailLabel)
+        view.addSubview(emailText)
+        view.addSubview(emailBtn)
+        view.addSubview(emailCheckLabel)
+        view.addSubview(emailCheckText)
+        view.addSubview(emailCheckBtn)
+        nextBtn = setNextBtn(view: self, title: "다음")
+    }
+    
+    func makeConstraint(){
+        emailLabel.translatesAutoresizingMaskIntoConstraints = false
+        emailText.translatesAutoresizingMaskIntoConstraints = false
+        emailBtn.translatesAutoresizingMaskIntoConstraints = false
+        emailCheckLabel.translatesAutoresizingMaskIntoConstraints = false
+        emailCheckText.translatesAutoresizingMaskIntoConstraints = false
+        emailCheckBtn.translatesAutoresizingMaskIntoConstraints = false
+       
+        
+        NSLayoutConstraint.activate([
+            emailLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40),
+            emailLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            emailText.topAnchor.constraint(equalTo: emailLabel.bottomAnchor, constant: 7),
+            emailText.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
+            emailText.heightAnchor.constraint(equalToConstant: 40),
+            emailText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            
+            emailBtn.topAnchor.constraint(equalTo: emailText.bottomAnchor, constant: 7),
+            emailBtn.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            emailBtn.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
+            emailBtn.heightAnchor.constraint(equalToConstant: 40),
+            
+            emailCheckLabel.topAnchor.constraint(equalTo: emailBtn.bottomAnchor, constant: 40),
+            emailCheckLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            
+            emailCheckText.topAnchor.constraint(equalTo: emailCheckLabel.bottomAnchor, constant: 7),
+            emailCheckText.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            emailCheckText.heightAnchor.constraint(equalToConstant: 40),
+            emailCheckText.widthAnchor.constraint(equalToConstant: 220),
+            
+            
+            emailCheckBtn.topAnchor.constraint(equalTo: emailCheckLabel.bottomAnchor, constant: 7),
+            emailCheckBtn.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
+            
+            emailCheckBtn.heightAnchor.constraint(equalToConstant: 40),
+            emailCheckBtn.leadingAnchor.constraint(equalTo: emailCheckText.trailingAnchor, constant: 5)
+         
+        ])
+        
+    }
+    
+    func makeAddTarget(){
+        self.nextBtn.addTarget(self, action: #selector(touchNextBtn(_:)), for: .touchUpInside)
+    }
     
     @objc func nextView(){
         let ChangePasswordVC = ChangePasswordVC()

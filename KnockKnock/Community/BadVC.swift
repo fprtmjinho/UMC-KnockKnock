@@ -30,20 +30,7 @@ class BadVC: UIViewController {
     
     let buttonTitles = ["10대", "20대", "30대", "40대~"]
     
-    func createButtons() {
-        for title in buttonTitles {
-            let button = UIButton(type: .custom)
-            button.setTitle(title, for: .normal)
-            button.setTitleColor(.black, for: .normal)
-            button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
-            button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
-            button.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
-            button.layer.cornerRadius = 16
-            button.widthAnchor.constraint(equalToConstant: 75).isActive = true
-            
-            buttonStackView.addArrangedSubview(button)
-        }
-    }
+   
     
     // 검색창 관련: searchBar
     let searchBar : UISearchBar = {
@@ -71,6 +58,71 @@ class BadVC: UIViewController {
         return tableView
     }()
     
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        makeSubView()
+        makeConstraint()
+        createButtons()
+    }
+    
+  
+    
+}
+
+extension BadVC: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return post.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! CustomCell
+        let post = post[indexPath.row]
+        cell.configureCell(with: post)
+        cell.makeSubView()
+        cell.makeConstraint()
+        cell.selectionStyle = .none
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if post[indexPath.row].image == nil { // 게시글에 사진이 없을 때
+            return 135
+        } else { // 게시글에 사진이 있을 때
+            return 300
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let postVC = PostVC()
+        postVC.categoryValue = 1 // 악 게시판
+        postVC.post.profile = post[indexPath.row].profile
+        postVC.post.title = post[indexPath.row].title
+        postVC.post.content = post[indexPath.row].content
+        postVC.post.likes = post[indexPath.row].likes
+        postVC.post.likes = post[indexPath.row].likes
+        postVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(postVC, animated: true)
+    }
+}
+
+extension BadVC {
+    func createButtons() {
+        for title in buttonTitles {
+            let button = UIButton(type: .custom)
+            button.setTitle(title, for: .normal)
+            button.setTitleColor(.black, for: .normal)
+            button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
+            button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
+            button.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
+            button.layer.cornerRadius = 16
+            button.widthAnchor.constraint(equalToConstant: 75).isActive = true
+            
+            buttonStackView.addArrangedSubview(button)
+        }
+    }
     func makeSubView() {
         buttonStackView.distribution = .equalSpacing
         buttonStackView.spacing = 5
@@ -111,13 +163,6 @@ class BadVC: UIViewController {
         
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        makeSubView()
-        makeConstraint()
-        createButtons()
-    }
-    
     @objc func buttonTapped(_ sender: UIButton) {
         guard let title = sender.titleLabel?.text else {
             return
@@ -135,43 +180,5 @@ class BadVC: UIViewController {
         
         print("Button tapped: \(title)")
         
-    }
-    
-}
-
-extension BadVC: UITableViewDelegate, UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return post.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! CustomCell
-        let post = post[indexPath.row]
-        cell.configureCell(with: post)
-        cell.makeSubView()
-        cell.makeConstraint()
-        cell.selectionStyle = .none
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if post[indexPath.row].image == nil { // 게시글에 사진이 없을 때
-            return 135
-        } else { // 게시글에 사진이 있을 때
-            return 300
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let postVC = PostVC()
-        postVC.categoryValue = 1 // 악 게시판
-        postVC.post.profile = post[indexPath.row].profile
-        postVC.post.title = post[indexPath.row].title
-        postVC.post.content = post[indexPath.row].content
-        postVC.post.likes = post[indexPath.row].likes
-        postVC.post.likes = post[indexPath.row].likes
-        postVC.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(postVC, animated: true)
     }
 }

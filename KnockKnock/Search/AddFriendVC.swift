@@ -90,6 +90,22 @@ class AddFriendVC : UIViewController {
     
  
     
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        setNavigationBar()
+        self.title = "연락처 추가"
+       
+        makeSubView()
+        makeConstraint()
+        makeAddTarget()
+        
+    }
+}
+
+extension AddFriendVC {
     func makeSubView(){
         view.addSubview(ProfileView)
         view.addSubview(Name)
@@ -187,17 +203,5 @@ class AddFriendVC : UIViewController {
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         fre.time.append(formatter.string(from: Date()))
         fre.hidden.append(false)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .white
-        setNavigationBar()
-        self.title = "연락처 추가"
-       
-        makeSubView()
-        makeConstraint()
-        makeAddTarget()
-        
     }
 }

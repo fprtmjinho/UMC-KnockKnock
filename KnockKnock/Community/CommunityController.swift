@@ -61,27 +61,7 @@ class CommunityController: TabmanViewController {
     }
     private var animation: UIViewPropertyAnimator?
     
-    func makeSubView() {
-        barView.addSubview(topLine)
-        barView.addSubview(bottomLine)
-    }
     
-    func makeConstraint() {
-        topLine.translatesAutoresizingMaskIntoConstraints = false
-        bottomLine.translatesAutoresizingMaskIntoConstraints = false
-        
-        
-        NSLayoutConstraint.activate([
-            topLine.topAnchor.constraint(equalTo: barView.topAnchor),
-            topLine.leadingAnchor.constraint(equalTo: barView.leadingAnchor),
-            topLine.trailingAnchor.constraint(equalTo: barView.trailingAnchor),
-            topLine.heightAnchor.constraint(equalToConstant: 1.0),
-            bottomLine.bottomAnchor.constraint(equalTo: barView.bottomAnchor),
-            bottomLine.leadingAnchor.constraint(equalTo: barView.leadingAnchor),
-            bottomLine.trailingAnchor.constraint(equalTo: barView.trailingAnchor),
-            bottomLine.heightAnchor.constraint(equalToConstant: 1.0),
-        ])
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -117,6 +97,65 @@ class CommunityController: TabmanViewController {
         super.viewDidLayoutSubviews()
         floatingButton.frame = CGRect(x: view.frame.size.width - 60 - 8 - 20, y: view.frame.size.height - 60 - 8 - 90, width: 60, height: 60)
         writeButton.frame = CGRect(x: view.frame.size.width - 60 - 8 - 20, y: view.frame.size.height - 60 - 80 - 8 - 80, width: 60, height: 60)
+    }
+    
+    
+}
+
+extension CommunityController: PageboyViewControllerDataSource {
+    func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
+        return 2
+    }
+    
+    func viewController(for pageboyViewController: PageboyViewController, at index: PageboyViewController.PageIndex) -> UIViewController? {
+        
+        switch index {
+        case 0:
+            return GoodVC()
+        case 1:
+            return BadVC()
+        default:
+            return nil
+        }
+        
+    }
+    
+    func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
+        return nil
+    }
+}
+
+extension CommunityController: TMBarDataSource {
+    func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
+        if index == 0 {
+            return TMBarItem(title: "선 게시판")
+        } else {
+            return TMBarItem(title: "악 게시판")
+        }
+    }
+}
+
+extension CommunityController {
+    func makeSubView() {
+        barView.addSubview(topLine)
+        barView.addSubview(bottomLine)
+    }
+    
+    func makeConstraint() {
+        topLine.translatesAutoresizingMaskIntoConstraints = false
+        bottomLine.translatesAutoresizingMaskIntoConstraints = false
+        
+        
+        NSLayoutConstraint.activate([
+            topLine.topAnchor.constraint(equalTo: barView.topAnchor),
+            topLine.leadingAnchor.constraint(equalTo: barView.leadingAnchor),
+            topLine.trailingAnchor.constraint(equalTo: barView.trailingAnchor),
+            topLine.heightAnchor.constraint(equalToConstant: 1.0),
+            bottomLine.bottomAnchor.constraint(equalTo: barView.bottomAnchor),
+            bottomLine.leadingAnchor.constraint(equalTo: barView.leadingAnchor),
+            bottomLine.trailingAnchor.constraint(equalTo: barView.trailingAnchor),
+            bottomLine.heightAnchor.constraint(equalToConstant: 1.0),
+        ])
     }
     
     private func setUI() {
@@ -171,38 +210,5 @@ class CommunityController: TabmanViewController {
         writeVC.index = currentIndex
         writeVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(writeVC, animated: true)
-    }
-}
-
-extension CommunityController: PageboyViewControllerDataSource {
-    func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
-        return 2
-    }
-    
-    func viewController(for pageboyViewController: PageboyViewController, at index: PageboyViewController.PageIndex) -> UIViewController? {
-        
-        switch index {
-        case 0:
-            return GoodVC()
-        case 1:
-            return BadVC()
-        default:
-            return nil
-        }
-        
-    }
-    
-    func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
-        return nil
-    }
-}
-
-extension CommunityController: TMBarDataSource {
-    func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
-        if index == 0 {
-            return TMBarItem(title: "선 게시판")
-        } else {
-            return TMBarItem(title: "악 게시판")
-        }
     }
 }

@@ -13,38 +13,7 @@ class GetInformationVC : UIViewController {
     var searchFriendBar : UISearchBar = UISearchBar()
  
     
-    func makeSubView(){
-        
-        searchFriendBar = setSearchBar(VC: self, title: "친구를 입력해주세요!")
-    }
-    
-    func makeConstraint(){
-       
-        NSLayoutConstraint.activate([
-            searchFriendBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40),
-            searchFriendBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            searchFriendBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
-            searchFriendBar.heightAnchor.constraint(equalToConstant: 45),
-            ])
-    }
-    @objc func setTime(){
-        var formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        friendTime.append(formatter.string(from: Date()))
-    }
-    
-    @objc func makeAddTarget(){
-        addBtn.addTarget(self, action: #selector(setData(_:)), for: .touchUpInside)
-    }
-    @objc func setData(_:UIButton){
-        fre.name = friendName
-        fre.number = friendNumber
-        fre.bestFriend = friendBest
-        fre.time = friendTime
-        fre.alram = friendAlram
-        
-        navigationController?.popViewController(animated: true)
-    }
+   
     //tableView
     var tableView = UITableView(frame: .zero, style: .plain)
     let fre = Friends.shared
@@ -292,5 +261,40 @@ extension GetInformationVC {
     @objc func downloadNumberBook(){
         readContacts()
         getFriendInfo()
+    }
+}
+
+extension GetInformationVC {
+    func makeSubView(){
+        
+        searchFriendBar = setSearchBar(VC: self, title: "친구를 입력해주세요!")
+    }
+    
+    func makeConstraint(){
+       
+        NSLayoutConstraint.activate([
+            searchFriendBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40),
+            searchFriendBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            searchFriendBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
+            searchFriendBar.heightAnchor.constraint(equalToConstant: 45),
+            ])
+    }
+    @objc func setTime(){
+        var formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        friendTime.append(formatter.string(from: Date()))
+    }
+    
+    @objc func makeAddTarget(){
+        addBtn.addTarget(self, action: #selector(setData(_:)), for: .touchUpInside)
+    }
+    @objc func setData(_:UIButton){
+        fre.name = friendName
+        fre.number = friendNumber
+        fre.bestFriend = friendBest
+        fre.time = friendTime
+        fre.alram = friendAlram
+        
+        navigationController?.popViewController(animated: true)
     }
 }

@@ -84,9 +84,23 @@ class AddAlarmVC : UIViewController {
                btn.configuration = config
                return btn
     }()
+   
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        self.title = "연락 주기 및 예정 알림"
+        setNavigationBar()
+        makeSubView()
+        makeConstraint()
+        makeAddTarget()
+      
+       
+    }
+    
+}
 
-    
+extension AddAlarmVC {
     func makeSubView(){
         view.addSubview(AlarmMemoLabel)
         view.addSubview(AlarmMemoText)
@@ -205,19 +219,5 @@ class AddAlarmVC : UIViewController {
         self.present(alert, animated: true)
         
     }
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .white
-        self.title = "연락 주기 및 예정 알림"
-        setNavigationBar()
-        makeSubView()
-        makeConstraint()
-        makeAddTarget()
-      
-       
-    }
-    
 }
 

@@ -62,6 +62,66 @@ class AddGroupView : UIView {
         return text
     }()
     
+    
+    let friendData = Friends.shared
+    var checked: Array<Bool> = []
+    var nameList: Array<String> = []
+    var numberList: Array<String> = []
+    var nickNameList: Array<String> = []
+    
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        getData()
+        makeSubView()
+        makeConstraint()
+        settableView()
+      
+    }
+    
+    required init?(coder _: NSCoder) {
+        fatalError("Error")
+    }
+   
+}
+
+
+extension AddGroupView : UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return nameList.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "groupMemberList") ?? UITableViewCell(style: .subtitle, reuseIdentifier: "gourpMemberList")
+        
+        
+        cell.backgroundColor = .systemGray6
+        cell.textLabel?.text = nameList[indexPath.row]
+        cell.detailTextLabel?.text = numberList[indexPath.row]
+        cell.textLabel?.font = UIFont.systemFont(ofSize: 15)
+        cell.textLabel?.textColor = UIColor.black
+        cell.detailTextLabel?.font = UIFont.systemFont(ofSize: 12)
+        cell.detailTextLabel?.textColor = UIColor.systemGray2
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
+    }
+    
+    func settableView(){
+        memberTableview.backgroundColor = .white
+        memberTableview.separatorStyle = .none
+        self.memberTableview.dataSource = self
+        self.memberTableview.delegate = self
+        //addSubView, Constraint는 위에서 실행함
+    }
+    
+    
+    
+}
+
+extension AddGroupView {
     func makeSubView(){
         addSubview(nameLabel)
         addSubview(nametext)
@@ -111,67 +171,10 @@ class AddGroupView : UIView {
         ])
         
     }
-    
-    let friendData = Friends.shared
-    var checked: Array<Bool> = []
-    var nameList: Array<String> = []
-    var numberList: Array<String> = []
-    var nickNameList: Array<String> = []
-    
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        getData()
-        makeSubView()
-        makeConstraint()
-        settableView()
-      
-    }
-    
-    required init?(coder _: NSCoder) {
-        fatalError("Error")
-    }
-    
     func getData(){
         nameList = friendData.name
         nickNameList = friendData.nickName
         numberList = friendData.number
         checked = friendData.bestFriend
     }
-}
-
-
-extension AddGroupView : UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return nameList.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "groupMemberList") ?? UITableViewCell(style: .subtitle, reuseIdentifier: "gourpMemberList")
-        
-        
-        cell.backgroundColor = .systemGray6
-        cell.textLabel?.text = nameList[indexPath.row]
-        cell.detailTextLabel?.text = numberList[indexPath.row]
-        cell.textLabel?.font = UIFont.systemFont(ofSize: 15)
-        cell.textLabel?.textColor = UIColor.black
-        cell.detailTextLabel?.font = UIFont.systemFont(ofSize: 12)
-        cell.detailTextLabel?.textColor = UIColor.systemGray2
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
-    }
-    
-    func settableView(){
-        memberTableview.backgroundColor = .white
-        memberTableview.separatorStyle = .none
-        self.memberTableview.dataSource = self
-        self.memberTableview.delegate = self
-        //addSubView, Constraint는 위에서 실행함
-    }
-    
-    
-    
 }

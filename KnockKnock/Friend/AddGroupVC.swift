@@ -16,6 +16,25 @@ class AddGroupVC : UIViewController {
        return view
     }()
     
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        setNavigationBar()
+        self.title = "모임 추가하기"
+        setScrollView()
+        
+        makeSubView()
+        makeConstraint()
+        makeAddTarget()
+    }
+    
+  
+    
+}
+
+extension AddGroupVC {
     private func setScrollView(){
         //scrollView 설정
         view.addSubview(scrollView)
@@ -63,19 +82,4 @@ class AddGroupVC : UIViewController {
     @objc func addBtnFunc(_: UIButton){
         self.navigationController?.popViewController(animated: true)
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .white
-        setNavigationBar()
-        self.title = "모임 추가하기"
-        setScrollView()
-        
-        makeSubView()
-        makeConstraint()
-        makeAddTarget()
-    }
-    
-  
-    
 }

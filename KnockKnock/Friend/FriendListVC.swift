@@ -9,23 +9,6 @@ import UIKit
 class FriendListVC: UIViewController {
     var addFriendBtn : UIButton = UIButton()
     
-    func makeSubView() {
-        addFriendBtn = setNextBtn(view: self, title: "찐친 추가하기")
-    }
-    
-    func makeConstraint() {
-        
-    }
-    func makeAddTarget(){
-          self.addFriendBtn.addTarget(self, action: #selector(addFriendFunc(_:)), for: .touchUpInside)
-      }
-
-      @objc func addFriendFunc(_: UIButton){
-          let addBFVC = AddBFVC()
-          //찐친 추가하기
-          addBFVC.hidesBottomBarWhenPushed = true
-          self.navigationController?.pushViewController(addBFVC, animated: true)
-      }
 
     var tableView = UITableView(frame: .zero, style: .plain)
     
@@ -58,6 +41,87 @@ class FriendListVC: UIViewController {
         makeSubView()
         makeAddTarget()
     }
+   
+}
+extension FriendListVC : UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return nameList.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "BestFriendList") ?? UITableViewCell(style: .subtitle, reuseIdentifier: "BestFriendList")
+        cell.backgroundColor = .systemGray6
+
+        cell.accessoryType = .disclosureIndicator
+        
+        cell.textLabel?.text = nameList[indexPath.row]
+        cell.detailTextLabel?.text = numberList[indexPath.row]
+        cell.textLabel!.font = UIFont.systemFont(ofSize: 15)
+        cell.textLabel!.textColor = UIColor.black
+        cell.detailTextLabel!.font = UIFont.systemFont(ofSize: 12)
+        cell.detailTextLabel!.textColor = UIColor.systemGray2
+        return cell
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        //nextView(index:indexPath)
+        //cell 클릭시 체크가 안되어있으면 체크, 체크가 되어있으면 체크풀기
+        
+    }
+    
+    
+    func tableView(_: UITableView, heightForRowAt: IndexPath) -> CGFloat{
+        return 60
+        //row 두께 설정
+    }
+    
+    func setTableView(){
+        view.addSubview(tableView)
+        tableView.backgroundColor = .white
+        tableView.separatorStyle = .none
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "friendList")
+        
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 15),
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant:-10)
+        ])
+       
+        
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
+
+    }
+    
+    //ui extension
+    func makeSubView() {
+        addFriendBtn = setNextBtn(view: self, title: "찐친 추가하기")
+    }
+    
+    func makeConstraint() {
+        
+    }
+    func makeAddTarget(){
+          self.addFriendBtn.addTarget(self, action: #selector(addFriendFunc(_:)), for: .touchUpInside)
+      }
+
+      @objc func addFriendFunc(_: UIButton){
+          let addBFVC = AddBFVC()
+          //찐친 추가하기
+          addBFVC.hidesBottomBarWhenPushed = true
+          self.navigationController?.pushViewController(addBFVC, animated: true)
+      }
+    @objc func nextView(index:IndexPath) {
+        let nextView = FriendProfileVC()
+        friendData.choiceIndex = index.row
+        nextView.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(nextView, animated: true)
+    }
+    
+    
     @objc func sortData(){
 
         // 이름, 전화번호, 나이를 튜플로 묶은 배열 생성
@@ -120,59 +184,5 @@ class FriendListVC: UIViewController {
             }
         }
         return false;
-    }
-}
-extension FriendListVC : UITableViewDelegate, UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return nameList.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "BestFriendList") ?? UITableViewCell(style: .subtitle, reuseIdentifier: "BestFriendList")
-        cell.backgroundColor = .systemGray6
-
-        cell.accessoryType = .disclosureIndicator
-        
-        cell.textLabel?.text = nameList[indexPath.row]
-        cell.detailTextLabel?.text = numberList[indexPath.row]
-        cell.textLabel!.font = UIFont.systemFont(ofSize: 15)
-        cell.textLabel!.textColor = UIColor.black
-        cell.detailTextLabel!.font = UIFont.systemFont(ofSize: 12)
-        cell.detailTextLabel!.textColor = UIColor.systemGray2
-        return cell
-    }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath)
-        //nextView(index:indexPath)
-        //cell 클릭시 체크가 안되어있으면 체크, 체크가 되어있으면 체크풀기
-        
-    }
-    
-    
-    func tableView(_: UITableView, heightForRowAt: IndexPath) -> CGFloat{
-        return 60
-        //row 두께 설정
-    }
-    
-    
-    func setTableView(){
-        view.addSubview(tableView)
-        tableView.backgroundColor = .white
-        tableView.separatorStyle = .none
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "friendList")
-        
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 15),
-            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant:-10)
-        ])
-       
-        
-        self.tableView.dataSource = self
-        self.tableView.delegate = self
-
     }
 }
