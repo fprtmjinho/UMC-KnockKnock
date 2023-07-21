@@ -10,10 +10,7 @@ import UIKit
 class PostVC: UIViewController {
     
     var myPost: Bool = true // 자신 글 여부
-<<<<<<< HEAD
-=======
     
->>>>>>> CommunityUICustom4
     
     var categoryValue: Int! // 게시판 종류
     
@@ -23,11 +20,7 @@ class PostVC: UIViewController {
                           name: "카림",
                           title: "바다에 놀러왔어~!",
                           content: "안녕 친구들 바닷가에 왔는데 날이 너무 좋아! 여기 바다 정말 추천해",
-<<<<<<< HEAD
-                          images: [UIImage(named: "beach"), UIImage(named: "sanfrancisco"), UIImage(named: "paris"), UIImage(named: "gangnam")],
-=======
                           images: [UIImage(named: "beach"), UIImage(named: "paris"), UIImage(named: "sanfrancisco")],
->>>>>>> CommunityUICustom4
                           time: "07/08 22:17",
                           likes: 17, comments: 3)
     
@@ -95,57 +88,6 @@ class PostVC: UIViewController {
         return button
     }()
     
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.title = categoryValue == 0 ? "선 게시판" : "악 게시판"
-        view.backgroundColor = .white
-        var image = UIImage(named: "more_vert")?.resizeImageTo(size: CGSize(width: 30, height: 30))
-        let rightBarButton = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(showActionSheet))
-        navigationItem.rightBarButtonItem = rightBarButton
-        
-        makeSubView()
-        makeConstraint()
-        
-    }
-    
-   
-}
-
-extension PostVC: UITableViewDelegate, UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1 // 섹션은 하나 (게시글 + 댓글)
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // 행 개수 리턴 (댓글 수 + 1(게시글))
-        return comments.count + 1
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0 {
-            // 행의 index가 0일 때는 게시글
-            let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! CustomPostCell
-            cell.configureCell(with: post)
-            cell.makeSubView()
-            cell.makeConstraint()
-            cell.selectionStyle = .none
-            return cell
-        } else {
-            // 나머지 index일 때는 댓글
-            let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath) as! CustomCommentCell
-            let comment = comments[indexPath.row - 1] // 댓글[행 인덱스 - 1] -> 해당 댓글
-            cell.configureCell(with: comment)
-            cell.makeSubView()
-            cell.makeConstraint()
-            cell.selectionStyle = .none
-            return cell
-        }
-    }
-}
-
-extension PostVC {
     func makeSubView() {
         tableView.delegate = self
         tableView.dataSource = self
@@ -196,6 +138,19 @@ extension PostVC {
             makeCommentImageButton.heightAnchor.constraint(equalToConstant: 25),
         ])
     }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.title = categoryValue == 0 ? "선 게시판" : "악 게시판"
+        view.backgroundColor = .white
+        var image = UIImage(named: "more_vert")?.resizeImageTo(size: CGSize(width: 30, height: 30))
+        let rightBarButton = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(showActionSheet))
+        navigationItem.rightBarButtonItem = rightBarButton
+        
+        makeSubView()
+        makeConstraint()
+    }
+    
     @objc func showActionSheet() {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         if myPost {
@@ -224,8 +179,7 @@ extension PostVC {
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         actionSheet.addAction(cancelAction)
-        
-        // 아이패드에서 팝오버 방식으로 하기 위함
+        // On iPad, the action sheet should be presented as a popover.
         if let popoverController = actionSheet.popoverPresentationController {
             popoverController.barButtonItem = navigationItem.rightBarButtonItem
         }
@@ -244,9 +198,6 @@ extension PostVC {
     }
 }
 
-<<<<<<< HEAD
-
-=======
 extension PostVC: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1 // 섹션은 하나 (게시글 + 댓글)
@@ -652,4 +603,3 @@ class CustomCommentCell: UITableViewCell { // 댓글 커스텀
     }
     
 }
->>>>>>> CommunityUICustom4
