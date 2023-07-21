@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Photos
 
 class WriteVC: UIViewController {
     
@@ -13,6 +14,8 @@ class WriteVC: UIViewController {
     var contentText: String? // 내용
     var isAnonymousSelected = false // 익명 체크표시 상태
     var index: Int? // 게시판 종류
+    var modify: Bool? // 수정 여부
+    var selectedImages: [UIImage] = [] // 사진
     
     lazy var completeButton: UIButton = {
         let button = UIButton(type: .system)
@@ -32,6 +35,7 @@ class WriteVC: UIViewController {
         return scrollView
     }()
     
+    // 사진 선택 기능: cameraButton, imagesStackView, addRemoveSelectedImage
     let cameraButton: UIButton = {
         let button = UIButton(type: .custom)
         button.setImage(UIImage(named: "camera"), for: .normal)
@@ -39,6 +43,34 @@ class WriteVC: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+    
+    lazy var imagesStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 8 // 이미지들 사이의 간격을 조정합니다.
+        stackView.alignment = .center
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
+    // 탭한 이미지 추가/삭제
+    func addRemoveSelectedImage(_ image: UIImage) {
+        let imageView = UIImageView(image: image)
+        imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = true
+        imageView.widthAnchor.constraint(equalToConstant: 35).isActive = false
+        imageView.heightAnchor.constraint(equalToConstant: 35).isActive = false
+        imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor, multiplier: 1.0).isActive = true
+        
+        // 이미지뷰에 탭 제스처를 추가 -> 이미지를 탭할 수 있음
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(removeSelectedImage(_:)))
+        imageView.isUserInteractionEnabled = true
+        imageView.addGestureRecognizer(tapGestureRecognizer)
+        
+        imagesStackView.addArrangedSubview(imageView)
+        selectedImages.append(image)
+    }
+
     
     let titleLabel: UILabel = {
         let label = UILabel()
@@ -55,7 +87,7 @@ class WriteVC: UIViewController {
         return view
     }()
     
-    let titleTextField: UITextField = {
+    var titleTextField: UITextField = {
         let textField = UITextField()
         textField.attributedPlaceholder = NSAttributedString(string: "제목을 입력하세요.", attributes: [NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0.824265182, green: 0.8242650628, blue: 0.8242650628, alpha: 1), NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15)])
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -85,7 +117,7 @@ class WriteVC: UIViewController {
         return button
     }()
     
-    private lazy var contentTextView: UITextView = {
+    lazy var contentTextView: UITextView = {
         let textView = UITextView()
         textView.font = UIFont.systemFont(ofSize: 15)
         textView.textColor = .placeholderText
@@ -108,6 +140,8 @@ class WriteVC: UIViewController {
     
     func makeSubView() {
         scrollView.addSubview(cameraButton)
+        scrollView.addSubview(imagesStackView)
+        imagesStackView.addArrangedSubview(cameraButton)
         scrollView.addSubview(titleLabel)
         scrollView.addSubview(titleContainerView)
         titleContainerView.addSubview(titleTextField)
@@ -134,7 +168,12 @@ class WriteVC: UIViewController {
             cameraButton.widthAnchor.constraint(equalToConstant: 35),
             cameraButton.heightAnchor.constraint(equalToConstant: 35),
             
-            titleLabel.topAnchor.constraint(equalTo: cameraButton.bottomAnchor, constant: verticalMargin),
+            imagesStackView.topAnchor.constraint(equalTo: cameraButton.bottomAnchor, constant: verticalMargin),
+            imagesStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: horizontalMargin),
+            imagesStackView.trailingAnchor.constraint(lessThanOrEqualTo: view.trailingAnchor, constant: -horizontalMargin),
+            imagesStackView.heightAnchor.constraint(equalToConstant: 35),
+            
+            titleLabel.topAnchor.constraint(equalTo: imagesStackView.bottomAnchor, constant: verticalMargin),
             titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: horizontalMargin),
             
             titleContainerView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5),
@@ -192,15 +231,26 @@ class WriteVC: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     
-    @objc func cameraButtonTapped(_ sender: UIButton) {
-        print("카메라 버튼 탭하였음.")
-    }
-    
     @objc func anonymousImageButtonTapped(_ sender: UIButton) {
         isAnonymousSelected.toggle()
         let imageName = isAnonymousSelected ? "check_anony_yes" : "check_anony_no"
         anonymousImageButton.setImage(UIImage(named: imageName), for: .normal)
     }
+    
+    @objc func removeSelectedImage(_ sender: UITapGestureRecognizer) { // 탭한 사진 삭제
+            guard let tappedImageView = sender.view as? UIImageView else { return }
+            if let index = imagesStackView.arrangedSubviews.firstIndex(of: tappedImageView) {
+                imagesStackView.removeArrangedSubview(tappedImageView)
+                tappedImageView.removeFromSuperview()
+
+                // 이미지가 1개인 경우, Index out of range 에러가 발생하지 않도록 예외 처리
+                if selectedImages.count == 1 {
+                    selectedImages.removeAll()
+                } else if index < selectedImages.count {
+                    selectedImages.remove(at: index)
+                }
+            }
+        }
     
 }
 
@@ -216,4 +266,48 @@ extension WriteVC: UITextViewDelegate {
             textView.textColor = .placeholderText
         }
     }
+}
+
+extension WriteVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    @objc func cameraButtonTapped(_ sender: UIButton) {
+        if selectedImages.count < 6 {
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = .photoLibrary
+            
+            if PHPhotoLibrary.authorizationStatus() == .authorized {
+                present(imagePicker, animated: true, completion: nil)
+            } else {
+                PHPhotoLibrary.requestAuthorization { status in
+                    if status == .authorized {
+                        DispatchQueue.main.async {
+                            self.present(imagePicker, animated: true, completion: nil)
+                        }
+                    } else {
+                        let alert = UIAlertController(title: "Error", message: "사진 앱에 접근 권한을 허용해주세요.", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                }
+            }
+        } else {
+            let alert = UIAlertController(title: "경고", message: "사진은 최대 6장까지 업로드할 수 있습니다.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    // UIImagePickerControllerDelegate 메서드를 구현하여 사용자가 이미지를 선택했을 때 처리
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let selectedImage = info[.originalImage] as? UIImage {
+            addRemoveSelectedImage(selectedImage)
+        }
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
 }

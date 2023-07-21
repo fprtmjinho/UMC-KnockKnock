@@ -10,9 +10,8 @@ import UIKit
 class PostVC: UIViewController {
     
     var myPost: Bool = true // 자신 글 여부
-
     
-    var categoryValue: Bool! // 게시판 종류
+    var categoryValue: Int! // 게시판 종류
     
     // 테이블 뷰 관련: post, comment, tableView
     // post(스트럭트 맨아래 있음)
@@ -20,7 +19,7 @@ class PostVC: UIViewController {
                           name: "카림",
                           title: "바다에 놀러왔어~!",
                           content: "안녕 친구들 바닷가에 왔는데 날이 너무 좋아! 여기 바다 정말 추천해",
-                          image: UIImage(named: "beach"),
+                          images: [UIImage(named: "beach"), UIImage(named: "sanfrancisco"), UIImage(named: "paris"), UIImage(named: "gangnam")],
                           time: "07/08 22:17",
                           likes: 17, comments: 3)
     
@@ -141,7 +140,7 @@ class PostVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = categoryValue ? "선 게시판" : "악 게시판"
+        self.title = categoryValue == 0 ? "선 게시판" : "악 게시판"
         view.backgroundColor = .white
         var image = UIImage(named: "more_vert")?.resizeImageTo(size: CGSize(width: 30, height: 30))
         let rightBarButton = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(showActionSheet))
@@ -149,6 +148,7 @@ class PostVC: UIViewController {
         
         makeSubView()
         makeConstraint()
+        
     }
     
     @objc func showActionSheet() {
@@ -156,7 +156,14 @@ class PostVC: UIViewController {
         if myPost {
             // 자신의 글일 때
             let action1 = UIAlertAction(title: "수정", style: .default) { _ in
-                // Handle Action 1
+                let writeVC = WriteVC()
+                writeVC.index = self.categoryValue
+                writeVC.modify = true
+                writeVC.titleTextField.text = self.post.title
+                writeVC.contentTextView.text = self.post.content
+                writeVC.contentTextView.textColor = .label
+                writeVC.hidesBottomBarWhenPushed = true
+                self.navigationController?.pushViewController(writeVC, animated: true)
             }
             let action2 = UIAlertAction(title: "삭제", style: .default) { _ in
                 // Handle Action 2
@@ -172,13 +179,14 @@ class PostVC: UIViewController {
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         actionSheet.addAction(cancelAction)
-        // On iPad, the action sheet should be presented as a popover.
+        
+        // 아이패드에서 팝오버 방식으로 하기 위함
         if let popoverController = actionSheet.popoverPresentationController {
             popoverController.barButtonItem = navigationItem.rightBarButtonItem
         }
         present(actionSheet, animated: true)
     }
-
+    
     
     @objc func anonymousImageButtonTapped(_ sender: UIButton) {
         isAnonymousSelected.toggle()
@@ -206,15 +214,8 @@ extension PostVC: UITableViewDelegate, UITableViewDataSource {
             // 행의 index가 0일 때는 게시글
             let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! CustomPostCell
             cell.configureCell(with: post)
-            cell.makeSubView1()
-            cell.makeConstraint1()
-            if post.image != nil {
-                cell.makeSubView1()
-                cell.makeConstraint1()
-            } else {
-                cell.makeSubView2()
-                cell.makeConstraint2()
-            }
+            cell.makeSubView()
+            cell.makeConstraint()
             cell.selectionStyle = .none
             return cell
         } else {
@@ -230,7 +231,31 @@ extension PostVC: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-class CustomPostCell: UITableViewCell { // 게시글 커스텀
+
+class CustomPostCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout { // 게시글 커스텀
+    
+    var postImages: [UIImage?] = []
+    
+    let imagesPageControl: UIPageControl = {
+        let pageControl = UIPageControl()
+        pageControl.currentPageIndicatorTintColor = .systemBlue
+        pageControl.pageIndicatorTintColor = .lightGray
+        pageControl.translatesAutoresizingMaskIntoConstraints = false
+        return pageControl
+    }()
+    
+    let imagesCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 0
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.isPagingEnabled = true
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        return collectionView
+    }()
+    
     
     let profileImageView: UIImageView = { // 프로필 사진
         let imageView = UIImageView()
@@ -259,12 +284,6 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
-    }()
-    
-    let imagesView: UIImageView = { // 이미지
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
     }()
     
     let timeLabel: UILabel = { // 시간
@@ -311,38 +330,43 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
     }()
     
     
-    func makeSubView1() { // 사진이 있는 경우
+    func makeSubView() {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 0
+        
+        imagesCollectionView.collectionViewLayout = layout
+        
+        imagesCollectionView.delegate = self
+        imagesCollectionView.dataSource = self
+        imagesCollectionView.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: "ImageCell")
+        imagesCollectionView.isUserInteractionEnabled = true
+        imagesCollectionView.isScrollEnabled = true
+
+        
+        addSubview(imagesCollectionView)
+        addSubview(imagesPageControl)
+        
         addSubview(profileImageView)
         addSubview(nameLabel)
         addSubview(titleLabel)
         addSubview(contentLabel)
-        addSubview(imagesView)
         addSubview(timeLabel)
         addSubview(likesView)
         addSubview(likesLabel)
         addSubview(commentsView)
         addSubview(commentsLabel)
         addSubview(shareButton)
-    }
-    func makeSubView2() { // 사진이 없는 경우
-        addSubview(profileImageView)
-        addSubview(nameLabel)
-        addSubview(titleLabel)
-        addSubview(contentLabel)
-        addSubview(timeLabel)
-        addSubview(likesView)
-        addSubview(likesLabel)
-        addSubview(commentsView)
-        addSubview(commentsLabel)
-        addSubview(shareButton)
+        
     }
     
-    func makeConstraint1() { // 사진이 있는 경우
+    func makeConstraint() {
         
         let horizontalMargin: CGFloat = 30
         let verticalMargin: CGFloat = 10
         
         NSLayoutConstraint.activate([
+            
             profileImageView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
             profileImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: horizontalMargin),
             profileImageView.widthAnchor.constraint(equalToConstant: 45),
@@ -363,87 +387,37 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
             contentLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: horizontalMargin),
             contentLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -horizontalMargin),
             
-            imagesView.topAnchor.constraint(equalTo: contentLabel.bottomAnchor, constant: verticalMargin),
-            imagesView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: horizontalMargin),
-            imagesView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -horizontalMargin),
-            imagesView.heightAnchor.constraint(equalToConstant: 200),
+            imagesCollectionView.topAnchor.constraint(equalTo: contentLabel.bottomAnchor, constant: verticalMargin),
+            imagesCollectionView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
+            imagesCollectionView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
+            imagesCollectionView.heightAnchor.constraint(equalToConstant: 200),
             
-            likesView.topAnchor.constraint(equalTo: imagesView.bottomAnchor, constant: verticalMargin),
+            imagesPageControl.centerXAnchor.constraint(equalTo: centerXAnchor),
+            imagesPageControl.bottomAnchor.constraint(equalTo: imagesCollectionView.bottomAnchor, constant: 5),
+            
+            
+            
+            likesView.topAnchor.constraint(equalTo: imagesPageControl.bottomAnchor, constant: verticalMargin),
             likesView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: horizontalMargin),
             likesView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
             likesView.widthAnchor.constraint(equalToConstant: 20),
             likesView.heightAnchor.constraint(equalToConstant: 20),
             
-            likesLabel.topAnchor.constraint(equalTo: imagesView.bottomAnchor, constant: verticalMargin),
+            likesLabel.topAnchor.constraint(equalTo: imagesPageControl.bottomAnchor, constant: verticalMargin),
             likesLabel.leadingAnchor.constraint(equalTo: likesView.trailingAnchor, constant: 10),
             likesLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
             
-            commentsView.topAnchor.constraint(equalTo: imagesView.bottomAnchor, constant: verticalMargin),
+            commentsView.topAnchor.constraint(equalTo: imagesPageControl.bottomAnchor, constant: verticalMargin),
             commentsView.leadingAnchor.constraint(equalTo: likesLabel.trailingAnchor, constant: 20),
             commentsView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
             commentsView.widthAnchor.constraint(equalToConstant: 20),
             commentsView.heightAnchor.constraint(equalToConstant: 20),
             
-            commentsLabel.topAnchor.constraint(equalTo: imagesView.bottomAnchor, constant: verticalMargin),
+            commentsLabel.topAnchor.constraint(equalTo: imagesPageControl.bottomAnchor, constant: verticalMargin),
             commentsLabel.leadingAnchor.constraint(equalTo: commentsView.trailingAnchor, constant: 10),
             commentsLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
             
-            shareButton.topAnchor.constraint(equalTo: imagesView.bottomAnchor, constant: verticalMargin),
-            shareButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -horizontalMargin),
-            shareButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
-            shareButton.widthAnchor.constraint(equalToConstant: 20),
-            shareButton.heightAnchor.constraint(equalToConstant: 20)
-        ])
-        
-    }
-    
-    func makeConstraint2() { // 사진이 없는 경우
-        
-        let horizontalMargin: CGFloat = 30
-        let verticalMargin: CGFloat = 10
-        
-        NSLayoutConstraint.activate([
-            profileImageView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
-            profileImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: horizontalMargin),
-            profileImageView.widthAnchor.constraint(equalToConstant: 45),
-            profileImageView.heightAnchor.constraint(equalToConstant: 45),
-            
-            nameLabel.topAnchor.constraint(equalTo: profileImageView.topAnchor, constant: 5),
-            nameLabel.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 8),
-            nameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -horizontalMargin),
-            
-            timeLabel.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 8),
-            timeLabel.bottomAnchor.constraint(equalTo: profileImageView.bottomAnchor),
-            
-            titleLabel.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: verticalMargin),
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: horizontalMargin),
-            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -horizontalMargin),
-            
-            contentLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: verticalMargin),
-            contentLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: horizontalMargin),
-            contentLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -horizontalMargin),
-            
-            likesView.topAnchor.constraint(equalTo: contentLabel.bottomAnchor, constant: verticalMargin),
-            likesView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: horizontalMargin),
-            likesView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
-            likesView.widthAnchor.constraint(equalToConstant: 20),
-            likesView.heightAnchor.constraint(equalToConstant: 20),
-            
-            likesLabel.topAnchor.constraint(equalTo: contentLabel.bottomAnchor, constant: verticalMargin),
-            likesLabel.leadingAnchor.constraint(equalTo: likesView.trailingAnchor, constant: 10),
-            likesLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
-            
-            commentsView.topAnchor.constraint(equalTo: contentLabel.bottomAnchor, constant: verticalMargin),
-            commentsView.leadingAnchor.constraint(equalTo: likesLabel.trailingAnchor, constant: 20),
-            commentsView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
-            commentsView.widthAnchor.constraint(equalToConstant: 20),
-            commentsView.heightAnchor.constraint(equalToConstant: 20),
-            
-            commentsLabel.topAnchor.constraint(equalTo: contentLabel.bottomAnchor, constant: verticalMargin),
-            commentsLabel.leadingAnchor.constraint(equalTo: commentsView.trailingAnchor, constant: 10),
-            commentsLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
-            
-            shareButton.topAnchor.constraint(equalTo: contentLabel.bottomAnchor, constant: verticalMargin),
+            shareButton.topAnchor.constraint(equalTo: imagesPageControl.bottomAnchor, constant: verticalMargin),
             shareButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -horizontalMargin),
             shareButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
             shareButton.widthAnchor.constraint(equalToConstant: 20),
@@ -457,13 +431,76 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
         nameLabel.text = post.name
         titleLabel.text = post.title
         contentLabel.text = post.content
-        imagesView.image = post.image
         timeLabel.text = post.time
         likesLabel.text = "\(post.likes)"
         commentsLabel.text = "\(post.comments)"
+        
+        postImages = post.images.compactMap { $0 }
+        imagesCollectionView.reloadData()
+        
+        imagesPageControl.numberOfPages = postImages.count
+        imagesCollectionView.reloadData()
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return postImages.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = collectionView.bounds.width
+        let height = collectionView.bounds.height
+        return CGSize(width: width, height: height)
+    }
+    
+    
+    // 이미지 셀 간의 간격을 설정하는 메서드
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCell", for: indexPath) as! ImageCollectionViewCell
+        if indexPath.item < postImages.count {
+            cell.imageView.image = postImages[indexPath.item]
+        }
+        return cell
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let currentPage = Int(scrollView.contentOffset.x / scrollView.bounds.width)
+        imagesPageControl.currentPage = currentPage
     }
     
 }
+
+class ImageCollectionViewCell: UICollectionViewCell {
+    
+    let imageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        contentView.addSubview(imageView)
+        NSLayoutConstraint.activate([
+            imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+        ])
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+}
+
 
 class CustomCommentCell: UITableViewCell { // 댓글 커스텀
     
