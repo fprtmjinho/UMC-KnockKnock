@@ -20,8 +20,6 @@ class MyPageController : UIViewController{
     }()
     
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
@@ -92,7 +90,7 @@ extension MyPageController {
             myPage.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
             myPage.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
             myPage.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
-            myPage.heightAnchor.constraint(equalToConstant: 420),
+            myPage.heightAnchor.constraint(equalToConstant: 470),
             myPage.widthAnchor.constraint(equalTo : scrollView.widthAnchor),
 
             myProfilePage.topAnchor.constraint(equalTo: myPage.bottomAnchor),

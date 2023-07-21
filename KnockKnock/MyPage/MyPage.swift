@@ -8,6 +8,7 @@
 import UIKit
 class MyPage : UIView{
 
+    let textScroll : UIScrollView = UIScrollView()
     
     let Name : UILabel = {
         let name = UILabel()
@@ -43,21 +44,17 @@ class MyPage : UIView{
         return texttitle
     }()
     
-    let myText : UITextField = {
-       let mytext = UITextField()
-        mytext.placeholder = " 남기고 싶은 메모를 작성해주세요!"
+    let myText : UITextView = {
+       let mytext = UITextView()
+        mytext.text = " 남기고 싶은 메모를 작성해주세요!"
         mytext.addLeftPadding()
-    
         mytext.backgroundColor = .systemGray6
         mytext.layer.cornerRadius = 5
         mytext.font = UIFont.systemFont(ofSize: 15)
-        
-        //content 위치 조정
-        mytext.contentVerticalAlignment = .top
-        mytext.contentHorizontalAlignment = .left
-
+      
         return mytext
     }()
+    
     let copyBtn : UIButton = {
        let copybtn = UIButton()
         copybtn.backgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
@@ -68,9 +65,6 @@ class MyPage : UIView{
         return copybtn
     }()
     
-    
-    
-   
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -88,6 +82,7 @@ class MyPage : UIView{
 
 extension MyPage {
     func makeConstraint(){
+        textScroll.translatesAutoresizingMaskIntoConstraints = false
         Name.translatesAutoresizingMaskIntoConstraints = false
         ProfileView.translatesAutoresizingMaskIntoConstraints = false
         editBtn.translatesAutoresizingMaskIntoConstraints = false
@@ -108,27 +103,42 @@ extension MyPage {
         
         textTitle.topAnchor.constraint(equalTo: editBtn.bottomAnchor, constant: 40),
         textTitle.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 30),
-        myText.topAnchor.constraint(equalTo: textTitle.bottomAnchor, constant: 8),
-        myText.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 30),
-        myText.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -30),
-        myText.heightAnchor.constraint(equalToConstant: 120),
-        copyBtn.topAnchor.constraint(equalTo: myText.bottomAnchor, constant: 10),
+        
+        copyBtn.topAnchor.constraint(equalTo: textTitle.bottomAnchor, constant: 210),
         copyBtn.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 30),
         copyBtn.widthAnchor.constraint(equalToConstant: 120),
         copyBtn.heightAnchor.constraint(equalToConstant: 30),
-    
+        
+        textScroll.topAnchor.constraint(equalTo: textTitle.bottomAnchor, constant: 8),
+        textScroll.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 30),
+        textScroll.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -30),
+        textScroll.bottomAnchor.constraint(equalTo: copyBtn.topAnchor, constant: -10),
+        myText.topAnchor.constraint(equalTo: textScroll.topAnchor),
+        myText.leadingAnchor.constraint(equalTo: textScroll.leadingAnchor),
+        myText.trailingAnchor.constraint(equalTo: textScroll.trailingAnchor),
+        myText.bottomAnchor.constraint(equalTo: textScroll.bottomAnchor),
+        myText.widthAnchor.constraint(equalTo: textScroll.widthAnchor),
+        
         ])
+        
+        let contentViewHeight = myText.heightAnchor.constraint(greaterThanOrEqualTo: textScroll.heightAnchor)
+        contentViewHeight.priority = .defaultLow
+        contentViewHeight.isActive = true
     }
     
     
     func makeSubView(){
+        
         self.addSubview(Name)
         self.addSubview(ProfileView)
         self.addSubview(editBtn)
         self.addSubview(textTitle)
-        self.addSubview(myText)
         self.addSubview(copyBtn)
-       
+        self.addSubview(textScroll)
+        textScroll.addSubview(myText)
+        
+        textScroll.isScrollEnabled = true
+        textScroll.alwaysBounceVertical = true
     }
     
     func makeAddTarget(){
