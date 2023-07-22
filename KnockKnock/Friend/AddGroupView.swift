@@ -64,7 +64,7 @@ class AddGroupView : UIView {
     
     
     let friendData = Friends.shared
-    var checked: Array<Bool> = []
+    var bestFriend: Array<Bool> = []
     var nameList: Array<String> = []
     var numberList: Array<String> = []
     var nickNameList: Array<String> = []
@@ -172,9 +172,12 @@ extension AddGroupView {
         
     }
     func getData(){
-        nameList = friendData.name
-        nickNameList = friendData.nickName
-        numberList = friendData.number
-        checked = friendData.bestFriend
+        for keys in friendData.dic.keys{
+            var dic = friendData.dic[keys]
+            nameList.append(dic!.name)
+            nickNameList.append(dic!.nickName)
+            numberList.append(keys)
+            bestFriend.append(dic!.bestFriend)
+        }
     }
 }

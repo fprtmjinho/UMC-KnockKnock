@@ -204,6 +204,11 @@ extension LoginSecondVC {
         if let passwordText = passwordText.text{
             password = passwordText
         }
+        if (password==""||specialCharactersCheck()||password.count < 8){
+            passwordText.layer.borderColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+            passwordText.layer.borderWidth = 2
+            return
+        }
         if let passwordSameText = passwordCheckText.text{
             passwordSame = passwordSameText
         }
@@ -224,36 +229,45 @@ extension LoginSecondVC {
             nextView()
         }
     }
-        
-        //이메일이 빈칸이거나 형식이 틀리면 타이틀 강조 (@를 포함하지 않거나 다른 조건(추가해야함))
-        func emailCheck()->Bool{
-            if(email == "" || !email.contains("@")){
-                emailText.layer.borderColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-                emailText.layer.borderWidth = 2
-                return true
-            }
-            else{
-                emailText.layer.borderWidth = 0
+    func specialCharactersCheck()->Bool{
+        let specialCharacters: Array<String> = ["!","\"","#","$","%","&","\'","(",")","*","+",",","-",".","/",":",";","<","=",">","?","@","[","]","\\","^","_","`","{","}","|","~"]
+        for word in specialCharacters{
+            if (password.contains(word)){
                 return false
             }
         }
+        return true
+    }
         
-        
-        func passwordCheck()->Bool{
-            if (password == ""){
-                passwordText.layer.borderColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-                passwordText.layer.borderWidth = 2
-                return true
-            }
-            else{
-                passwordText.layer.borderWidth = 0
-                return false
-            }
+    //이메일이 빈칸이거나 형식이 틀리면 타이틀 강조 (@를 포함하지 않거나 다른 조건(추가해야함))
+    func emailCheck()->Bool{
+        if(email == "" || !email.contains("@")){
+            emailText.layer.borderColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+            emailText.layer.borderWidth = 2
+            return true
         }
-        
-        func nextView(){
-            let allowApproachVC = AllowApproachVC()
-            self.navigationController?.pushViewController(allowApproachVC, animated: true)
+        else{
+            emailText.layer.borderWidth = 0
+            return false
         }
+    }
+    
+    
+    func passwordCheck()->Bool{
+        if (password == ""){
+            passwordText.layer.borderColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+            passwordText.layer.borderWidth = 2
+            return true
+        }
+        else{
+            passwordText.layer.borderWidth = 0
+            return false
+        }
+    }
+    
+    func nextView(){
+        let allowApproachVC = AllowApproachVC()
+        self.navigationController?.pushViewController(allowApproachVC, animated: true)
+    }
 }
 

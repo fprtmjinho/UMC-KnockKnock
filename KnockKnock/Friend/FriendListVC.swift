@@ -15,22 +15,22 @@ class FriendListVC: UIViewController {
     let friendData = Friends.shared
     
     var best: Array<Bool> = []
-    var indexList: Array<Int> = []
+    
     var nameList: Array<String> = []
     var numberList: Array<String> = []
     var nickNameList: Array<String> = []
-    var checked: Array<Bool> = []
+    var bestFriendList: Array<Bool> = []
     var alramList: Array<Bool> = []
     var timeList: Array<String> = []
-    var hiddenList: Array<Bool> = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         makeConstraint()
 
-        //getData()
+        getData()
         setTableView()
-        //makeSubView()
-        //makeAddTarget()
+        makeSubView()
+        makeAddTarget()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -65,7 +65,7 @@ extension FriendListVC : UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
-        //nextView(index:indexPath)
+        nextView(index:indexPath)
         //cell 클릭시 체크가 안되어있으면 체크, 체크가 되어있으면 체크풀기
         
     }
@@ -116,7 +116,7 @@ extension FriendListVC : UITableViewDelegate, UITableViewDataSource {
       }
     @objc func nextView(index:IndexPath) {
         let nextView = FriendProfileVC()
-        friendData.choiceIndex = index.row
+        friendData.choiceNumber = numberList[index.row]
         nextView.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(nextView, animated: true)
     }
@@ -125,7 +125,7 @@ extension FriendListVC : UITableViewDelegate, UITableViewDataSource {
     @objc func sortData(){
 
         // 이름, 전화번호, 나이를 튜플로 묶은 배열 생성
-        var combinedList = zip(nameList, zip(nickNameList,zip(numberList, zip(checked,zip(alramList,zip(timeList,indexList).map{($0,$1)}).map{($0, $1)}).map{($0, $1)}).map{($0, $1)}).map{($0,$1)}).map{($0,$1)}
+        var combinedList = zip(nameList, zip(nickNameList,zip(numberList, zip(bestFriendList,zip(alramList,timeList).map{($0,$1)}).map{($0, $1)}).map{($0, $1)}).map{($0, $1)}).map{($0,$1)}
 
         // 이름을 기준으로 오름차순 정렬
         combinedList.sort { $0.0 < $1.0 }
@@ -137,43 +137,34 @@ extension FriendListVC : UITableViewDelegate, UITableViewDataSource {
         nameList = combinedList.map { $0.0 }
         nickNameList = combinedList.map {$0.1.0}
         numberList = combinedList.map { $0.1.1.0 }
-        checked = combinedList.map { $0.1.1.1.0 }
+        bestFriendList = combinedList.map { $0.1.1.1.0 }
         alramList = combinedList.map {$0.1.1.1.1.0}
-        timeList = combinedList.map{$0.1.1.1.1.1.0}
-        indexList = combinedList.map{$0.1.1.1.1.1.1}
+        timeList = combinedList.map{$0.1.1.1.1.1}
     }
     @objc func getData(){
-        var i=0
-        best = friendData.bestFriend
-        print(best)
-        for check in best{
-            if check == true{
-                if (!checkDouble(phoneNumber: friendData.number[i])){
-                    nameList.append(friendData.name[i])
-                    nickNameList.append(friendData.nickName[i])
-                    numberList.append(friendData.number[i])
-                    checked.append(friendData.bestFriend[i])
-                    alramList.append(friendData.alram[i])
-                    timeList.append(friendData.time[i])
-                    hiddenList.append(friendData.hidden[i])
-                    indexList.append(i)
-                }
-            }else if check == false{
-                if numberList.contains(friendData.number[i]){
-                    var index = numberList.firstIndex(of: friendData.number[i])
-                    nameList.remove(at: index!)
-                    nickNameList.remove(at: index!)
-                    numberList.remove(at: index!)
-                    checked.remove(at: index!)
-                    alramList.remove(at: index!)
-                    timeList.remove(at: index!)
-                    hiddenList.remove(at: index!)
-                    indexList.remove(at: index!)
-                }
+        var nameCh: Array<String> = []
+        var numberCh: Array<String> = []
+        var nickNameCh: Array<String> = []
+        var bestFriendCh: Array<Bool> = []
+        var alramCh: Array<Bool> = []
+        var timeCh: Array<String> = []
+        for key in friendData.dic.keys{
+            let dic = friendData.dic[key]
+            if dic?.bestFriend == true{
+                nameCh.append(dic!.name)
+                numberCh.append(key)
+                nickNameCh.append(dic!.nickName)
+                bestFriendCh.append(dic!.bestFriend)
+                alramCh.append(dic!.alram)
+                timeCh.append(dic!.time)
             }
-            i+=1
         }
-        print(nameList)
+        nameList = nameCh
+        numberList = numberCh
+        nickNameList = nickNameCh
+        bestFriendList = bestFriendCh
+        alramList = alramCh
+        timeList = timeCh
     }
     @objc func checkDouble(phoneNumber:String) -> Bool{
         let fre = Friends.shared
