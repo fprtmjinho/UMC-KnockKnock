@@ -20,7 +20,7 @@ class MyPageController : UIViewController{
     }()
     
     
-    
+    let me = MyData.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +29,14 @@ class MyPageController : UIViewController{
         setNavigationBar()
         customNavigationBar()
         
+        makeSubView()
+        makeConstraint()
+        makeAddTarget()
+        setScrollView()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        myPage.Name.text = me.name
         makeSubView()
         makeConstraint()
         makeAddTarget()

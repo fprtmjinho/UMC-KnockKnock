@@ -197,38 +197,51 @@ extension AddFriendVC {
         var formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         if let number = numberText.text{
-            var phoneNumber: String = number
-            var addInfo: Info = Info(
-                name:names,
-                nickName: nickNames,
-                bestFriend: false,
-                alram: true,
-                time:formatter.string(from: Date())
-            )
-            fre.dic[phoneNumber] = addInfo
-        }else{
-            var addInfo: Info = Info(
-                name:names,
-                nickName: nickNames,
-                bestFriend: false,
-                alram: true,
-                time:formatter.string(from: Date())
-            )
-            for key in fre.dic.keys{
-                var dic = fre.dic[key]
-                if key.contains(names){
-                    var i=1
-                    var nkey = names
-                    while(true){
-                        nkey = nkey + String(i)
-                        if fre.dic.keys.contains(nkey){
-                            i+=1
-                        }else{
-                            fre.dic[nkey] = addInfo
-                            break
+            if number != ""{
+                print("number1")
+                var phoneNumber: String = number
+                var addInfo: Info = Info(
+                    name:names,
+                    nickName: nickNames,
+                    bestFriend: false,
+                    alram: true,
+                    time:formatter.string(from: Date())
+                )
+                fre.dic[phoneNumber] = addInfo
+            }else{
+                print("number2")
+                var addInfo: Info = Info(
+                    name:names,
+                    nickName: nickNames,
+                    bestFriend: false,
+                    alram: true,
+                    time:formatter.string(from: Date())
+                )
+                for key in fre.dic.keys{
+                    var dic = fre.dic[key]
+                    print("number3")
+                    print(names)
+                    print(dic!.name)
+                    if dic!.name.contains(names){
+                        print("number4")
+                        var i: Int=1
+                        while(true){
+                            var nkey = names
+                            print("number5")
+                            nkey = nkey + String(i)
+                            if fre.dic.keys.contains(nkey){
+                                print("number6")
+                                i+=1
+                            }else{
+                                fre.dic[nkey] = addInfo
+                                print("number7")
+                                break
+                            }
                         }
                     }
-                }else{
+                }
+                if fre.dic[names] == nil{
+                    print("number8")
                     names = names + String(1)
                     fre.dic[names] = addInfo
                 }

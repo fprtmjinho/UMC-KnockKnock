@@ -66,6 +66,7 @@ class SearchController : UIViewController{
     var tableView = UITableView(frame: .zero, style: .plain)
     
     let friendData = Friends.shared
+    let me = MyData.shared
     
     var nameList: Array<String> = []
     var numberList: Array<String> = []
@@ -90,6 +91,7 @@ class SearchController : UIViewController{
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        Label1.text = me.name
         getData()
         sortData()
         tableView.reloadData()
@@ -300,6 +302,7 @@ extension SearchController {
         bestFriendList = bestFriendCh
         alramList = alramCh
         timeList = timeCh
+        sortData()
         tableView.reloadData()
         setTableView()
     }
