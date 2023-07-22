@@ -22,15 +22,10 @@ class GetInformationVC : UIViewController {
     var contacts: NSMutableArray = NSMutableArray()
     
     var nameList: Array<String> = []
-    var nickNameList: Array<String> = []
-    var familyNameList: Array<String> = []
     var numberList: Array<String> = []
     var checked: Array<Bool> = []
-    var alram: Array<Bool> = []
-    var date: Array<String> = []
-    var hidden: Array<Bool> = []
-    var addFriendList: Array<String> = []
-    var addNumberList: Array<String> = []
+    
+    var dic: [String:Info] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,16 +48,22 @@ extension GetInformationVC : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "numberBook") ?? UITableViewCell(style: .subtitle, reuseIdentifier: "numberBook")
-        var image = UIImage(named: "UnselectedCheckCircle")?.resizeImageTo(size: CGSize(width: 25, height: 25))
-        
-        cell.accessoryView = UIImageView(image:image)
-        cell.textLabel?.text = familyNameList[indexPath.row]+nameList[indexPath.row]
-        cell.detailTextLabel?.text = numberList[indexPath.row]
-        
-        cell.textLabel?.font = UIFont.systemFont(ofSize: 15)
-        cell.textLabel?.textColor = UIColor.black
-        cell.detailTextLabel?.font = UIFont.systemFont(ofSize: 12)
-        cell.detailTextLabel?.textColor = UIColor.systemGray2
+        let unSelectedImage = UIImage(named: "UnselectedCheckCircle")?.resizeImageTo(size: CGSize(width: 25, height: 25))
+        let selectedImage = UIImage(named: "SelectedCheckCircle")?.resizeImageTo(size: CGSize(width: 25, height: 25))
+    if (checked[indexPath.row]==true) {
+        cell.accessoryView = UIImageView(image:selectedImage)
+    }
+    else if (checked[indexPath.row]==false) {
+        cell.accessoryView = UIImageView(image:unSelectedImage)
+    }
+       
+       cell.textLabel?.text = nameList[indexPath.row]
+       cell.detailTextLabel?.text = numberList[indexPath.row]
+       
+       cell.textLabel?.font = UIFont.systemFont(ofSize: 15)
+       cell.textLabel?.textColor = UIColor.black
+       cell.detailTextLabel?.font = UIFont.systemFont(ofSize: 12)
+       cell.detailTextLabel?.textColor = UIColor.systemGray2
         
         return cell
     }
@@ -71,15 +72,27 @@ extension GetInformationVC : UITableViewDelegate, UITableViewDataSource {
         let selectedImage = UIImage(named: "SelectedCheckCircle")?.resizeImageTo(size: CGSize(width: 25, height: 25))
         let cell = tableView.cellForRow(at: indexPath)
         
-        //cell 클릭시 체크가 안되어있으면 체크, 체크가 되어있으면 체크풀기
         if (checked[indexPath.row]==false) {
             cell?.accessoryView = UIImageView(image:selectedImage)
             checked[indexPath.row]=true
+            let info:Info = Info(
+                name: dic[numberList[indexPath.row]]!.name,
+                nickName: "",
+                bestFriend: true,
+                alram: false,
+                time: "")
+            dic[numberList[indexPath.row]] = info
         } else {
             cell?.accessoryView = UIImageView(image:unSelectedImage)
             checked[indexPath.row]=false
+            let info:Info = Info(
+                name: dic[numberList[indexPath.row]]!.name,
+                nickName: "",
+                bestFriend: false,
+                alram: false,
+                time: "")
+            dic[numberList[indexPath.row]] = info
         }
-        //아래는 추가버튼 보이면 없앨 예정
         
     }
     
@@ -200,26 +213,24 @@ extension GetInformationVC {
                 let givenName = contact.givenName
                 let familyName = contact.familyName
                 let phoneNumbers = contact.phoneNumbers.map { $0.value.stringValue }[0]
-                // 중복안되면 추가
-                if (!checkDouble(phoneNumber: phoneNumbers)){
-                    nameList.append(givenName)
-                    familyNameList.append(familyName)
-                    numberList.append(phoneNumbers)
-                    checked.append(false)
+                if !fre.dic.keys.contains(phoneNumbers){
+                    if !dic.keys.contains(phoneNumbers){
+                        nameList.append(familyName+givenName)
+                        numberList.append(phoneNumbers)
+                        checked.append(false)
+                    }
+                    let info:Info = Info(
+                        name: familyName+givenName,
+                        nickName: "",
+                        bestFriend: false,
+                        alram: false,
+                        time: "")
+                    dic[phoneNumbers] = info
                 }
             }
         }
     }
-    // 친구 목록에 있는 번호와 중복되면 true
-    @objc func checkDouble(phoneNumber:String) -> Bool{
-        let fre = Friends.shared
-        for key in fre.dic.keys{
-            if key == phoneNumber{
-                return true;
-            }
-        }
-        return false;
-    }
+    
     @objc func downloadNumberBook(){
         readContacts()
         getFriendInfo()
@@ -244,23 +255,64 @@ extension GetInformationVC {
     
     @objc func makeAddTarget(){
         addBtn.addTarget(self, action: #selector(setData(_:)), for: .touchUpInside)
+        searchFriendBar.searchTextField.addTarget(self, action: #selector(searchFriend(_:)), for: .editingChanged)
+    }
+    @objc func searchFriend(_:UISearchBar){
+        print("searchFriend")
+        var friendName: String = ""
+        if let name = searchFriendBar.text{
+            friendName = name
+        }
+        loadFriendArray(name: friendName)
+    }
+    @objc func loadFriendArray(name: String){
+        var nameCh: Array<String> = []
+        var numberCh: Array<String> = []
+        var bestFriendCh: Array<Bool> = []
+        if name == ""{
+            for key in dic.keys{
+                let dics = dic[key]
+                nameCh.append(dics!.name)
+                numberCh.append(key)
+                bestFriendCh.append(dics!.bestFriend)
+            }
+        }else{
+            for key in dic.keys{
+                let dics = dic[key]
+                if dics!.name.contains(name){
+                    nameCh.append(dics!.name)
+                    numberCh.append(key)
+                    bestFriendCh.append(dics!.bestFriend)
+                }
+            }
+        }
+        nameList = nameCh
+        numberList = numberCh
+        checked = bestFriendCh
+        tableView.reloadData()
+        setTableView()
+        addBtn = setNextBtn(view: self, title: "다음")
+        makeAddTarget()
     }
     @objc func setData(_:UIButton){
+        var formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         var i=0
-        for check in checked{
-            if check == true{
-                var formatter = DateFormatter()
-                formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                var addInfo: Info = Info(
-                    name:familyNameList[i]+nameList[i],
-                    nickName: "",
-                    bestFriend: false,
-                    alram: true,
-                    time:formatter.string(from: Date())
+        for key in dic.keys{
+            let ddic = dic[key]
+            if ddic!.bestFriend == true{
+                if !fre.dic.keys.contains(key){
+                    var addInfo: Info = Info(
+                        name:ddic!.name,
+                        nickName: "",
+                        bestFriend: false,
+                        alram: true,
+                        time:formatter.string(from: Date())
                     )
-                fre.dic[numberList[i]] = addInfo
+                    fre.dic[key] = addInfo
+                }
             }
-            i+=1
+            i=i+1
         }
         navigationController?.popViewController(animated: true)
     }

@@ -87,12 +87,6 @@ class SearchController : UIViewController{
         setTableView()
         makeAddTarget()
         setTitle()
-        print(nameList)
-        print(numberList)
-        print(nickNameList)
-        print(bestFriendList)
-        print(alramList)
-        print(timeList)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -100,12 +94,6 @@ class SearchController : UIViewController{
         sortData()
         tableView.reloadData()
         setTableView()
-        print(nameList)
-        print(numberList)
-        print(nickNameList)
-        print(bestFriendList)
-        print(alramList)
-        print(timeList)
     }
 }
 
@@ -277,24 +265,43 @@ extension SearchController {
         loadFriendArray(name: friendName)
     }
     @objc func loadFriendArray(name: String){
+        var nameCh: Array<String> = []
+        var numberCh: Array<String> = []
+        var nickNameCh: Array<String> = []
+        var bestFriendCh: Array<Bool> = []
+        var alramCh: Array<Bool> = []
+        var timeCh: Array<String> = []
         if name == ""{
-            //채워야함
+            for key in friendData.dic.keys{
+                let dic = friendData.dic[key]
+                nameCh.append(dic!.name)
+                nickNameCh.append(dic!.nickName)
+                numberCh.append(key)
+                bestFriendCh.append(dic!.bestFriend)
+                alramCh.append(dic!.alram)
+                timeCh.append(dic!.time)
+            }
         }else{
-            var i=0;
-            for listName in nameList{
-                if !listName.contains(name){
-                    var index = nameList.firstIndex(of: listName)
-                    hiddenList[index!] = true
-                }else{
-                    hiddenList[i] = false
+            for key in friendData.dic.keys{
+                let dic = friendData.dic[key]
+                if dic!.name.contains(name){
+                    nameCh.append(dic!.name)
+                    nickNameCh.append(dic!.nickName)
+                    numberCh.append(key)
+                    bestFriendCh.append(dic!.bestFriend)
+                    alramCh.append(dic!.alram)
+                    timeCh.append(dic!.time)
                 }
-                i=i+1
             }
         }
-        print(hiddenList)
+        nameList = nameCh
+        nickNameList = nickNameCh
+        numberList = numberCh
+        bestFriendList = bestFriendCh
+        alramList = alramCh
+        timeList = timeCh
         tableView.reloadData()
-        //hidden에 의한 업데이트는 됨 근데 tableview를 클릭시 리스트가 뒤죽박죽임
-        
+        setTableView()
     }
     @objc func setTitle(){
         var nickName: String = loadLocalName()//loadNickName()

@@ -38,6 +38,7 @@ class LoginAddBestFriendVC : AllowApproachVC {
    override func makeAddTarget(){
        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Skip", style: .plain, target: self, action: #selector(skipBtnFunc(_:)))
         self.nextBtn.addTarget(self, action: #selector(nextView(_:)), for: .touchUpInside)
+       searchFriendBar.searchTextField.addTarget(self, action: #selector(searchFriend(_:)), for: .editingChanged)
     }
     
     @objc func nextView(_: UIButton){
@@ -62,6 +63,9 @@ class LoginAddBestFriendVC : AllowApproachVC {
     var numberList: Array<String> = []
     var date: Array<String> = []
     var tableView = UITableView(frame: .zero, style: .plain)
+    
+    var dic: [String:Info] = [:]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigationBar()
@@ -78,7 +82,15 @@ class LoginAddBestFriendVC : AllowApproachVC {
         for key in friendData.dic.keys{
             nameList.append(friendData.dic[key]!.name)
             numberList.append(key)
+            checked.append(false)
             date.append(friendData.dic[key]!.time)
+            let info: Info = Info(
+                name: friendData.dic[key]!.name,
+                nickName: "",
+                bestFriend: false,
+                alram: false,
+                time: friendData.dic[key]!.time)
+            dic[key] = info
         }
 //        nameList = friendData.name
 //        numberList = friendData.number
@@ -89,21 +101,61 @@ class LoginAddBestFriendVC : AllowApproachVC {
         var i=0
         var formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        for check in checked{
-            if (check==true){
+        for key in dic.keys{
+            let ddic = dic[key]
+            if ddic!.bestFriend == true{
                 var addInfo: Info = Info(
-                    name:nameList[i],
+                    name:ddic!.name,
                     nickName: "",
                     bestFriend: true,
                     alram: true,
                     time:formatter.string(from: Date())
                 )
-                fre.dic[numberList[i]] = addInfo
+                fre.dic[key] = addInfo
             }
             i=i+1
         }
     }
     
+}
+extension LoginAddBestFriendVC{
+    @objc func searchFriend(_:UISearchBar){
+        print("searchFriend")
+        var friendName: String = ""
+        if let name = searchFriendBar.text{
+            friendName = name
+        }
+        loadFriendArray(name: friendName)
+    }
+    @objc func loadFriendArray(name: String){
+        var nameCh: Array<String> = []
+        var numberCh: Array<String> = []
+        var bestFriendCh: Array<Bool> = []
+        if name == ""{
+            for key in dic.keys{
+                let dics = dic[key]
+                nameCh.append(dics!.name)
+                numberCh.append(key)
+                bestFriendCh.append(dics!.bestFriend)
+            }
+        }else{
+            for key in dic.keys{
+                let dics = dic[key]
+                if dics!.name.contains(name){
+                    nameCh.append(dics!.name)
+                    numberCh.append(key)
+                    bestFriendCh.append(dics!.bestFriend)
+                }
+            }
+        }
+        nameList = nameCh
+        numberList = numberCh
+        checked = bestFriendCh
+        tableView.reloadData()
+        setTableView()
+        nextBtn = setNextBtn(view: self, title: "다음")
+        makeAddTarget()
+    }
 }
 extension LoginAddBestFriendVC : UITableViewDelegate, UITableViewDataSource {
     
@@ -113,8 +165,14 @@ extension LoginAddBestFriendVC : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             let cell = tableView.dequeueReusableCell(withIdentifier: "friendList") ?? UITableViewCell(style: .subtitle, reuseIdentifier: "friendList")
-            var image = UIImage(named: "UnselectedCheckCircle")?.resizeImageTo(size: CGSize(width: 25, height: 25))
-            cell.accessoryView = UIImageView(image:image)
+        let unSelectedImage = UIImage(named: "UnselectedCheckCircle")?.resizeImageTo(size: CGSize(width: 25, height: 25))
+        let selectedImage = UIImage(named: "SelectedCheckCircle")?.resizeImageTo(size: CGSize(width: 25, height: 25))
+    if (checked[indexPath.row]==true) {
+        cell.accessoryView = UIImageView(image:selectedImage)
+    }
+    else if (checked[indexPath.row]==false) {
+        cell.accessoryView = UIImageView(image:unSelectedImage)
+    }
             cell.textLabel?.text = nameList[indexPath.row]
             cell.detailTextLabel?.text = numberList[indexPath.row]
             
@@ -136,9 +194,23 @@ extension LoginAddBestFriendVC : UITableViewDelegate, UITableViewDataSource {
         if (checked[indexPath.row]==false) {
             cell?.accessoryView = UIImageView(image:selectedImage)
             checked[indexPath.row]=true
+            let info:Info = Info(
+                name: dic[numberList[indexPath.row]]!.name,
+                nickName: "",
+                bestFriend: true,
+                alram: false,
+                time: "")
+            dic[numberList[indexPath.row]] = info
         } else {
             cell?.accessoryView = UIImageView(image:unSelectedImage)
             checked[indexPath.row]=false
+            let info:Info = Info(
+                name: dic[numberList[indexPath.row]]!.name,
+                nickName: "",
+                bestFriend: false,
+                alram: false,
+                time: "")
+            dic[numberList[indexPath.row]] = info
         }
     }
     
