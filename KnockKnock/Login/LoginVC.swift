@@ -165,13 +165,13 @@ class LoginVC : UIViewController {
         
         if !isEmailValid && !isPasswordValid {
             // 이메일과 비밀번호 모두 유효하지 않을 때
-            showAlert(message: "아이디 입력 오류: 이메일을 입력해주세요.\n\n비밀번호 입력 오류: 특수문자, 알파벳 대소문자 포함 8자 이상을 입력해주세요.")
+            showAlert(message: "[아이디 입력 오류] 이메일을 입력해주세요.\n\n[비밀번호 입력 오류] 특수문자, 알파벳 대소문자 포함 8자 이상을 입력해주세요.")
         } else if !isEmailValid {
             // 이메일이 유효하지 않을 때
-            showAlert(message: "아이디 입력 오류: 이메일을 입력해주세요.")
+            showAlert(message: "[아이디 입력 오류] 이메일을 입력해주세요.")
         } else if !isPasswordValid {
             // 비밀번호가 유효하지 않을 때
-            showAlert(message: "비밀번호 입력 오류: 특수문자, 알파벳 대소문자 포함 8자 이상을 입력해주세요.")
+            showAlert(message: "[비밀번호 입력 오류] 특수문자, 알파벳 대소문자 포함 8자 이상을 입력해주세요.")
         } else {
             let tabBarController = TabBarController()
             tabBarController.modalPresentationStyle = .fullScreen
@@ -302,8 +302,20 @@ extension LoginVC {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
         alert.addAction(okAction)
+        
+        // 메시지 폰트 사이즈 설정
+        let attributedMessage = NSMutableAttributedString(string: message)
+        let style = NSMutableParagraphStyle()
+        style.alignment = .center
+        attributedMessage.addAttribute(.paragraphStyle, value: style, range: NSRange(location: 0, length: attributedMessage.length))
+        
+        let fontSize: CGFloat = 16
+        attributedMessage.addAttribute(.font, value: UIFont.systemFont(ofSize: fontSize), range: NSRange(location: 0, length: attributedMessage.length))
+        alert.setValue(attributedMessage, forKey: "attributedMessage")
+        
         present(alert, animated: true, completion: nil)
     }
+
     
     func isEmailValidFormat(email: String?) -> Bool {
         guard let email = email else { return false }
