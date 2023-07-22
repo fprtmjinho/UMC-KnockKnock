@@ -59,7 +59,8 @@ class EditProfileVC : UIViewController {
          text.addLeftPadding()
          return text
      }()
-    
+    let fre = Friends.shared
+    let me = MyData.shared
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -124,6 +125,38 @@ extension EditProfileVC {
     }
     
     func makeAddTarget(){
-        
+        saveBtn.addTarget(self, action: #selector(saveFriendData(_:)), for: .touchUpInside)
+    }
+    @objc func saveFriendData(_:UIButton){
+        var newName: String = ""
+        var newNickName: String = ""
+        var newNumber: String = ""
+        if let name = nameText.text{
+            newName = name
+        }else{
+            newName = fre.dic[fre.choiceNumber!]!.name
+        }
+        if let nickName = nicknameText.text{
+            newNickName = nickName
+        }else{
+            newNickName = fre.dic[fre.choiceNumber!]!.nickName
+        }
+        // 번호 수정 만들어지면 적용할 곳
+//        if let number = numberText.text{
+//            newNumber = number
+//        }else{
+//            newNumber = fre.choiceNumber!
+//        }
+        newNumber = fre.choiceNumber!
+        var info: Info = Info(
+            name: newName,
+            nickName: newNickName,
+            bestFriend: fre.dic[newNumber]!.bestFriend,
+            alram: fre.dic[newNumber]!.alram,
+            time: fre.dic[newNumber]!.time
+        )
+        fre.dic.removeValue(forKey: fre.choiceNumber!)
+        fre.dic[newNumber] = info
+        self.navigationController?.popViewController(animated: true)
     }
 }

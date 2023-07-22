@@ -151,6 +151,14 @@ class FriendProfileVC : UIViewController {
         setLabel()
        
     }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        makeSubView()
+        makeConstraint()
+        getData()
+        makeAddTarget()
+        setLabel()
+    }
     
 }
 
