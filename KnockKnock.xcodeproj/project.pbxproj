@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00086E972A6B62AE00A7C9FF /* CustomPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00086E962A6B62AE00A7C9FF /* CustomPostCell.swift */; };
+		00086E992A6B631600A7C9FF /* CustomCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00086E982A6B631600A7C9FF /* CustomCommentCell.swift */; };
 		00124F1B2A63CB6000536EAD /* PostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00124F1A2A63CB6000536EAD /* PostVC.swift */; };
 		00124F1E2A643B7600536EAD /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00124F1D2A643B7600536EAD /* Post.swift */; };
 		0041A6ED2A61A2BF008A5048 /* WriteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0041A6EC2A61A2BF008A5048 /* WriteVC.swift */; };
@@ -79,6 +81,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		00086E962A6B62AE00A7C9FF /* CustomPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPostCell.swift; sourceTree = "<group>"; };
+		00086E982A6B631600A7C9FF /* CustomCommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCommentCell.swift; sourceTree = "<group>"; };
 		00124F1A2A63CB6000536EAD /* PostVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostVC.swift; sourceTree = "<group>"; };
 		00124F1D2A643B7600536EAD /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		0041A6EC2A61A2BF008A5048 /* WriteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteVC.swift; sourceTree = "<group>"; };
@@ -321,6 +325,8 @@
 				008463FA2A5D5713009F4033 /* BadVC.swift */,
 				0041A6EC2A61A2BF008A5048 /* WriteVC.swift */,
 				00124F1A2A63CB6000536EAD /* PostVC.swift */,
+				00086E962A6B62AE00A7C9FF /* CustomPostCell.swift */,
+				00086E982A6B631600A7C9FF /* CustomCommentCell.swift */,
 			);
 			path = Community;
 			sourceTree = "<group>";
@@ -597,6 +603,7 @@
 				C932467B2A458D9400908D6B /* SceneDelegate.swift in Sources */,
 				C935FA7C2A5D63740035FA2C /* LoginAddFriendVC.swift in Sources */,
 				C935FA272A59BC840035FA2C /* Extension.swift in Sources */,
+				00086E992A6B631600A7C9FF /* CustomCommentCell.swift in Sources */,
 				00124F1B2A63CB6000536EAD /* PostVC.swift in Sources */,
 				00124F1E2A643B7600536EAD /* Post.swift in Sources */,
 				C935FA1F2A58264B0035FA2C /* LoginFirstVC.swift in Sources */,
@@ -607,6 +614,7 @@
 				C935FA802A5D74980035FA2C /* AllowApproachVC.swift in Sources */,
 				008463FD2A5D93BF009F4033 /* FriendListVC.swift in Sources */,
 				C9229C942A64592E0017A45C /* EditProfileVC.swift in Sources */,
+				00086E972A6B62AE00A7C9FF /* CustomPostCell.swift in Sources */,
 				008463F92A5D56FC009F4033 /* GoodVC.swift in Sources */,
 				E91EE28D2A61A3AC003D6E5C /* Friends.swift in Sources */,
 				C935FA2F2A59D0EA0035FA2C /* AddFriendVC.swift in Sources */,

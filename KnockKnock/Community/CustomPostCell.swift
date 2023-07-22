@@ -1,3 +1,12 @@
+//
+//  CustomPostCell.swift
+//  KnockKnock
+//
+//  Created by 티모시 킴 on 2023/07/22.
+//
+
+import UIKit
+
 class CustomPostCell: UITableViewCell { // 게시글 커스텀
     var post: Post?
     
@@ -268,16 +277,16 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
     
     // (매우 중요)테이블뷰 셀의 터치 이벤트를 해당 버튼으로 전달
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-            if let view = prevImageButton.hitTest(convert(point, to: prevImageButton), with: event) {
-                return view
-            }
-        
-            if let view = nextImageButton.hitTest(convert(point, to: nextImageButton), with: event) {
-                return view
-            }
-        
-            return super.hitTest(point, with: event)
+        if let view = prevImageButton.hitTest(convert(point, to: prevImageButton), with: event) {
+            return view
         }
+        
+        if let view = nextImageButton.hitTest(convert(point, to: nextImageButton), with: event) {
+            return view
+        }
+        
+        return super.hitTest(point, with: event)
+    }
     
     func configureCell(with post: Post) {
         self.post = post
@@ -289,80 +298,6 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
         timeLabel.text = post.time
         likesLabel.text = "\(post.likes)"
         commentsLabel.text = "\(post.comments)"
-    }
-    
-}
-
-class CustomCommentCell: UITableViewCell { // 댓글 커스텀
-    
-    let profileImageView: UIImageView = { // 프로필 사진
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
-    
-    let nameLabel: UILabel = { // 이름
-        let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 15)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    let commentLabel: UILabel = { // 댓글 내용
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 15)
-        label.numberOfLines = 0
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    let timeLabel: UILabel = { // 시간
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 13)
-        label.textColor = #colorLiteral(red: 0.824265182, green: 0.8242650628, blue: 0.8242650628, alpha: 1)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    func makeSubView() {
-        addSubview(profileImageView)
-        addSubview(nameLabel)
-        addSubview(commentLabel)
-        addSubview(timeLabel)
-    }
-    
-    func makeConstraint() {
-        
-        let horizontalMargin: CGFloat = 30
-        let verticalMargin: CGFloat = 8
-        
-        NSLayoutConstraint.activate([
-            profileImageView.topAnchor.constraint(equalTo: topAnchor, constant: verticalMargin),
-            profileImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: horizontalMargin),
-            profileImageView.widthAnchor.constraint(equalToConstant: 35),
-            profileImageView.heightAnchor.constraint(equalToConstant: 35),
-            
-            nameLabel.centerYAnchor.constraint(equalTo: profileImageView.centerYAnchor),
-            nameLabel.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 5),
-            nameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -horizontalMargin),
-            
-            commentLabel.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: verticalMargin),
-            commentLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: horizontalMargin),
-            commentLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -horizontalMargin),
-            
-            timeLabel.topAnchor.constraint(equalTo: commentLabel.bottomAnchor, constant: 5),
-            timeLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: horizontalMargin),
-            timeLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -verticalMargin)
-        ])
-        
-    }
-    
-    func configureCell(with comment: Comment) {
-        profileImageView.image = comment.profile
-        nameLabel.text = comment.name
-        commentLabel.text = comment.text
-        timeLabel.text = comment.time
     }
     
 }
