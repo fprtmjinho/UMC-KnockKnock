@@ -162,6 +162,7 @@ class PostVC: UIViewController {
                 writeVC.titleTextField.text = self.post.title
                 writeVC.contentTextView.text = self.post.content
                 writeVC.contentTextView.textColor = .label
+                writeVC.originalImages = self.post.images
                 writeVC.hidesBottomBarWhenPushed = true
                 self.navigationController?.pushViewController(writeVC, animated: true)
             }
