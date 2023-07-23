@@ -22,4 +22,5 @@ struct Info{
     var bestFriend: Bool
     var alram: Bool
     var time: String
+    //var groupList: Array<String>
 }
