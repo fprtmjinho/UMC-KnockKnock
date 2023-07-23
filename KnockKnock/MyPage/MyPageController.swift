@@ -19,12 +19,8 @@ class MyPageController : UIViewController{
         return myProfilePg
     }()
     
-    
-<<<<<<< HEAD
     let me = MyData.shared
     
-=======
->>>>>>> makingGroup
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white

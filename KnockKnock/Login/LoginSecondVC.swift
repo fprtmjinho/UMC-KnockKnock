@@ -107,9 +107,6 @@ class LoginSecondVC : UIViewController{
         return fourthText2
     }()
     
-<<<<<<< HEAD
-   
-=======
     let passwordCheckAlertLabel: UILabel = {
        let passwordCheckAlertLabel = UILabel()
         passwordCheckAlertLabel.text = "비밀번호를 재입력해주세요."
@@ -126,7 +123,6 @@ class LoginSecondVC : UIViewController{
         label.font = UIFont.systemFont(ofSize: 14)
         return label
     }()
->>>>>>> style
     
     
     
@@ -158,11 +154,8 @@ extension LoginSecondVC {
         view.addSubview(passwordAlertLabel)
         view.addSubview(passwordCheckLabel)
         view.addSubview(passwordCheckText)
-<<<<<<< HEAD
-=======
         view.addSubview(passwordCheckAlertLabel)
         view.addSubview(lastLabel)
->>>>>>> style
         nextBtn = setNextBtn(view: self, title: "다음")
     }
     
@@ -177,11 +170,8 @@ extension LoginSecondVC {
         passwordAlertLabel.translatesAutoresizingMaskIntoConstraints = false
         passwordCheckLabel.translatesAutoresizingMaskIntoConstraints = false
         passwordCheckText.translatesAutoresizingMaskIntoConstraints = false
-<<<<<<< HEAD
-=======
         passwordCheckAlertLabel.translatesAutoresizingMaskIntoConstraints = false
         lastLabel.translatesAutoresizingMaskIntoConstraints = false
->>>>>>> style
         
         
         NSLayoutConstraint.activate([
@@ -227,6 +217,9 @@ extension LoginSecondVC {
             passwordCheckAlertLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 45),
             passwordCheckAlertLabel.heightAnchor.constraint(equalToConstant: 17),
             
+            lastLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            lastLabel.bottomAnchor.constraint(equalTo: nextBtn.topAnchor, constant: -10),
+            
         ])
         
     }
@@ -250,11 +243,6 @@ extension LoginSecondVC {
         if let passwordText = passwordText.text{
             password = passwordText
         }
-        if (password==""||specialCharactersCheck()||password.count < 8){
-            passwordText.layer.borderColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-            passwordText.layer.borderWidth = 2
-            return
-        }
         if let passwordSameText = passwordCheckText.text{
             passwordSame = passwordSameText
         }
@@ -277,12 +265,6 @@ extension LoginSecondVC {
             nextView()
         }
     }
-<<<<<<< HEAD
-    func specialCharactersCheck()->Bool{
-        let specialCharacters: Array<String> = ["!","\"","#","$","%","&","\'","(",")","*","+",",","-",".","/",":",";","<","=",">","?","@","[","]","\\","^","_","`","{","}","|","~"]
-        for word in specialCharacters{
-            if (password.contains(word)){
-=======
         
         //이메일이 빈칸이거나 형식이 틀리면 타이틀 강조 (@를 포함하지 않거나 다른 조건(추가해야함))
         func emailCheck()->Bool{
@@ -295,21 +277,10 @@ extension LoginSecondVC {
             else{
                 emailText.layer.borderWidth = 0
                 emailAlertLabel.textColor = .white
->>>>>>> style
                 return false
             }
         }
-        return true
-    }
         
-<<<<<<< HEAD
-    //이메일이 빈칸이거나 형식이 틀리면 타이틀 강조 (@를 포함하지 않거나 다른 조건(추가해야함))
-    func emailCheck()->Bool{
-        if(email == "" || !email.contains("@")){
-            emailText.layer.borderColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-            emailText.layer.borderWidth = 2
-            return true
-=======
         
         func passwordCheck()->Bool{
             if (password == ""){
@@ -323,30 +294,10 @@ extension LoginSecondVC {
                 passwordAlertLabel.textColor = .white
                 return false
             }
->>>>>>> style
         }
-        else{
-            emailText.layer.borderWidth = 0
-            return false
-        }
-    }
-    
-    
-    func passwordCheck()->Bool{
-        if (password == ""){
-            passwordText.layer.borderColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-            passwordText.layer.borderWidth = 2
-            return true
-        }
-        else{
-            passwordText.layer.borderWidth = 0
-            return false
-        }
-    }
         
-    func nextView(){
-        navigationController?.pushViewController(LoginThirdVC(), animated: true)
-    }
-  
+        func nextView(){
+            let allowApproachVC = AllowApproachVC()
+            self.navigationController?.pushViewController(allowApproachVC, animated: true)
+        }
 }
-
