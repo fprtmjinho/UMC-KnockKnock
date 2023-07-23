@@ -1,6 +1,0 @@
-framework module Pods_KnockKnockTests {
-  umbrella header "Pods-KnockKnockTests-umbrella.h"
-
-  export *
-  module * { export * }
-}

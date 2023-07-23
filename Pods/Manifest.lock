@@ -1,20 +1,28 @@
 PODS:
+  - NMapsGeometry (1.0.1)
+  - NMapsMap (3.17.0):
+    - NMapsGeometry
   - Pageboy (3.7.0)
   - Tabman (2.13.0):
     - Pageboy (~> 3.7.0)
 
 DEPENDENCIES:
+  - NMapsMap
   - Tabman (~> 2.9)
 
 SPEC REPOS:
   trunk:
+    - NMapsGeometry
+    - NMapsMap
     - Pageboy
     - Tabman
 
 SPEC CHECKSUMS:
+  NMapsGeometry: 53c573ead66466681cf123f99f698dc8071a4b83
+  NMapsMap: a5b909a31b6f3d27a670f6eb2ddc913c38975474
   Pageboy: fe646118f7168960058bea7a96038386aa7c0da8
   Tabman: 66ea44c44488327ec20f3c8dc5554a5d22f5908c
 
-PODFILE CHECKSUM: 62d0e5180099554790ffac05fa13a5b7913186cc
+PODFILE CHECKSUM: b004a275198d67037ae949246e8634a057b78c91
 
 COCOAPODS: 1.12.1
