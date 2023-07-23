@@ -15,7 +15,8 @@ class WriteVC: UIViewController {
     var isAnonymousSelected = false // 익명 체크표시 상태
     var index: Int? // 게시판 종류
     var modify: Bool? // 수정 여부
-    var selectedImages: [UIImage] = [] // 사진
+    var selectedImages: [UIImage?] = [] // 사진
+    var originalImages: [UIImage?] = [] // 기존 게시물 사진
     
     lazy var completeButton: UIButton = {
         let button = UIButton(type: .system)
@@ -134,8 +135,13 @@ class WriteVC: UIViewController {
         makeSubView()
         makeConstraint()
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: completeButton
-        )
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: completeButton)
+        // 이미 선택된 이미지들을 imagesStackView에 추가합니다.
+            for image in originalImages {
+                if let originalImage = image {
+                    addRemoveSelectedImage(originalImage)
+                }
+            }
     }
     
     

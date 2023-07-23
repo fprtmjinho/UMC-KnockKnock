@@ -24,7 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
        
 
 
-        window?.rootViewController = mainViewController
+        window?.rootViewController = PromiseVC()
         window?.makeKeyAndVisible()
     }
 

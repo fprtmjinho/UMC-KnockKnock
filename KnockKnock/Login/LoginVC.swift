@@ -7,141 +7,141 @@
 
 import UIKit
 class LoginVC : UIViewController {
-
-        
-        let Title : UILabel = {
-           let title = UILabel()
-            title.text = "knock knock"
-            //글씨체 수정 필요
-            title.textColor = #colorLiteral(red: 1, green: 0.1743352413, blue: 0.4743140936, alpha: 1)
-            title.font = UIFont.boldSystemFont(ofSize: 40)
-            return title
-        }()
-        
-        let EmailText : UITextField = {
-            let emailBtn = UITextField()
-            emailBtn.placeholder = "이메일 주소"
-            emailBtn.backgroundColor = .systemGray6
-            
-            let emailimage = UIImage(named: "mail")?.resizeImageTo(size: CGSize(width: 25, height: 25))
-            emailBtn.addLeftImage(image: emailimage!)
-            emailBtn.layer.cornerRadius = 20
-            //모서리 둥글게
-            emailBtn.clearButtonMode = .whileEditing
-            //clear모드 설정
-            return emailBtn
-        }()
-    //image 첨부 필요
-        
-        let PasswordText : UITextField = {
-            let passwordBtn = UITextField()
-            passwordBtn.placeholder = "비밀번호"
-            
-            let passwordimage = UIImage(named: "key")?.resizeImageTo(size: CGSize(width: 25, height: 25))
-            passwordBtn.addLeftImage(image: passwordimage!)
-            passwordBtn.backgroundColor = .systemGray6
-            passwordBtn.layer.cornerRadius = 20
-            passwordBtn.clearButtonMode = .whileEditing
-            passwordBtn.isSecureTextEntry = true
-            return passwordBtn
-        }()
-    //image 첨부 필요
-        
-        let LoginButton : UIButton={
-            let btn = UIButton()
-            var title = AttributedString("로그인")
-            title.font = UIFont.boldSystemFont(ofSize: 20)
-            
-            var config = UIButton.Configuration.filled()
-            config.cornerStyle = .capsule
-            config.baseBackgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-            config.attributedTitle = title
-            
-            btn.configuration = config
-            return btn
-        }()
-        
-        let ForgetPassword : UIButton = {
-            let FpBtn =  UIButton()
-           FpBtn.setTitle("비밀번호를 잊으셨나요?", for: .normal)
-            FpBtn.setTitleColor(UIColor.systemGray, for: .normal)
-            FpBtn.titleLabel?.font = UIFont.systemFont(ofSize: 13)
-           
-            FpBtn.setUnderLine()
-           
-            return FpBtn
-        }()
-        
-        let EasyLogin : UITextField = {
-           let easylogin = UITextField()
-            easylogin.text = "간편 로그인"
-            easylogin.textColor = .systemGray
-            easylogin.font = UIFont.systemFont(ofSize: 15)
-            return easylogin
-        }()
-        
-        let LoginGuide_1 : UIView = {
-            let lineView = UIView()
-            lineView.backgroundColor = .systemGray
-            return lineView
-        }()
-        
-        let LoginGuide_2 : UIView = {
-            let lineView = UIView()
-            lineView.backgroundColor = .systemGray
-            return lineView
-        }()
-        
-        
-        
-        let ForKakaoBtn : UIButton = {
-            let btn = UIButton()
-            var config = UIButton.Configuration.filled()
-            config.cornerStyle = .capsule
-            config.baseBackgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-            config.image = UIImage(named: "kakao talk")?.resizeImageTo(size: CGSize(width: 30, height: 30) )
-            btn.configuration = config
-            return btn
-        }()
     
-        
-        let ForNaverBtn : UIButton = {
-            let btn = UIButton()
-            var config = UIButton.Configuration.filled()
-            config.cornerStyle = .capsule
-            config.baseBackgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-            config.image = UIImage(named: "naver")?.resizeImageTo(size: CGSize(width: 30, height: 30) )
-            btn.configuration = config
-            return btn
-        }()
-        
-        let ForGoogleBtn : UIButton = {
-            let btn = UIButton()
-            var config = UIButton.Configuration.filled()
-            config.cornerStyle = .capsule
-            config.baseBackgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-            config.image = UIImage(named: "google")?.resizeImageTo(size: CGSize(width: 30, height: 30) )
-            btn.configuration = config
-            return btn
-        }()
-        
-        let NotYet : UIButton = {
-          let notyet = UIButton()
-            notyet.setTitle("아직 회원이 아니신가요?", for: .normal)
-            notyet.setTitleColor(.systemGray, for: .normal)
-            notyet.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-            return notyet
-        }()
-        let SignUp : UIButton = {
-           let enternew = UIButton()
-            enternew.setTitle("가입하기", for: .normal)
-            enternew.setTitleColor(.systemGray, for: .normal)
-            enternew.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-            enternew.setUnderLine()
-            return enternew
-        }()
     
+    let Title : UILabel = {
+        let title = UILabel()
+        title.text = "knock knock"
+        //글씨체 수정 필요
+        title.textColor = #colorLiteral(red: 1, green: 0.1743352413, blue: 0.4743140936, alpha: 1)
+        title.font = UIFont.boldSystemFont(ofSize: 40)
+        return title
+    }()
+    
+    let EmailText : UITextField = {
+        let emailBtn = UITextField()
+        emailBtn.placeholder = "이메일 주소"
+        emailBtn.backgroundColor = .systemGray6
         
+        let emailimage = UIImage(named: "mail")?.resizeImageTo(size: CGSize(width: 25, height: 25))
+        emailBtn.addLeftImage(image: emailimage!)
+        emailBtn.layer.cornerRadius = 20
+        //모서리 둥글게
+        emailBtn.clearButtonMode = .whileEditing
+        //clear모드 설정
+        return emailBtn
+    }()
+    //image 첨부 필요
+    
+    let PasswordText : UITextField = {
+        let passwordBtn = UITextField()
+        passwordBtn.placeholder = "비밀번호"
+        
+        let passwordimage = UIImage(named: "key")?.resizeImageTo(size: CGSize(width: 25, height: 25))
+        passwordBtn.addLeftImage(image: passwordimage!)
+        passwordBtn.backgroundColor = .systemGray6
+        passwordBtn.layer.cornerRadius = 20
+        passwordBtn.clearButtonMode = .whileEditing
+        passwordBtn.isSecureTextEntry = true
+        return passwordBtn
+    }()
+    //image 첨부 필요
+    
+    let LoginButton : UIButton={
+        let btn = UIButton()
+        var title = AttributedString("로그인")
+        title.font = UIFont.boldSystemFont(ofSize: 20)
+        
+        var config = UIButton.Configuration.filled()
+        config.cornerStyle = .capsule
+        config.baseBackgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+        config.attributedTitle = title
+        
+        btn.configuration = config
+        return btn
+    }()
+    
+    let ForgetPassword : UIButton = {
+        let FpBtn =  UIButton()
+        FpBtn.setTitle("비밀번호를 잊으셨나요?", for: .normal)
+        FpBtn.setTitleColor(UIColor.systemGray, for: .normal)
+        FpBtn.titleLabel?.font = UIFont.systemFont(ofSize: 13)
+        
+        FpBtn.setUnderLine()
+        
+        return FpBtn
+    }()
+    
+    let EasyLogin : UITextField = {
+        let easylogin = UITextField()
+        easylogin.text = "간편 로그인"
+        easylogin.textColor = .systemGray
+        easylogin.font = UIFont.systemFont(ofSize: 15)
+        return easylogin
+    }()
+    
+    let LoginGuide_1 : UIView = {
+        let lineView = UIView()
+        lineView.backgroundColor = .systemGray
+        return lineView
+    }()
+    
+    let LoginGuide_2 : UIView = {
+        let lineView = UIView()
+        lineView.backgroundColor = .systemGray
+        return lineView
+    }()
+    
+    
+    
+    let ForKakaoBtn : UIButton = {
+        let btn = UIButton()
+        var config = UIButton.Configuration.filled()
+        config.cornerStyle = .capsule
+        config.baseBackgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+        config.image = UIImage(named: "kakao talk")?.resizeImageTo(size: CGSize(width: 30, height: 30) )
+        btn.configuration = config
+        return btn
+    }()
+    
+    
+    let ForNaverBtn : UIButton = {
+        let btn = UIButton()
+        var config = UIButton.Configuration.filled()
+        config.cornerStyle = .capsule
+        config.baseBackgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+        config.image = UIImage(named: "naver")?.resizeImageTo(size: CGSize(width: 30, height: 30) )
+        btn.configuration = config
+        return btn
+    }()
+    
+    let ForGoogleBtn : UIButton = {
+        let btn = UIButton()
+        var config = UIButton.Configuration.filled()
+        config.cornerStyle = .capsule
+        config.baseBackgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+        config.image = UIImage(named: "google")?.resizeImageTo(size: CGSize(width: 30, height: 30) )
+        btn.configuration = config
+        return btn
+    }()
+    
+    let NotYet : UIButton = {
+        let notyet = UIButton()
+        notyet.setTitle("아직 회원이 아니신가요?", for: .normal)
+        notyet.setTitleColor(.systemGray, for: .normal)
+        notyet.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        return notyet
+    }()
+    let SignUp : UIButton = {
+        let enternew = UIButton()
+        enternew.setTitle("가입하기", for: .normal)
+        enternew.setTitleColor(.systemGray, for: .normal)
+        enternew.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        enternew.setUnderLine()
+        return enternew
+    }()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -149,7 +149,7 @@ class LoginVC : UIViewController {
         makeConstraint()
         makeAddTarget()
         
-      
+        
         navigationController?.isNavigationBarHidden = true
     }
     
@@ -159,27 +159,39 @@ class LoginVC : UIViewController {
     }
     
     @objc func loginSuccess(_: UIButton){
-        //로그인 성공여부 판별하는 로직 짜야함(서버랑 얘기하고 구현)
-//        if(){
-//            nextView()
-//        }else{
-//            return
-//        }
+        // 이메일과 비밀번호 유효성 검사
+        let isEmailValid = isEmailValidFormat(email: EmailText.text)
+        let isPasswordValid = isPasswordValidFormat(password: PasswordText.text)
+        
+        if !isEmailValid && !isPasswordValid {
+            // 이메일과 비밀번호 모두 유효하지 않을 때
+            showAlert(message: "[아이디 입력 오류] 이메일을 입력해주세요.\n\n[비밀번호 입력 오류] 특수문자, 알파벳 대소문자 포함 8자 이상을 입력해주세요.")
+        } else if !isEmailValid {
+            // 이메일이 유효하지 않을 때
+            showAlert(message: "[아이디 입력 오류] 이메일을 입력해주세요.")
+        } else if !isPasswordValid {
+            // 비밀번호가 유효하지 않을 때
+            showAlert(message: "[비밀번호 입력 오류] 특수문자, 알파벳 대소문자 포함 8자 이상을 입력해주세요.")
+        } else {
+            let tabBarController = TabBarController()
+            tabBarController.modalPresentationStyle = .fullScreen
+            self.present(tabBarController, animated: true, completion: nil)
+        }
     }
-  
+    
     @objc func signUpFunc(_:UIButton){
         let loginFirstVC = LoginFirstVC()
         
         self.navigationController?.pushViewController(loginFirstVC, animated: true)
     }
-        
-    }
+    
+}
 
 
 extension LoginVC {
     func makeSubView(){
         view.addSubview(Title)
-                
+        
         view.addSubview(EmailText)
         view.addSubview(PasswordText)
         view.addSubview(LoginButton)
@@ -188,14 +200,14 @@ extension LoginVC {
         view.addSubview(ForKakaoBtn)
         view.addSubview(ForNaverBtn)
         view.addSubview(ForGoogleBtn)
-            
+        
         view.addSubview(EasyLogin)
         view.addSubview(LoginGuide_1)
         view.addSubview(LoginGuide_2)
-            
+        
         view.addSubview(NotYet)
         view.addSubview(SignUp)
-}
+    }
     
     func makeConstraint(){
         Title.translatesAutoresizingMaskIntoConstraints = false
@@ -277,31 +289,44 @@ extension LoginVC {
             SignUp.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -80)
         ])
     }
+    
+    func makeAddTarget(){
+        self.ForgetPassword.addTarget(self, action: #selector(findPasswordFunc(_:)), for: .touchUpInside)
+        self.SignUp.addTarget(self, action: #selector(signUpFunc(_:)), for: .touchUpInside)
+        self.LoginButton.addTarget(self, action: #selector(loginSuccess(_:)), for: .touchUpInside)
+        //회원가입 뷰로 이동
         
-        func makeAddTarget(){
-            self.ForgetPassword.addTarget(self, action: #selector(findPasswordFunc(_:)), for: .touchUpInside)
-            self.SignUp.addTarget(self, action: #selector(signUpFunc(_:)), for: .touchUpInside)
-            self.LoginButton.addTarget(self, action: #selector(loginSuccess(_:)), for: .touchUpInside)
-            //회원가입 뷰로 이동
-            
-        }
     }
     
-
-
-
-
-
-
-
-
-
-
+    func showAlert(message: String) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
+        alert.addAction(okAction)
         
-
-
+        // 메시지 폰트 사이즈 설정
+        let attributedMessage = NSMutableAttributedString(string: message)
+        let style = NSMutableParagraphStyle()
+        style.alignment = .center
+        attributedMessage.addAttribute(.paragraphStyle, value: style, range: NSRange(location: 0, length: attributedMessage.length))
+        
+        let fontSize: CGFloat = 16
+        attributedMessage.addAttribute(.font, value: UIFont.systemFont(ofSize: fontSize), range: NSRange(location: 0, length: attributedMessage.length))
+        alert.setValue(attributedMessage, forKey: "attributedMessage")
+        
+        present(alert, animated: true, completion: nil)
+    }
 
     
+    func isEmailValidFormat(email: String?) -> Bool {
+        guard let email = email else { return false }
+        return email.contains("@")
+    }
     
+    func isPasswordValidFormat(password: String?) -> Bool {
+        guard let password = password else { return false }
+        let passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])[A-Za-z\\d!@#$%^&*]{8,}$"
+        let passwordPredicate = NSPredicate(format: "SELF MATCHES %@", passwordRegex)
+        return passwordPredicate.evaluate(with: password)
+    }
     
-
+}

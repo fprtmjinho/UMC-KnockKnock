@@ -7,6 +7,7 @@ target 'KnockKnock' do
 
   # Pods for KnockKnock
   pod 'Tabman', '~> 2.9'
+  pod 'NMapsMap'
 
   target 'KnockKnockTests' do
     inherit! :search_paths
