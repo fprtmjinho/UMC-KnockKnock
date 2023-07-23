@@ -31,6 +31,21 @@ class LoginSuccessVC : UIViewController {
         label.font = UIFont.systemFont(ofSize: 20)
         return label
     }()
+    
+    let readHowtoUseBtn : UIButton = {
+        let nextbtn = UIButton()
+         var title = AttributedString("앱 사용법 익히기")
+         title.font = UIFont.boldSystemFont(ofSize: 20)
+         
+         var config = UIButton.Configuration.filled()
+        config.baseBackgroundColor = .white
+         config.cornerStyle = .capsule
+         config.attributedTitle = title
+        config.baseForegroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+        config.background.strokeColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+         nextbtn.configuration = config
+         return nextbtn
+    }()
 
     
     
@@ -60,13 +75,15 @@ extension LoginSuccessVC {
         view.addSubview(checkIMg)
         view.addSubview(welcomeLabel)
         view.addSubview(signInLabel)
-        startBtn = setNextBtn(view: self, title: "앱 사용법 읽기")
+        view.addSubview(readHowtoUseBtn)
+        startBtn = setNextBtn(view: self, title: "시작하기")
     }
     
     func makeConstraint(){
         checkIMg.translatesAutoresizingMaskIntoConstraints = false
         welcomeLabel.translatesAutoresizingMaskIntoConstraints = false
         signInLabel.translatesAutoresizingMaskIntoConstraints = false
+        readHowtoUseBtn.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             checkIMg.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
@@ -81,12 +98,19 @@ extension LoginSuccessVC {
             signInLabel.topAnchor.constraint(equalTo: welcomeLabel.bottomAnchor, constant: 5),
             signInLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             signInLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
+            
+            readHowtoUseBtn.bottomAnchor.constraint(equalTo: startBtn.topAnchor, constant: -10),
+            readHowtoUseBtn.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            readHowtoUseBtn.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            readHowtoUseBtn.heightAnchor.constraint(equalToConstant: 50)
            
         ])
         
     }
     func makeAddTarget(){
-        self.startBtn.addTarget(self, action: #selector(nextView(_:)), for: .touchUpInside)
+        self.readHowtoUseBtn.addTarget(self, action: #selector(readHowtoUseFunc(_:)), for: .touchUpInside)
+        self.startBtn.addTarget(self, action: #selector(startBtnFunc(_:)), for: .touchUpInside)
+        
     }
     
     func debugingFunction(){
@@ -109,8 +133,13 @@ extension LoginSuccessVC {
         welcomeLabel.text = "\(nickName)님 환영합니다!"
         //nickName이 안뜸 흠
     }
-    @objc func nextView(_: UIButton){
-      
+    @objc func startBtnFunc(_: UIButton){
+        let tabBarController = TabBarController()
+        tabBarController.modalPresentationStyle = .fullScreen
+        self.present(tabBarController, animated: true, completion: nil)
+    }
+    
+    @objc func readHowtoUseFunc(_: UIButton){
         navigationController?.pushViewController(HowtouseVC(), animated: true)
     }
 }

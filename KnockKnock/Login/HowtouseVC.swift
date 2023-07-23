@@ -8,13 +8,9 @@
 import UIKit
 class HowtouseVC : GuideVC {
     
-    var startBtn : UIButton = UIButton()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-     
-        startBtn = setNextBtn(view: self, title: "시작하기")
        makeAddtarget()
     }
   
@@ -22,7 +18,7 @@ class HowtouseVC : GuideVC {
 
 extension HowtouseVC {
     func makeAddtarget(){
-        startBtn.addTarget(self, action: #selector(nextViewfunc(_:)), for: .touchUpInside)
+       
     }
     @objc func nextViewfunc(_: UIButton){
         let tabBarController = TabBarController()
