@@ -1,7 +1,7 @@
 
 
 import UIKit
-class FriendProrileView : UIView {
+class FriendProfileView : UIView {
     
     let Number : UILabel = {
         let number = UILabel()
@@ -152,7 +152,7 @@ class FriendProrileView : UIView {
     
 }
 
-extension FriendProrileView {
+extension FriendProfileView {
     func makeSubView(){
         addSubview(Number)
         addSubview(ProfileView)
