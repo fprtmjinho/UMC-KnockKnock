@@ -24,7 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
        
 
 
-        window?.rootViewController = PromiseVC()
+        window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
     }
 

@@ -296,8 +296,8 @@ extension LoginSecondVC {
             }
         }
         
-        func nextView(){
-            let allowApproachVC = AllowApproachVC()
-            self.navigationController?.pushViewController(allowApproachVC, animated: true)
-        }
+    @objc func nextView(){
+        let allowApproachVC = AllowApproachVC()
+        self.navigationController?.pushViewController(allowApproachVC, animated: true)
+    }
 }

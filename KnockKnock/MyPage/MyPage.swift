@@ -48,6 +48,7 @@ class MyPage : UIView{
        let mytext = UITextView()
         mytext.text = " 남기고 싶은 메모를 작성해주세요!"
         mytext.addLeftPadding()
+        mytext.layer.cornerRadius = 5
         mytext.backgroundColor = .systemGray6
         mytext.layer.cornerRadius = 5
         mytext.font = UIFont.systemFont(ofSize: 15)

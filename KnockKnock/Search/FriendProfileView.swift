@@ -45,19 +45,17 @@ class FriendProfileView : UIView {
         return textguide
     }()
     
-    let myText : UITextField = {
-       let mytext = UITextField()
-        mytext.placeholder = "문자 가이드라인 예시"
-        mytext.addLeftPadding()
+    let textScroll : UIScrollView = UIScrollView()
     
+    let myText : UITextView = {
+       let mytext = UITextView()
+        mytext.text = " 남기고 싶은 메모를 작성해주세요!"
+        mytext.addLeftPadding()
+        mytext.layer.cornerRadius = 5
         mytext.backgroundColor = .systemGray6
         mytext.layer.cornerRadius = 5
         mytext.font = UIFont.systemFont(ofSize: 15)
-        
-        //content 위치 조정
-        mytext.contentVerticalAlignment = .top
-        mytext.contentHorizontalAlignment = .left
-
+      
         return mytext
     }()
     
@@ -154,12 +152,13 @@ class FriendProfileView : UIView {
 
 extension FriendProfileView {
     func makeSubView(){
+        addSubview(textScroll)
         addSubview(Number)
         addSubview(ProfileView)
         addSubview(editBtn)
         addSubview(textTitle)
         addSubview(textGuideBtn)
-        addSubview(myText)
+        textScroll.addSubview(myText)
         addSubview(sendMessageBtn)
         addSubview(copyBtn)
         addSubview(AlarmMemoLabel)
@@ -178,6 +177,7 @@ extension FriendProfileView {
         editBtn.translatesAutoresizingMaskIntoConstraints = false
         textTitle.translatesAutoresizingMaskIntoConstraints = false
         textGuideBtn.translatesAutoresizingMaskIntoConstraints = false
+        textScroll.translatesAutoresizingMaskIntoConstraints = false
         myText.translatesAutoresizingMaskIntoConstraints = false
         sendMessageBtn.translatesAutoresizingMaskIntoConstraints = false
         copyBtn.translatesAutoresizingMaskIntoConstraints = false
@@ -204,11 +204,17 @@ extension FriendProfileView {
             textGuideBtn.topAnchor.constraint(equalTo: textTitle.topAnchor),
             textGuideBtn.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -30),
             
-            myText.topAnchor.constraint(equalTo: textGuideBtn.bottomAnchor, constant: 7),
-            myText.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            myText.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -30),
-            myText.heightAnchor.constraint(equalToConstant: 160),
-            sendMessageBtn.topAnchor.constraint(equalTo: myText.bottomAnchor, constant: 10),
+            textScroll.topAnchor.constraint(equalTo: textGuideBtn.bottomAnchor, constant: 7),
+            textScroll.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            textScroll.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -30),
+            textScroll.bottomAnchor.constraint(equalTo: sendMessageBtn.topAnchor, constant: -10),
+            myText.topAnchor.constraint(equalTo: textScroll.topAnchor),
+            myText.leadingAnchor.constraint(equalTo: textScroll.leadingAnchor),
+            myText.trailingAnchor.constraint(equalTo: textScroll.trailingAnchor),
+            myText.bottomAnchor.constraint(equalTo: textScroll.bottomAnchor),
+            myText.widthAnchor.constraint(equalTo: textScroll.widthAnchor),
+            
+            sendMessageBtn.topAnchor.constraint(equalTo: textGuideBtn.bottomAnchor, constant: 180),
             sendMessageBtn.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 30),
             sendMessageBtn.widthAnchor.constraint(equalToConstant: 110),
             sendMessageBtn.heightAnchor.constraint(equalToConstant: 30),
@@ -222,7 +228,7 @@ extension FriendProfileView {
             AlarmMemoText.topAnchor.constraint(equalTo: AlarmMemoLabel.bottomAnchor, constant: 7),
             AlarmMemoText.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 30),
             AlarmMemoText.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -30),
-            AlarmMemoText.heightAnchor.constraint(equalToConstant: 120),
+            AlarmMemoText.heightAnchor.constraint(equalToConstant: 100),
             
            AlarmLabel.topAnchor.constraint(equalTo: AlarmMemoText.bottomAnchor, constant: 40),
             AlarmLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 30),
@@ -237,6 +243,9 @@ extension FriendProfileView {
             BfSwitch.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -30)
             
         ])
+        let contentViewHeight = myText.heightAnchor.constraint(greaterThanOrEqualTo: textScroll.heightAnchor)
+        contentViewHeight.priority = .defaultLow
+        contentViewHeight.isActive = true
     }
  
 }
