@@ -165,12 +165,14 @@ extension EditProfileVC {
         var newNumber: String = ""
         if let name = nameText.text{
             newName = name
-        }else{
+        }
+        if newName == ""{
             newName = fre.dic[fre.choiceNumber!]!.name
         }
         if let nickName = nicknameText.text{
             newNickName = nickName
-        }else{
+        }
+        if newNickName == ""{
             newNickName = fre.dic[fre.choiceNumber!]!.nickName
         }
         // 번호 수정 만들어지면 적용할 곳

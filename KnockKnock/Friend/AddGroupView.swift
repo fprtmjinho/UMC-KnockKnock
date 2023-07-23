@@ -64,15 +64,17 @@ class AddGroupView : UIView {
     
     
     let friendData = Friends.shared
-    var bestFriend: Array<Bool> = []
+    
+    
     var nameList: Array<String> = []
     var numberList: Array<String> = []
     var nickNameList: Array<String> = []
-    
+    var bestFriendList: Array<Bool> = []
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         getData()
+        sortData()
         makeSubView()
         makeConstraint()
         settableView()
@@ -172,12 +174,36 @@ extension AddGroupView {
         
     }
     func getData(){
-        for keys in friendData.dic.keys{
-            var dic = friendData.dic[keys]
-            nameList.append(dic!.name)
-            nickNameList.append(dic!.nickName)
-            numberList.append(keys)
-            bestFriend.append(dic!.bestFriend)
+        var nameCh: Array<String> = []
+        var numberCh: Array<String> = []
+        var nickNameCh: Array<String> = []
+        var bestFriendCh: Array<Bool> = []
+        for key in friendData.dic.keys{
+            var dic = friendData.dic[key]
+            nameCh.append(dic!.name)
+            numberCh.append(key)
+            nickNameCh.append(dic!.nickName)
+            bestFriendCh.append(dic!.bestFriend)
         }
+        nameList = nameCh
+        numberList = numberCh
+        nickNameList = nickNameCh
+        bestFriendList = bestFriendCh
+    }
+    @objc func sortData(){
+        // 이름, 전화번호, 나이를 튜플로 묶은 배열 생성
+        var combinedList = zip(nameList, zip(nickNameList,zip(numberList,bestFriendList).map{($0,$1)}).map{($0, $1)}).map{($0, $1)}
+
+        // 이름을 기준으로 오름차순 정렬
+        combinedList.sort { $0.0 < $1.0 }
+
+        // 혹은 이렇게도 가능합니다.
+        // combinedList = combinedList.sorted { $0.0 < $1.0 }
+
+        // 정렬된 결과를 다시 리스트로 분리
+        nameList = combinedList.map { $0.0 }
+        nickNameList = combinedList.map {$0.1.0}
+        numberList = combinedList.map { $0.1.1.0 }
+        bestFriendList = combinedList.map { $0.1.1.1 }
     }
 }
