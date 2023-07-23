@@ -59,8 +59,26 @@ class EditProfileVC : UIViewController {
          text.addLeftPadding()
          return text
      }()
+
+    let numberLabel : UILabel = {
+       let label = UILabel()
+        label.text = "전화번호(선택)"
+        label.font = UIFont.boldSystemFont(ofSize: 17)
+        return label
+    }()
+    
+    let numberText : UITextField = {
+       let text = UITextField()
+        text.placeholder = "입력해주세요!"
+        text.backgroundColor = .systemGray6
+        text.layer.cornerRadius = 10
+        text.addLeftPadding()
+        return text
+    }()
+    
     let fre = Friends.shared
     let me = MyData.shared
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -81,6 +99,9 @@ extension EditProfileVC {
         view.addSubview(nameText)
         view.addSubview(nicknameLabel)
         view.addSubview(nicknameText)
+        view.addSubview(numberLabel)
+        view.addSubview(numberText)
+        
         saveBtn = setNextBtn(view: self, title: "저장하기")
     }
     
@@ -92,6 +113,8 @@ extension EditProfileVC {
         nameText.translatesAutoresizingMaskIntoConstraints = false
         nicknameLabel.translatesAutoresizingMaskIntoConstraints = false
         nicknameText.translatesAutoresizingMaskIntoConstraints = false
+        numberLabel.translatesAutoresizingMaskIntoConstraints = false
+        numberText.translatesAutoresizingMaskIntoConstraints = false
         
         
         NSLayoutConstraint.activate([
@@ -119,6 +142,15 @@ extension EditProfileVC {
             nicknameText.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             nicknameText.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
             nicknameText.heightAnchor.constraint(equalToConstant: 45),
+            
+            numberLabel.topAnchor.constraint(equalTo: nicknameText.bottomAnchor, constant: 20),
+            numberLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            numberLabel.heightAnchor.constraint(equalToConstant: 30),
+
+            numberText.topAnchor.constraint(equalTo: numberLabel.bottomAnchor, constant: 7),
+            numberText.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            numberText.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
+            numberText.heightAnchor.constraint(equalToConstant: 45),
             
         ])
         

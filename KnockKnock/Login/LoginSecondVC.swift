@@ -92,14 +92,7 @@ class LoginSecondVC : UIViewController{
         return fourthText2
     }()
     
-    let lastLabel : UILabel = {
-        let label = UILabel()
-        label.text = "다음이 마지막 단계입니다!"
-        label.textAlignment = .center
-        label.textColor = .systemGray
-        label.font = UIFont.systemFont(ofSize: 14)
-        return label
-    }()
+   
     
     
     
@@ -129,7 +122,6 @@ extension LoginSecondVC {
         view.addSubview(passwordText)
         view.addSubview(passwordCheckLabel)
         view.addSubview(passwordCheckText)
-        view.addSubview(lastLabel)
         nextBtn = setNextBtn(view: self, title: "다음")
     }
     
@@ -142,7 +134,6 @@ extension LoginSecondVC {
         passwordText.translatesAutoresizingMaskIntoConstraints = false
         passwordCheckLabel.translatesAutoresizingMaskIntoConstraints = false
         passwordCheckText.translatesAutoresizingMaskIntoConstraints = false
-        lastLabel.translatesAutoresizingMaskIntoConstraints = false
         
         
         NSLayoutConstraint.activate([
@@ -177,9 +168,6 @@ extension LoginSecondVC {
             passwordCheckText.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             passwordCheckText.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
             passwordCheckText.heightAnchor.constraint(equalToConstant: 45),
-            
-            lastLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            lastLabel.bottomAnchor.constraint(equalTo: nextBtn.topAnchor, constant: -10),
             
         ])
         
@@ -264,10 +252,10 @@ extension LoginSecondVC {
             return false
         }
     }
-    
+        
     func nextView(){
-        let allowApproachVC = AllowApproachVC()
-        self.navigationController?.pushViewController(allowApproachVC, animated: true)
+        navigationController?.pushViewController(LoginThirdVC(), animated: true)
     }
+  
 }
 

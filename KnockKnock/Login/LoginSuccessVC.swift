@@ -46,7 +46,6 @@ class LoginSuccessVC : UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setNavigationBar()
-        startBtn = setNextBtn(view: self, title: "시작하기")
         debugingFunction()
         makeSubView()
         makeConstraint()
@@ -61,7 +60,7 @@ extension LoginSuccessVC {
         view.addSubview(checkIMg)
         view.addSubview(welcomeLabel)
         view.addSubview(signInLabel)
-        
+        startBtn = setNextBtn(view: self, title: "앱 사용법 읽기")
     }
     
     func makeConstraint(){
@@ -111,9 +110,7 @@ extension LoginSuccessVC {
         //nickName이 안뜸 흠
     }
     @objc func nextView(_: UIButton){
-        let tabBarController = TabBarController()
-        tabBarController.modalPresentationStyle = .fullScreen
-        self.present(tabBarController, animated: true, completion: nil)
-        
+      
+        navigationController?.pushViewController(HowtouseVC(), animated: true)
     }
 }

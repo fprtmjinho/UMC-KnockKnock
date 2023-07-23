@@ -40,6 +40,12 @@ extension UITextField {
  
 }
 
+extension UITextView {
+    func addLeftPadding() {
+        self.textContainerInset = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15);
+    }
+}
+
 extension UIImage {
     func resizeImageTo(size: CGSize) -> UIImage? {
         UIGraphicsBeginImageContextWithOptions(size, false, 0.0)

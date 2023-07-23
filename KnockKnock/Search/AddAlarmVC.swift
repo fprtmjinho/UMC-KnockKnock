@@ -10,24 +10,6 @@ class AddAlarmVC : UIViewController {
     
     var saveBtn : UIButton = UIButton()
     
-    let AlarmMemoLabel : UILabel = {
-       let alarmMemoLabel = UILabel()
-        alarmMemoLabel.text = "알림 메모"
-        alarmMemoLabel.font = UIFont.boldSystemFont(ofSize: 18)
-        return alarmMemoLabel
-    }()
-    
-    let AlarmMemoText : UITextField = {
-       let alarmMemoText = UITextField()
-        alarmMemoText.placeholder = "알림 메모를 입력해주세요\n(최대 45자)"
-        alarmMemoText.addLeftPadding()
-        alarmMemoText.contentVerticalAlignment = .top
-        alarmMemoText.contentHorizontalAlignment = .left
-        
-        alarmMemoText.backgroundColor = .systemGray6
-        alarmMemoText.layer.cornerRadius = 5
-        return alarmMemoText
-    }()
     
     let AlarmTimeLabel : UILabel = {
        let alarmTimeLabel = UILabel()
@@ -102,12 +84,8 @@ class AddAlarmVC : UIViewController {
 
 extension AddAlarmVC {
     func makeSubView(){
-        view.addSubview(AlarmMemoLabel)
-        view.addSubview(AlarmMemoText)
         view.addSubview(AlarmTimeLabel)
-        
         view.addSubview(SetDatePickerBtn)
-        //임시 버튼
        
         view.addSubview(loopLabel)
         view.addSubview(loopOnceBtn)
@@ -116,38 +94,25 @@ extension AddAlarmVC {
     }
     
     func makeConstraint(){
-        AlarmMemoLabel.translatesAutoresizingMaskIntoConstraints = false
-        AlarmMemoText.translatesAutoresizingMaskIntoConstraints = false
         AlarmTimeLabel.translatesAutoresizingMaskIntoConstraints = false
-       
         SetDatePickerBtn.translatesAutoresizingMaskIntoConstraints = false
-        //임시 버튼
         
         loopLabel.translatesAutoresizingMaskIntoConstraints = false
         loopOnceBtn.translatesAutoresizingMaskIntoConstraints = false
         loopBtn.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            AlarmMemoLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40),
-            AlarmMemoLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            AlarmMemoText.topAnchor.constraint(equalTo: AlarmMemoLabel.bottomAnchor, constant: 7),
-            AlarmMemoText.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            AlarmMemoText.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
-            AlarmMemoText.heightAnchor.constraint(equalToConstant: 120),
             
-            AlarmTimeLabel.topAnchor.constraint(equalTo: AlarmMemoText.bottomAnchor, constant: 40),
+            
+            AlarmTimeLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 70),
             AlarmTimeLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            
-            
             
             SetDatePickerBtn.topAnchor.constraint(equalTo: AlarmTimeLabel.bottomAnchor, constant: 7),
             SetDatePickerBtn.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             SetDatePickerBtn.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
             SetDatePickerBtn.heightAnchor.constraint(equalToConstant: 50),
-            //임시 버튼 constraint
             
-            
-            loopLabel.topAnchor.constraint(equalTo:SetDatePickerBtn.bottomAnchor, constant: 40),
+            loopLabel.topAnchor.constraint(equalTo:SetDatePickerBtn.bottomAnchor, constant: 50),
             loopLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             
             loopOnceBtn.topAnchor.constraint(equalTo: loopLabel.bottomAnchor, constant: 7),
@@ -172,8 +137,6 @@ extension AddAlarmVC {
     @objc func setDataPickerBtnFunc(_: UIButton){
         alarmDatePicker()
     }
-    //임시 버튼 addtarget
-    
     
     
     @objc func saveBtnPressed(_:UIButton){
