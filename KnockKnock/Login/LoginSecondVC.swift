@@ -257,6 +257,7 @@ extension LoginSecondVC {
             return
         }else{
             passwordCheckText.layer.borderWidth = 0
+            passwordCheckAlertLabel.textColor = .white
             UserDefaults.standard.set(password, forKey: "password")
             
             // 데이터 동기화
@@ -275,6 +276,7 @@ extension LoginSecondVC {
             }
             else{
                 emailText.layer.borderWidth = 0
+                emailAlertLabel.textColor = .white
                 return false
             }
         }
@@ -289,6 +291,7 @@ extension LoginSecondVC {
             }
             else{
                 passwordText.layer.borderWidth = 0
+                passwordAlertLabel.textColor = .white
                 return false
             }
         }

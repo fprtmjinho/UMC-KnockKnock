@@ -318,6 +318,7 @@ extension LoginFirstVC {
         // 아니면 검정색
         else{
             nameText.layer.borderWidth = 0
+            nameAlertLabel.textColor = .white
             return false
         }
         
@@ -337,6 +338,7 @@ extension LoginFirstVC {
         else{
             womanButton.layer.borderWidth = 0
             manButton.layer.borderWidth = 0
+            sexAlertLabel.textColor = .white
             return false
         }
     }
@@ -351,6 +353,7 @@ extension LoginFirstVC {
         }
         else{
             birthdayText.layer.borderWidth = 0
+            birthdayAlertLabel.textColor = .white
             return false
         }
     }
