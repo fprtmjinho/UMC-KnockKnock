@@ -40,6 +40,14 @@ class LoginSecondVC : UIViewController{
         return forthtext
     }()
     
+    let emailAlertLabel: UILabel = {
+       let emailAlertLabel = UILabel()
+        emailAlertLabel.text = "이메일을 입력해주세요."
+        emailAlertLabel.textColor = .white
+        emailAlertLabel.font = UIFont.boldSystemFont(ofSize: 14)
+        return emailAlertLabel
+    }()
+    
     let num5: UILabel = {
         let num5 = UILabel()
         num5.backgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
@@ -61,7 +69,7 @@ class LoginSecondVC : UIViewController{
     
     let passwordText: UITextField = {
         let fourthText1 = UITextField()
-        fourthText1.placeholder = "6자리 이상 입력해 주세요."
+        fourthText1.placeholder = "6자리 이상 입력해주세요."
         fourthText1.backgroundColor = .systemGray6
         fourthText1.layer.cornerRadius = 20
         fourthText1.addLeftPadding()
@@ -71,6 +79,13 @@ class LoginSecondVC : UIViewController{
     }()
     //글자 수 6개 이상이어야 통과하도록 수정해야 함
     
+    let passwordAlertLabel: UILabel = {
+       let passwordAlertLabel = UILabel()
+        passwordAlertLabel.text = "비밀번호를 입력해주세요."
+        passwordAlertLabel.textColor = .white
+        passwordAlertLabel.font = UIFont.boldSystemFont(ofSize: 14)
+        return passwordAlertLabel
+    }()
     
     let passwordCheckLabel: UILabel = {
         let fourthlabel2 = UILabel()
@@ -83,13 +98,21 @@ class LoginSecondVC : UIViewController{
     
     let passwordCheckText: UITextField = {
         let fourthText2 = UITextField()
-        fourthText2.placeholder = "다시 한번 입력해 주세요."
+        fourthText2.placeholder = "다시 한번 입력해주세요."
         fourthText2.backgroundColor = .systemGray6
         fourthText2.layer.cornerRadius = 20
         fourthText2.addLeftPadding()
         fourthText2.clearButtonMode = .whileEditing
         fourthText2.isSecureTextEntry = true
         return fourthText2
+    }()
+    
+    let passwordCheckAlertLabel: UILabel = {
+       let passwordCheckAlertLabel = UILabel()
+        passwordCheckAlertLabel.text = "비밀번호를 재입력해주세요."
+        passwordCheckAlertLabel.textColor = .white
+        passwordCheckAlertLabel.font = UIFont.boldSystemFont(ofSize: 14)
+        return passwordCheckAlertLabel
     }()
     
     let lastLabel : UILabel = {
@@ -124,11 +147,14 @@ extension LoginSecondVC {
         view.addSubview(num4)
         view.addSubview(emailLabel)
         view.addSubview(emailText)
+        view.addSubview(emailAlertLabel)
         view.addSubview(num5)
         view.addSubview(passwordLabel)
         view.addSubview(passwordText)
+        view.addSubview(passwordAlertLabel)
         view.addSubview(passwordCheckLabel)
         view.addSubview(passwordCheckText)
+        view.addSubview(passwordCheckAlertLabel)
         view.addSubview(lastLabel)
         nextBtn = setNextBtn(view: self, title: "다음")
     }
@@ -137,11 +163,14 @@ extension LoginSecondVC {
         num4.translatesAutoresizingMaskIntoConstraints = false
         emailLabel.translatesAutoresizingMaskIntoConstraints = false
         emailText.translatesAutoresizingMaskIntoConstraints = false
+        emailAlertLabel.translatesAutoresizingMaskIntoConstraints = false
         num5.translatesAutoresizingMaskIntoConstraints = false
         passwordLabel.translatesAutoresizingMaskIntoConstraints = false
         passwordText.translatesAutoresizingMaskIntoConstraints = false
+        passwordAlertLabel.translatesAutoresizingMaskIntoConstraints = false
         passwordCheckLabel.translatesAutoresizingMaskIntoConstraints = false
         passwordCheckText.translatesAutoresizingMaskIntoConstraints = false
+        passwordCheckAlertLabel.translatesAutoresizingMaskIntoConstraints = false
         lastLabel.translatesAutoresizingMaskIntoConstraints = false
         
         
@@ -157,11 +186,15 @@ extension LoginSecondVC {
             emailText.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             emailText.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
             emailText.heightAnchor.constraint(equalToConstant: 45),
+            emailAlertLabel.topAnchor.constraint(equalTo: emailText.bottomAnchor, constant: 5),
+            emailAlertLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 45),
+            emailAlertLabel.heightAnchor.constraint(equalToConstant: 17),
             
-            
+            num5.topAnchor.constraint(equalTo: emailAlertLabel.bottomAnchor, constant: 30),
             num5.bottomAnchor.constraint(equalTo: passwordLabel.topAnchor, constant: -10),
             num5.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            num5.widthAnchor.constraint(equalToConstant: 25), num5.heightAnchor.constraint(equalToConstant: 25),
+            num5.widthAnchor.constraint(equalToConstant: 25),
+            num5.heightAnchor.constraint(equalToConstant: 25),
             
             passwordLabel.bottomAnchor.constraint(equalTo: passwordText.topAnchor, constant: -10),
             passwordLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
@@ -170,13 +203,19 @@ extension LoginSecondVC {
             passwordText.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             passwordText.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
             passwordText.heightAnchor.constraint(equalToConstant: 45),
+            passwordAlertLabel.topAnchor.constraint(equalTo: passwordText.bottomAnchor, constant: 5),
+            passwordAlertLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 45),
+            passwordAlertLabel.heightAnchor.constraint(equalToConstant: 17),
             
-            passwordCheckLabel.topAnchor.constraint(equalTo: passwordText.bottomAnchor, constant: 30),
+            passwordCheckLabel.topAnchor.constraint(equalTo: passwordAlertLabel.bottomAnchor, constant: 30),
             passwordCheckLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             passwordCheckText.topAnchor.constraint(equalTo: passwordCheckLabel.bottomAnchor, constant: 10),
             passwordCheckText.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             passwordCheckText.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
             passwordCheckText.heightAnchor.constraint(equalToConstant: 45),
+            passwordCheckAlertLabel.topAnchor.constraint(equalTo: passwordCheckText.bottomAnchor, constant: 5),
+            passwordCheckAlertLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 45),
+            passwordCheckAlertLabel.heightAnchor.constraint(equalToConstant: 17),
             
             lastLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             lastLabel.bottomAnchor.constraint(equalTo: nextBtn.topAnchor, constant: -10),
@@ -214,6 +253,7 @@ extension LoginSecondVC {
         if (password != passwordSame){
             passwordCheckText.layer.borderColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
             passwordCheckText.layer.borderWidth = 2
+            passwordCheckAlertLabel.textColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
             return
         }else{
             passwordCheckText.layer.borderWidth = 0
@@ -230,6 +270,7 @@ extension LoginSecondVC {
             if(email == "" || !email.contains("@")){
                 emailText.layer.borderColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
                 emailText.layer.borderWidth = 2
+                emailAlertLabel.textColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
                 return true
             }
             else{
@@ -243,6 +284,7 @@ extension LoginSecondVC {
             if (password == ""){
                 passwordText.layer.borderColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
                 passwordText.layer.borderWidth = 2
+                passwordAlertLabel.textColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
                 return true
             }
             else{

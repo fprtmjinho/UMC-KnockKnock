@@ -28,6 +28,7 @@ class LoginFirstVC : UIViewController {
         firstlabel.font = UIFont.boldSystemFont(ofSize: 20)
         return firstlabel
     }()
+    
     let nameText : UITextField = {
         let firsttext = UITextField()
         firsttext.backgroundColor = .systemGray6
@@ -37,6 +38,14 @@ class LoginFirstVC : UIViewController {
         return firsttext
     }()
     //글자수 현황 체크 필요
+    
+    let nameAlertLabel: UILabel = {
+       let nameAlertLabel = UILabel()
+        nameAlertLabel.text = "이름을 입력해주세요."
+        nameAlertLabel.textColor = .white
+        nameAlertLabel.font = UIFont.boldSystemFont(ofSize: 14)
+        return nameAlertLabel
+    }()
     
     let num2 : UILabel = {
        let num2 = UILabel()
@@ -78,6 +87,14 @@ class LoginFirstVC : UIViewController {
         return secondchoice2
     }()
     
+    let sexAlertLabel: UILabel = {
+       let sexAlertLabel = UILabel()
+        sexAlertLabel.text = "성별을 선택해주세요."
+        sexAlertLabel.textColor = .white
+        sexAlertLabel.font = UIFont.boldSystemFont(ofSize: 14)
+        return sexAlertLabel
+    }()
+    
     let num3 : UILabel = {
        let num3 = UILabel()
         num3.backgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
@@ -105,6 +122,14 @@ class LoginFirstVC : UIViewController {
         thirdtext.addLeftPadding()
         thirdtext.clearButtonMode = .whileEditing
         return thirdtext
+    }()
+    
+    let birthdayAlertLabel: UILabel = {
+       let birthdayAlertLabel = UILabel()
+        birthdayAlertLabel.text = "생년월일을 입력해주세요."
+        birthdayAlertLabel.textColor = .white
+        birthdayAlertLabel.font = UIFont.boldSystemFont(ofSize: 14)
+        return birthdayAlertLabel
     }()
     
       
@@ -136,13 +161,16 @@ extension LoginFirstVC {
         view.addSubview(num1)
         view.addSubview(nameLabel)
         view.addSubview(nameText)
+        view.addSubview(nameAlertLabel)
         view.addSubview(num2)
         view.addSubview(sexLabel)
         view.addSubview(manButton)
         view.addSubview(womanButton)
+        view.addSubview(sexAlertLabel)
         view.addSubview(num3)
         view.addSubview(birthdayLabel)
         view.addSubview(birthdayText)
+        view.addSubview(birthdayAlertLabel)
         nextBtn = setNextBtn(view: self, title: "다음")
     }
     
@@ -153,11 +181,14 @@ extension LoginFirstVC {
         num3.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         nameText.translatesAutoresizingMaskIntoConstraints = false
+        nameAlertLabel.translatesAutoresizingMaskIntoConstraints = false
         sexLabel.translatesAutoresizingMaskIntoConstraints = false
         manButton.translatesAutoresizingMaskIntoConstraints = false
         womanButton.translatesAutoresizingMaskIntoConstraints = false
+        sexAlertLabel.translatesAutoresizingMaskIntoConstraints = false
         birthdayText.translatesAutoresizingMaskIntoConstraints = false
         birthdayLabel.translatesAutoresizingMaskIntoConstraints = false
+        birthdayAlertLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             num1.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
@@ -171,8 +202,11 @@ extension LoginFirstVC {
             nameText.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             nameText.widthAnchor.constraint(equalToConstant: 250),
             nameText.heightAnchor.constraint(equalToConstant: 45),
+            nameAlertLabel.topAnchor.constraint(equalTo: nameText.bottomAnchor, constant: 5),
+            nameAlertLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 45),
+            nameAlertLabel.heightAnchor.constraint(equalToConstant: 17),
             
-            num2.topAnchor.constraint(equalTo: nameText.bottomAnchor, constant: 40),
+            num2.topAnchor.constraint(equalTo: nameAlertLabel.bottomAnchor, constant: 25),
             num2.bottomAnchor.constraint(equalTo: sexLabel.topAnchor, constant: -5),
             num2.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             num2.widthAnchor.constraint(equalToConstant: 25),
@@ -181,8 +215,6 @@ extension LoginFirstVC {
             sexLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             sexLabel.heightAnchor.constraint(equalToConstant: 40),
             
-            
-            manButton.bottomAnchor.constraint(lessThanOrEqualTo: num3.topAnchor, constant: -40),
             manButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             manButton.widthAnchor.constraint(equalToConstant: 160),
             manButton.heightAnchor.constraint(equalTo : nameText.heightAnchor),
@@ -190,7 +222,11 @@ extension LoginFirstVC {
             womanButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
             womanButton.widthAnchor.constraint(equalToConstant: 160),
             womanButton.heightAnchor.constraint(equalTo : nameText.heightAnchor),
+            sexAlertLabel.topAnchor.constraint(equalTo: manButton.bottomAnchor, constant: 5),
+            sexAlertLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 45),
+            sexAlertLabel.heightAnchor.constraint(equalToConstant: 17),
             
+           num3.topAnchor.constraint(equalTo: sexAlertLabel.bottomAnchor, constant: 25),
             num3.bottomAnchor.constraint(equalTo: birthdayLabel.topAnchor, constant: -5),
             num3.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             num3.widthAnchor.constraint(equalToConstant: 25),
@@ -201,6 +237,10 @@ extension LoginFirstVC {
             birthdayText.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             birthdayText.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
             birthdayText.heightAnchor.constraint(equalTo : nameText.heightAnchor),
+            birthdayAlertLabel.topAnchor.constraint(equalTo: birthdayText.bottomAnchor, constant: 5),
+            birthdayAlertLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 45),
+            birthdayAlertLabel.heightAnchor.constraint(equalToConstant: 17),
+            
             
         ])
         
@@ -272,6 +312,7 @@ extension LoginFirstVC {
         if(nickName==""){
             nameText.layer.borderColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
             nameText.layer.borderWidth = 2
+            nameAlertLabel.textColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
             return true
         }
         // 아니면 검정색
@@ -289,6 +330,7 @@ extension LoginFirstVC {
             manButton.layer.borderWidth = 2
             womanButton.layer.borderColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
             womanButton.layer.borderWidth = 2
+            sexAlertLabel.textColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
             return true
         }
        
@@ -304,6 +346,7 @@ extension LoginFirstVC {
         if(birthday==""||birthday.count != 6){
             birthdayText.layer.borderColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
             birthdayText.layer.borderWidth = 2
+            birthdayAlertLabel.textColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
             return true
         }
         else{
