@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import NMapsMap
 class AddGroupView : UIView {
     
     
@@ -62,7 +63,18 @@ class AddGroupView : UIView {
         return text
     }()
     
+    let placeSearchButton : UIButton = {
+        let btn = UIButton()
+        btn.setTitle("검색하기", for: .normal)
+        btn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        btn.setTitleColor(#colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1), for: .normal)
+        btn.layer.borderWidth = 1
+        btn.layer.borderColor = UIColor.systemGray4.cgColor
+        return btn
+    }()
     
+    
+    let naverMapView = NMFNaverMapView(frame: UIScreen.main.bounds)
     let friendData = Friends.shared
     
     
@@ -78,6 +90,7 @@ class AddGroupView : UIView {
         makeSubView()
         makeConstraint()
         settableView()
+        makeAddTarget()
       
     }
     
@@ -132,6 +145,8 @@ extension AddGroupView {
         addSubview(addmemberBtn)
         addSubview(placeLabel)
         addSubview(placetext)
+        addSubview(placeSearchButton)
+        addSubview(naverMapView)
     }
     
     func makeConstraint(){
@@ -142,6 +157,8 @@ extension AddGroupView {
         addmemberBtn.translatesAutoresizingMaskIntoConstraints = false
         placeLabel.translatesAutoresizingMaskIntoConstraints = false
         placetext.translatesAutoresizingMaskIntoConstraints = false
+        placeSearchButton.translatesAutoresizingMaskIntoConstraints = false
+        naverMapView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             
@@ -169,9 +186,32 @@ extension AddGroupView {
             placetext.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
             placetext.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
             placetext.heightAnchor.constraint(equalToConstant: 45),
-        
+            placeSearchButton.topAnchor.constraint(equalTo: placetext.bottomAnchor, constant: 10),
+            placeSearchButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
+            placeSearchButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
+            placeSearchButton.heightAnchor.constraint(equalToConstant: 50),
+            
+            naverMapView.topAnchor.constraint(equalTo: placeSearchButton.bottomAnchor, constant: 40),
+            naverMapView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
+            naverMapView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
+            naverMapView.heightAnchor.constraint(equalToConstant: 300),
         ])
         
+    }
+    func makeAddTarget(){
+        placeSearchButton.addTarget(self, action: #selector(searchMap(_:)), for: .touchUpInside)
+        
+    }
+    @objc func searchMap(_:UITextField){
+        var searchText: String = ""
+        if let text = placetext.text{
+            searchText = text
+        }
+        if searchText == ""{
+            return
+        }else{//이 부분을 백엔드에서 처리해야하는지 아니면 프론트에서 직접 API로 좌표 알아내야 하는지 잘모르겠음
+            //naverMapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat:, lng:)))
+        }
     }
     func getData(){
         var nameCh: Array<String> = []

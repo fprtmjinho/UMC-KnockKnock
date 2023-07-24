@@ -64,6 +64,7 @@
 		E91EE27E2A5C9B24003D6E5C /* GetInformationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91EE27D2A5C9B24003D6E5C /* GetInformationVC.swift */; };
 		E91EE28D2A61A3AC003D6E5C /* Friends.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91EE28C2A61A3AC003D6E5C /* Friends.swift */; };
 		E999620E2A658E6B00FA602C /* MyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E999620D2A658E6B00FA602C /* MyData.swift */; };
+		E99962122A6D837800FA602C /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99962112A6D837800FA602C /* Group.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -148,10 +149,10 @@
 		C9D07CF92A6AE74A0071C2F5 /* FriendProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendProfileView.swift; sourceTree = "<group>"; };
 		C9D07CFB2A6C427C0071C2F5 /* HowtouseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowtouseVC.swift; sourceTree = "<group>"; };
 		C9D07CFF2A6C4FB30071C2F5 /* LoginThirdVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginThirdVC.swift; sourceTree = "<group>"; };
-		D943A7024EF348CF136AAB58 /* Pods_KnockKnockTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KnockKnockTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E91EE27D2A5C9B24003D6E5C /* GetInformationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetInformationVC.swift; sourceTree = "<group>"; };
 		E91EE28C2A61A3AC003D6E5C /* Friends.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friends.swift; sourceTree = "<group>"; };
 		E999620D2A658E6B00FA602C /* MyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyData.swift; sourceTree = "<group>"; };
+		E99962112A6D837800FA602C /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Group.swift; path = /Users/fprtm/Desktop/code/KnockKnock/Group.swift; sourceTree = "<absolute>"; };
 		F6B9941AEDF608B7B3FABCB3 /* Pods_KnockKnockTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KnockKnockTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -243,6 +244,7 @@
 				C932467A2A458D9400908D6B /* SceneDelegate.swift */,
 				C935FA262A59BC840035FA2C /* Extension.swift */,
 				C935FA2C2A59C1B30035FA2C /* TabBarController.swift */,
+				E99962112A6D837800FA602C /* Group.swift */,
 				E91EE28C2A61A3AC003D6E5C /* Friends.swift */,
 				E999620D2A658E6B00FA602C /* MyData.swift */,
 				C935FA1D2A5817FB0035FA2C /* Login */,
@@ -594,7 +596,6 @@
 				C9229C8C2A6441A70017A45C /* AddBFVC.swift in Sources */,
 				E91EE27E2A5C9B24003D6E5C /* GetInformationVC.swift in Sources */,
 				C9D07CEE2A6A62290071C2F5 /* CustomCell.swift in Sources */,
-				C9D07D002A6C4FB30071C2F5 /* LoginThirdVC.swift in Sources */,
 				C935FA742A5BE56D0035FA2C /* TextGuideVC.swift in Sources */,
 				C9D07CFC2A6C427C0071C2F5 /* HowtouseVC.swift in Sources */,
 				0041A6ED2A61A2BF008A5048 /* WriteVC.swift in Sources */,
@@ -609,6 +610,7 @@
 				C935FA1C2A57F1B90035FA2C /* MyProfilePage.swift in Sources */,
 				E999620E2A658E6B00FA602C /* MyData.swift in Sources */,
 				C935FA862A5EB6010035FA2C /* FindPasswordVC.swift in Sources */,
+				E99962122A6D837800FA602C /* Group.swift in Sources */,
 				C93246C32A48317800908D6B /* FriendController.swift in Sources */,
 				C935FA7E2A5D63840035FA2C /* LoginAddBestFriendVC.swift in Sources */,
 				C977A2792A6854B6001249E3 /* AddGroupView.swift in Sources */,
