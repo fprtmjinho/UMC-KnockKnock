@@ -9,6 +9,7 @@ import UIKit
 
 class CustomPostCell: UITableViewCell { // 게시글 커스텀
     var post: Post?
+    var likesPressed: Bool = false
     
     let prevImageButton: UIButton = {
         let button = UIButton()
@@ -69,11 +70,12 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
         return label
     }()
     
-    let likesView: UIImageView = { // 좋아요 이미지
-        let imageView = UIImageView()
-        imageView.image = #imageLiteral(resourceName: "like_ff0060")
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
+    let likesButton: UIButton = { // 좋아요 버튼
+        let button = UIButton()
+        button.setImage(UIImage(named: "like_ff0060"), for: .normal)
+        button.addTarget(self, action: #selector(likesButtonTapped(_:)), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
     
     let likesLabel: UILabel = { // 좋아요 개수
@@ -115,7 +117,7 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
         addSubview(contentLabel)
         addSubview(imagesView)
         addSubview(timeLabel)
-        addSubview(likesView)
+        addSubview(likesButton)
         addSubview(likesLabel)
         addSubview(commentsView)
         addSubview(commentsLabel)
@@ -127,7 +129,7 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
         addSubview(titleLabel)
         addSubview(contentLabel)
         addSubview(timeLabel)
-        addSubview(likesView)
+        addSubview(likesButton)
         addSubview(likesLabel)
         addSubview(commentsView)
         addSubview(commentsLabel)
@@ -175,14 +177,14 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
             imagesView.trailingAnchor.constraint(equalTo: trailingAnchor),
             imagesView.heightAnchor.constraint(equalToConstant: 200),
             
-            likesView.topAnchor.constraint(equalTo: imagesView.bottomAnchor, constant: verticalMargin),
-            likesView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: horizontalMargin),
-            likesView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
-            likesView.widthAnchor.constraint(equalToConstant: 20),
-            likesView.heightAnchor.constraint(equalToConstant: 20),
+            likesButton.topAnchor.constraint(equalTo: imagesView.bottomAnchor, constant: verticalMargin),
+            likesButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: horizontalMargin),
+            likesButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
+            likesButton.widthAnchor.constraint(equalToConstant: 20),
+            likesButton.heightAnchor.constraint(equalToConstant: 20),
             
             likesLabel.topAnchor.constraint(equalTo: imagesView.bottomAnchor, constant: verticalMargin),
-            likesLabel.leadingAnchor.constraint(equalTo: likesView.trailingAnchor, constant: 10),
+            likesLabel.leadingAnchor.constraint(equalTo: likesButton.trailingAnchor, constant: 10),
             likesLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
             
             commentsView.topAnchor.constraint(equalTo: imagesView.bottomAnchor, constant: verticalMargin),
@@ -230,14 +232,14 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
             contentLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: horizontalMargin),
             contentLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -horizontalMargin),
             
-            likesView.topAnchor.constraint(equalTo: contentLabel.bottomAnchor, constant: verticalMargin),
-            likesView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: horizontalMargin),
-            likesView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
-            likesView.widthAnchor.constraint(equalToConstant: 20),
-            likesView.heightAnchor.constraint(equalToConstant: 20),
+            likesButton.topAnchor.constraint(equalTo: contentLabel.bottomAnchor, constant: verticalMargin),
+            likesButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: horizontalMargin),
+            likesButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
+            likesButton.widthAnchor.constraint(equalToConstant: 20),
+            likesButton.heightAnchor.constraint(equalToConstant: 20),
             
             likesLabel.topAnchor.constraint(equalTo: contentLabel.bottomAnchor, constant: verticalMargin),
-            likesLabel.leadingAnchor.constraint(equalTo: likesView.trailingAnchor, constant: 10),
+            likesLabel.leadingAnchor.constraint(equalTo: likesButton.trailingAnchor, constant: 10),
             likesLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
             
             commentsView.topAnchor.constraint(equalTo: contentLabel.bottomAnchor, constant: verticalMargin),
@@ -275,6 +277,18 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
         }
     }
     
+    @objc func likesButtonTapped(_ sender: UIButton) {
+        if likesPressed {
+            likesButton.setImage(UIImage(named: "like_ff0060"), for: .normal)
+            likesLabel.text = "\(Int(likesLabel.text!)! - 1)"
+            likesPressed = false
+        } else {
+            likesButton.setImage(UIImage(named: "like_fill_ff0060"), for: .normal)
+            likesLabel.text = "\(Int(likesLabel.text!)! + 1)"
+            likesPressed = true
+        }
+    }
+    
     // (매우 중요)테이블뷰 셀의 터치 이벤트를 해당 버튼으로 전달
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         if let view = prevImageButton.hitTest(convert(point, to: prevImageButton), with: event) {
@@ -282,6 +296,10 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
         }
         
         if let view = nextImageButton.hitTest(convert(point, to: nextImageButton), with: event) {
+            return view
+        }
+        
+        if let view = likesButton.hitTest(convert(point, to: likesButton), with: event) {
             return view
         }
         
