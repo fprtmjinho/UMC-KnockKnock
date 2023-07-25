@@ -17,3 +17,19 @@ struct LoginResponse: Codable {
     let message: String
     let data: String
 }
+
+struct SignUpData: Codable {
+    let email: String
+    let nickName: String
+    let password: String
+    let userPhone: String
+    let memberName: String
+    let memberGender: String
+    let birthday: String
+}
+
+struct SignUpResponse: Codable {
+    let statusCode: Int?
+    let message: String?
+    let data: String?
+}

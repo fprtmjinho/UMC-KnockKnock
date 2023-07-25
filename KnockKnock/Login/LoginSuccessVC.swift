@@ -8,6 +8,8 @@
 import UIKit
 class LoginSuccessVC : UIViewController {
     
+    let signUpURLString = "http://43.200.240.251/signup"
+    
     var startBtn : UIButton = UIButton()
     
     let checkIMg : UIImageView = {
@@ -40,6 +42,8 @@ class LoginSuccessVC : UIViewController {
     var birthday: String = ""
     var email: String = ""
     var password: String = ""
+    var name: String = "123"
+    var userPhone: String = "010-XXXX-XXXX"
     
    
     override func viewDidLoad() {
@@ -97,12 +101,88 @@ extension LoginSuccessVC {
            let email = UserDefaults.standard.string(forKey: "email"),
            let password = UserDefaults.standard.string(forKey: "password"){
             // 가져온 값 사용
-            nickName=nickNames
+            nickName = nickNames
+            self.sex = sex
+            self.birthday = birthday
+            self.email = email
+            self.password = password
         } else {
             // 저장된 데이터가 없을 경우 기본값 또는 처리할 로직 설정
             print("No data found.")
         }
+        performSignUp()
         setName()
+    }
+    
+    func performSignUp() {
+        // JSON으로 인코딩할 데이터 생성
+        let signUpData = SignUpData(email: email,
+                                    nickName: nickName,
+                                    password: password,
+                                    userPhone: userPhone,
+                                    memberName: name,
+                                    memberGender: sex,
+                                    birthday: birthday)
+        
+        guard let url = URL(string: signUpURLString) else {
+            showAlert(message: "서버 URL을 만들 수 없습니다.")
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        do {
+            let jsonData = try JSONEncoder().encode(signUpData)
+            request.httpBody = jsonData
+        } catch {
+            showAlert(message: "JSON 인코딩에 실패하였습니다.")
+            return
+        }
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data else {
+                self.showAlert(message: "응답 데이터를 받아오지 못했습니다.")
+                return
+            }
+            
+            do {
+                let signUpResponse = try JSONDecoder().decode(SignUpResponse.self, from: data)
+                
+                if signUpResponse.message == "회원가입 성공" {
+                    DispatchQueue.main.async {
+                        print("회원가입 성공하셨습니다.")
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        print("회원가입 실패하셨습니다.")
+                    }
+                }
+            } catch {
+                self.showAlert(message: "JSON 디코딩에 실패하였습니다.")
+            }
+        }.resume()
+
+        
+    }
+    
+    func showAlert(message: String) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
+        alert.addAction(okAction)
+        
+        // 메시지 폰트 사이즈 설정
+        let attributedMessage = NSMutableAttributedString(string: message)
+        let style = NSMutableParagraphStyle()
+        style.alignment = .center
+        attributedMessage.addAttribute(.paragraphStyle, value: style, range: NSRange(location: 0, length: attributedMessage.length))
+        
+        let fontSize: CGFloat = 16
+        attributedMessage.addAttribute(.font, value: UIFont.systemFont(ofSize: fontSize), range: NSRange(location: 0, length: attributedMessage.length))
+        alert.setValue(attributedMessage, forKey: "attributedMessage")
+        
+        present(alert, animated: true, completion: nil)
     }
     
     @objc func setName(){
