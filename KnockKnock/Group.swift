@@ -11,6 +11,8 @@ class Group{
     
     var dic: [String:GroupInfo] = [:] //키값 : 생성 시간
     
+    var choiceTime : String?
+    
     private func Init() {}
 }
 

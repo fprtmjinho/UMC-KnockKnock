@@ -16,10 +16,23 @@ class AddGroupVC : UIViewController {
        return view
     }()
     
-    
+    var groupName: String = ""
+    var groupMember: [String] = []
+    var groupPlace: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
+        setNavigationBar()
+        self.title = "모임 추가하기"
+        setScrollView()
+        
+        makeSubView()
+        makeConstraint()
+        makeAddTarget()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         view.backgroundColor = .white
         setNavigationBar()
         self.title = "모임 추가하기"
@@ -80,6 +93,31 @@ extension AddGroupVC {
     }
 
     @objc func addBtnFunc(_: UIButton){
+        if let name = addGroupView.nametext.text{
+            groupName = name
+        }
+//        for number in addGroupView.numberList{
+//            groupMember.append(number)
+//        }
+//        if let gPlace = addGroupView.placetext.text{
+//            groupPlace = gPlace
+//        }
+        if groupName == ""{
+            // 팝업이나 표시
+            return
+        }
+//        if groupMember.count == 0{
+//            // 팝업이나 표시
+//            return
+//        }
+//        if groupPlace == ""{
+//            //팝업이나 표시
+//            return
+//        }
+        setGroupData()
         self.navigationController?.popViewController(animated: true)
+    }
+    func setGroupData(){
+        
     }
 }

@@ -77,11 +77,13 @@ class AddGroupView : UIView {
     let naverMapView = NMFNaverMapView(frame: UIScreen.main.bounds)
     let friendData = Friends.shared
     
+    public var groupMemberList: Array<String> = []
+    public func setMember(memberList: Array<String>){
+        self.groupMemberList = memberList
+    }
     
     var nameList: Array<String> = []
     var numberList: Array<String> = []
-    var nickNameList: Array<String> = []
-    var bestFriendList: Array<Bool> = []
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -214,25 +216,35 @@ extension AddGroupView {
         }
     }
     func getData(){
+//        var nameCh: Array<String> = []
+//        var numberCh: Array<String> = []
+//        var nickNameCh: Array<String> = []
+//        var bestFriendCh: Array<Bool> = []
+//        for key in friendData.dic.keys{
+//            var dic = friendData.dic[key]
+//            if dic!.bestFriend == true{
+//                nameCh.append(dic!.name)
+//                numberCh.append(key)
+//                nickNameCh.append(dic!.nickName)
+//                bestFriendCh.append(dic!.bestFriend)
+//            }
+//        }
+//        nameList = nameCh
+//        numberList = numberCh
+//        nickNameList = nickNameCh
+//        bestFriendList = bestFriendCh
         var nameCh: Array<String> = []
         var numberCh: Array<String> = []
-        var nickNameCh: Array<String> = []
-        var bestFriendCh: Array<Bool> = []
-        for key in friendData.dic.keys{
-            var dic = friendData.dic[key]
-            nameCh.append(dic!.name)
-            numberCh.append(key)
-            nickNameCh.append(dic!.nickName)
-            bestFriendCh.append(dic!.bestFriend)
+        for member in groupMemberList{
+            nameCh.append(friendData.dic[member]!.name)
+            numberCh.append(member)
         }
         nameList = nameCh
         numberList = numberCh
-        nickNameList = nickNameCh
-        bestFriendList = bestFriendCh
     }
     @objc func sortData(){
         // 이름, 전화번호, 나이를 튜플로 묶은 배열 생성
-        var combinedList = zip(nameList, zip(nickNameList,zip(numberList,bestFriendList).map{($0,$1)}).map{($0, $1)}).map{($0, $1)}
+        var combinedList = zip(nameList, numberList).map{($0,$1)}
 
         // 이름을 기준으로 오름차순 정렬
         combinedList.sort { $0.0 < $1.0 }
@@ -242,8 +254,6 @@ extension AddGroupView {
 
         // 정렬된 결과를 다시 리스트로 분리
         nameList = combinedList.map { $0.0 }
-        nickNameList = combinedList.map {$0.1.0}
-        numberList = combinedList.map { $0.1.1.0 }
-        bestFriendList = combinedList.map { $0.1.1.1 }
+        numberList = combinedList.map { $0.1 }
     }
 }
