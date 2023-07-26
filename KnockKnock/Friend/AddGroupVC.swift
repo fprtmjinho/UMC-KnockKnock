@@ -16,9 +16,12 @@ class AddGroupVC : UIViewController {
        return view
     }()
     
+    let group = Group.shared
+    
     var groupName: String = ""
     var groupMember: [String] = []
     var groupPlace: String = ""
+    var groupTime: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,8 +41,11 @@ class AddGroupVC : UIViewController {
         self.title = "모임 추가하기"
         setScrollView()
         
+        
         makeSubView()
         makeConstraint()
+        AddGroupView().memberTableview.reloadData()
+        AddGroupView().settableView()
         makeAddTarget()
     }
     
@@ -93,6 +99,9 @@ extension AddGroupVC {
     }
 
     @objc func addBtnFunc(_: UIButton){
+        var formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        groupTime = formatter.string(from: Date())
         if let name = addGroupView.nametext.text{
             groupName = name
         }
@@ -118,6 +127,13 @@ extension AddGroupVC {
         self.navigationController?.popViewController(animated: true)
     }
     func setGroupData(){
-        
+        let groupInfo: GroupInfo = GroupInfo(
+            name: groupName,
+            user: [],
+            place: "",
+            alram: true,
+            time: groupTime
+        )
+        group.dic[groupTime] = groupInfo
     }
 }

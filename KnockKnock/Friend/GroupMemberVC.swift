@@ -16,6 +16,7 @@ class GroupMemberVC : UIViewController {
     var tableView = UITableView(frame: .zero, style: .plain)
     
     let friendData = Friends.shared
+    let group = Group.shared
     
     var nameList: Array<String> = []
     var numberList: Array<String> = []
@@ -33,7 +34,6 @@ class GroupMemberVC : UIViewController {
         makeSubView()
         makeConstraint()
         
-        addMemberList = addGroupView.groupMemberList
         setTableView()
         addBtn = setNextBtn(view: self, title: "추가하기")
         makeAddTarget()
@@ -92,14 +92,13 @@ extension GroupMemberVC {
     
     @objc func addBtnFunc(_: UIButton){
         setData()
-        AddGroupView().setMember(memberList:addMemberList)
         navigationController?.popViewController(animated: true)
     }
     @objc func setData(){
         var i = 0
         for check in checked{
             if check{
-                addMemberList.append(numberList[i])
+                group.groupMember.append(numberList[i])
             }
             i+=1
         }

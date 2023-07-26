@@ -22,11 +22,26 @@ class GroupVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        getData()
+        sortData()
+        
         setTableView()
         makeSubView()
         makeConstraint()
         makeAddTarget()
+        print(nameList)
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        getData()
+        sortData()
         
+        tableView.reloadData()
+        setTableView()
+        makeSubView()
+        makeConstraint()
+        makeAddTarget()
+        print(nameList)
     }
     
 }
@@ -54,7 +69,7 @@ class GroupVC: UIViewController {
      }
      func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
          let cell = tableView.cellForRow(at: indexPath)
-         groupSelect(index:indexPath)
+         //groupSelect(index:indexPath)
          //cell 클릭시 체크가 안되어있으면 체크, 체크가 되어있으면 체크풀기
          
      }
@@ -130,11 +145,11 @@ extension GroupVC {
         timeList = combinedList.map{$0.1.0}
         memberList = combinedList.map{$0.1.1}
     }
-    @objc func groupSelect(index:IndexPath) {
-        let groupSelect = FriendProfileVC()// 여기를 그룹 수정 뷰 or 그룹 정보 뷰로 넘어가게 해야함
-        group.choiceTime = timeList[index.row]
-//        friendData.choiceIndex = index.row
-        groupSelect.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(groupSelect, animated: true)
-    }
+//    @objc func groupSelect(index:IndexPath) {
+//        let groupSelect = FriendProfileVC()// 여기를 그룹 수정 뷰 or 그룹 정보 뷰로 넘어가게 해야함
+//        group.choiceTime = timeList[index.row]
+////        friendData.choiceIndex = index.row
+//        groupSelect.hidesBottomBarWhenPushed = true
+//        navigationController?.pushViewController(groupSelect, animated: true)
+//    }
 }

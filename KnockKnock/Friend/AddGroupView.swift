@@ -77,10 +77,7 @@ class AddGroupView : UIView {
     let naverMapView = NMFNaverMapView(frame: UIScreen.main.bounds)
     let friendData = Friends.shared
     
-    public var groupMemberList: Array<String> = []
-    public func setMember(memberList: Array<String>){
-        self.groupMemberList = memberList
-    }
+    let group = Group.shared
     
     var nameList: Array<String> = []
     var numberList: Array<String> = []
@@ -91,9 +88,11 @@ class AddGroupView : UIView {
         sortData()
         makeSubView()
         makeConstraint()
+        memberTableview.reloadData()
         settableView()
         makeAddTarget()
-      
+        print(nameList)
+        print(numberList)
     }
     
     required init?(coder _: NSCoder) {
@@ -111,7 +110,6 @@ extension AddGroupView : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "groupMemberList") ?? UITableViewCell(style: .subtitle, reuseIdentifier: "gourpMemberList")
         
-        
         cell.backgroundColor = .systemGray6
         cell.textLabel?.text = nameList[indexPath.row]
         cell.detailTextLabel?.text = numberList[indexPath.row]
@@ -127,8 +125,17 @@ extension AddGroupView : UITableViewDelegate, UITableViewDataSource {
     }
     
     func settableView(){
+        addSubview(memberTableview)
         memberTableview.backgroundColor = .white
         memberTableview.separatorStyle = .none
+        
+        memberTableview.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            memberTableview.topAnchor.constraint(equalTo: memberLabel.bottomAnchor, constant: 10),
+            memberTableview.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
+            memberTableview.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
+            memberTableview.heightAnchor.constraint(equalToConstant: CGFloat(nameList.count*60)),
+        ])
         self.memberTableview.dataSource = self
         self.memberTableview.delegate = self
         //addSubView, Constraint는 위에서 실행함
@@ -235,7 +242,7 @@ extension AddGroupView {
 //        bestFriendList = bestFriendCh
         var nameCh: Array<String> = []
         var numberCh: Array<String> = []
-        for member in groupMemberList{
+        for member in group.groupMember{
             nameCh.append(friendData.dic[member]!.name)
             numberCh.append(member)
         }
