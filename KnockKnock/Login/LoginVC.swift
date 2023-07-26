@@ -8,6 +8,7 @@
 import UIKit
 class LoginVC : UIViewController {
     
+    let loginURLString = "http://43.200.240.251/login"
     
     let Title : UILabel = {
         let title = UILabel()
@@ -173,11 +174,53 @@ class LoginVC : UIViewController {
             // 비밀번호가 유효하지 않을 때
             showAlert(message: "[비밀번호 입력 오류] 특수문자, 알파벳 대소문자 포함 8자 이상을 입력해주세요.")
         } else {
-            let tabBarController = TabBarController()
-            tabBarController.modalPresentationStyle = .fullScreen
-            self.present(tabBarController, animated: true, completion: nil)
+            // 유효한 이메일과 비밀번호인 경우, 로그인 요청 보내기
+            let loginRequestBody = LoginRequestBody(email: EmailText.text!, password: PasswordText.text!)
+            
+            guard let url = URL(string: loginURLString) else {
+                showAlert(message: "서버 URL을 만들 수 없습니다.")
+                return
+            }
+            
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            
+            do {
+                let jsonData = try JSONEncoder().encode(loginRequestBody)
+                request.httpBody = jsonData
+            } catch {
+                showAlert(message: "JSON 인코딩에 실패하였습니다.")
+                return
+            }
+            
+            URLSession.shared.dataTask(with: request) { data, response, error in
+                guard let data = data else {
+                    self.showAlert(message: "응답 데이터를 받아오지 못했습니다.")
+                    return
+                }
+                
+                do {
+                    let loginResponse = try JSONDecoder().decode(LoginResponse.self, from: data)
+                    
+                    if loginResponse.message == "로그인 성공" {
+                        DispatchQueue.main.async {
+                            let tabBarController = TabBarController()
+                            tabBarController.modalPresentationStyle = .fullScreen
+                            self.present(tabBarController, animated: true, completion: nil)
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            self.showAlert(message: "로그인에 실패하였습니다.")
+                        }
+                    }
+                } catch {
+                    self.showAlert(message: "JSON 디코딩에 실패하였습니다.")
+                }
+            }.resume()
         }
     }
+    
     
     @objc func signUpFunc(_:UIButton){
         let loginFirstVC = LoginFirstVC()
@@ -315,7 +358,7 @@ extension LoginVC {
         
         present(alert, animated: true, completion: nil)
     }
-
+    
     
     func isEmailValidFormat(email: String?) -> Bool {
         guard let email = email else { return false }

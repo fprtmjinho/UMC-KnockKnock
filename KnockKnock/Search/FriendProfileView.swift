@@ -1,6 +1,7 @@
 
-
 import UIKit
+import MessageUI
+
 class FriendProfileView : UIView {
     
     let Number : UILabel = {
@@ -61,18 +62,20 @@ class FriendProfileView : UIView {
         return mytext
     }()
     
-    let sendMessageBtn : UIButton = {
+    lazy var sendMessageBtn : UIButton = {
         let btn = UIButton()
-           var title = AttributedString("문자하기")
-           title.font = UIFont.systemFont(ofSize: 15)
-           title.foregroundColor = .black
-           var config = UIButton.Configuration.filled()
-           config.cornerStyle = .capsule
-           config.baseBackgroundColor = .systemGray6
-           config.attributedTitle = title
-           btn.configuration = config
-           return btn
+        var title = AttributedString("문자하기")
+        title.font = UIFont.systemFont(ofSize: 15)
+        title.foregroundColor = .black
+        var config = UIButton.Configuration.filled()
+        config.cornerStyle = .capsule
+        config.baseBackgroundColor = .systemGray6
+        config.attributedTitle = title
+        btn.configuration = config
+        btn.addTarget(self, action: #selector(shareText), for: .touchUpInside)
+        return btn
     }()
+
     
     let copyBtn : UIButton = {
         let btn = UIButton()
@@ -238,5 +241,12 @@ extension FriendProfileView {
             
         ])
     }
+    
+    @objc func shareText() {
+            guard let text = myText.text else { return }
+
+            let activityController = UIActivityViewController(activityItems: [text], applicationActivities: nil)
+            UIApplication.shared.windows.first?.rootViewController?.present(activityController, animated: true, completion: nil)
+        }
  
 }

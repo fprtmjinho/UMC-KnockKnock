@@ -9,6 +9,9 @@ import UIKit
 
 class CustomCommentCell: UITableViewCell { // 댓글 커스텀
     
+    var myComment: Bool?
+    weak var delegate: CustomCommentCellDelegate?
+    
     let profileImageView: UIImageView = { // 프로필 사진
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -39,11 +42,20 @@ class CustomCommentCell: UITableViewCell { // 댓글 커스텀
         return label
     }()
     
+    let moreButton: UIButton = {
+       let button = UIButton()
+        button.setImage(UIImage(named: "more_vert"), for: .normal)
+        button.addTarget(self, action: #selector(moreButtonTapped(_:)), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     func makeSubView() {
         addSubview(profileImageView)
         addSubview(nameLabel)
         addSubview(commentLabel)
         addSubview(timeLabel)
+        addSubview(moreButton)
     }
     
     func makeConstraint() {
@@ -67,9 +79,26 @@ class CustomCommentCell: UITableViewCell { // 댓글 커스텀
             
             timeLabel.topAnchor.constraint(equalTo: commentLabel.bottomAnchor, constant: 5),
             timeLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: horizontalMargin),
-            timeLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -verticalMargin)
+            timeLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -verticalMargin),
+            
+            moreButton.topAnchor.constraint(equalTo: topAnchor, constant: verticalMargin),
+            moreButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -horizontalMargin),
+            moreButton.widthAnchor.constraint(equalToConstant: 17),
+            moreButton.heightAnchor.constraint(equalToConstant: 17)
         ])
         
+    }
+    
+    @objc func moreButtonTapped(_ sender: UIButton) {
+        delegate?.moreButtonTapped(cell: self)
+    }
+    
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        if let view = moreButton.hitTest(convert(point, to: moreButton), with: event) {
+            return view
+        }
+        
+        return super.hitTest(point, with: event)
     }
     
     func configureCell(with comment: Comment) {
@@ -77,6 +106,11 @@ class CustomCommentCell: UITableViewCell { // 댓글 커스텀
         nameLabel.text = comment.name
         commentLabel.text = comment.text
         timeLabel.text = comment.time
+        myComment = comment.myComment
     }
     
+}
+
+protocol CustomCommentCellDelegate: AnyObject {
+    func moreButtonTapped(cell: CustomCommentCell)
 }

@@ -9,14 +9,27 @@ import UIKit
 
 class GoodVC: UIViewController {
     
-    // 게시글 모음
-    var post: [PostCategory] = [
-        PostCategory(profile: UIImage(named: "karim")!, title: "샌프란시스코에 휴가 왔어요!", content: "여기 날도 정말 맑고 덥지도 않네요. 여행 오시는거 꼭 추천합니다~~", image: UIImage(named: "sanfrancisco"),likes: 15, comments: 3),
-        PostCategory(profile: UIImage(named: "karim")!, title: "휴가 시작!", content: "휴가 시작 와#@!#@!$!@#$#!@#!@#!@#!@#!@#!#!@#!@#!@#!@#!@#!#!@#!#@!#!@#!#@!#!#@!#!@#!#!@#!@#!#!@#!#@!#!@#!@#!@#@!#!@#!@#!#@!#@#!@#!@#!@#@!#@!#!", image: nil, likes: 7, comments: 3),
-        PostCategory(profile: UIImage(named: "mesut")!, title: "성수동 카페 추천", content: "@#@!#!@#!#@!#!@#@!#!@#!#!#@#!@#!@#!#!@#!#!@#!@#!@#!#!#@!#!#!@#!@#!@#!#!#!@#!#", image: UIImage(named: "seongsu"),likes: 10, comments: 3),
-        PostCategory(profile: UIImage(named: "toni")!, title: "강남역 놀거리 추천합니다", content: "@#@!#!@#!#@!#!@#@!#!@#!#!#@#!@#!@#!#!@#!#!@#!@#!@#!#!#@!#!#!@#!@#!@#!#!#!@#!#", image: UIImage(named: "gangnam"),likes: 8, comments: 3),
-        PostCategory(profile: UIImage(named: "sergio")!, title: "파리에 왔어요", content: "파리에 여행왔어요!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!@#@!#!@#!#@!#!@#@!#!@#!#!#@#!@#!@#!#!@#!#!@#!@#!@#!#!#@!#!#!@#!@#!@#!#!#!@#!#", image: UIImage(named: "paris"),likes: 4, comments: 3),
-    ]
+    var posts: [PostParsing] = []
+    
+    func fetchData() {
+        let url = URL(string: "http://43.200.240.251/board/allPosts?boardType=GOOD")!
+        
+        let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
+            guard let data = data else { return }
+            
+            do {
+                let decoder = JSONDecoder()
+                self.posts = try decoder.decode([PostParsing].self, from: data)
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            } catch {
+                print("Error decoding JSON: \(error)")
+            }
+        }
+        
+        task.resume()
+    }
     
     // 나이대 버튼 관련: buttonStackView, buttonTitles, createButtons
     let buttonStackView: UIStackView = {
@@ -30,7 +43,7 @@ class GoodVC: UIViewController {
     
     let buttonTitles = ["10대", "20대", "30대", "40대~"]
     
-   
+    
     
     // 검색창 관련: searchBar
     let searchBar : UISearchBar = {
@@ -54,6 +67,7 @@ class GoodVC: UIViewController {
     let tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .white
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
@@ -65,12 +79,12 @@ class GoodVC: UIViewController {
 extension GoodVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return post.count
+        return posts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! CustomCell
-        let post = post[indexPath.row]
+        let post = posts[indexPath.row]
         cell.configureCell(with: post)
         cell.makeSubView()
         cell.makeConstraint()
@@ -78,22 +92,13 @@ extension GoodVC: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if post[indexPath.row].image == nil { // 게시글에 사진이 없을 때
-            return 135
-        } else { // 게시글에 사진이 있을 때
-            return 300
-        }
-    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let postVC = PostVC()
         postVC.categoryValue = 0 // 선 게시판
-        postVC.post.profile = post[indexPath.row].profile
-        postVC.post.title = post[indexPath.row].title
-        postVC.post.content = post[indexPath.row].content
-        postVC.post.likes = post[indexPath.row].likes
-        postVC.post.likes = post[indexPath.row].likes
+        postVC.post.title = posts[indexPath.row].title
+        postVC.post.content = posts[indexPath.row].content
+        postVC.post.likes = posts[indexPath.row].likes
+        postVC.post.comments = posts[indexPath.row].comments
         postVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(postVC, animated: true)
     }
@@ -159,6 +164,8 @@ extension GoodVC {
         makeSubView()
         makeConstraint()
         createButtons()
+        
+        fetchData()
     }
     
     @objc func buttonTapped(_ sender: UIButton) {

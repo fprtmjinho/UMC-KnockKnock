@@ -17,6 +17,7 @@
 		008463FB2A5D5713009F4033 /* BadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008463FA2A5D5713009F4033 /* BadVC.swift */; };
 		008463FD2A5D93BF009F4033 /* FriendListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008463FC2A5D93BF009F4033 /* FriendListVC.swift */; };
 		008463FF2A5D93FF009F4033 /* GroupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008463FE2A5D93FF009F4033 /* GroupVC.swift */; };
+		00E558F22A6FD3CC00EA73FC /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E558F12A6FD3CC00EA73FC /* Login.swift */; };
 		00FD26582A5CE1520013E169 /* GuideVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FD26572A5CE1520013E169 /* GuideVC.swift */; };
 		55264A9DE1ED88A2B377A672 /* Pods_KnockKnock_KnockKnockUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DBA3859EDF2C9AF5B666E35 /* Pods_KnockKnock_KnockKnockUITests.framework */; };
 		630F1F3B064994AD0D3ACAEB /* Pods_KnockKnockTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6B9941AEDF608B7B3FABCB3 /* Pods_KnockKnockTests.framework */; };
@@ -96,6 +97,7 @@
 		008463FA2A5D5713009F4033 /* BadVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadVC.swift; sourceTree = "<group>"; };
 		008463FC2A5D93BF009F4033 /* FriendListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListVC.swift; sourceTree = "<group>"; };
 		008463FE2A5D93FF009F4033 /* GroupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupVC.swift; sourceTree = "<group>"; };
+		00E558F12A6FD3CC00EA73FC /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		00FD26572A5CE1520013E169 /* GuideVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideVC.swift; sourceTree = "<group>"; };
 		07D7546DE7B95907D6D91395 /* Pods-KnockKnock.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KnockKnock.debug.xcconfig"; path = "Target Support Files/Pods-KnockKnock/Pods-KnockKnock.debug.xcconfig"; sourceTree = "<group>"; };
 		1A3BB14BCA180BC7CE8155AA /* Pods-KnockKnockTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KnockKnockTests.debug.xcconfig"; path = "Target Support Files/Pods-KnockKnockTests/Pods-KnockKnockTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 			isa = PBXGroup;
 			children = (
 				00124F1D2A643B7600536EAD /* Post.swift */,
+				00E558F12A6FD3CC00EA73FC /* Login.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -615,6 +618,7 @@
 				C935FA7E2A5D63840035FA2C /* LoginAddBestFriendVC.swift in Sources */,
 				C977A2792A6854B6001249E3 /* AddGroupView.swift in Sources */,
 				C93246792A458D9400908D6B /* AppDelegate.swift in Sources */,
+				00E558F22A6FD3CC00EA73FC /* Login.swift in Sources */,
 				C9229C922A644B270017A45C /* ToChangePasswordVC.swift in Sources */,
 				C932467B2A458D9400908D6B /* SceneDelegate.swift in Sources */,
 				C935FA7C2A5D63740035FA2C /* LoginAddFriendVC.swift in Sources */,
@@ -819,7 +823,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -848,7 +852,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
