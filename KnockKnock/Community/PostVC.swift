@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PostVC: UIViewController {
+class PostVC: UIViewController, CustomCommentCellDelegate {
     
     var myPost: Bool = true // 자신 글 여부
     
@@ -29,15 +29,18 @@ class PostVC: UIViewController {
         Comment(profile: UIImage(named: "sergio")!,
                 name: "세르히오",
                 text: "짧은 문장 테스트: 우와",
-                time: "07/08 23:17"),
+                time: "07/08 23:17",
+               myComment: true),
         Comment(profile: UIImage(named: "toni")!,
                 name: "토니",
                 text: "나도 갈래",
-                time: "07/08 22:19"),
+                time: "07/08 22:19",
+               myComment: false),
         Comment(profile: UIImage(named: "mesut")!,
                 name: "메수트",
                 text: "긴 문장 테스트: 오 여기서 가깝다!@#$%@!#$@!#!@#!@$%!#@!#!#@!#@!#!@#!#@!#!@#!@#@#!@#!#!@#!#@!#!@#!@#@!#!#!",
-                time: "07/09 02:14")
+                time: "07/09 02:14",
+               myComment: false)
     ]
     
     let tableView: UITableView = {
@@ -178,7 +181,7 @@ class PostVC: UIViewController {
             }
             actionSheet.addAction(action1)
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
         actionSheet.addAction(cancelAction)
         // On iPad, the action sheet should be presented as a popover.
         if let popoverController = actionSheet.popoverPresentationController {
@@ -227,6 +230,7 @@ extension PostVC: UITableViewDelegate, UITableViewDataSource {
             // 나머지 index일 때는 댓글
             let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath) as! CustomCommentCell
             let comment = comments[indexPath.row - 1] // 댓글[행 인덱스 - 1] -> 해당 댓글
+            cell.delegate = self
             cell.configureCell(with: comment)
             cell.makeSubView()
             cell.makeConstraint()
@@ -234,4 +238,28 @@ extension PostVC: UITableViewDelegate, UITableViewDataSource {
             return cell
         }
     }
+    
+    func moreButtonTapped(cell: CustomCommentCell) {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        if cell.myComment! {
+                    // 자신의 댓글일 때
+                    let action1 = UIAlertAction(title: "수정", style: .default) { _ in
+                        // Handle Action 1
+                    }
+                    let action2 = UIAlertAction(title: "삭제", style: .default) { _ in
+                        // Handle Action 2
+                    }
+                    actionSheet.addAction(action1)
+                    actionSheet.addAction(action2)
+                } else {
+                    // 자신의 댓글이 아닐 때
+                    let action1 = UIAlertAction(title: "신고", style: .default) { _ in
+                        // Handle Action 1
+                    }
+                    actionSheet.addAction(action1)
+                }
+                let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+                actionSheet.addAction(cancelAction)
+            present(actionSheet, animated: true)
+        }
 }

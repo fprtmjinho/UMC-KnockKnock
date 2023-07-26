@@ -33,6 +33,7 @@ struct Comment { // 댓글
     let name: String
     var text: String
     var time: String
+    var myComment: Bool
 }
 
 struct PostParsing: Codable { // 게시글(게시판에서 보이는)
