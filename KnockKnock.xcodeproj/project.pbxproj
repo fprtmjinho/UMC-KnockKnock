@@ -9,15 +9,15 @@
 /* Begin PBXBuildFile section */
 		00086E972A6B62AE00A7C9FF /* CustomPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00086E962A6B62AE00A7C9FF /* CustomPostCell.swift */; };
 		00086E992A6B631600A7C9FF /* CustomCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00086E982A6B631600A7C9FF /* CustomCommentCell.swift */; };
-		000EF5BA2A71092000E6B188 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000EF5B92A71092000E6B188 /* Group.swift */; };
 		00124F1B2A63CB6000536EAD /* PostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00124F1A2A63CB6000536EAD /* PostVC.swift */; };
-		00124F1E2A643B7600536EAD /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00124F1D2A643B7600536EAD /* Post.swift */; };
 		0041A6ED2A61A2BF008A5048 /* WriteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0041A6EC2A61A2BF008A5048 /* WriteVC.swift */; };
 		007B67C22A6D31F50087B264 /* PromiseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007B67C12A6D31F50087B264 /* PromiseVC.swift */; };
 		008463F92A5D56FC009F4033 /* GoodVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008463F82A5D56FC009F4033 /* GoodVC.swift */; };
 		008463FB2A5D5713009F4033 /* BadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008463FA2A5D5713009F4033 /* BadVC.swift */; };
 		008463FD2A5D93BF009F4033 /* FriendListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008463FC2A5D93BF009F4033 /* FriendListVC.swift */; };
 		008463FF2A5D93FF009F4033 /* GroupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008463FE2A5D93FF009F4033 /* GroupVC.swift */; };
+		008C498C2A714EAF00BE6705 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008C498B2A714EAF00BE6705 /* Group.swift */; };
+		008C498E2A714ED700BE6705 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008C498D2A714ED700BE6705 /* Post.swift */; };
 		00E558F22A6FD3CC00EA73FC /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E558F12A6FD3CC00EA73FC /* Login.swift */; };
 		00FD26582A5CE1520013E169 /* GuideVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FD26572A5CE1520013E169 /* GuideVC.swift */; };
 		55264A9DE1ED88A2B377A672 /* Pods_KnockKnock_KnockKnockUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DBA3859EDF2C9AF5B666E35 /* Pods_KnockKnock_KnockKnockUITests.framework */; };
@@ -88,9 +88,7 @@
 /* Begin PBXFileReference section */
 		00086E962A6B62AE00A7C9FF /* CustomPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPostCell.swift; sourceTree = "<group>"; };
 		00086E982A6B631600A7C9FF /* CustomCommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCommentCell.swift; sourceTree = "<group>"; };
-		000EF5B92A71092000E6B188 /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		00124F1A2A63CB6000536EAD /* PostVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostVC.swift; sourceTree = "<group>"; };
-		00124F1D2A643B7600536EAD /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		0041A6EC2A61A2BF008A5048 /* WriteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteVC.swift; sourceTree = "<group>"; };
 		0077CEBC45158B865B94A5C7 /* Pods-KnockKnock-KnockKnockUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KnockKnock-KnockKnockUITests.debug.xcconfig"; path = "Target Support Files/Pods-KnockKnock-KnockKnockUITests/Pods-KnockKnock-KnockKnockUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		007B67C12A6D31F50087B264 /* PromiseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseVC.swift; sourceTree = "<group>"; };
@@ -98,6 +96,8 @@
 		008463FA2A5D5713009F4033 /* BadVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadVC.swift; sourceTree = "<group>"; };
 		008463FC2A5D93BF009F4033 /* FriendListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendListVC.swift; sourceTree = "<group>"; };
 		008463FE2A5D93FF009F4033 /* GroupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupVC.swift; sourceTree = "<group>"; };
+		008C498B2A714EAF00BE6705 /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Group.swift; path = ../Group.swift; sourceTree = "<group>"; };
+		008C498D2A714ED700BE6705 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		00E558F12A6FD3CC00EA73FC /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		00FD26572A5CE1520013E169 /* GuideVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideVC.swift; sourceTree = "<group>"; };
 		07D7546DE7B95907D6D91395 /* Pods-KnockKnock.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KnockKnock.debug.xcconfig"; path = "Target Support Files/Pods-KnockKnock/Pods-KnockKnock.debug.xcconfig"; sourceTree = "<group>"; };
@@ -189,7 +189,8 @@
 		00124F1C2A643ABA00536EAD /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				00124F1D2A643B7600536EAD /* Post.swift */,
+				008C498D2A714ED700BE6705 /* Post.swift */,
+				008C498B2A714EAF00BE6705 /* Group.swift */,
 				00E558F12A6FD3CC00EA73FC /* Login.swift */,
 			);
 			path = Model;
@@ -259,7 +260,6 @@
 				C93246862A458D9600908D6B /* LaunchScreen.storyboard */,
 				C93246892A458D9600908D6B /* Info.plist */,
 				C93246812A458D9400908D6B /* KnockKnock.xcdatamodeld */,
-				000EF5B92A71092000E6B188 /* Group.swift */,
 			);
 			path = KnockKnock;
 			sourceTree = "<group>";
@@ -614,7 +614,7 @@
 				E999620E2A658E6B00FA602C /* MyData.swift in Sources */,
 				C935FA862A5EB6010035FA2C /* FindPasswordVC.swift in Sources */,
 				C93246C32A48317800908D6B /* FriendController.swift in Sources */,
-				000EF5BA2A71092000E6B188 /* Group.swift in Sources */,
+				008C498C2A714EAF00BE6705 /* Group.swift in Sources */,
 				C935FA7E2A5D63840035FA2C /* LoginAddBestFriendVC.swift in Sources */,
 				C977A2792A6854B6001249E3 /* AddGroupView.swift in Sources */,
 				C93246792A458D9400908D6B /* AppDelegate.swift in Sources */,
@@ -625,7 +625,6 @@
 				C935FA272A59BC840035FA2C /* Extension.swift in Sources */,
 				00086E992A6B631600A7C9FF /* CustomCommentCell.swift in Sources */,
 				00124F1B2A63CB6000536EAD /* PostVC.swift in Sources */,
-				00124F1E2A643B7600536EAD /* Post.swift in Sources */,
 				C935FA1F2A58264B0035FA2C /* LoginFirstVC.swift in Sources */,
 				00FD26582A5CE1520013E169 /* GuideVC.swift in Sources */,
 				C933F4552A5EFBBA0089670A /* EditMyPageVC.swift in Sources */,
@@ -639,6 +638,7 @@
 				00086E972A6B62AE00A7C9FF /* CustomPostCell.swift in Sources */,
 				008463F92A5D56FC009F4033 /* GoodVC.swift in Sources */,
 				E91EE28D2A61A3AC003D6E5C /* Friends.swift in Sources */,
+				008C498E2A714ED700BE6705 /* Post.swift in Sources */,
 				C935FA2F2A59D0EA0035FA2C /* AddFriendVC.swift in Sources */,
 				008463FF2A5D93FF009F4033 /* GroupVC.swift in Sources */,
 				C93246832A458D9400908D6B /* KnockKnock.xcdatamodeld in Sources */,
