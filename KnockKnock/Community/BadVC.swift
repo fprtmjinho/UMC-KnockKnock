@@ -9,6 +9,8 @@ import UIKit
 
 class BadVC: UIViewController {
     
+    let refreshControl = UIRefreshControl()
+    
     var posts: [PostParsing] = []
     
     func fetchData() {
@@ -166,6 +168,14 @@ extension BadVC {
         createButtons()
         
         fetchData()
+        
+        // Pull-to-refresh 기능을 위한 refreshControl 설정
+        if #available(iOS 10.0, *) {
+            tableView.refreshControl = refreshControl
+        } else {
+            tableView.addSubview(refreshControl)
+        }
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
     }
     
     @objc func buttonTapped(_ sender: UIButton) {
@@ -185,6 +195,17 @@ extension BadVC {
         
         print("Button tapped: \(title)")
         
+    }
+    
+    // Pull-to-refresh를 위한 메서드
+    @objc func refreshData() {
+        // 데이터를 다시 가져오고 테이블뷰를 새로고침합니다.
+        fetchData()
+        
+        // 새로고침이 완료되면 UIRefreshControl을 종료시킵니다.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.refreshControl.endRefreshing()
+        }
     }
     
 }
