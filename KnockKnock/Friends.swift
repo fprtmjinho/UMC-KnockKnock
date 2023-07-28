@@ -8,6 +8,7 @@
 import Foundation
 class Friends {
     static let shared = Friends()
+    
     var dic: [String:Info] = [:]
     
     var choiceNumber: String?

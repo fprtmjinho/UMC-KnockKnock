@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import NMapsMap
 class AddGroupView : UIView {
     
     
@@ -62,14 +63,24 @@ class AddGroupView : UIView {
         return text
     }()
     
+    let placeSearchButton : UIButton = {
+        let btn = UIButton()
+        btn.setTitle("검색하기", for: .normal)
+        btn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        btn.setTitleColor(#colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1), for: .normal)
+        btn.layer.borderWidth = 1
+        btn.layer.borderColor = UIColor.systemGray4.cgColor
+        return btn
+    }()
     
+    
+    let naverMapView = NMFNaverMapView(frame: UIScreen.main.bounds)
     let friendData = Friends.shared
     
+    let group = Group.shared
     
     var nameList: Array<String> = []
     var numberList: Array<String> = []
-    var nickNameList: Array<String> = []
-    var bestFriendList: Array<Bool> = []
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -77,8 +88,11 @@ class AddGroupView : UIView {
         sortData()
         makeSubView()
         makeConstraint()
+        memberTableview.reloadData()
         settableView()
-      
+        makeAddTarget()
+        print(nameList)
+        print(numberList)
     }
     
     required init?(coder _: NSCoder) {
@@ -96,7 +110,6 @@ extension AddGroupView : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "groupMemberList") ?? UITableViewCell(style: .subtitle, reuseIdentifier: "gourpMemberList")
         
-        
         cell.backgroundColor = .systemGray6
         cell.textLabel?.text = nameList[indexPath.row]
         cell.detailTextLabel?.text = numberList[indexPath.row]
@@ -112,8 +125,17 @@ extension AddGroupView : UITableViewDelegate, UITableViewDataSource {
     }
     
     func settableView(){
+        addSubview(memberTableview)
         memberTableview.backgroundColor = .white
         memberTableview.separatorStyle = .none
+        
+        memberTableview.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            memberTableview.topAnchor.constraint(equalTo: memberLabel.bottomAnchor, constant: 10),
+            memberTableview.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
+            memberTableview.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
+            memberTableview.heightAnchor.constraint(equalToConstant: CGFloat(nameList.count*60)),
+        ])
         self.memberTableview.dataSource = self
         self.memberTableview.delegate = self
         //addSubView, Constraint는 위에서 실행함
@@ -132,6 +154,8 @@ extension AddGroupView {
         addSubview(addmemberBtn)
         addSubview(placeLabel)
         addSubview(placetext)
+        addSubview(placeSearchButton)
+        addSubview(naverMapView)
     }
     
     func makeConstraint(){
@@ -142,6 +166,8 @@ extension AddGroupView {
         addmemberBtn.translatesAutoresizingMaskIntoConstraints = false
         placeLabel.translatesAutoresizingMaskIntoConstraints = false
         placetext.translatesAutoresizingMaskIntoConstraints = false
+        placeSearchButton.translatesAutoresizingMaskIntoConstraints = false
+        naverMapView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             
@@ -169,30 +195,63 @@ extension AddGroupView {
             placetext.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
             placetext.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
             placetext.heightAnchor.constraint(equalToConstant: 45),
-        
+            placeSearchButton.topAnchor.constraint(equalTo: placetext.bottomAnchor, constant: 10),
+            placeSearchButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
+            placeSearchButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
+            placeSearchButton.heightAnchor.constraint(equalToConstant: 50),
+            
+            naverMapView.topAnchor.constraint(equalTo: placeSearchButton.bottomAnchor, constant: 40),
+            naverMapView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
+            naverMapView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
+            naverMapView.heightAnchor.constraint(equalToConstant: 300),
         ])
         
     }
+    func makeAddTarget(){
+        placeSearchButton.addTarget(self, action: #selector(searchMap(_:)), for: .touchUpInside)
+        
+    }
+    @objc func searchMap(_:UITextField){
+        var searchText: String = ""
+        if let text = placetext.text{
+            searchText = text
+        }
+        if searchText == ""{
+            return
+        }else{//이 부분을 백엔드에서 처리해야하는지 아니면 프론트에서 직접 API로 좌표 알아내야 하는지 잘모르겠음
+            //naverMapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat:, lng:)))
+        }
+    }
     func getData(){
+//        var nameCh: Array<String> = []
+//        var numberCh: Array<String> = []
+//        var nickNameCh: Array<String> = []
+//        var bestFriendCh: Array<Bool> = []
+//        for key in friendData.dic.keys{
+//            var dic = friendData.dic[key]
+//            if dic!.bestFriend == true{
+//                nameCh.append(dic!.name)
+//                numberCh.append(key)
+//                nickNameCh.append(dic!.nickName)
+//                bestFriendCh.append(dic!.bestFriend)
+//            }
+//        }
+//        nameList = nameCh
+//        numberList = numberCh
+//        nickNameList = nickNameCh
+//        bestFriendList = bestFriendCh
         var nameCh: Array<String> = []
         var numberCh: Array<String> = []
-        var nickNameCh: Array<String> = []
-        var bestFriendCh: Array<Bool> = []
-        for key in friendData.dic.keys{
-            var dic = friendData.dic[key]
-            nameCh.append(dic!.name)
-            numberCh.append(key)
-            nickNameCh.append(dic!.nickName)
-            bestFriendCh.append(dic!.bestFriend)
+        for member in group.groupMember{
+            nameCh.append(friendData.dic[member]!.name)
+            numberCh.append(member)
         }
         nameList = nameCh
         numberList = numberCh
-        nickNameList = nickNameCh
-        bestFriendList = bestFriendCh
     }
     @objc func sortData(){
         // 이름, 전화번호, 나이를 튜플로 묶은 배열 생성
-        var combinedList = zip(nameList, zip(nickNameList,zip(numberList,bestFriendList).map{($0,$1)}).map{($0, $1)}).map{($0, $1)}
+        var combinedList = zip(nameList, numberList).map{($0,$1)}
 
         // 이름을 기준으로 오름차순 정렬
         combinedList.sort { $0.0 < $1.0 }
@@ -202,8 +261,6 @@ extension AddGroupView {
 
         // 정렬된 결과를 다시 리스트로 분리
         nameList = combinedList.map { $0.0 }
-        nickNameList = combinedList.map {$0.1.0}
-        numberList = combinedList.map { $0.1.1.0 }
-        bestFriendList = combinedList.map { $0.1.1.1 }
+        numberList = combinedList.map { $0.1 }
     }
 }

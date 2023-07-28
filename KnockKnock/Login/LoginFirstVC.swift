@@ -279,10 +279,10 @@ extension LoginFirstVC {
         let choieColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
         // 성별 선택(string)
         if (manButton.backgroundColor == choieColor){
-            sex = "man"
+            sex = "MALE"
         }
         else if(womanButton.backgroundColor == choieColor){
-            sex = "woman"
+            sex = "FEMALE"
         }
         if let nameText = nameText.text{
             nickName = nameText
