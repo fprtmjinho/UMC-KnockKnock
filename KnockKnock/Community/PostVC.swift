@@ -244,7 +244,7 @@ extension PostVC: UITableViewDelegate, UITableViewDataSource {
         if cell.myComment! {
                     // 자신의 댓글일 때
                     let action1 = UIAlertAction(title: "수정", style: .default) { _ in
-                        // Handle Action 1
+                        self.commentTextField.text = cell.commentLabel.text
                     }
                     let action2 = UIAlertAction(title: "삭제", style: .default) { _ in
                         // Handle Action 2
