@@ -11,6 +11,9 @@ class BadVC: UIViewController {
     
     let refreshControl = UIRefreshControl()
     
+    // 버튼 탭 여부를 저장하는 배열
+    var buttonPressedStates: [String:Bool] = ["10대": false, "20대": false, "30대": false, "40대~": false]
+    
     var posts: [PostParsing] = []
     
     func fetchData() {
@@ -185,15 +188,18 @@ extension BadVC {
         
         if sender.isSelected {
             sender.isSelected = false
+            buttonPressedStates[title] = false
             sender.setTitleColor(.black, for: .normal)
             sender.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
         } else {
             sender.isSelected = true
+            buttonPressedStates[title] = true
             sender.setTitleColor(.white, for: .normal)
             sender.backgroundColor = #colorLiteral(red: 1, green: 0, blue: 0.3764705882, alpha: 1)
         }
         
         print("Button tapped: \(title)")
+        print(buttonPressedStates)
         
     }
     
