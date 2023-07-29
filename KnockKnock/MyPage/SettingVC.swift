@@ -76,7 +76,7 @@ extension SettingVC: UITableViewDelegate, UITableViewDataSource {
             navigationController?.pushViewController(getInfoVC, animated: true)
             
         case 2:
-            let guideVC = GuideVC()
+            let guideVC = PostVC()
             guideVC.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(guideVC, animated: true)
         default:

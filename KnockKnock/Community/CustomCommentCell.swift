@@ -45,7 +45,7 @@ class CustomCommentCell: UITableViewCell { // 댓글 커스텀
     let moreButton: UIButton = {
        let button = UIButton()
         button.setImage(UIImage(named: "more_vert"), for: .normal)
-        button.addTarget(self, action: #selector(moreButtonTapped(_:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(commentShowActionSheet(_:)), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -89,8 +89,8 @@ class CustomCommentCell: UITableViewCell { // 댓글 커스텀
         
     }
     
-    @objc func moreButtonTapped(_ sender: UIButton) {
-        delegate?.moreButtonTapped(cell: self)
+    @objc func commentShowActionSheet(_ sender: UIButton) {
+        delegate?.commentShowActionSheet(cell: self)
     }
     
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
@@ -112,5 +112,5 @@ class CustomCommentCell: UITableViewCell { // 댓글 커스텀
 }
 
 protocol CustomCommentCellDelegate: AnyObject {
-    func moreButtonTapped(cell: CustomCommentCell)
+    func commentShowActionSheet(cell: CustomCommentCell)
 }
