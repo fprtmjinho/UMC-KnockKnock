@@ -14,10 +14,33 @@ class GroupProfileVC : UIViewController {
     
     let scrollView : UIScrollView = UIScrollView()
     
+    
+    let group = Group.shared
+    
+    var groupName: String = ""
+    var groupMember: [String] = []
+    var groupPlace: String = ""
+    var groupTime: String = ""
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         setNavigationBar()
+        makeSubView()
+        makeConstraint()
+        makeAddTarget()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        view.backgroundColor = .white
+        setNavigationBar()
+        makeSubView()
+        makeConstraint()
+        groupProfileView.membertableView.reloadData()
+       // groupProfileView.settableView()
+        makeAddTarget()
     }
 }
 

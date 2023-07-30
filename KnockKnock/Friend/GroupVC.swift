@@ -67,12 +67,7 @@ class GroupVC: UIViewController {
          cell.detailTextLabel!.textColor = UIColor.systemGray2
          return cell
      }
-     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-         let cell = tableView.cellForRow(at: indexPath)
-         //groupSelect(index:indexPath)
-         //cell 클릭시 체크가 안되어있으면 체크, 체크가 되어있으면 체크풀기
-         
-     }
+  
      func tableView(_: UITableView, heightForRowAt: IndexPath) -> CGFloat{
          return 60
          //row 두께 설정
@@ -123,6 +118,13 @@ extension GroupVC {
     
     private func makeAddTarget(){
            self.addGroupBtn.addTarget(self, action: #selector(addGroupFunc(_:)), for: .touchUpInside)
+    }
+    
+     func nextView(index:IndexPath) {
+        let nextView = GroupProfileVC()
+         group.choiceTime = nameList[index.row]
+        nextView.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(nextView, animated: true)
     }
 
     @objc func addGroupFunc(_: UIButton){

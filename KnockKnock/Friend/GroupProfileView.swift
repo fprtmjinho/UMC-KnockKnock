@@ -42,14 +42,11 @@ class GroupProfileView : UIView {
         label.font = UIFont.boldSystemFont(ofSize: 16)
          return label
     }()
-    
-    
     let friendData = Friends.shared
+    let group = Group.shared
     
     var nameList: Array<String> = []
     var numberList: Array<String> = []
-    var nickNameList: Array<String> = []
-    var bestFriendList: Array<Bool> = []
     
     
     override init(frame: CGRect) {
@@ -58,7 +55,8 @@ class GroupProfileView : UIView {
         setTableView()
         makeSubView()
         makeConstraint()
-        
+        membertableView.reloadData()
+        setTableView()
       
     }
     
@@ -155,18 +153,11 @@ extension GroupProfileView {
     func getData(){
         var nameCh: Array<String> = []
         var numberCh: Array<String> = []
-        var nickNameCh: Array<String> = []
-        var bestFriendCh: Array<Bool> = []
-        for key in friendData.dic.keys{
-            var dic = friendData.dic[key]
-            nameCh.append(dic!.name)
-            numberCh.append(key)
-            nickNameCh.append(dic!.nickName)
-            bestFriendCh.append(dic!.bestFriend)
+        for member in group.groupMember{
+            nameCh.append(friendData.dic[member]!.name)
+            numberCh.append(member)
         }
         nameList = nameCh
         numberList = numberCh
-        nickNameList = nickNameCh
-        bestFriendList = bestFriendCh
     }
 }

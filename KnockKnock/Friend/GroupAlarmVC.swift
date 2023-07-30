@@ -10,6 +10,8 @@ class GroupAlarmVc : UIViewController {
     
     var saveBtn : UIButton = UIButton()
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
