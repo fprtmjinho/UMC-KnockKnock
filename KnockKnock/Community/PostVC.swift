@@ -284,7 +284,7 @@ extension PostVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     @objc func commentShowActionSheet(cell: CustomCommentCell) {
-        let actionSheet = UIAlertController(title: "글 메뉴", message: nil, preferredStyle: .actionSheet)
+        let actionSheet = UIAlertController(title: "댓글 메뉴", message: nil, preferredStyle: .actionSheet)
 
         if cell.myComment! {
             // 자신의 댓글일 때

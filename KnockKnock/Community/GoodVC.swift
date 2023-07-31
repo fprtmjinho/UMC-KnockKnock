@@ -107,6 +107,15 @@ extension GoodVC: UITableViewDelegate, UITableViewDataSource {
         postVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(postVC, animated: true)
     }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        // 현재 표시되는 테이블뷰 셀의 인덱스가 마지막 row 인덱스인지 확인
+        let lastRowIndex = tableView.numberOfRows(inSection: 0) - 1
+        if indexPath.row == lastRowIndex {
+            // 마지막 row에 도달하면 데이터를 추가로 fetch
+            fetchData()
+        }
+    }
 }
 
 extension GoodVC {
@@ -205,10 +214,10 @@ extension GoodVC {
     
     // Pull-to-refresh를 위한 메서드
     @objc func refreshData() {
-        // 데이터를 다시 가져오고 테이블뷰를 새로고침합니다.
+        // 데이터를 다시 가져오고 테이블뷰를 새로고침
         fetchData()
         
-        // 새로고침이 완료되면 UIRefreshControl을 종료시킵니다.
+        // 새로고침이 완료되면 UIRefreshControl을 종료
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.refreshControl.endRefreshing()
         }
