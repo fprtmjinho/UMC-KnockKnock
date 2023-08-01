@@ -23,5 +23,5 @@ struct GroupInfo{
     var place: String
     var alram: Bool
     var time: String //알람 설정시간
-    //var bestFriend: Bool //모두 찐친일때만
+    var bestFriend: Bool //모두 찐친일때만
 }
