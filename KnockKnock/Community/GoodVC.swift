@@ -190,6 +190,11 @@ extension GoodVC {
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        refreshData()
+    }
+    
     @objc func buttonTapped(_ sender: UIButton) {
         guard let title = sender.titleLabel?.text else {
             return

@@ -9,7 +9,7 @@ import UIKit
 
 class PostVC: UIViewController, CustomCommentCellDelegate {
     
-    var myPost: Bool = false // 자신 글 여부
+    var myPost: Bool = true // 자신 글 여부
     
     
     var categoryValue: Int! // 게시판 종류
@@ -167,6 +167,8 @@ class PostVC: UIViewController, CustomCommentCellDelegate {
             }
             let deletePost = UIAlertAction(title: "삭제", style: .default) { _ in
                 // 글 삭제 탭시 수행할 동작
+                self.navigationController?.popViewController(animated: true)
+                
             }
             actionSheet.addAction(modifyPost)
             actionSheet.addAction(deletePost)

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import UserNotifications
 
 class SettingVC: UIViewController {
     let tableView: UITableView = {
@@ -76,7 +77,7 @@ extension SettingVC: UITableViewDelegate, UITableViewDataSource {
             navigationController?.pushViewController(getInfoVC, animated: true)
             
         case 2:
-            let guideVC = PostVC()
+            let guideVC = GuideVC()
             guideVC.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(guideVC, animated: true)
         default:
@@ -90,8 +91,10 @@ extension SettingVC: UITableViewDelegate, UITableViewDataSource {
         // 스위치 값 변경 시 수행할 작업을 여기에 구현하세요.
         if sender.isOn {
             // 스위치가 켜진 상태
+            UserDefaults.standard.set(true, forKey: "notificationsEnabled")
         } else {
             // 스위치가 꺼진 상태
+            UserDefaults.standard.set(false, forKey: "notificationsEnabled")
         }
     }
 }
