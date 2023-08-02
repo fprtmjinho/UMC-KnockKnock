@@ -25,49 +25,22 @@ class AllowApproachVC : UIViewController {
         label.font = UIFont.systemFont(ofSize: 16)
         return label
     }()
-    
-    let stepGuide : UIStackView = {
-        let now = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 3))
-        now.backgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-        now.layer.cornerRadius = 5
-        let circle1 = UIView(frame: CGRect(x: 0, y: 0, width: 3, height: 3))
-        circle1.backgroundColor = .systemGray4
-        circle1.layer.cornerRadius = 1.5
-        let circle2 = UIView(frame: CGRect(x: 0, y: 0, width: 3, height: 3))
-        circle2.backgroundColor = .systemGray4
-        circle2.layer.cornerRadius = 1.5
-        
-        let stepGuide = UIStackView(frame: CGRect(x: 0, y: 0, width: 25, height: 5))
-        stepGuide.spacing = 3
-        stepGuide.axis = .horizontal
-        stepGuide.addArrangedSubview(now)
-        stepGuide.addArrangedSubview(circle1)
-        stepGuide.addArrangedSubview(circle2)
-        return stepGuide
-    }()
-    //코드 수정 필요
-    
+
     func makeSubView(){
         view.addSubview(titleLabel)
         view.addSubview(subtitleLabel)
-        view.addSubview(stepGuide)
         nextBtn = setNextBtn(view: self, title: "다음")
     }
     
     func makeConstraint(){
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        stepGuide.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             titleLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 15),
             subtitleLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             subtitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
-        
-            
-            stepGuide.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            stepGuide.bottomAnchor.constraint(equalTo: nextBtn.topAnchor, constant: -5)
         
         ])
         

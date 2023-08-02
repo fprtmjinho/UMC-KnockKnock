@@ -207,7 +207,7 @@ extension FindPasswordVC {
             emailLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             emailText.topAnchor.constraint(equalTo: emailLabel.bottomAnchor, constant: 7),
             emailText.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
-            emailText.heightAnchor.constraint(equalToConstant: 40),
+            emailText.heightAnchor.constraint(equalToConstant: 45),
             emailText.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
             emailAlertLabel.topAnchor.constraint(equalTo: emailText.bottomAnchor, constant: 5),
             emailAlertLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 45),

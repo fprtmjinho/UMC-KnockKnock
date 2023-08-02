@@ -59,6 +59,7 @@
 		C977A2772A684692001249E3 /* GroupMemberVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C977A2762A684692001249E3 /* GroupMemberVC.swift */; };
 		C977A2792A6854B6001249E3 /* AddGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C977A2782A6854B6001249E3 /* AddGroupView.swift */; };
 		C98C4DFA2A6120C00001BEAB /* ChangePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C4DF92A6120C00001BEAB /* ChangePasswordVC.swift */; };
+		C98EB7172A7ABA9600FAB4B8 /* LoginThirdVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98EB7162A7ABA9600FAB4B8 /* LoginThirdVC.swift */; };
 		C9D07CEE2A6A62290071C2F5 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D07CED2A6A62290071C2F5 /* CustomCell.swift */; };
 		C9D07CFA2A6AE74A0071C2F5 /* FriendProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D07CF92A6AE74A0071C2F5 /* FriendProfileView.swift */; };
 		C9D07CFC2A6C427C0071C2F5 /* HowtouseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D07CFB2A6C427C0071C2F5 /* HowtouseVC.swift */; };
@@ -151,10 +152,10 @@
 		C977A2762A684692001249E3 /* GroupMemberVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupMemberVC.swift; sourceTree = "<group>"; };
 		C977A2782A6854B6001249E3 /* AddGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupView.swift; sourceTree = "<group>"; };
 		C98C4DF92A6120C00001BEAB /* ChangePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordVC.swift; sourceTree = "<group>"; };
+		C98EB7162A7ABA9600FAB4B8 /* LoginThirdVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginThirdVC.swift; sourceTree = "<group>"; };
 		C9D07CED2A6A62290071C2F5 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 		C9D07CF92A6AE74A0071C2F5 /* FriendProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendProfileView.swift; sourceTree = "<group>"; };
 		C9D07CFB2A6C427C0071C2F5 /* HowtouseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowtouseVC.swift; sourceTree = "<group>"; };
-		C9D07CFF2A6C4FB30071C2F5 /* LoginThirdVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginThirdVC.swift; sourceTree = "<group>"; };
 		C9D07D0B2A6D663B0071C2F5 /* GroupProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupProfileView.swift; sourceTree = "<group>"; };
 		C9D07D0D2A6D66450071C2F5 /* GroupProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupProfileVC.swift; sourceTree = "<group>"; };
 		C9D07D0F2A6D74210071C2F5 /* GroupAlarmVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupAlarmVC.swift; sourceTree = "<group>"; };
@@ -296,7 +297,7 @@
 				C98C4DF92A6120C00001BEAB /* ChangePasswordVC.swift */,
 				C935FA1E2A58264B0035FA2C /* LoginFirstVC.swift */,
 				C935FA222A59357B0035FA2C /* LoginSecondVC.swift */,
-				C9D07CFF2A6C4FB30071C2F5 /* LoginThirdVC.swift */,
+				C98EB7162A7ABA9600FAB4B8 /* LoginThirdVC.swift */,
 				C935FA7F2A5D74980035FA2C /* AllowApproachVC.swift */,
 				C935FA7B2A5D63740035FA2C /* LoginAddFriendVC.swift */,
 				C935FA7D2A5D63840035FA2C /* LoginAddBestFriendVC.swift */,
@@ -629,6 +630,7 @@
 				C935FA7E2A5D63840035FA2C /* LoginAddBestFriendVC.swift in Sources */,
 				C977A2792A6854B6001249E3 /* AddGroupView.swift in Sources */,
 				C93246792A458D9400908D6B /* AppDelegate.swift in Sources */,
+				C98EB7172A7ABA9600FAB4B8 /* LoginThirdVC.swift in Sources */,
 				00E558F22A6FD3CC00EA73FC /* Login.swift in Sources */,
 				C9229C922A644B270017A45C /* ToChangePasswordVC.swift in Sources */,
 				C932467B2A458D9400908D6B /* SceneDelegate.swift in Sources */,
