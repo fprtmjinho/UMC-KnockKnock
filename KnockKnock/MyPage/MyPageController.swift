@@ -99,7 +99,7 @@ extension MyPageController {
             myPage.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
             myPage.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
             myPage.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
-            myPage.heightAnchor.constraint(equalToConstant: 470),
+            myPage.heightAnchor.constraint(equalToConstant: 490),
             myPage.widthAnchor.constraint(equalTo : scrollView.widthAnchor),
 
             myProfilePage.topAnchor.constraint(equalTo: myPage.bottomAnchor),

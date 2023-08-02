@@ -154,4 +154,13 @@ extension UILabel {
         }
         UIPasteboard.general.string = label.text // 텍스트가 복사됨
     }
+    
+    
+    func textguideExtension(){
+        self.font = UIFont.systemFont(ofSize: 16)
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.backgroundColor = .systemGray6
+        self.numberOfLines = 0
+        self.CopyOnLabel()
+    }
 }
