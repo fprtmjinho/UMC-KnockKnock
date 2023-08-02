@@ -30,7 +30,7 @@ class LoginThirdVC : UIViewController {
     
     let passwordText: UITextField = {
         let fourthText1 = UITextField()
-        fourthText1.placeholder = "6자리 이상 입력해주세요."
+        fourthText1.placeholder = "비밀번호를 입력해주세요."
         fourthText1.backgroundColor = .systemGray6
         fourthText1.layer.cornerRadius = 20
         fourthText1.addLeftPadding()
@@ -38,7 +38,15 @@ class LoginThirdVC : UIViewController {
         fourthText1.isSecureTextEntry = true
         return fourthText1
     }()
-    //글자 수 6개 이상이어야 통과하도록 수정해야 함
+   
+    let infoLabel : UILabel = {
+       let label = UILabel()
+        label.text = "*8자리 이상 영문 대소문자, 숫자, 특수문자를 포함해야합니다."
+        label.textColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 13)
+        return label
+    }()
     
     let passwordAlertLabel: UILabel = {
        let passwordAlertLabel = UILabel()
@@ -101,6 +109,7 @@ extension LoginThirdVC {
         view.addSubview(num5)
         view.addSubview(passwordLabel)
         view.addSubview(passwordText)
+        view.addSubview(infoLabel)
         view.addSubview(passwordAlertLabel)
         view.addSubview(passwordCheckLabel)
         view.addSubview(passwordCheckText)
@@ -112,6 +121,7 @@ extension LoginThirdVC {
         num5.translatesAutoresizingMaskIntoConstraints = false
         passwordLabel.translatesAutoresizingMaskIntoConstraints = false
         passwordText.translatesAutoresizingMaskIntoConstraints = false
+        infoLabel.translatesAutoresizingMaskIntoConstraints = false
         passwordAlertLabel.translatesAutoresizingMaskIntoConstraints = false
         passwordCheckLabel.translatesAutoresizingMaskIntoConstraints = false
         passwordCheckText.translatesAutoresizingMaskIntoConstraints = false
@@ -124,14 +134,18 @@ extension LoginThirdVC {
             num5.widthAnchor.constraint(equalToConstant: 25),
             num5.heightAnchor.constraint(equalToConstant: 25),
             
-            passwordLabel.bottomAnchor.constraint(equalTo: passwordText.topAnchor, constant: -10),
+            passwordLabel.topAnchor.constraint(equalTo:num5.bottomAnchor, constant: 10),
             passwordLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             
-            passwordText.topAnchor.constraint(equalTo: view.centerYAnchor),
+            passwordText.topAnchor.constraint(equalTo: passwordLabel.bottomAnchor, constant: 10),
             passwordText.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             passwordText.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
             passwordText.heightAnchor.constraint(equalToConstant: 45),
-            passwordAlertLabel.topAnchor.constraint(equalTo: passwordText.bottomAnchor, constant: 5),
+            infoLabel.topAnchor.constraint(equalTo: passwordText.bottomAnchor, constant: 5),
+            infoLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            
+            
+            passwordAlertLabel.topAnchor.constraint(equalTo: infoLabel.bottomAnchor, constant: 5),
             passwordAlertLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 45),
             passwordAlertLabel.heightAnchor.constraint(equalToConstant: 17),
             
