@@ -80,6 +80,12 @@ extension SettingVC: UITableViewDelegate, UITableViewDataSource {
             let guideVC = GuideVC()
             guideVC.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(guideVC, animated: true)
+            
+        case 4:
+            let privacyPolicyVC = PrivacyPolicyVC()
+            privacyPolicyVC.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(privacyPolicyVC, animated: true)
+            
         default:
             break
         }

@@ -11,7 +11,6 @@ class PostVC: UIViewController, CustomCommentCellDelegate {
     
     var myPost: Bool = true // 자신 글 여부
     
-    
     var categoryValue: Int! // 게시판 종류
     
     // 테이블 뷰 관련: post, comment, tableView

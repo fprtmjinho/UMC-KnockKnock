@@ -21,7 +21,7 @@ class GoodVC: UIViewController {
     var posts: [PostParsing] = []
     
     func fetchData(page: Int) {
-        let urlString = "http://43.200.240.251/board/allPosts?boardType=GOOD&page=\(page)&size=3"
+        let urlString = "http://43.200.240.251/board/allPosts?boardType=GOOD&page=\(page)&size=5"
         
         guard let url = URL(string: urlString) else {
             return
@@ -121,6 +121,7 @@ extension GoodVC: UITableViewDelegate, UITableViewDataSource {
         postVC.post.content = posts[indexPath.row].content
         postVC.post.likes = posts[indexPath.row].likes
         postVC.post.comments = posts[indexPath.row].comments
+        postVC.categoryValue = posts[indexPath.row].boardType
         postVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(postVC, animated: true)
     }

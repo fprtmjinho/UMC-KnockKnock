@@ -19,6 +19,7 @@
 		008C498C2A714EAF00BE6705 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008C498B2A714EAF00BE6705 /* Group.swift */; };
 		008C498E2A714ED700BE6705 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008C498D2A714ED700BE6705 /* Post.swift */; };
 		00E558F22A6FD3CC00EA73FC /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E558F12A6FD3CC00EA73FC /* Login.swift */; };
+		00E648552A7A2C05005AB40B /* PrivacyPolicyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E648542A7A2C05005AB40B /* PrivacyPolicyVC.swift */; };
 		00FD26582A5CE1520013E169 /* GuideVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FD26572A5CE1520013E169 /* GuideVC.swift */; };
 		55264A9DE1ED88A2B377A672 /* Pods_KnockKnock_KnockKnockUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DBA3859EDF2C9AF5B666E35 /* Pods_KnockKnock_KnockKnockUITests.framework */; };
 		630F1F3B064994AD0D3ACAEB /* Pods_KnockKnockTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6B9941AEDF608B7B3FABCB3 /* Pods_KnockKnockTests.framework */; };
@@ -99,6 +100,7 @@
 		008C498B2A714EAF00BE6705 /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Group.swift; path = ../Group.swift; sourceTree = "<group>"; };
 		008C498D2A714ED700BE6705 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		00E558F12A6FD3CC00EA73FC /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
+		00E648542A7A2C05005AB40B /* PrivacyPolicyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyVC.swift; sourceTree = "<group>"; };
 		00FD26572A5CE1520013E169 /* GuideVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideVC.swift; sourceTree = "<group>"; };
 		07D7546DE7B95907D6D91395 /* Pods-KnockKnock.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KnockKnock.debug.xcconfig"; path = "Target Support Files/Pods-KnockKnock/Pods-KnockKnock.debug.xcconfig"; sourceTree = "<group>"; };
 		1A3BB14BCA180BC7CE8155AA /* Pods-KnockKnockTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KnockKnockTests.debug.xcconfig"; path = "Target Support Files/Pods-KnockKnockTests/Pods-KnockKnockTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -339,6 +341,7 @@
 				C935FA1B2A57F1B90035FA2C /* MyProfilePage.swift */,
 				C935FA772A5C01200035FA2C /* SettingVC.swift */,
 				00FD26572A5CE1520013E169 /* GuideVC.swift */,
+				00E648542A7A2C05005AB40B /* PrivacyPolicyVC.swift */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -631,6 +634,7 @@
 				C9D07CFA2A6AE74A0071C2F5 /* FriendProfileView.swift in Sources */,
 				007B67C22A6D31F50087B264 /* PromiseVC.swift in Sources */,
 				C935FA252A59475A0035FA2C /* LoginSuccessVC.swift in Sources */,
+				00E648552A7A2C05005AB40B /* PrivacyPolicyVC.swift in Sources */,
 				C93246BF2A48313000908D6B /* SearchController.swift in Sources */,
 				C935FA802A5D74980035FA2C /* AllowApproachVC.swift in Sources */,
 				008463FD2A5D93BF009F4033 /* FriendListVC.swift in Sources */,
