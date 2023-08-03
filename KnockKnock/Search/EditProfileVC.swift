@@ -17,6 +17,15 @@ class EditProfileVC : UIViewController {
         label.font = .systemFont(ofSize: 14)
         return label
     }()
+    //앨범에서 이미지 가져오는 작업하려면 위에꺼 주석처리하고 이거 주석 풀고 하면 됨
+    //+ addtarget함수에 있는 주석도 풀어야함
+//    let editLabel : UIButton = {
+//        let label = UIButton()
+//        label.titleLabel?.text = "프로필 사진 편집"
+//        label.titleLabel?.textColor =  #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+//        label.titleLabel?.font = .systemFont(ofSize: 14)
+//        return label
+//    }()
     
     
     let ProfileView : UIImageView = {
@@ -37,6 +46,8 @@ class EditProfileVC : UIViewController {
     
     let nameText : UITextField = {
        let nametext = UITextField()
+        let fre = Friends.shared
+        nametext.text = fre.dic[fre.choiceNumber!]!.name
         nametext.placeholder = "입력해주세요!"
         nametext.backgroundColor = .systemGray6
         nametext.layer.cornerRadius = 10
@@ -53,6 +64,8 @@ class EditProfileVC : UIViewController {
 
      let nicknameText : UITextField = {
         let text = UITextField()
+         let fre = Friends.shared
+         text.text = fre.dic[fre.choiceNumber!]!.nickName
          text.placeholder = "입력해주세요!"
          text.backgroundColor = .systemGray6
          text.layer.cornerRadius = 10
@@ -69,6 +82,8 @@ class EditProfileVC : UIViewController {
     
     let numberText : UITextField = {
        let text = UITextField()
+        let fre = Friends.shared
+        text.text = fre.choiceNumber!
         text.placeholder = "입력해주세요!"
         text.backgroundColor = .systemGray6
         text.layer.cornerRadius = 10
@@ -76,8 +91,10 @@ class EditProfileVC : UIViewController {
         return text
     }()
     
-    let fre = Friends.shared
     let me = MyData.shared
+    let fre = Friends.shared
+    let imagePickerController = UIImagePickerController()
+    let alertController = UIAlertController(title: "올릴 방식을 선택하세요", message: "사진 찍기 또는 앨범에서 선택", preferredStyle: .actionSheet)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -158,6 +175,7 @@ extension EditProfileVC {
     
     func makeAddTarget(){
         saveBtn.addTarget(self, action: #selector(saveFriendData(_:)), for: .touchUpInside)
+        //editLabel.addTarget(self, action: #selector(enrollAlertEvent(_:)), for: .touchUpInside)
     }
     @objc func saveFriendData(_:UIButton){
         var newName: String = ""
@@ -175,22 +193,56 @@ extension EditProfileVC {
         if newNickName == ""{
             newNickName = fre.dic[fre.choiceNumber!]!.nickName
         }
-        // 번호 수정 만들어지면 적용할 곳
-//        if let number = numberText.text{
-//            newNumber = number
-//        }else{
-//            newNumber = fre.choiceNumber!
-//        }
-        newNumber = fre.choiceNumber!
+        if let number = numberText.text{
+            newNumber = number
+        }
+        if newNumber == ""{
+            newNumber = fre.choiceNumber!
+        }
         var info: Info = Info(
             name: newName,
             nickName: newNickName,
-            bestFriend: fre.dic[newNumber]!.bestFriend,
-            alram: fre.dic[newNumber]!.alram,
-            time: fre.dic[newNumber]!.time
+            bestFriend: fre.dic[fre.choiceNumber!]!.bestFriend,
+            alram: fre.dic[fre.choiceNumber!]!.alram,
+            time: fre.dic[fre.choiceNumber!]!.time
         )
-        fre.dic.removeValue(forKey: fre.choiceNumber!)
         fre.dic[newNumber] = info
+        fre.dic.removeValue(forKey: fre.choiceNumber!)
+        fre.choiceNumber = newNumber
         self.navigationController?.popViewController(animated: true)
+    }
+}
+// 앨범에서 이미지 가져오기
+extension EditProfileVC: UIImagePickerControllerDelegate,UINavigationControllerDelegate {
+    @objc func enrollAlertEvent(_:UILabel) {
+        let alert = UIAlertController(title: "사진 가져오기", message: "사진 유형을 선택해주세요", preferredStyle: .actionSheet)
+        let photoLibraryAlertAction = UIAlertAction(title: "사진 앨범", style: .default) { action in
+            self.openAlbum()
+            //DatePicker의 date를 btn의 title로 설정
+        }
+        let cancelAlertAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+                        
+        
+        alert.addAction(photoLibraryAlertAction)
+        alert.addAction(cancelAlertAction)
+        self.present(alert, animated: true)
+    }
+    @objc func openAlbum(){
+        self.imagePickerController.delegate = self
+        self.imagePickerController.sourceType = .photoLibrary
+        present(self.imagePickerController, animated: false, completion: nil)
+    }
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+            if let image = info[UIImagePickerController.InfoKey.originalImage]
+                as? UIImage {
+                //가져온 이미지를 UIImage뷰에 넣는 곳
+                ProfileView.image = image
+                ProfileView.layer.cornerRadius = ProfileView.frame.width/2
+                ProfileView.clipsToBounds = true
+            }
+            else {
+                print("error detected in didFinishPickinMediaWithInfo method")
+            }
+            dismiss(animated: true, completion: nil) // 반드시 dismiss 하기.
     }
 }
