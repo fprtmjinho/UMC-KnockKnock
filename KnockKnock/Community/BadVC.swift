@@ -21,7 +21,7 @@ class BadVC: UIViewController {
     var posts: [PostParsing] = []
     
     func fetchData(page: Int) {
-        let urlString = "http://43.200.240.251/board/allPosts?boardType=GOOD&page=\(page)&size=5"
+        let urlString = "http://43.200.240.251/board/allPosts?boardType=EVIL&page=\(page)&size=5"
         
         guard let url = URL(string: urlString) else {
             return
@@ -116,12 +116,11 @@ extension BadVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let postVC = PostVC()
-        postVC.categoryValue = 0 // 선 게시판
+        postVC.categoryValue = posts[indexPath.row].boardType
         postVC.post.title = posts[indexPath.row].title
         postVC.post.content = posts[indexPath.row].content
         postVC.post.likes = posts[indexPath.row].likes
         postVC.post.comments = posts[indexPath.row].comments
-        postVC.categoryValue = posts[indexPath.row].boardType
         postVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(postVC, animated: true)
     }

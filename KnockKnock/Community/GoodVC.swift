@@ -116,12 +116,11 @@ extension GoodVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let postVC = PostVC()
-        postVC.categoryValue = 0 // 선 게시판
+        postVC.categoryValue = posts[indexPath.row].boardType
         postVC.post.title = posts[indexPath.row].title
         postVC.post.content = posts[indexPath.row].content
         postVC.post.likes = posts[indexPath.row].likes
         postVC.post.comments = posts[indexPath.row].comments
-        postVC.categoryValue = posts[indexPath.row].boardType
         postVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(postVC, animated: true)
     }
