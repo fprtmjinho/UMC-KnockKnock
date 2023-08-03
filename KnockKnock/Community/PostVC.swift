@@ -11,7 +11,6 @@ class PostVC: UIViewController, CustomCommentCellDelegate {
     
     var myPost: Bool = true // 자신 글 여부
     
-    
     var categoryValue: Int! // 게시판 종류
     
     // 테이블 뷰 관련: post, comment, tableView
@@ -147,49 +146,95 @@ class PostVC: UIViewController, CustomCommentCellDelegate {
         self.title = categoryValue == 0 ? "선 게시판" : "악 게시판"
         view.backgroundColor = .white
         var image = UIImage(named: "more_vert")?.resizeImageTo(size: CGSize(width: 30, height: 30))
-        let rightBarButton = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(showActionSheet))
+        let rightBarButton = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(postShowActionSheet))
         navigationItem.rightBarButtonItem = rightBarButton
         
         makeSubView()
         makeConstraint()
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+            view.addGestureRecognizer(tapGesture)
     }
     
-    @objc func showActionSheet() {
-        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+    @objc func postShowActionSheet() {
+        let actionSheet = UIAlertController(title: "글 메뉴", message: nil, preferredStyle: .actionSheet)
+
         if myPost {
             // 자신의 글일 때
-            let action1 = UIAlertAction(title: "수정", style: .default) { _ in
-                let writeVC = WriteVC()
-                writeVC.index = self.categoryValue
-                writeVC.modify = true
-                writeVC.titleTextField.text = self.post.title
-                writeVC.contentTextView.text = self.post.content
-                writeVC.contentTextView.textColor = .label
-                writeVC.originalImages = self.post.images
-                writeVC.hidesBottomBarWhenPushed = true
-                self.navigationController?.pushViewController(writeVC, animated: true)
+            let modifyPost = UIAlertAction(title: "수정", style: .default) { _ in
+                // 글 수정 탭시 수행할 동작
             }
-            let action2 = UIAlertAction(title: "삭제", style: .default) { _ in
-                // Handle Action 2
+            let deletePost = UIAlertAction(title: "삭제", style: .default) { _ in
+                // 글 삭제 탭시 수행할 동작
+                self.navigationController?.popViewController(animated: true)
+                
             }
-            actionSheet.addAction(action1)
-            actionSheet.addAction(action2)
+            actionSheet.addAction(modifyPost)
+            actionSheet.addAction(deletePost)
         } else {
             // 자신의 글이 아닐 때
-            let action1 = UIAlertAction(title: "신고", style: .default) { _ in
-                // Handle Action 1
+            let reportPost = UIAlertAction(title: "신고", style: .default) { _ in
+                let reportActionSheet = UIAlertController(title: "신고 사유 선택", message: nil, preferredStyle: .actionSheet)
+                
+                let report1 = UIAlertAction(title: "게시판 성격에 부적절함", style: .default) { _ in
+                    
+                }
+                
+                let report2 = UIAlertAction(title: "음란물/불건전한 만남 및 대화", style: .default) { _ in
+                    
+                }
+                
+                let report3 = UIAlertAction(title: "낚시/놀람/도배", style: .default) { _ in
+                    
+                }
+                
+                let report4 = UIAlertAction(title: "욕설/비하", style: .default) { _ in
+                    
+                }
+                
+                let report5 = UIAlertAction(title: "정당/정치인 비하 및 선거운동", style: .default) { _ in
+                    
+                }
+                
+                let report6 = UIAlertAction(title: "상업적 광고 및 판매", style: .default) { _ in
+                    
+                }
+                
+                let report7 = UIAlertAction(title: "유출/사칭/사기", style: .default) { _ in
+                    
+                }
+                
+                reportActionSheet.addAction(report1)
+                reportActionSheet.addAction(report2)
+                reportActionSheet.addAction(report3)
+                reportActionSheet.addAction(report4)
+                reportActionSheet.addAction(report5)
+                reportActionSheet.addAction(report6)
+                reportActionSheet.addAction(report7)
+
+                let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+                reportActionSheet.addAction(cancelAction)
+
+                self.present(reportActionSheet, animated: true)
             }
-            actionSheet.addAction(action1)
+            actionSheet.addAction(reportPost)
         }
+
         let cancelAction = UIAlertAction(title: "취소", style: .cancel)
         actionSheet.addAction(cancelAction)
+
         // On iPad, the action sheet should be presented as a popover.
         if let popoverController = actionSheet.popoverPresentationController {
             popoverController.barButtonItem = navigationItem.rightBarButtonItem
         }
+
         present(actionSheet, animated: true)
     }
-    
+
+    @objc func handleTap() {
+        view.endEditing(true)
+    }
+
     
     @objc func anonymousImageButtonTapped(_ sender: UIButton) {
         isAnonymousSelected.toggle()
@@ -239,27 +284,77 @@ extension PostVC: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    func moreButtonTapped(cell: CustomCommentCell) {
-        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+    @objc func commentShowActionSheet(cell: CustomCommentCell) {
+        let actionSheet = UIAlertController(title: "댓글 메뉴", message: nil, preferredStyle: .actionSheet)
+
         if cell.myComment! {
-                    // 자신의 댓글일 때
-                    let action1 = UIAlertAction(title: "수정", style: .default) { _ in
-                        // Handle Action 1
-                    }
-                    let action2 = UIAlertAction(title: "삭제", style: .default) { _ in
-                        // Handle Action 2
-                    }
-                    actionSheet.addAction(action1)
-                    actionSheet.addAction(action2)
-                } else {
-                    // 자신의 댓글이 아닐 때
-                    let action1 = UIAlertAction(title: "신고", style: .default) { _ in
-                        // Handle Action 1
-                    }
-                    actionSheet.addAction(action1)
+            // 자신의 댓글일 때
+            let modifyPost = UIAlertAction(title: "수정", style: .default) { _ in
+                // 댓글 수정 탭시 수행할 동작
+                self.commentTextField.text = cell.commentLabel.text
+            }
+            let deletePost = UIAlertAction(title: "삭제", style: .default) { _ in
+                // 댓글 삭제 탭시 수행할 동작
+            }
+            actionSheet.addAction(modifyPost)
+            actionSheet.addAction(deletePost)
+        } else {
+            // 자신의 댓글이 아닐 때
+            let reportPost = UIAlertAction(title: "신고", style: .default) { _ in
+                let reportActionSheet = UIAlertController(title: "신고 사유 선택", message: nil, preferredStyle: .actionSheet)
+                
+                let report1 = UIAlertAction(title: "게시판 성격에 부적절함", style: .default) { _ in
+                    
                 }
+                
+                let report2 = UIAlertAction(title: "음란물/불건전한 만남 및 대화", style: .default) { _ in
+                    
+                }
+                
+                let report3 = UIAlertAction(title: "낚시/놀람/도배", style: .default) { _ in
+                    
+                }
+                
+                let report4 = UIAlertAction(title: "욕설/비하", style: .default) { _ in
+                    
+                }
+                
+                let report5 = UIAlertAction(title: "정당/정치인 비하 및 선거운동", style: .default) { _ in
+                    
+                }
+                
+                let report6 = UIAlertAction(title: "상업적 광고 및 판매", style: .default) { _ in
+                    
+                }
+                
+                let report7 = UIAlertAction(title: "유출/사칭/사기", style: .default) { _ in
+                    
+                }
+                
+                reportActionSheet.addAction(report1)
+                reportActionSheet.addAction(report2)
+                reportActionSheet.addAction(report3)
+                reportActionSheet.addAction(report4)
+                reportActionSheet.addAction(report5)
+                reportActionSheet.addAction(report6)
+                reportActionSheet.addAction(report7)
+
                 let cancelAction = UIAlertAction(title: "취소", style: .cancel)
-                actionSheet.addAction(cancelAction)
-            present(actionSheet, animated: true)
+                reportActionSheet.addAction(cancelAction)
+
+                self.present(reportActionSheet, animated: true)
+            }
+            actionSheet.addAction(reportPost)
         }
+
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+        actionSheet.addAction(cancelAction)
+
+        // On iPad, the action sheet should be presented as a popover.
+        if let popoverController = actionSheet.popoverPresentationController {
+            popoverController.barButtonItem = navigationItem.rightBarButtonItem
+        }
+
+        present(actionSheet, animated: true)
+    }
 }

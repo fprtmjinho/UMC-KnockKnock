@@ -9,22 +9,44 @@ import UIKit
 
 class GoodVC: UIViewController {
     
+    var page: Int = 1 // 페이지 번호
+    
+    var hasNext: Bool? // 다음 페이지가 있는지 여부
+    
+    let refreshControl = UIRefreshControl()
+    
+    // 버튼 탭 여부를 저장하는 배열
+    var buttonPressedStates: [String:Bool] = ["10대": false, "20대": false, "30대": false, "40대~": false]
+    
     var posts: [PostParsing] = []
     
-    func fetchData() {
-        let url = URL(string: "http://43.200.240.251/board/allPosts?boardType=GOOD")!
+    func fetchData(page: Int) {
+        let urlString = "http://43.200.240.251/board/allPosts?boardType=GOOD&page=\(page)&size=5"
         
-        let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
-            guard let data = data else { return }
+        guard let url = URL(string: urlString) else {
+            return
+        }
+        
+        let task = URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
+            guard let self = self, let data = data else {
+                return
+            }
             
             do {
                 let decoder = JSONDecoder()
-                self.posts = try decoder.decode([PostParsing].self, from: data)
+                let response = try decoder.decode(Response.self, from: data)
+                if page == 1 {
+                    self.posts = response.posts
+                } else {
+                    self.posts.append(contentsOf: response.posts)
+                }
+                
+                self.hasNext = response.hasNext
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
             } catch {
-                print("Error decoding JSON: \(error)")
+                print("Error parsing JSON: \(error)")
             }
         }
         
@@ -99,8 +121,22 @@ extension GoodVC: UITableViewDelegate, UITableViewDataSource {
         postVC.post.content = posts[indexPath.row].content
         postVC.post.likes = posts[indexPath.row].likes
         postVC.post.comments = posts[indexPath.row].comments
+        postVC.categoryValue = posts[indexPath.row].boardType
         postVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(postVC, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        // 현재 표시되는 테이블뷰 셀의 인덱스가 마지막 row 인덱스인지 확인
+        let lastRowIndex = tableView.numberOfRows(inSection: 0) - 1
+        if indexPath.row == lastRowIndex {
+            // 마지막 row에 도달하면 데이터를 추가로 fetch
+            if hasNext == false {
+                return
+            }
+            page += 1
+            fetchData(page: page)
+        }
     }
 }
 
@@ -165,7 +201,20 @@ extension GoodVC {
         makeConstraint()
         createButtons()
         
-        fetchData()
+        fetchData(page: page)
+        
+        // Pull-to-refresh 기능을 위한 refreshControl 설정
+        if #available(iOS 10.0, *) {
+            tableView.refreshControl = refreshControl
+        } else {
+            tableView.addSubview(refreshControl)
+        }
+        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        refreshData()
     }
     
     @objc func buttonTapped(_ sender: UIButton) {
@@ -175,16 +224,31 @@ extension GoodVC {
         
         if sender.isSelected {
             sender.isSelected = false
+            buttonPressedStates[title] = false
             sender.setTitleColor(.black, for: .normal)
             sender.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
         } else {
             sender.isSelected = true
+            buttonPressedStates[title] = true
             sender.setTitleColor(.white, for: .normal)
             sender.backgroundColor = #colorLiteral(red: 1, green: 0, blue: 0.3764705882, alpha: 1)
         }
         
         print("Button tapped: \(title)")
+        print(buttonPressedStates)
         
+    }
+    
+    // Pull-to-refresh를 위한 메서드
+    @objc func refreshData() {
+        // 데이터를 다시 가져오고 테이블뷰를 새로고침
+        page = 1
+        fetchData(page: page)
+        
+        // 새로고침이 완료되면 UIRefreshControl을 종료
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.refreshControl.endRefreshing()
+        }
     }
     
 }

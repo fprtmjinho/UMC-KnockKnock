@@ -36,14 +36,9 @@ struct Comment { // 댓글
     var myComment: Bool
 }
 
-struct Response: Codable {
-    var posts: [PostParsing]
-    var hasNext: Bool
-}
-
 struct PostParsing: Codable { // 게시글(게시판에서 보이는)
     var postID: Int
-    var boardType: Int
+    var boardType: String
     var name: String
     var title: String
     var content: String
@@ -52,7 +47,6 @@ struct PostParsing: Codable { // 게시글(게시판에서 보이는)
     var likes: Int
     var comments: Int
     var reports: Int
-    var imageUrl: [String]
     var hashtags: [String]
     
     enum CodingKeys: String, CodingKey {
@@ -66,7 +60,6 @@ struct PostParsing: Codable { // 게시글(게시판에서 보이는)
         case likes = "likeCount"
         case comments = "commentCount"
         case reports = "reportCount"
-        case imageUrl
         case hashtags
     }
 }
