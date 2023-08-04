@@ -24,7 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
        
 
 
-        window?.rootViewController = SayHelloTextGuideVC()
+        window?.rootViewController = mainViewController
         window?.makeKeyAndVisible()
     }
 

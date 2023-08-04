@@ -95,33 +95,18 @@ class LoginVC : UIViewController {
     
     
     
-    let ForKakaoBtn : UIButton = {
-        let btn = UIButton()
-        var config = UIButton.Configuration.filled()
+    let naverBtn : UIButton = {
+       let btn = UIButton()
+        var title = AttributedString("네이버로 간편로그인하기")
+        title.font =  UIFont.systemFont(ofSize: 15, weight: .light)
+        var config = UIButton.Configuration.plain()
+        config.attributedTitle = title
+        config.background.strokeColor = #colorLiteral(red: 0.131085664, green: 0.8754685521, blue: 0.2015054226, alpha: 1)
+        config.baseForegroundColor = .black
         config.cornerStyle = .capsule
-        config.baseBackgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-        config.image = UIImage(named: "kakao talk")?.resizeImageTo(size: CGSize(width: 30, height: 30) )
-        btn.configuration = config
-        return btn
-    }()
-    
-    
-    let ForNaverBtn : UIButton = {
-        let btn = UIButton()
-        var config = UIButton.Configuration.filled()
-        config.cornerStyle = .capsule
-        config.baseBackgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-        config.image = UIImage(named: "naver")?.resizeImageTo(size: CGSize(width: 30, height: 30) )
-        btn.configuration = config
-        return btn
-    }()
-    
-    let ForGoogleBtn : UIButton = {
-        let btn = UIButton()
-        var config = UIButton.Configuration.filled()
-        config.cornerStyle = .capsule
-        config.baseBackgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-        config.image = UIImage(named: "google")?.resizeImageTo(size: CGSize(width: 30, height: 30) )
+        let naverimage = UIImage(named: "naverIcon")!.resizeImageTo(size: CGSize(width: 20, height: 20))
+        config.image = naverimage
+        config.imagePadding = 10
         btn.configuration = config
         return btn
     }()
@@ -239,10 +224,7 @@ extension LoginVC {
         view.addSubview(PasswordText)
         view.addSubview(LoginButton)
         view.addSubview(ForgetPassword)
-        
-        view.addSubview(ForKakaoBtn)
-        view.addSubview(ForNaverBtn)
-        view.addSubview(ForGoogleBtn)
+        view.addSubview(naverBtn)
         
         view.addSubview(EasyLogin)
         view.addSubview(LoginGuide_1)
@@ -258,9 +240,7 @@ extension LoginVC {
         LoginButton.translatesAutoresizingMaskIntoConstraints = false
         PasswordText.translatesAutoresizingMaskIntoConstraints = false
         ForgetPassword.translatesAutoresizingMaskIntoConstraints = false
-        ForKakaoBtn.translatesAutoresizingMaskIntoConstraints = false
-        ForNaverBtn.translatesAutoresizingMaskIntoConstraints = false
-        ForGoogleBtn.translatesAutoresizingMaskIntoConstraints = false
+        naverBtn.translatesAutoresizingMaskIntoConstraints = false
         EasyLogin.translatesAutoresizingMaskIntoConstraints = false
         LoginGuide_1.translatesAutoresizingMaskIntoConstraints = false
         LoginGuide_2.translatesAutoresizingMaskIntoConstraints = false
@@ -309,21 +289,10 @@ extension LoginVC {
             LoginGuide_2.heightAnchor.constraint(equalToConstant: 1),
             LoginGuide_2.widthAnchor.constraint(equalToConstant: 105),
             
-            ForNaverBtn.topAnchor.constraint(equalTo: EasyLogin.bottomAnchor, constant: 20),
-            ForNaverBtn.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            ForNaverBtn.widthAnchor.constraint(equalToConstant: 50),
-            ForNaverBtn.heightAnchor.constraint(equalToConstant: 50),
-            
-            ForKakaoBtn.topAnchor.constraint(equalTo: EasyLogin.bottomAnchor, constant: 20),
-            ForKakaoBtn.trailingAnchor.constraint(equalTo: ForNaverBtn.leadingAnchor, constant: -20),
-            ForKakaoBtn.widthAnchor.constraint(equalTo : ForNaverBtn.widthAnchor),
-            ForKakaoBtn.heightAnchor.constraint(equalTo : ForNaverBtn.heightAnchor),
-            
-            ForGoogleBtn.topAnchor.constraint(equalTo: EasyLogin.bottomAnchor, constant: 20),
-            ForGoogleBtn.leadingAnchor.constraint(equalTo: ForNaverBtn.trailingAnchor, constant: 20),
-            ForGoogleBtn.widthAnchor.constraint(equalTo : ForNaverBtn.widthAnchor),
-            ForGoogleBtn.heightAnchor.constraint(equalTo : ForNaverBtn.heightAnchor),
-            
+            naverBtn.topAnchor.constraint(equalTo: EasyLogin.bottomAnchor, constant: 20),
+            naverBtn.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            naverBtn.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            naverBtn.heightAnchor.constraint(equalToConstant: 50),
             
             NotYet.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 80),
             NotYet.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30),
@@ -338,7 +307,12 @@ extension LoginVC {
         self.SignUp.addTarget(self, action: #selector(signUpFunc(_:)), for: .touchUpInside)
         self.LoginButton.addTarget(self, action: #selector(loginSuccess(_:)), for: .touchUpInside)
         //회원가입 뷰로 이동
+        self.naverBtn.addTarget(self, action: #selector(easyLoginfunc(_:)), for: .touchUpInside)
         
+    }
+    
+    @objc func easyLoginfunc(_:UIButton){
+        //간편 로그인
     }
     
     func showAlert(message: String) {
