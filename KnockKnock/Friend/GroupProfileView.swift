@@ -15,13 +15,6 @@ class GroupProfileView : UIView {
         return label
     }()
     
-    let editmemberBtn : UIButton = {
-       let btn = UIButton()
-        btn.setTitle("편집", for: .normal)
-        btn.setTitleColor(.gray, for: .normal)
-        return btn
-    }()
-    
     let membertableView : UITableView = UITableView(frame: .zero, style: .plain)
     
     let groupAlarmLabel : UILabel = {
@@ -31,9 +24,9 @@ class GroupProfileView : UIView {
          return label
     }()
     
-    let groupAlarmBtn : UIButton = {
-        let btn = UIButton(type: .detailDisclosure)
-        return btn
+    let groupAlarmSwitch : UISwitch = {
+        let swit = UISwitch()
+        return swit
     }()
     
     let placeLabel : UILabel = {
@@ -110,26 +103,22 @@ extension GroupProfileView : UITableViewDelegate, UITableViewDataSource {
 extension GroupProfileView {
     func makeSubView(){
         addSubview(memberLabel)
-        addSubview(editmemberBtn)
         addSubview(membertableView)
         addSubview(groupAlarmLabel)
-        addSubview(groupAlarmBtn)
+        addSubview(groupAlarmSwitch)
         addSubview(placeLabel)
         
     }
     func makeConstraint(){
         memberLabel.translatesAutoresizingMaskIntoConstraints = false
-        editmemberBtn.translatesAutoresizingMaskIntoConstraints = false
         membertableView.translatesAutoresizingMaskIntoConstraints = false
         groupAlarmLabel.translatesAutoresizingMaskIntoConstraints = false
-        groupAlarmBtn.translatesAutoresizingMaskIntoConstraints = false
+        groupAlarmSwitch.translatesAutoresizingMaskIntoConstraints = false
         placeLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             memberLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 30),
             memberLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
-            editmemberBtn.topAnchor.constraint(equalTo: memberLabel.topAnchor),
-            editmemberBtn.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
             
             membertableView.topAnchor.constraint(equalTo: memberLabel.bottomAnchor, constant: 7),
             membertableView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
@@ -138,16 +127,15 @@ extension GroupProfileView {
             
             groupAlarmLabel.topAnchor.constraint(equalTo: membertableView.bottomAnchor, constant: 30),
             groupAlarmLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
-            groupAlarmBtn.topAnchor.constraint(equalTo: groupAlarmLabel.topAnchor),
-            groupAlarmBtn.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
+            groupAlarmSwitch.topAnchor.constraint(equalTo: groupAlarmLabel.topAnchor),
+            groupAlarmSwitch.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
             
-            placeLabel.topAnchor.constraint(equalTo: groupAlarmBtn.bottomAnchor, constant: 30),
+            placeLabel.topAnchor.constraint(equalTo: groupAlarmSwitch.bottomAnchor, constant: 30),
             placeLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30)
         
             
         ])
     }
-    
     
     //임시로 적용
     func getData(){

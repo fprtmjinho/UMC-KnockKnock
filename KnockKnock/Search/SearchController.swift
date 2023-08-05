@@ -151,6 +151,7 @@ extension SearchController : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "friendList") ?? UITableViewCell(style: .subtitle, reuseIdentifier: "friendList")
+
         var selected = UIImage(named: "SelectedCheckCircle")?.resizeImageTo(size: CGSize(width: 25, height: 25))
         var unSelected = UIImage(named: "UnselectedCheckCircle")?.resizeImageTo(size: CGSize(width: 25, height:25))
         if bestFriendList[indexPath.row] == true{
@@ -174,6 +175,7 @@ extension SearchController : UITableViewDelegate, UITableViewDataSource {
         //cell 클릭시 체크가 안되어있으면 체크, 체크가 되어있으면 체크풀기
         
     }
+
     
     
     func tableView(_: UITableView, heightForRowAt: IndexPath) -> CGFloat{

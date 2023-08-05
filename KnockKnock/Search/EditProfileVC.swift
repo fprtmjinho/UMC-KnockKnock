@@ -10,12 +10,12 @@ class EditProfileVC : UIViewController {
     
     var saveBtn : UIButton = UIButton()
     
-    let editLabel : UILabel = {
-        let label = UILabel()
-        label.text = "프로필 사진 편집"
-        label.textColor =  #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-        label.font = .systemFont(ofSize: 14)
-        return label
+    let editBtn : UIButton = {
+        let btn = UIButton()
+        btn.setTitle("프로필 사진 편집", for: .normal)
+        btn.setTitleColor(#colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1), for: .normal)
+        btn.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        return btn
     }()
     //앨범에서 이미지 가져오는 작업하려면 위에꺼 주석처리하고 이거 주석 풀고 하면 됨
     //+ addtarget함수에 있는 주석도 풀어야함
@@ -111,7 +111,7 @@ class EditProfileVC : UIViewController {
 extension EditProfileVC {
     func makeSubView(){
         view.addSubview(ProfileView)
-        view.addSubview(editLabel)
+        view.addSubview(editBtn)
         view.addSubview(nameLabel)
         view.addSubview(nameText)
         view.addSubview(nicknameLabel)
@@ -125,7 +125,7 @@ extension EditProfileVC {
     
     func makeConstraint(){
         ProfileView.translatesAutoresizingMaskIntoConstraints = false
-        editLabel.translatesAutoresizingMaskIntoConstraints = false
+        editBtn.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         nameText.translatesAutoresizingMaskIntoConstraints = false
         nicknameLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -139,10 +139,10 @@ extension EditProfileVC {
             ProfileView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30),
             ProfileView.widthAnchor.constraint(equalToConstant: 100),
             ProfileView.heightAnchor.constraint(equalToConstant: 100),
-            editLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            editLabel.topAnchor.constraint(equalTo: ProfileView.bottomAnchor, constant: 5),
+            editBtn.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            editBtn.topAnchor.constraint(equalTo: ProfileView.bottomAnchor, constant: 5),
             
-            nameLabel.topAnchor.constraint(equalTo: editLabel.bottomAnchor, constant: 50),
+            nameLabel.topAnchor.constraint(equalTo: editBtn.bottomAnchor, constant: 50),
             nameLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             nameLabel.heightAnchor.constraint(equalToConstant: 30),
             
