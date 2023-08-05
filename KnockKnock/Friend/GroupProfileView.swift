@@ -72,8 +72,8 @@ extension GroupProfileView : UITableViewDelegate, UITableViewDataSource {
         cell.detailTextLabel?.text = numberList[indexPath.row]
         cell.textLabel!.font = UIFont.systemFont(ofSize: 15)
         cell.textLabel!.textColor = UIColor.black
-       cell.detailTextLabel!.font = UIFont.systemFont(ofSize: 12)
-        cell.detailTextLabel!.textColor = UIColor.systemGray2
+       cell.detailTextLabel?.font = UIFont.systemFont(ofSize: 12)
+        cell.detailTextLabel?.textColor = UIColor.systemGray2
         
         return cell
     }

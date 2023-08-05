@@ -27,6 +27,7 @@ class GroupProfileVC : UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setNavigationBar()
+        editNavigationBarBtn()
         makeSubView()
         makeConstraint()
         makeAddTarget()
@@ -49,9 +50,25 @@ extension GroupProfileVC {
         view.addSubview(scrollView)
         scrollView.addSubview(groupProfileView)
     }
+    
     func makeConstraint(){
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         groupProfileView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            groupProfileView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
+            groupProfileView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
+            groupProfileView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
+            groupProfileView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
+            groupProfileView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
+        ])
+        let contentViewHeight = groupProfileView.heightAnchor.constraint(greaterThanOrEqualTo: view.heightAnchor)
+        contentViewHeight.priority = .defaultLow
+        contentViewHeight.isActive = true
         
     }
     func makeAddTarget(){
@@ -65,5 +82,15 @@ extension GroupProfileVC {
     
     @objc func groupAlarmSwitchFunc(_: UIButton){
         //그룹 알림 on/off 설정
+    }
+    
+    func editNavigationBarBtn(){
+        let editbtn = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(editNavigationBarBtnFunc(_:)))
+        editbtn.tintColor = .systemGray2
+        navigationItem.rightBarButtonItem = editbtn
+    }
+    
+    @objc func editNavigationBarBtnFunc(_: UINavigationItem){
+        navigationController?.pushViewController(EditGroupVC(), animated: true)
     }
 }
