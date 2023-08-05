@@ -25,7 +25,6 @@
 		630F1F3B064994AD0D3ACAEB /* Pods_KnockKnockTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6B9941AEDF608B7B3FABCB3 /* Pods_KnockKnockTests.framework */; };
 		C9229C8C2A6441A70017A45C /* AddBFVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9229C8B2A6441A70017A45C /* AddBFVC.swift */; };
 		C9229C8E2A6441DB0017A45C /* AddGroupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9229C8D2A6441DB0017A45C /* AddGroupVC.swift */; };
-		C9229C922A644B270017A45C /* ToChangePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9229C912A644B270017A45C /* ToChangePasswordVC.swift */; };
 		C9229C942A64592E0017A45C /* EditProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9229C932A64592E0017A45C /* EditProfileVC.swift */; };
 		C93246792A458D9400908D6B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93246782A458D9400908D6B /* AppDelegate.swift */; };
 		C932467B2A458D9400908D6B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C932467A2A458D9400908D6B /* SceneDelegate.swift */; };
@@ -67,6 +66,7 @@
 		C98EB71F2A7AC52F00FAB4B8 /* AppointmentTextGuideVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98EB71E2A7AC52F00FAB4B8 /* AppointmentTextGuideVC.swift */; };
 		C98EB7212A7E877900FAB4B8 /* EditGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98EB7202A7E877900FAB4B8 /* EditGroupView.swift */; };
 		C98EB7232A7E878100FAB4B8 /* EditGroupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98EB7222A7E878100FAB4B8 /* EditGroupVC.swift */; };
+		C98EB7252A7EB11700FAB4B8 /* ChangePasswordSuccessVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98EB7242A7EB11700FAB4B8 /* ChangePasswordSuccessVC.swift */; };
 		C9D07CEE2A6A62290071C2F5 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D07CED2A6A62290071C2F5 /* CustomCell.swift */; };
 		C9D07CFA2A6AE74A0071C2F5 /* FriendProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D07CF92A6AE74A0071C2F5 /* FriendProfileView.swift */; };
 		C9D07CFC2A6C427C0071C2F5 /* HowtouseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D07CFB2A6C427C0071C2F5 /* HowtouseVC.swift */; };
@@ -121,7 +121,6 @@
 		C6E3773EEB3DC8AFF5BD12A1 /* Pods-KnockKnock-KnockKnockUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KnockKnock-KnockKnockUITests.release.xcconfig"; path = "Target Support Files/Pods-KnockKnock-KnockKnockUITests/Pods-KnockKnock-KnockKnockUITests.release.xcconfig"; sourceTree = "<group>"; };
 		C9229C8B2A6441A70017A45C /* AddBFVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBFVC.swift; sourceTree = "<group>"; };
 		C9229C8D2A6441DB0017A45C /* AddGroupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupVC.swift; sourceTree = "<group>"; };
-		C9229C912A644B270017A45C /* ToChangePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToChangePasswordVC.swift; sourceTree = "<group>"; };
 		C9229C932A64592E0017A45C /* EditProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileVC.swift; sourceTree = "<group>"; };
 		C93246752A458D9400908D6B /* KnockKnock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KnockKnock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C93246782A458D9400908D6B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -167,6 +166,7 @@
 		C98EB71E2A7AC52F00FAB4B8 /* AppointmentTextGuideVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppointmentTextGuideVC.swift; sourceTree = "<group>"; };
 		C98EB7202A7E877900FAB4B8 /* EditGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditGroupView.swift; sourceTree = "<group>"; };
 		C98EB7222A7E878100FAB4B8 /* EditGroupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditGroupVC.swift; sourceTree = "<group>"; };
+		C98EB7242A7EB11700FAB4B8 /* ChangePasswordSuccessVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordSuccessVC.swift; sourceTree = "<group>"; };
 		C9D07CED2A6A62290071C2F5 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 		C9D07CF92A6AE74A0071C2F5 /* FriendProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendProfileView.swift; sourceTree = "<group>"; };
 		C9D07CFB2A6C427C0071C2F5 /* HowtouseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowtouseVC.swift; sourceTree = "<group>"; };
@@ -307,8 +307,8 @@
 			children = (
 				C935FA202A58656C0035FA2C /* LoginVC.swift */,
 				C935FA852A5EB6010035FA2C /* FindPasswordVC.swift */,
-				C9229C912A644B270017A45C /* ToChangePasswordVC.swift */,
 				C98C4DF92A6120C00001BEAB /* ChangePasswordVC.swift */,
+				C98EB7242A7EB11700FAB4B8 /* ChangePasswordSuccessVC.swift */,
 				C935FA1E2A58264B0035FA2C /* LoginFirstVC.swift */,
 				C935FA222A59357B0035FA2C /* LoginSecondVC.swift */,
 				C98EB7162A7ABA9600FAB4B8 /* LoginThirdVC.swift */,
@@ -658,7 +658,6 @@
 				C98EB7172A7ABA9600FAB4B8 /* LoginThirdVC.swift in Sources */,
 				C98EB7192A7AC4D200FAB4B8 /* SayHelloTextGuideVC.swift in Sources */,
 				00E558F22A6FD3CC00EA73FC /* Login.swift in Sources */,
-				C9229C922A644B270017A45C /* ToChangePasswordVC.swift in Sources */,
 				C932467B2A458D9400908D6B /* SceneDelegate.swift in Sources */,
 				C935FA7C2A5D63740035FA2C /* LoginAddFriendVC.swift in Sources */,
 				C935FA272A59BC840035FA2C /* Extension.swift in Sources */,
@@ -666,6 +665,7 @@
 				00124F1B2A63CB6000536EAD /* PostVC.swift in Sources */,
 				C935FA1F2A58264B0035FA2C /* LoginFirstVC.swift in Sources */,
 				C98EB71B2A7AC4E500FAB4B8 /* BirthTextGuideVC.swift in Sources */,
+				C98EB7252A7EB11700FAB4B8 /* ChangePasswordSuccessVC.swift in Sources */,
 				00FD26582A5CE1520013E169 /* GuideVC.swift in Sources */,
 				C9D07D102A6D74210071C2F5 /* GroupAlarmVC.swift in Sources */,
 				C933F4552A5EFBBA0089670A /* EditMyPageVC.swift in Sources */,

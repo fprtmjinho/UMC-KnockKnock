@@ -27,7 +27,7 @@ class ChangePasswordVC : UIViewController {
         fourthText1.isSecureTextEntry = true
         return fourthText1
     }()
-    //글자 수 6개 이상이어야 통과하도록 수정해야 함
+    //글자 수 8개 이상이어야 통과하도록 수정해야 함
     
     
     let passwordCheckLabel: UILabel = {
@@ -106,5 +106,7 @@ extension ChangePasswordVC {
     
     @objc func changePasswordFunc(_: UIButton){
         //비밀번호 변경
+        
+        navigationController?.popToRootViewController(animated: true)
     }
 }

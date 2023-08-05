@@ -138,6 +138,20 @@ class FriendProfileView : UIView {
         return bfSwitch
     }()
     
+    let alarmLabel : UILabel = {
+       let Label = UILabel()
+        Label.text = "연락 알림"
+        Label.font = UIFont.boldSystemFont(ofSize: 18)
+        return Label
+    }()
+    
+    let alarmSwitch : UISwitch = {
+       let Switch = UISwitch()
+        return Switch
+    }()
+    
+    
+    
     
     
     override init(frame: CGRect) {
@@ -170,6 +184,8 @@ extension FriendProfileView {
         addSubview(addAlarmBtn)
         addSubview(setBFLabel)
         addSubview(BfSwitch)
+        addSubview(alarmLabel)
+        addSubview(alarmSwitch)
             }
     func makeConstraint(){
         
@@ -189,6 +205,8 @@ extension FriendProfileView {
         addAlarmBtn.translatesAutoresizingMaskIntoConstraints = false
         setBFLabel.translatesAutoresizingMaskIntoConstraints = false
         BfSwitch.translatesAutoresizingMaskIntoConstraints = false
+        alarmLabel.translatesAutoresizingMaskIntoConstraints = false
+        alarmSwitch.translatesAutoresizingMaskIntoConstraints = false
         
         
         NSLayoutConstraint.activate([
@@ -243,7 +261,11 @@ extension FriendProfileView {
             setBFLabel.topAnchor.constraint(equalTo: addAlarmBtn.bottomAnchor, constant: 40),
             setBFLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 30),
             BfSwitch.topAnchor.constraint(equalTo: setBFLabel.topAnchor),
-            BfSwitch.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -30)
+            BfSwitch.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -30),
+            alarmLabel.topAnchor.constraint(equalTo: setBFLabel.bottomAnchor, constant: 40),
+            alarmLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            alarmSwitch.topAnchor.constraint(equalTo: alarmLabel.topAnchor),
+            alarmSwitch.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -30)
             
         ])
         let contentViewHeight = myText.heightAnchor.constraint(greaterThanOrEqualTo: textScroll.heightAnchor)

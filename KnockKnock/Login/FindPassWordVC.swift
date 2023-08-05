@@ -13,7 +13,7 @@ class FindPasswordVC : UIViewController{
     let emailLabel : UILabel = {
         let label = UILabel()
         label.text = "이메일 계정"
-        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.font = UIFont.boldSystemFont(ofSize: 18)
         return label
     }()
     
@@ -50,7 +50,7 @@ class FindPasswordVC : UIViewController{
     let emailCheckLabel : UILabel = {
         let label = UILabel()
         label.text = "인증코드"
-        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.font = UIFont.boldSystemFont(ofSize: 18)
         return label
     }()
     
@@ -213,7 +213,7 @@ extension FindPasswordVC {
             emailAlertLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 45),
             emailAlertLabel.heightAnchor.constraint(equalToConstant: 17),
             
-            emailBtn.topAnchor.constraint(equalTo: emailAlertLabel.bottomAnchor, constant: 20),
+            emailBtn.topAnchor.constraint(equalTo: emailAlertLabel.bottomAnchor, constant: 5),
             emailBtn.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
             emailBtn.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
             emailBtn.heightAnchor.constraint(equalToConstant: 40),

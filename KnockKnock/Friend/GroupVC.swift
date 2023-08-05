@@ -73,6 +73,16 @@ class GroupVC: UIViewController {
          //row 두께 설정
      }
      
+     
+     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+         if editingStyle == .delete {
+             nameList.remove(at: indexPath.row)
+             tableView.deleteRows(at: [indexPath], with: .fade)
+             
+         }
+         //화이팅!
+     }
+     
      func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
          let cell = tableView.cellForRow(at: indexPath)
          nextView(index:indexPath)
