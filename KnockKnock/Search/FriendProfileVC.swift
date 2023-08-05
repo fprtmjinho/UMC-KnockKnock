@@ -22,7 +22,7 @@ class FriendProfileVC : UIViewController {
     var best: Bool?
     var alrams: Bool?
     var times: String = ""
-    var hiddens: Bool?
+    var images: Data?
 
   
     
@@ -122,7 +122,8 @@ extension FriendProfileVC {
                 nickName:nickNames,
                 bestFriend:best!,
                 alram:alrams!,
-                time:times
+                time:times,
+                image:images!
             )
         friendData.dic[number] = info
         print(friendData.dic[number])
@@ -137,6 +138,11 @@ extension FriendProfileVC {
         }else{
             friendprofileView.BfSwitch.isOn = false
         }
+        if images != nil{
+            friendprofileView.ProfileView.layer.cornerRadius = friendprofileView.ProfileView.frame.width/2
+            friendprofileView.ProfileView.image = UIImage(data: images!)
+            friendprofileView.ProfileView.clipsToBounds = true
+        }
     }
     @objc func getData(){
         number = friendData.choiceNumber!
@@ -146,6 +152,7 @@ extension FriendProfileVC {
         best = dic!.bestFriend
         alrams = dic!.alram
         times = dic!.time
+        images = dic!.image
     }
     
 }

@@ -6,26 +6,27 @@
 //
 
 import UIKit
+import CoreData
 class EditProfileVC : UIViewController {
     
     var saveBtn : UIButton = UIButton()
     
-    let editLabel : UILabel = {
-        let label = UILabel()
-        label.text = "프로필 사진 편집"
-        label.textColor =  #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-        label.font = .systemFont(ofSize: 14)
-        return label
-    }()
-    //앨범에서 이미지 가져오는 작업하려면 위에꺼 주석처리하고 이거 주석 풀고 하면 됨
-    //+ addtarget함수에 있는 주석도 풀어야함
-//    let editLabel : UIButton = {
-//        let label = UIButton()
-//        label.titleLabel?.text = "프로필 사진 편집"
-//        label.titleLabel?.textColor =  #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-//        label.titleLabel?.font = .systemFont(ofSize: 14)
+//    let editLabel : UILabel = {
+//        let label = UILabel()
+//        label.text = "프로필 사진 편집"
+//        label.textColor =  #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+//        label.font = .systemFont(ofSize: 14)
 //        return label
 //    }()
+    //앨범에서 이미지 가져오는 작업하려면 위에꺼 주석처리하고 이거 주석 풀고 하면 됨
+    //+ addtarget함수에 있는 주석도 풀어야함
+    let editLabel : UIButton = {
+        let label = UIButton()
+        label.titleLabel?.text = "프로필 사진 편집"
+        label.titleLabel?.textColor =  #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+        label.titleLabel?.font = .systemFont(ofSize: 14)
+        return label
+    }()
     
     
     let ProfileView : UIImageView = {
@@ -93,7 +94,7 @@ class EditProfileVC : UIViewController {
     
     let me = MyData.shared
     let fre = Friends.shared
-    let imagePickerController = UIImagePickerController()
+    var imagePickerController = UIImagePickerController()
     let alertController = UIAlertController(title: "올릴 방식을 선택하세요", message: "사진 찍기 또는 앨범에서 선택", preferredStyle: .actionSheet)
 
     override func viewDidLoad() {
@@ -175,12 +176,13 @@ extension EditProfileVC {
     
     func makeAddTarget(){
         saveBtn.addTarget(self, action: #selector(saveFriendData(_:)), for: .touchUpInside)
-        //editLabel.addTarget(self, action: #selector(enrollAlertEvent(_:)), for: .touchUpInside)
+        editLabel.addTarget(self, action: #selector(enrollAlertEvent(_:)), for: .touchUpInside)
     }
     @objc func saveFriendData(_:UIButton){
         var newName: String = ""
         var newNickName: String = ""
         var newNumber: String = ""
+        var png: Data?
         if let name = nameText.text{
             newName = name
         }
@@ -199,21 +201,27 @@ extension EditProfileVC {
         if newNumber == ""{
             newNumber = fre.choiceNumber!
         }
+        if let data = ProfileView.image?.pngData(){
+            png = data
+        }
+        print(newName)
         var info: Info = Info(
             name: newName,
             nickName: newNickName,
             bestFriend: fre.dic[fre.choiceNumber!]!.bestFriend,
             alram: fre.dic[fre.choiceNumber!]!.alram,
-            time: fre.dic[fre.choiceNumber!]!.time
+            time: fre.dic[fre.choiceNumber!]!.time,
+            image: png!
         )
-        fre.dic[newNumber] = info
         fre.dic.removeValue(forKey: fre.choiceNumber!)
+        fre.dic[newNumber] = info
         fre.choiceNumber = newNumber
         self.navigationController?.popViewController(animated: true)
     }
 }
 // 앨범에서 이미지 가져오기
 extension EditProfileVC: UIImagePickerControllerDelegate,UINavigationControllerDelegate {
+    
     @objc func enrollAlertEvent(_:UILabel) {
         let alert = UIAlertController(title: "사진 가져오기", message: "사진 유형을 선택해주세요", preferredStyle: .actionSheet)
         let photoLibraryAlertAction = UIAlertAction(title: "사진 앨범", style: .default) { action in
@@ -230,10 +238,11 @@ extension EditProfileVC: UIImagePickerControllerDelegate,UINavigationControllerD
     @objc func openAlbum(){
         self.imagePickerController.delegate = self
         self.imagePickerController.sourceType = .photoLibrary
+        self.imagePickerController.allowsEditing = false
         present(self.imagePickerController, animated: false, completion: nil)
     }
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-            if let image = info[UIImagePickerController.InfoKey.originalImage]
+        if let image = info[.originalImage]
                 as? UIImage {
                 //가져온 이미지를 UIImage뷰에 넣는 곳
                 ProfileView.image = image

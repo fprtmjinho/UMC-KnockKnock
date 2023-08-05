@@ -88,7 +88,6 @@ class AddGroupView : UIView {
         sortData()
         makeSubView()
         makeConstraint()
-        memberTableview.reloadData()
         settableView()
         makeAddTarget()
         print(nameList)

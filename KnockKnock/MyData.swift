@@ -13,6 +13,7 @@ class MyData {
     var nickName: String = ""
     var sex: String = ""
     var birthday: String = ""
+    var myText: String = ""
     
     
     private func Init() {}
