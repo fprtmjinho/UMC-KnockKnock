@@ -51,9 +51,9 @@ extension FriendListVC : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "BestFriendList") ?? UITableViewCell(style: .subtitle, reuseIdentifier: "BestFriendList")
+        let BFimage = UIImage(named: "BF")?.resizeImageTo(size: CGSize(width: 65, height: 25))
         cell.backgroundColor = .systemGray6
-
-        cell.accessoryType = .disclosureIndicator
+        cell.accessoryView = UIImageView(image: BFimage)
         
         cell.textLabel?.text = nameList[indexPath.row]
         cell.detailTextLabel?.text = numberList[indexPath.row]

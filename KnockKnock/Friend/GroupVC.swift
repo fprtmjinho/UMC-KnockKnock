@@ -78,7 +78,7 @@ class GroupVC: UIViewController {
          if editingStyle == .delete {
              nameList.remove(at: indexPath.row)
              tableView.deleteRows(at: [indexPath], with: .fade)
-             
+             //remove 확인용 alarm 필요
          }
          //화이팅!
      }

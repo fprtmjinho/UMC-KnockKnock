@@ -123,7 +123,7 @@ extension FriendProfileVC {
                 bestFriend:best!,
                 alram:alrams!,
                 time:times,
-                image:images!
+                image:images
             )
         friendData.dic[number] = info
         print(friendData.dic[number])

@@ -108,6 +108,14 @@ extension AddGroupView : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "groupMemberList") ?? UITableViewCell(style: .subtitle, reuseIdentifier: "gourpMemberList")
+        let BFimage = UIImage(named: "BFonly")?.resizeImageTo(size: CGSize(width: 65, height: 25))
+        /*
+        if groupMemberList[indexPath.row] == true{
+            cell.accessoryView = UIImageView(image: BFimage))
+        }else{
+            cell.accessoryView = .none
+        }*/
+        
         
         cell.backgroundColor = .systemGray6
         cell.textLabel?.text = nameList[indexPath.row]

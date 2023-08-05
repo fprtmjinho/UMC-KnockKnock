@@ -152,10 +152,10 @@ extension SearchController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "friendList") ?? UITableViewCell(style: .subtitle, reuseIdentifier: "friendList")
 
-        var selected = UIImage(named: "SelectedCheckCircle")?.resizeImageTo(size: CGSize(width: 25, height: 25))
-        var unSelected = UIImage(named: "UnselectedCheckCircle")?.resizeImageTo(size: CGSize(width: 25, height:25))
+        let selected = UIImage(named: "BF")?.resizeImageTo(size: CGSize(width: 65, height: 25))
+        let unSelected = UIImage(named: "expand")?.resizeImageTo(size: CGSize(width: 25, height:25))
         if bestFriendList[indexPath.row] == true{
-            cell.accessoryView = UIImageView(image:selected)
+            cell.accessoryView = UIImageView(image: selected)
         }else{
             cell.accessoryView = UIImageView(image:unSelected)
         }
