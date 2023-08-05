@@ -36,16 +36,26 @@ class GoodVC: UIViewController {
             do {
                 let decoder = JSONDecoder()
                 let response = try decoder.decode(Response.self, from: data)
+                
                 if page == 1 {
                     self.posts = response.posts
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
                 } else {
-                    self.posts.append(contentsOf: response.posts)
+                    let newPosts = response.posts
+                    let currentPostsCount = self.posts.count
+                    let (start, end) = (currentPostsCount, newPosts.count + currentPostsCount)
+                    let indexPaths = (start..<end).map { IndexPath(row: $0, section: 0) }
+                    
+                    DispatchQueue.main.async {
+                        self.posts.append(contentsOf: newPosts)
+                        self.tableView.insertRows(at: indexPaths, with: .automatic)
+                    }
                 }
                 
                 self.hasNext = response.hasNext
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
+                
             } catch {
                 print("Error parsing JSON: \(error)")
             }
@@ -53,6 +63,7 @@ class GoodVC: UIViewController {
         
         task.resume()
     }
+
     
     // 나이대 버튼 관련: buttonStackView, buttonTitles, createButtons
     let buttonStackView: UIStackView = {
@@ -99,7 +110,7 @@ class GoodVC: UIViewController {
     
 }
 
-extension GoodVC: UITableViewDelegate, UITableViewDataSource {
+extension GoodVC: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return posts.count
@@ -130,18 +141,17 @@ extension GoodVC: UITableViewDelegate, UITableViewDataSource {
         navigationController?.pushViewController(postVC, animated: true)
     }
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        // 현재 표시되는 테이블뷰 셀의 인덱스가 마지막 row 인덱스인지 확인
-        let lastRowIndex = tableView.numberOfRows(inSection: 0) - 1
-        if indexPath.row == lastRowIndex {
-            // 마지막 row에 도달하면 데이터를 추가로 fetch
-            if hasNext == false {
-                return
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+            let position = scrollView.contentOffset.y
+            if position > (tableView.contentSize.height - 100 - scrollView.frame.size.height) {
+                guard let hasNext = hasNext, hasNext else {
+                    return
+                }
+                page += 1
+                fetchData(page: page)
             }
-            page += 1
-            fetchData(page: page)
         }
-    }
+    
 }
 
 extension GoodVC {

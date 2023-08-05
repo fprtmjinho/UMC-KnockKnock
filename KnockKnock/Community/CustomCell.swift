@@ -171,6 +171,7 @@ extension CustomCell {
     }
     
     
+    
     func configureCell(with post: PostParsing) {
         titleLabel.text = post.title
         contentLabel.text = post.content
