@@ -67,14 +67,13 @@ extension FriendListVC : UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.cellForRow(at: indexPath)
         nextView(index:indexPath)
         //cell 클릭시 체크가 안되어있으면 체크, 체크가 되어있으면 체크풀기
-        
     }
-    
     
     func tableView(_: UITableView, heightForRowAt: IndexPath) -> CGFloat{
         return 60
         //row 두께 설정
     }
+
     
     func setTableView(){
         view.addSubview(tableView)
