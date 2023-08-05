@@ -10,11 +10,6 @@ import SDWebImage
 
 class CustomCell: UITableViewCell { // 게시글 커스텀
     
-    weak var delegate: CustomCellDelegate?
-    var isImageDownloaded = false
-    
-    var images: [UIImageView] = []
-    
     let profileImageView: UIImageView = { // 프로필 사진
         let imageView = UIImageView()
         imageView.image = UIImage(named: "karim")
@@ -41,7 +36,7 @@ class CustomCell: UITableViewCell { // 게시글 커스텀
         return label
     }()
     
-    var imagesView: UIImageView = { // 글 이미지
+    let imagesView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
@@ -181,25 +176,6 @@ extension CustomCell {
         contentLabel.text = post.content
         likesLabel.text = "\(post.likes)"
         commentsLabel.text = "\(post.comments)"
-
-        if post.imageUrl.count > 0 {
-            if let imageURL = URL(string: post.imageUrl[0]) {
-                imagesView.sd_setImage(with: imageURL)
-                if !isImageDownloaded {
-                    self.delegate?.cellDidFinishImageDownload(for: self)
-                    if imagesView.image != nil {
-                        isImageDownloaded = true
-                    }
-                }
-            }
-        } else {
-            imagesView.image = nil
-        }
-
     }
-    
-}
 
-protocol CustomCellDelegate: AnyObject {
-    func cellDidFinishImageDownload(for cell: CustomCell)
 }

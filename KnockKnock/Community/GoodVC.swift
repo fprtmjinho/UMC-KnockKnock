@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class GoodVC: UIViewController {
     
@@ -107,13 +108,16 @@ extension GoodVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! CustomCell
         let post = posts[indexPath.row]
-        cell.delegate = self
+        if post.imageUrl.count != 0 {
+            cell.imagesView.sd_setImage(with: URL(string: post.imageUrl[0]), placeholderImage: UIImage(named: "beach"))
+        }
         cell.configureCell(with: post)
         cell.makeSubView()
         cell.makeConstraint()
         cell.selectionStyle = .none
         return cell
     }
+
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let postVC = PostVC()
@@ -202,7 +206,7 @@ extension GoodVC {
         createButtons()
         
         fetchData(page: page)
-        
+
         // Pull-to-refresh 기능을 위한 refreshControl 설정
         if #available(iOS 10.0, *) {
             tableView.refreshControl = refreshControl
@@ -210,11 +214,6 @@ extension GoodVC {
             tableView.addSubview(refreshControl)
         }
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        refreshData()
     }
     
     @objc func buttonTapped(_ sender: UIButton) {
@@ -251,16 +250,4 @@ extension GoodVC {
         }
     }
     
-}
-
-
-extension GoodVC: CustomCellDelegate {
-    func cellDidFinishImageDownload(for cell: CustomCell) {
-        // 이미지 다운로드가 완료되었을 때 호출되는 메서드
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            if let indexPath = self.tableView.indexPath(for: cell) {
-                self.tableView.reloadRows(at: [indexPath], with: .none)
-            }
-        }
-    }
 }
