@@ -107,6 +107,7 @@ extension GoodVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! CustomCell
         let post = posts[indexPath.row]
+        cell.delegate = self
         cell.configureCell(with: post)
         cell.makeSubView()
         cell.makeConstraint()
@@ -250,4 +251,16 @@ extension GoodVC {
         }
     }
     
+}
+
+
+extension GoodVC: CustomCellDelegate {
+    func cellDidFinishImageDownload(for cell: CustomCell) {
+        // 이미지 다운로드가 완료되었을 때 호출되는 메서드
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            if let indexPath = self.tableView.indexPath(for: cell) {
+                self.tableView.reloadRows(at: [indexPath], with: .none)
+            }
+        }
+    }
 }

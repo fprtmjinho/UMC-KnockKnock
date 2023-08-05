@@ -6,8 +6,14 @@
 //
 
 import UIKit
+import SDWebImage
 
 class CustomCell: UITableViewCell { // 게시글 커스텀
+    
+    weak var delegate: CustomCellDelegate?
+    var isImageDownloaded = false
+    
+    var images: [UIImageView] = []
     
     let profileImageView: UIImageView = { // 프로필 사진
         let imageView = UIImageView()
@@ -35,8 +41,10 @@ class CustomCell: UITableViewCell { // 게시글 커스텀
         return label
     }()
     
-    let imagesView: UIImageView = { // 글 이미지
+    var imagesView: UIImageView = { // 글 이미지
         let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         return imageView
     }()
     
@@ -132,7 +140,7 @@ extension CustomCell {
                 imagesView.topAnchor.constraint(equalTo: contentContainerView.bottomAnchor, constant: 4),
                 imagesView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 90),
                 imagesView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -30),
-                imagesView.heightAnchor.constraint(equalToConstant: 90),
+                imagesView.heightAnchor.constraint(equalToConstant: 120),
             ]
         }
         
@@ -171,8 +179,27 @@ extension CustomCell {
     func configureCell(with post: PostParsing) {
         titleLabel.text = post.title
         contentLabel.text = post.content
-        imagesView.image = nil
         likesLabel.text = "\(post.likes)"
         commentsLabel.text = "\(post.comments)"
+
+        if post.imageUrl.count > 0 {
+            if let imageURL = URL(string: post.imageUrl[0]) {
+                imagesView.sd_setImage(with: imageURL)
+                if !isImageDownloaded {
+                    self.delegate?.cellDidFinishImageDownload(for: self)
+                    if imagesView.image != nil {
+                        isImageDownloaded = true
+                    }
+                }
+            }
+        } else {
+            imagesView.image = nil
+        }
+
     }
+    
+}
+
+protocol CustomCellDelegate: AnyObject {
+    func cellDidFinishImageDownload(for cell: CustomCell)
 }

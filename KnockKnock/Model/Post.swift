@@ -47,12 +47,12 @@ struct PostParsing: Codable { // 게시글(게시판에서 보이는)
     var name: String
     var title: String
     var content: String
+    var imageUrl: [String]
     let createdAt: String
     let modifiedAt: String
     var likes: Int
     var comments: Int
     var reports: Int
-    var imageUrl: [String]
     var hashtags: [String]
     
     enum CodingKeys: String, CodingKey {
@@ -61,12 +61,12 @@ struct PostParsing: Codable { // 게시글(게시판에서 보이는)
         case name = "nickName"
         case title
         case content
+        case imageUrl
         case createdAt
         case modifiedAt
         case likes = "likeCount"
         case comments = "commentCount"
         case reports = "reportCount"
-        case imageUrl
         case hashtags
     }
 }
