@@ -41,11 +41,9 @@ class AddGroupVC : UIViewController {
         self.title = "모임 추가하기"
         setScrollView()
         
-        
+        AddGroupView().memberTableview.reloadData()
         makeSubView()
         makeConstraint()
-        AddGroupView().memberTableview.reloadData()
-        AddGroupView().settableView()
         makeAddTarget()
     }
     

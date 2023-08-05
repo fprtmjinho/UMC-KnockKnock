@@ -205,7 +205,8 @@ extension AddFriendVC {
                     nickName: nickNames,
                     bestFriend: false,
                     alram: true,
-                    time:formatter.string(from: Date())
+                    time:formatter.string(from: Date()),
+                    image:nil
                 )
                 fre.dic[phoneNumber] = addInfo
             }else{
@@ -215,7 +216,8 @@ extension AddFriendVC {
                     nickName: nickNames,
                     bestFriend: false,
                     alram: true,
-                    time:formatter.string(from: Date())
+                    time:formatter.string(from: Date()),
+                    image:nil
                 )
                 for key in fre.dic.keys{
                     var dic = fre.dic[key]

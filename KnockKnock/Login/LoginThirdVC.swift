@@ -176,26 +176,23 @@ extension LoginThirdVC {
         if let passwordSameText = passwordCheckText.text{
             passwordSame = passwordSameText
         }
-        let checkTwo : Bool = passwordCheck()
-        if (checkTwo){
-            return
-        }
-        
-        if (password != passwordSame){
-            passwordCheckText.layer.borderColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-            passwordCheckText.layer.borderWidth = 2
-            passwordCheckAlertLabel.textColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-            return
-        }else{
-            passwordCheckText.layer.borderWidth = 0
-            passwordCheckAlertLabel.textColor = .white
+        if (passwordEmptyCheck()){ return }
+        if (passwordCheck()){ return }
+        if (passwordNotSame(passwordSame: passwordSame)){ return }
+        else{
             UserDefaults.standard.set(password, forKey: "password")
             UserDefaults.standard.synchronize()
             nextView()
         }
+        
     }
-    
-    func passwordCheck()->Bool{
+    func isPasswordValidFormat(password: String?) -> Bool {
+        guard let password = password else { return false }
+        let passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])[A-Za-z\\d!@#$%^&*]{8,}$"
+        let passwordPredicate = NSPredicate(format: "SELF MATCHES %@", passwordRegex)
+        return passwordPredicate.evaluate(with: password)
+    }
+    func passwordEmptyCheck()->Bool{
         if (password == ""){
             passwordText.layer.borderColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
             passwordText.layer.borderWidth = 2
@@ -205,6 +202,30 @@ extension LoginThirdVC {
         else{
             passwordText.layer.borderWidth = 0
             passwordAlertLabel.textColor = .white
+            return false
+        }
+    }
+    func passwordCheck()->Bool{
+        if (!isPasswordValidFormat(password: password)){
+            passwordText.layer.borderColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+            passwordText.layer.borderWidth = 2
+            infoLabel.textColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+            return true
+        }else{
+            passwordText.layer.borderWidth = 0
+            infoLabel.textColor = .white
+            return false
+        }
+    }
+    func passwordNotSame(passwordSame:String)->Bool{
+        if (password != passwordSame){
+            passwordCheckText.layer.borderColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+            passwordCheckText.layer.borderWidth = 2
+            passwordCheckAlertLabel.textColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+            return true
+        }else{
+            passwordCheckText.layer.borderWidth = 0
+            passwordCheckAlertLabel.textColor = .white
             return false
         }
     }
