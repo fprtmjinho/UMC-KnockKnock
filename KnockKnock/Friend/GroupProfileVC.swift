@@ -55,8 +55,7 @@ extension GroupProfileVC {
         
     }
     func makeAddTarget(){
-        groupProfileView.editmemberBtn.addTarget(self, action: #selector(editmemberBtnFunc(_:)), for: .touchUpInside)
-        groupProfileView.groupAlarmBtn.addTarget(self, action: #selector(groupAlarmBtnFunc(_:)), for: .touchUpInside)
+        groupProfileView.groupAlarmSwitch.addTarget(self, action: #selector(groupAlarmSwitchFunc(_:)), for: .touchUpInside)
         
     }
     @objc func editmemberBtnFunc(_: UIButton){
@@ -64,7 +63,7 @@ extension GroupProfileVC {
         navigationController?.pushViewController(groupmemberVC, animated: true)
     }
     
-    @objc func groupAlarmBtnFunc(_: UIButton){
-        navigationController?.pushViewController(GroupAlarmVc(), animated: true)
+    @objc func groupAlarmSwitchFunc(_: UIButton){
+        //그룹 알림 on/off 설정
     }
 }
