@@ -154,7 +154,7 @@ extension GoodVC: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelega
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
             let position = scrollView.contentOffset.y
-            if position > (tableView.contentSize.height - 100 - scrollView.frame.size.height) {
+            if position > (tableView.contentSize.height - 200 - scrollView.frame.size.height) {
                 guard let hasNext = hasNext, hasNext else {
                     return
                 }

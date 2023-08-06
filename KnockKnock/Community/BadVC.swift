@@ -1,19 +1,20 @@
 //
-//  BadVC.swift
+//  GoodVC.swift
 //  KnockKnock
 //
 //  Created by 티모시 킴 on 2023/07/11.
 //
 
 import UIKit
+import SDWebImage
 
 class BadVC: UIViewController {
+    
+    let refreshControl = UIRefreshControl()
     
     var page: Int = 1 // 페이지 번호
     
     var hasNext: Bool? // 다음 페이지가 있는지 여부
-    
-    let refreshControl = UIRefreshControl()
     
     // 버튼 탭 여부를 저장하는 배열
     var buttonPressedStates: [String:Bool] = ["10대": false, "20대": false, "30대": false, "40대~": false]
@@ -35,16 +36,37 @@ class BadVC: UIViewController {
             do {
                 let decoder = JSONDecoder()
                 let response = try decoder.decode(Response.self, from: data)
-                if page == 1 {
+                
+                if page == 0 {
+                    let indexPaths = (0..<self.posts.count).map {IndexPath(row: $0, section: 0)}
+                    DispatchQueue.main.async {
+                        self.tableView.deleteRows(at: indexPaths, with: .automatic)
+                    }
+                    self.page = 1
                     self.posts = response.posts
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                }
+                else if page == 1 {
+                    self.posts = response.posts
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                        self.tableView.reloadData()
+                    }
                 } else {
-                    self.posts.append(contentsOf: response.posts)
+                    let newPosts = response.posts
+                    let currentPostsCount = self.posts.count
+                    let (start, end) = (currentPostsCount, newPosts.count + currentPostsCount)
+                    let indexPaths = (start..<end).map { IndexPath(row: $0, section: 0) }
+                    
+                    DispatchQueue.main.async {
+                        self.posts.append(contentsOf: newPosts)
+                        self.tableView.insertRows(at: indexPaths, with: .automatic)
+                    }
                 }
                 
                 self.hasNext = response.hasNext
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
+                
             } catch {
                 print("Error parsing JSON: \(error)")
             }
@@ -52,6 +74,7 @@ class BadVC: UIViewController {
         
         task.resume()
     }
+
     
     // 나이대 버튼 관련: buttonStackView, buttonTitles, createButtons
     let buttonStackView: UIStackView = {
@@ -98,7 +121,7 @@ class BadVC: UIViewController {
     
 }
 
-extension BadVC: UITableViewDelegate, UITableViewDataSource {
+extension BadVC: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return posts.count
@@ -107,12 +130,16 @@ extension BadVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! CustomCell
         let post = posts[indexPath.row]
+        if post.imageUrl.count != 0 {
+            cell.imagesView.sd_setImage(with: URL(string: post.imageUrl[0]), placeholderImage: UIImage(named: "beach"))
+        }
         cell.configureCell(with: post)
         cell.makeSubView()
         cell.makeConstraint()
         cell.selectionStyle = .none
         return cell
     }
+
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let postVC = PostVC()
@@ -125,17 +152,17 @@ extension BadVC: UITableViewDelegate, UITableViewDataSource {
         navigationController?.pushViewController(postVC, animated: true)
     }
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        // 현재 표시되는 테이블뷰 셀의 인덱스가 마지막 row 인덱스인지 확인
-        let lastRowIndex = tableView.numberOfRows(inSection: 0) - 1
-        if indexPath.row == lastRowIndex {
-            if hasNext == false {
-                return
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+            let position = scrollView.contentOffset.y
+            if position > (tableView.contentSize.height - 200 - scrollView.frame.size.height) {
+                guard let hasNext = hasNext, hasNext else {
+                    return
+                }
+                page += 1
+                fetchData(page: page)
             }
-            page += 1
-            fetchData(page: page)
         }
-    }
+    
 }
 
 extension BadVC {
@@ -199,21 +226,22 @@ extension BadVC {
         makeConstraint()
         createButtons()
         
-        fetchData(page: page)
+        setupRefreshControl()
         
-        // Pull-to-refresh 기능을 위한 refreshControl 설정
-        if #available(iOS 10.0, *) {
-            tableView.refreshControl = refreshControl
-        } else {
-            tableView.addSubview(refreshControl)
-        }
-        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        fetchData(page: page)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        refreshData()
+    func setupRefreshControl() {
+        tableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshPostsData(_:)), for: .valueChanged)
     }
+    
+    @objc private func refreshPostsData(_ sender: Any) {
+        fetchData(page: 0)
+        refreshControl.endRefreshing()
+    }
+
+
     
     @objc func buttonTapped(_ sender: UIButton) {
         guard let title = sender.titleLabel?.text else {
@@ -235,18 +263,6 @@ extension BadVC {
         print("Button tapped: \(title)")
         print(buttonPressedStates)
         
-    }
-    
-    // Pull-to-refresh를 위한 메서드
-    @objc func refreshData() {
-        // 데이터를 다시 가져오고 테이블뷰를 새로고침
-        page = 1
-        fetchData(page: page)
-        
-        // 새로고침이 완료되면 UIRefreshControl을 종료
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.refreshControl.endRefreshing()
-        }
     }
     
 }
