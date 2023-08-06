@@ -178,5 +178,5 @@ extension CustomCell {
         likesLabel.text = "\(post.likes)"
         commentsLabel.text = "\(post.comments)"
     }
-
+    
 }

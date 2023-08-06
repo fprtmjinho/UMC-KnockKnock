@@ -10,11 +10,11 @@ import SDWebImage
 
 class GoodVC: UIViewController {
     
+    let refreshControl = UIRefreshControl()
+    
     var page: Int = 1 // 페이지 번호
     
     var hasNext: Bool? // 다음 페이지가 있는지 여부
-    
-    let refreshControl = UIRefreshControl()
     
     // 버튼 탭 여부를 저장하는 배열
     var buttonPressedStates: [String:Bool] = ["10대": false, "20대": false, "30대": false, "40대~": false]
@@ -37,7 +37,18 @@ class GoodVC: UIViewController {
                 let decoder = JSONDecoder()
                 let response = try decoder.decode(Response.self, from: data)
                 
-                if page == 1 {
+                if page == 0 {
+                    let indexPaths = (0..<self.posts.count).map {IndexPath(row: $0, section: 0)}
+                    DispatchQueue.main.async {
+                        self.tableView.deleteRows(at: indexPaths, with: .automatic)
+                    }
+                    self.page = 1
+                    self.posts = response.posts
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                }
+                else if page == 1 {
                     self.posts = response.posts
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
@@ -215,16 +226,22 @@ extension GoodVC {
         makeConstraint()
         createButtons()
         
+        setupRefreshControl()
+        
         fetchData(page: page)
-
-        // Pull-to-refresh 기능을 위한 refreshControl 설정
-        if #available(iOS 10.0, *) {
-            tableView.refreshControl = refreshControl
-        } else {
-            tableView.addSubview(refreshControl)
-        }
-        refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
     }
+    
+    func setupRefreshControl() {
+        tableView.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshPostsData(_:)), for: .valueChanged)
+    }
+    
+    @objc private func refreshPostsData(_ sender: Any) {
+        fetchData(page: 0)
+        refreshControl.endRefreshing()
+    }
+
+
     
     @objc func buttonTapped(_ sender: UIButton) {
         guard let title = sender.titleLabel?.text else {
@@ -246,18 +263,6 @@ extension GoodVC {
         print("Button tapped: \(title)")
         print(buttonPressedStates)
         
-    }
-    
-    // Pull-to-refresh를 위한 메서드
-    @objc func refreshData() {
-        // 데이터를 다시 가져오고 테이블뷰를 새로고침
-        page = 1
-        fetchData(page: page)
-        
-        // 새로고침이 완료되면 UIRefreshControl을 종료
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.refreshControl.endRefreshing()
-        }
     }
     
 }
