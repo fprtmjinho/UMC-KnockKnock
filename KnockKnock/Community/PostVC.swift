@@ -143,7 +143,6 @@ class PostVC: UIViewController, CustomCommentCellDelegate {
         var image = UIImage(named: "more_vert")?.resizeImageTo(size: CGSize(width: 30, height: 30))
         let rightBarButton = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(postShowActionSheet))
         navigationItem.rightBarButtonItem = rightBarButton
-        
         downloadAndSetImages(for: post.imageURL)
         
         makeSubView()
@@ -154,21 +153,31 @@ class PostVC: UIViewController, CustomCommentCellDelegate {
     }
     
     func downloadAndSetImages(for imageURLs: [String]) {
-        for urlString in imageURLs {
-            if let imageURL = URL(string: urlString) {
-                SDWebImageDownloader.shared.downloadImage(with: imageURL) { (image, _, _, _) in
-                    if let image = image {
-                        self.post.images.append(image)
-                        
-                        DispatchQueue.main.async {
-                            let indexPath = IndexPath(row: 0, section: 0)
-                            self.tableView.reloadRows(at: [indexPath], with: .automatic)
-                        }
+        downloadImageSequentially(from: imageURLs, index: 0)
+    }
+    
+    func downloadImageSequentially(from urls: [String], index: Int) {
+        guard index < urls.count else {
+            return
+        }
+        
+        if let imageURL = URL(string: urls[index]) {
+            SDWebImageDownloader.shared.downloadImage(with: imageURL) { (image, _, _, _) in
+                if let image = image {
+                    self.post.images.append(image)
+                    
+                    DispatchQueue.main.async {
+                        let indexPath = IndexPath(row: 0, section: 0)
+                        self.tableView.reloadRows(at: [indexPath], with: .automatic)
                     }
+                    
+                    // 다음 이미지 다운로드
+                    self.downloadImageSequentially(from: urls, index: index + 1)
                 }
             }
         }
     }
+    
     
     @objc func postShowActionSheet() {
         let actionSheet = UIAlertController(title: "글 메뉴", message: nil, preferredStyle: .actionSheet)

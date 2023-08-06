@@ -22,7 +22,7 @@ class GoodVC: UIViewController {
     var posts: [PostParsing] = []
     
     func fetchData(page: Int) {
-        let urlString = "http://43.200.240.251/board/allPosts?boardType=GOOD&page=\(page)&size=5"
+        let urlString = "http://54.180.168.54/board/allPosts?boardType=GOOD&page=\(page)&size=5"
         
         guard let url = URL(string: urlString) else {
             return
@@ -37,18 +37,7 @@ class GoodVC: UIViewController {
                 let decoder = JSONDecoder()
                 let response = try decoder.decode(Response.self, from: data)
                 
-                if page == 0 {
-                    let indexPaths = (0..<self.posts.count).map {IndexPath(row: $0, section: 0)}
-                    DispatchQueue.main.async {
-                        self.tableView.deleteRows(at: indexPaths, with: .automatic)
-                    }
-                    self.page = 1
-                    self.posts = response.posts
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
-                }
-                else if page == 1 {
+                if page == 1 {
                     self.posts = response.posts
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
@@ -74,7 +63,7 @@ class GoodVC: UIViewController {
         
         task.resume()
     }
-
+    
     
     // 나이대 버튼 관련: buttonStackView, buttonTitles, createButtons
     let buttonStackView: UIStackView = {
@@ -130,16 +119,27 @@ extension GoodVC: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelega
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! CustomCell
         let post = posts[indexPath.row]
+        
+        cell.resetCell()
+        
+        
+        cell.imagesView.image = nil
+        
         if post.imageUrl.count != 0 {
             cell.imagesView.sd_setImage(with: URL(string: post.imageUrl[0]), placeholderImage: UIImage(named: "beach"))
+            cell.makeSubView1()
+            cell.makeConstraint1()
+        } else {
+            cell.makeSubView2()
+            cell.makeConstraint2()
         }
+        
         cell.configureCell(with: post)
-        cell.makeSubView()
-        cell.makeConstraint()
         cell.selectionStyle = .none
         return cell
     }
-
+    
+    
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let postVC = PostVC()
@@ -150,15 +150,14 @@ extension GoodVC: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelega
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-            let position = scrollView.contentOffset.y
-            if position > (tableView.contentSize.height - 200 - scrollView.frame.size.height) {
-                guard let hasNext = hasNext, hasNext else {
-                    return
-                }
+        let position = scrollView.contentOffset.y
+        if position > (tableView.contentSize.height - tableView.bounds.size.height - 100) {
+            if hasNext == true {
                 page += 1
                 fetchData(page: page)
             }
         }
+    }
     
 }
 
@@ -184,10 +183,6 @@ extension GoodVC {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(CustomCell.self, forCellReuseIdentifier: "PostCell")
-        
-        if let postCell = tableView.dequeueReusableCell(withIdentifier: "PostCell") as? CustomCell {
-            postCell.makeSubView()
-        }
         
         view.addSubview(buttonStackView)
         view.addSubview(searchBar)
@@ -222,10 +217,8 @@ extension GoodVC {
         makeSubView()
         makeConstraint()
         createButtons()
-        
-        setupRefreshControl()
-        
-        fetchData(page: page)
+        setupRefreshControl() // 새로고침
+        fetchData(page: page) // 첫 화면: page = 1
     }
     
     func setupRefreshControl() {
@@ -234,11 +227,12 @@ extension GoodVC {
     }
     
     @objc private func refreshPostsData(_ sender: Any) {
-        fetchData(page: 0)
+        page = 1
+        fetchData(page: page)
         refreshControl.endRefreshing()
     }
-
-
+    
+    
     
     @objc func buttonTapped(_ sender: UIButton) {
         guard let title = sender.titleLabel?.text else {

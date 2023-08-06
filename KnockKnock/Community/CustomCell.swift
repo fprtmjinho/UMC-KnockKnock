@@ -82,14 +82,12 @@ class CustomCell: UITableViewCell { // 게시글 커스텀
 }
 
 extension CustomCell {
-    func makeSubView() {
+    func makeSubView1() { // 이미지 있는 경우
         contentView.addSubview(profileImageView)
         contentView.addSubview(titleLabel)
         contentView.addSubview(contentContainerView)
         contentContainerView.addSubview(contentLabel)
-        if imagesView.image != nil {
-            contentView.addSubview(imagesView)
-        }
+        contentView.addSubview(imagesView)
         contentView.addSubview(likesView)
         contentView.addSubview(likesLabel)
         contentView.addSubview(commentsView)
@@ -97,7 +95,86 @@ extension CustomCell {
         contentView.addSubview(shareButton)
     }
     
-    func makeConstraint() {
+    func makeSubView2() { // 이미지 없는 경우
+        contentView.addSubview(profileImageView)
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(contentContainerView)
+        contentContainerView.addSubview(contentLabel)
+        contentView.addSubview(likesView)
+        contentView.addSubview(likesLabel)
+        contentView.addSubview(commentsView)
+        contentView.addSubview(commentsLabel)
+        contentView.addSubview(shareButton)
+    }
+    
+    func makeConstraint1() {
+        profileImageView.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        contentLabel.translatesAutoresizingMaskIntoConstraints = false
+        contentContainerView.translatesAutoresizingMaskIntoConstraints = false
+        imagesView.translatesAutoresizingMaskIntoConstraints = false
+        likesView.translatesAutoresizingMaskIntoConstraints = false
+        likesLabel.translatesAutoresizingMaskIntoConstraints = false
+        commentsView.translatesAutoresizingMaskIntoConstraints = false
+        commentsLabel.translatesAutoresizingMaskIntoConstraints = false
+        shareButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        var constraints = [
+            profileImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+            profileImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 23),
+            profileImageView.widthAnchor.constraint(equalToConstant: 45),
+            profileImageView.heightAnchor.constraint(equalToConstant: 45),
+            
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 90),
+            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -30),
+            titleLabel.heightAnchor.constraint(equalToConstant: 15),
+            
+            contentContainerView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
+            contentContainerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 90),
+            contentContainerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -30),
+            contentContainerView.heightAnchor.constraint(equalToConstant: 90),
+            
+            contentLabel.topAnchor.constraint(equalTo: contentContainerView.topAnchor),
+            contentLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 90),
+            contentLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -30),
+            
+            imagesView.topAnchor.constraint(equalTo: contentContainerView.bottomAnchor, constant: 4),
+            imagesView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 90),
+            imagesView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -30),
+            imagesView.heightAnchor.constraint(equalToConstant: 120),
+            
+            likesView.topAnchor.constraint(equalTo: imagesView.bottomAnchor, constant: 4),
+            likesView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 90),
+            likesView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
+            likesView.widthAnchor.constraint(equalToConstant: 20),
+            likesView.heightAnchor.constraint(equalToConstant: 20),
+            
+            likesLabel.topAnchor.constraint(equalTo: imagesView.bottomAnchor, constant: 4),
+            likesLabel.leadingAnchor.constraint(equalTo: likesView.trailingAnchor, constant: 10),
+            likesLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
+            
+            commentsView.topAnchor.constraint(equalTo: imagesView.bottomAnchor, constant: 4),
+            commentsView.leadingAnchor.constraint(equalTo: likesLabel.trailingAnchor, constant: 20),
+            commentsView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
+            commentsView.widthAnchor.constraint(equalToConstant: 20),
+            commentsView.heightAnchor.constraint(equalToConstant: 20),
+            
+            commentsLabel.topAnchor.constraint(equalTo: imagesView.bottomAnchor, constant: 4),
+            commentsLabel.leadingAnchor.constraint(equalTo: commentsView.trailingAnchor, constant: 10),
+            commentsLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
+            
+            shareButton.topAnchor.constraint(equalTo: imagesView.bottomAnchor, constant: 4),
+            shareButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -30),
+            shareButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
+            shareButton.widthAnchor.constraint(equalToConstant: 20),
+            shareButton.heightAnchor.constraint(equalToConstant: 20)
+        ]
+        
+        NSLayoutConstraint.activate(constraints)
+    }
+    
+    func makeConstraint2() {
         profileImageView.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         contentLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -127,40 +204,28 @@ extension CustomCell {
             contentLabel.topAnchor.constraint(equalTo: contentContainerView.topAnchor),
             contentLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 90),
             contentLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -30),
-        ]
-        
-        if imagesView.image != nil {
-            imagesView.translatesAutoresizingMaskIntoConstraints = false
-            constraints += [
-                imagesView.topAnchor.constraint(equalTo: contentContainerView.bottomAnchor, constant: 4),
-                imagesView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 90),
-                imagesView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -30),
-                imagesView.heightAnchor.constraint(equalToConstant: 120),
-            ]
-        }
-        
-        constraints += [
-            likesView.topAnchor.constraint(equalTo: (imagesView.image != nil) ? imagesView.bottomAnchor : contentContainerView.bottomAnchor, constant: 4),
+            
+            likesView.topAnchor.constraint(equalTo: contentContainerView.bottomAnchor, constant: 4),
             likesView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 90),
             likesView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
             likesView.widthAnchor.constraint(equalToConstant: 20),
             likesView.heightAnchor.constraint(equalToConstant: 20),
             
-            likesLabel.topAnchor.constraint(equalTo: (imagesView.image != nil) ? imagesView.bottomAnchor : contentContainerView.bottomAnchor, constant: 4),
+            likesLabel.topAnchor.constraint(equalTo: contentContainerView.bottomAnchor, constant: 4),
             likesLabel.leadingAnchor.constraint(equalTo: likesView.trailingAnchor, constant: 10),
             likesLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
             
-            commentsView.topAnchor.constraint(equalTo: (imagesView.image != nil) ? imagesView.bottomAnchor : contentContainerView.bottomAnchor, constant: 4),
+            commentsView.topAnchor.constraint(equalTo: contentContainerView.bottomAnchor, constant: 4),
             commentsView.leadingAnchor.constraint(equalTo: likesLabel.trailingAnchor, constant: 20),
             commentsView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
             commentsView.widthAnchor.constraint(equalToConstant: 20),
             commentsView.heightAnchor.constraint(equalToConstant: 20),
             
-            commentsLabel.topAnchor.constraint(equalTo: (imagesView.image != nil) ? imagesView.bottomAnchor : contentContainerView.bottomAnchor, constant: 4),
+            commentsLabel.topAnchor.constraint(equalTo: contentContainerView.bottomAnchor, constant: 4),
             commentsLabel.leadingAnchor.constraint(equalTo: commentsView.trailingAnchor, constant: 10),
             commentsLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
             
-            shareButton.topAnchor.constraint(equalTo: (imagesView.image != nil) ? imagesView.bottomAnchor : contentContainerView.bottomAnchor, constant: 4),
+            shareButton.topAnchor.constraint(equalTo: contentContainerView.bottomAnchor, constant: 4),
             shareButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -30),
             shareButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
             shareButton.widthAnchor.constraint(equalToConstant: 20),
@@ -170,7 +235,9 @@ extension CustomCell {
         NSLayoutConstraint.activate(constraints)
     }
     
-    
+    func resetCell() {
+        self.contentView.subviews.forEach({ $0.removeFromSuperview() })
+    }
     
     func configureCell(with post: PostParsing) {
         titleLabel.text = post.title
