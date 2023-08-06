@@ -312,7 +312,9 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
         nameLabel.text = post.name
         titleLabel.text = post.title
         contentLabel.text = post.content
-        imagesView.image = post.images[0]
+        if post.images.count != 0 {
+            imagesView.image = post.images[0]
+        }
         timeLabel.text = post.time
         likesLabel.text = "\(post.likes)"
         commentsLabel.text = "\(post.comments)"

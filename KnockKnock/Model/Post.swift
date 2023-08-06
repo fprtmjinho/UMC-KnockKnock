@@ -22,6 +22,7 @@ struct Post { // 게시글
     var name: String
     var title: String
     var content: String
+    var imageURL: [String]
     var images: [UIImage?]
     let time: String
     var likes: Int

@@ -144,10 +144,7 @@ extension GoodVC: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelega
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let postVC = PostVC()
         postVC.categoryValue = posts[indexPath.row].boardType
-        postVC.post.title = posts[indexPath.row].title
-        postVC.post.content = posts[indexPath.row].content
-        postVC.post.likes = posts[indexPath.row].likes
-        postVC.post.comments = posts[indexPath.row].comments
+        postVC.post = Post(profile: UIImage(named: "karim")!, name: "카림", title: posts[indexPath.row].title, content: posts[indexPath.row].content, imageURL: posts[indexPath.row].imageUrl, images: [], time: posts[indexPath.row].createdAt, likes: posts[indexPath.row].likes, comments: posts[indexPath.row].comments)
         postVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(postVC, animated: true)
     }
