@@ -15,8 +15,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        UNUserNotificationCenter.current().delegate = self
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (granted, error) in
+                    if granted {
+                        DispatchQueue.main.async {
+                            application.registerForRemoteNotifications()
+                        }
+                    } else {
+                        // 사용자가 알림 권한을 거부한 경우 처리
+                    }
+                }
         return true
     }
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+            let token = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
+            print("Device Token: \(token)")
+            // 서버에 디바이스 토큰을 등록하는 등의 작업을 수행
+        }
 
     // MARK: UISceneSession Lifecycle
 
@@ -77,5 +92,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
+}
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.alert, .badge, .sound])
+    }
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse,
+                                withCompletionHandler completionHandler: @escaping () -> Void) {
+
+        // deep link처리 시 아래 url값 가지고 처리
+        let url = response.notification.request.content.userInfo
+
+        completionHandler()
+    }
 }
 

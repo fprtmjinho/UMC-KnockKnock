@@ -74,6 +74,7 @@
 		C9D07D0E2A6D66450071C2F5 /* GroupProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D07D0D2A6D66450071C2F5 /* GroupProfileVC.swift */; };
 		C9D07D102A6D74210071C2F5 /* GroupAlarmVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D07D0F2A6D74210071C2F5 /* GroupAlarmVC.swift */; };
 		D9307CAF2ACAE9C26196364D /* Pods_KnockKnock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6BA4AB9AE11CC547F1B308C /* Pods_KnockKnock.framework */; };
+		E90B7CCB2A7F6DB400195BF1 /* UNUserNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90B7CCA2A7F6DB400195BF1 /* UNUserNotificationCenter.swift */; };
 		E91EE27E2A5C9B24003D6E5C /* GetInformationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91EE27D2A5C9B24003D6E5C /* GetInformationVC.swift */; };
 		E91EE28D2A61A3AC003D6E5C /* Friends.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91EE28C2A61A3AC003D6E5C /* Friends.swift */; };
 		E999620E2A658E6B00FA602C /* MyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E999620D2A658E6B00FA602C /* MyData.swift */; };
@@ -173,6 +174,8 @@
 		C9D07D0B2A6D663B0071C2F5 /* GroupProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupProfileView.swift; sourceTree = "<group>"; };
 		C9D07D0D2A6D66450071C2F5 /* GroupProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupProfileVC.swift; sourceTree = "<group>"; };
 		C9D07D0F2A6D74210071C2F5 /* GroupAlarmVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupAlarmVC.swift; sourceTree = "<group>"; };
+		E90B7CC92A7EB6BC00195BF1 /* KnockKnock.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KnockKnock.entitlements; sourceTree = "<group>"; };
+		E90B7CCA2A7F6DB400195BF1 /* UNUserNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UNUserNotificationCenter.swift; sourceTree = "<group>"; };
 		E91EE27D2A5C9B24003D6E5C /* GetInformationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetInformationVC.swift; sourceTree = "<group>"; };
 		E91EE28C2A61A3AC003D6E5C /* Friends.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friends.swift; sourceTree = "<group>"; };
 		E999620D2A658E6B00FA602C /* MyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyData.swift; sourceTree = "<group>"; };
@@ -265,6 +268,7 @@
 		C93246772A458D9400908D6B /* KnockKnock */ = {
 			isa = PBXGroup;
 			children = (
+				E90B7CC92A7EB6BC00195BF1 /* KnockKnock.entitlements */,
 				C93246782A458D9400908D6B /* AppDelegate.swift */,
 				C932467A2A458D9400908D6B /* SceneDelegate.swift */,
 				C935FA262A59BC840035FA2C /* Extension.swift */,
@@ -281,6 +285,7 @@
 				C93246862A458D9600908D6B /* LaunchScreen.storyboard */,
 				C93246892A458D9600908D6B /* Info.plist */,
 				C93246812A458D9400908D6B /* KnockKnock.xcdatamodeld */,
+				E90B7CCA2A7F6DB400195BF1 /* UNUserNotificationCenter.swift */,
 			);
 			path = KnockKnock;
 			sourceTree = "<group>";
@@ -668,6 +673,7 @@
 				C98EB71B2A7AC4E500FAB4B8 /* BirthTextGuideVC.swift in Sources */,
 				00FD26582A5CE1520013E169 /* GuideVC.swift in Sources */,
 				C9D07D102A6D74210071C2F5 /* GroupAlarmVC.swift in Sources */,
+				E90B7CCB2A7F6DB400195BF1 /* UNUserNotificationCenter.swift in Sources */,
 				C933F4552A5EFBBA0089670A /* EditMyPageVC.swift in Sources */,
 				C9D07CFA2A6AE74A0071C2F5 /* FriendProfileView.swift in Sources */,
 				007B67C22A6D31F50087B264 /* PromiseVC.swift in Sources */,
@@ -856,8 +862,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = KnockKnock/KnockKnock.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KnockKnock/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -885,8 +893,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = KnockKnock/KnockKnock.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KnockKnock/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

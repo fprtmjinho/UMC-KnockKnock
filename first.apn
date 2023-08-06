@@ -1,0 +1,10 @@
+{
+	"aps":{
+		"alert":{
+			"title":"Breaking News!",
+			"body":"The content of the alert message."
+		},
+		"sound":"default"
+	},
+	"link_url":"https://www.lipsum.com/"
+}
