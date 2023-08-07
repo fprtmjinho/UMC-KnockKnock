@@ -178,6 +178,7 @@ class LoginVC : UIViewController {
                 let loginResponse = try JSONDecoder().decode(LoginResponse.self, from: data)
                 
                 if loginResponse.message == "로그인 성공" {
+                    
                     DispatchQueue.main.async {
                         
                         guard let httpResponse = response as? HTTPURLResponse,
@@ -197,6 +198,30 @@ class LoginVC : UIViewController {
                             infoDict.write(toFile: infoPlistPath, atomically: true)
                             
                         }
+                        
+                        // User 정보를 가져오기 위한 URL
+                            let userURLString = "http://43.200.240.251/member"
+                            guard let userURL = URL(string: userURLString) else {
+                                self.showAlert(message: "유저 정보를 가져올 수 없습니다.")
+                                return
+                            }
+
+                            var userRequest = URLRequest(url: userURL)
+                            userRequest.httpMethod = "GET"
+                            userRequest.addValue(accessToken, forHTTPHeaderField: "Authorization")
+                            URLSession.shared.dataTask(with: userRequest) { data, response, error in
+                                
+                                guard let data = data else {
+                                    self.showAlert(message: "유저 정보를 받아오지 못했습니다.")
+                                    return
+                                }
+                                do {
+                                    let user = try JSONDecoder().decode(User.self, from: data)
+                                    print("유저 정보: \(user)")
+                                } catch {
+                                    self.showAlert(message: "유저 정보 디코딩에 실패하였습니다.")
+                                }
+                            }.resume()
                         
                         let tabBarController = TabBarController()
                         tabBarController.modalPresentationStyle = .fullScreen
