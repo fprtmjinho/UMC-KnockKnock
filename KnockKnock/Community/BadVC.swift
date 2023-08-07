@@ -143,24 +143,20 @@ extension BadVC: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegat
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let postVC = PostVC()
         postVC.categoryValue = posts[indexPath.row].boardType
-        postVC.post.title = posts[indexPath.row].title
-        postVC.post.content = posts[indexPath.row].content
-        postVC.post.likes = posts[indexPath.row].likes
-        postVC.post.comments = posts[indexPath.row].comments
+        postVC.post = Post(postID: posts[indexPath.row].postID, profile: UIImage(named: "karim")!, name: posts[indexPath.row].name, title: posts[indexPath.row].title, content: posts[indexPath.row].content, imageURL: posts[indexPath.row].imageUrl, images: [], time: posts[indexPath.row].createdAt, likes: posts[indexPath.row].likes, comments: posts[indexPath.row].comments)
         postVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(postVC, animated: true)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-            let position = scrollView.contentOffset.y
-            if position > (tableView.contentSize.height - 100 - scrollView.frame.size.height) {
-                guard let hasNext = hasNext, hasNext else {
-                    return
-                }
+        let position = scrollView.contentOffset.y
+        if position > (tableView.contentSize.height - tableView.bounds.size.height - 100) {
+            if hasNext == true {
                 page += 1
                 fetchData(page: page)
             }
         }
+    }
     
 }
 
@@ -220,9 +216,7 @@ extension BadVC {
         makeSubView()
         makeConstraint()
         createButtons()
-        
         setupRefreshControl()
-        
         fetchData(page: page)
     }
     

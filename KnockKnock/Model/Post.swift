@@ -18,6 +18,7 @@ struct PostCategory { // 카테고리에서 보이는 게시글
 }
 
 struct Post { // 게시글
+    var postID: Int
     var profile: UIImage
     var name: String
     var title: String
@@ -29,12 +30,13 @@ struct Post { // 게시글
     var comments: Int
 }
 
-struct Comment { // 댓글
-    let profile: UIImage
-    let name: String
-    var text: String
-    var time: String
-    var myComment: Bool
+struct Comment: Codable { // 댓글
+    let commentId: Int
+    let postId: Int
+    let nickName: String
+    let content: String
+    let createdAt: String
+    let modifiedAt: String
 }
 
 struct Response: Codable {

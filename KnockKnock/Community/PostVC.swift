@@ -11,6 +11,7 @@ import SDWebImage
 class PostVC: UIViewController, CustomCommentCellDelegate {
     
     var myPost: Bool = true // 자신 글 여부
+    var myComment: Bool = true // 자신 댓글 여부
     
     var categoryValue: Int! // 게시판 종류
     
@@ -19,23 +20,40 @@ class PostVC: UIViewController, CustomCommentCellDelegate {
     var post: Post!
     
     // comment(스트럭트 맨아래 있음)
-    var comments: [Comment] = [
-        Comment(profile: UIImage(named: "sergio")!,
-                name: "세르히오",
-                text: "짧은 문장 테스트: 우와",
-                time: "07/08 23:17",
-                myComment: true),
-        Comment(profile: UIImage(named: "toni")!,
-                name: "토니",
-                text: "나도 갈래",
-                time: "07/08 22:19",
-                myComment: false),
-        Comment(profile: UIImage(named: "mesut")!,
-                name: "메수트",
-                text: "긴 문장 테스트: 오 여기서 가깝다!@#$%@!#$@!#!@#!@$%!#@!#!#@!#@!#!@#!#@!#!@#!@#@#!@#!#!@#!#@!#!@#!@#@!#!#!",
-                time: "07/09 02:14",
-                myComment: false)
-    ]
+    var comments: [Comment] = []
+    
+    
+    func fetchComment(postID: Int) {
+        
+        let urlString = "http://54.180.168.54/post/comment/\(postID)/all"
+        
+        guard let url = URL(string: urlString) else { return }
+        
+        let task = URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
+            guard let self = self, let data = data else {
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                let fetchComments = try decoder.decode([Comment].self, from: data)
+                comments = fetchComments
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            } catch {
+                print("Error parsing JSON: \(error)")
+            }
+            
+        }
+        
+        task.resume()
+    }
+    
+    
+    
+    
+    
     
     let tableView: UITableView = {
         let tableView = UITableView()
@@ -143,6 +161,7 @@ class PostVC: UIViewController, CustomCommentCellDelegate {
         var image = UIImage(named: "more_vert")?.resizeImageTo(size: CGSize(width: 30, height: 30))
         let rightBarButton = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(postShowActionSheet))
         navigationItem.rightBarButtonItem = rightBarButton
+        fetchComment(postID: post.postID)
         downloadAndSetImages(for: post.imageURL)
         
         makeSubView()
@@ -319,7 +338,7 @@ extension PostVC: UITableViewDelegate, UITableViewDataSource {
     @objc func commentShowActionSheet(cell: CustomCommentCell) {
         let actionSheet = UIAlertController(title: "댓글 메뉴", message: nil, preferredStyle: .actionSheet)
         
-        if cell.myComment! {
+        if myComment {
             // 자신의 댓글일 때
             let modifyPost = UIAlertAction(title: "수정", style: .default) { _ in
                 // 댓글 수정 탭시 수행할 동작
