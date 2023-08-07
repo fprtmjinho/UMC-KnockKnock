@@ -18,22 +18,26 @@ struct PostCategory { // 카테고리에서 보이는 게시글
 }
 
 struct Post { // 게시글
-    var profile: UIImage
+    var postID: Int
+    var profile: String
     var name: String
     var title: String
     var content: String
+    var imageURL: [String]
     var images: [UIImage?]
     let time: String
     var likes: Int
     var comments: Int
 }
 
-struct Comment { // 댓글
-    let profile: UIImage
-    let name: String
-    var text: String
-    var time: String
-    var myComment: Bool
+struct Comment: Codable { // 댓글
+    let commentId: Int
+    let postId: Int
+    var profileImageUrl: String
+    let nickName: String
+    let content: String
+    let createdAt: String
+    let modifiedAt: String
 }
 
 struct Response: Codable {
@@ -45,28 +49,30 @@ struct PostParsing: Codable { // 게시글(게시판에서 보이는)
     var postID: Int
     var boardType: Int
     var name: String
+    var profileImageUrl: String
     var title: String
     var content: String
+    var imageUrl: [String]
     let createdAt: String
     let modifiedAt: String
     var likes: Int
     var comments: Int
     var reports: Int
-    var imageUrl: [String]
     var hashtags: [String]
     
     enum CodingKeys: String, CodingKey {
         case postID = "postId"
         case boardType
         case name = "nickName"
+        case profileImageUrl
         case title
         case content
+        case imageUrl
         case createdAt
         case modifiedAt
         case likes = "likeCount"
         case comments = "commentCount"
         case reports = "reportCount"
-        case imageUrl
         case hashtags
     }
 }

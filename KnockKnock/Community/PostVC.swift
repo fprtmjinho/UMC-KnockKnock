@@ -6,41 +6,54 @@
 //
 
 import UIKit
+import SDWebImage
 
 class PostVC: UIViewController, CustomCommentCellDelegate {
     
     var myPost: Bool = true // 자신 글 여부
+    var myComment: Bool = true // 자신 댓글 여부
     
     var categoryValue: Int! // 게시판 종류
     
     // 테이블 뷰 관련: post, comment, tableView
     // post(스트럭트 맨아래 있음)
-    var post: Post = Post(profile: UIImage(named: "karim")!,
-                          name: "카림",
-                          title: "바다에 놀러왔어~!",
-                          content: "안녕 친구들 바닷가에 왔는데 날이 너무 좋아! 여기 바다 정말 추천해",
-                          images: [UIImage(named: "beach"), UIImage(named: "paris"), UIImage(named: "sanfrancisco")],
-                          time: "07/08 22:17",
-                          likes: 17, comments: 3)
+    var post: Post!
     
     // comment(스트럭트 맨아래 있음)
-    var comments: [Comment] = [
-        Comment(profile: UIImage(named: "sergio")!,
-                name: "세르히오",
-                text: "짧은 문장 테스트: 우와",
-                time: "07/08 23:17",
-               myComment: true),
-        Comment(profile: UIImage(named: "toni")!,
-                name: "토니",
-                text: "나도 갈래",
-                time: "07/08 22:19",
-               myComment: false),
-        Comment(profile: UIImage(named: "mesut")!,
-                name: "메수트",
-                text: "긴 문장 테스트: 오 여기서 가깝다!@#$%@!#$@!#!@#!@$%!#@!#!#@!#@!#!@#!#@!#!@#!@#@#!@#!#!@#!#@!#!@#!@#@!#!#!",
-                time: "07/09 02:14",
-               myComment: false)
-    ]
+    var comments: [Comment] = []
+    
+    
+    func fetchComment(postID: Int) {
+        
+        let urlString = "http://54.180.168.54/post/comment/\(postID)/all"
+        
+        guard let url = URL(string: urlString) else { return }
+        
+        let task = URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
+            guard let self = self, let data = data else {
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                let fetchComments = try decoder.decode([Comment].self, from: data)
+                comments = fetchComments
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            } catch {
+                print("Error parsing JSON: \(error)")
+            }
+            
+        }
+        
+        task.resume()
+    }
+    
+    
+    
+    
+    
     
     let tableView: UITableView = {
         let tableView = UITableView()
@@ -148,21 +161,59 @@ class PostVC: UIViewController, CustomCommentCellDelegate {
         var image = UIImage(named: "more_vert")?.resizeImageTo(size: CGSize(width: 30, height: 30))
         let rightBarButton = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(postShowActionSheet))
         navigationItem.rightBarButtonItem = rightBarButton
+        fetchComment(postID: post.postID)
+        downloadAndSetImages(for: post.imageURL)
         
         makeSubView()
         makeConstraint()
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-            view.addGestureRecognizer(tapGesture)
+        view.addGestureRecognizer(tapGesture)
     }
+    
+    func downloadAndSetImages(for imageURLs: [String]) {
+        downloadImageSequentially(from: imageURLs, index: 0)
+    }
+    
+    func downloadImageSequentially(from urls: [String], index: Int) {
+        guard index < urls.count else {
+            return
+        }
+        
+        if let imageURL = URL(string: urls[index]) {
+            SDWebImageDownloader.shared.downloadImage(with: imageURL) { (image, _, _, _) in
+                if let image = image {
+                    self.post.images.append(image)
+                    
+                    DispatchQueue.main.async {
+                        let indexPath = IndexPath(row: 0, section: 0)
+                        self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                    }
+                    
+                    // 다음 이미지 다운로드
+                    self.downloadImageSequentially(from: urls, index: index + 1)
+                }
+            }
+        }
+    }
+    
     
     @objc func postShowActionSheet() {
         let actionSheet = UIAlertController(title: "글 메뉴", message: nil, preferredStyle: .actionSheet)
-
+        
         if myPost {
             // 자신의 글일 때
             let modifyPost = UIAlertAction(title: "수정", style: .default) { _ in
                 // 글 수정 탭시 수행할 동작
+                let writeVC = WriteVC()
+                writeVC.index = self.categoryValue
+                writeVC.modify = true
+                writeVC.titleTextField.text = self.post.title
+                writeVC.contentTextView.text = self.post.content
+                writeVC.contentTextView.textColor = .label
+                writeVC.originalImages = self.post.images
+                writeVC.hidesBottomBarWhenPushed = true
+                self.navigationController?.pushViewController(writeVC, animated: true)
             }
             let deletePost = UIAlertAction(title: "삭제", style: .default) { _ in
                 // 글 삭제 탭시 수행할 동작
@@ -211,30 +262,30 @@ class PostVC: UIViewController, CustomCommentCellDelegate {
                 reportActionSheet.addAction(report5)
                 reportActionSheet.addAction(report6)
                 reportActionSheet.addAction(report7)
-
+                
                 let cancelAction = UIAlertAction(title: "취소", style: .cancel)
                 reportActionSheet.addAction(cancelAction)
-
+                
                 self.present(reportActionSheet, animated: true)
             }
             actionSheet.addAction(reportPost)
         }
-
+        
         let cancelAction = UIAlertAction(title: "취소", style: .cancel)
         actionSheet.addAction(cancelAction)
-
+        
         // On iPad, the action sheet should be presented as a popover.
         if let popoverController = actionSheet.popoverPresentationController {
             popoverController.barButtonItem = navigationItem.rightBarButtonItem
         }
-
+        
         present(actionSheet, animated: true)
     }
-
+    
     @objc func handleTap() {
         view.endEditing(true)
     }
-
+    
     
     @objc func anonymousImageButtonTapped(_ sender: UIButton) {
         isAnonymousSelected.toggle()
@@ -261,8 +312,9 @@ extension PostVC: UITableViewDelegate, UITableViewDataSource {
         if indexPath.row == 0 {
             // 행의 index가 0일 때는 게시글
             let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! CustomPostCell
+            cell.profileImageView.sd_setImage(with: URL(string: post.profile), placeholderImage: UIImage(named: "karim"))
             cell.configureCell(with: post)
-            if post.images != nil {
+            if post.images.count != 0 {
                 cell.makeSubView1()
                 cell.makeConstraint1()
             } else {
@@ -276,6 +328,7 @@ extension PostVC: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath) as! CustomCommentCell
             let comment = comments[indexPath.row - 1] // 댓글[행 인덱스 - 1] -> 해당 댓글
             cell.delegate = self
+            cell.profileImageView.sd_setImage(with: URL(string: comment.profileImageUrl), placeholderImage: UIImage(named: "karim"))
             cell.configureCell(with: comment)
             cell.makeSubView()
             cell.makeConstraint()
@@ -286,8 +339,8 @@ extension PostVC: UITableViewDelegate, UITableViewDataSource {
     
     @objc func commentShowActionSheet(cell: CustomCommentCell) {
         let actionSheet = UIAlertController(title: "댓글 메뉴", message: nil, preferredStyle: .actionSheet)
-
-        if cell.myComment! {
+        
+        if myComment {
             // 자신의 댓글일 때
             let modifyPost = UIAlertAction(title: "수정", style: .default) { _ in
                 // 댓글 수정 탭시 수행할 동작
@@ -338,23 +391,24 @@ extension PostVC: UITableViewDelegate, UITableViewDataSource {
                 reportActionSheet.addAction(report5)
                 reportActionSheet.addAction(report6)
                 reportActionSheet.addAction(report7)
-
+                
                 let cancelAction = UIAlertAction(title: "취소", style: .cancel)
                 reportActionSheet.addAction(cancelAction)
-
+                
                 self.present(reportActionSheet, animated: true)
             }
             actionSheet.addAction(reportPost)
         }
-
+        
         let cancelAction = UIAlertAction(title: "취소", style: .cancel)
         actionSheet.addAction(cancelAction)
-
+        
         // On iPad, the action sheet should be presented as a popover.
         if let popoverController = actionSheet.popoverPresentationController {
             popoverController.barButtonItem = navigationItem.rightBarButtonItem
         }
-
+        
         present(actionSheet, animated: true)
     }
 }
+
