@@ -13,7 +13,6 @@ class CustomCommentCell: UITableViewCell { // 댓글 커스텀
     
     let profileImageView: UIImageView = { // 프로필 사진
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -88,6 +87,12 @@ class CustomCommentCell: UITableViewCell { // 댓글 커스텀
         
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        profileImageView.layer.cornerRadius = profileImageView.frame.size.width / 2
+        profileImageView.clipsToBounds = true
+    }
+    
     @objc func commentShowActionSheet(_ sender: UIButton) {
         delegate?.commentShowActionSheet(cell: self)
     }
@@ -101,7 +106,6 @@ class CustomCommentCell: UITableViewCell { // 댓글 커스텀
     }
     
     func configureCell(with comment: Comment) {
-        profileImageView.image = UIImage(named: "sergio")
         nameLabel.text = comment.nickName
         commentLabel.text = comment.content
         timeLabel.text = comment.createdAt

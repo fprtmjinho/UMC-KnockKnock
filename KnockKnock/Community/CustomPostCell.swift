@@ -29,7 +29,6 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
     
     let profileImageView: UIImageView = { // 프로필 사진
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -289,6 +288,12 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
         }
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        profileImageView.layer.cornerRadius = profileImageView.frame.size.width / 2
+        profileImageView.clipsToBounds = true
+    }
+    
     // (매우 중요)테이블뷰 셀의 터치 이벤트를 해당 버튼으로 전달
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         if let view = prevImageButton.hitTest(convert(point, to: prevImageButton), with: event) {
@@ -308,7 +313,7 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
     
     func configureCell(with post: Post) {
         self.post = post
-        profileImageView.image = post.profile
+        
         nameLabel.text = post.name
         titleLabel.text = post.title
         contentLabel.text = post.content

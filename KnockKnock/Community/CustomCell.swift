@@ -12,9 +12,6 @@ class CustomCell: UITableViewCell { // 게시글 커스텀
     
     let profileImageView: UIImageView = { // 프로필 사진
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "karim")
-        imageView.layer.cornerRadius = imageView.frame.width / 2
-        imageView.clipsToBounds = true
         return imageView
     }()
     
@@ -234,6 +231,13 @@ extension CustomCell {
         
         NSLayoutConstraint.activate(constraints)
     }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        profileImageView.layer.cornerRadius = profileImageView.frame.size.width / 2
+        profileImageView.clipsToBounds = true
+    }
+
     
     func resetCell() {
         self.contentView.subviews.forEach({ $0.removeFromSuperview() })

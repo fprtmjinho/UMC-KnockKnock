@@ -122,7 +122,7 @@ extension GoodVC: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelega
         
         cell.resetCell()
         
-        
+        cell.profileImageView.sd_setImage(with: URL(string: post.profileImageUrl), placeholderImage: UIImage(named: "karim"))
         cell.imagesView.image = nil
         
         if post.imageUrl.count != 0 {
@@ -144,7 +144,7 @@ extension GoodVC: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelega
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let postVC = PostVC()
         postVC.categoryValue = posts[indexPath.row].boardType
-        postVC.post = Post(postID: posts[indexPath.row].postID, profile: UIImage(named: "karim")!, name: posts[indexPath.row].name, title: posts[indexPath.row].title, content: posts[indexPath.row].content, imageURL: posts[indexPath.row].imageUrl, images: [], time: posts[indexPath.row].createdAt, likes: posts[indexPath.row].likes, comments: posts[indexPath.row].comments)
+        postVC.post = Post(postID: posts[indexPath.row].postID, profile: posts[indexPath.row].profileImageUrl, name: posts[indexPath.row].name, title: posts[indexPath.row].title, content: posts[indexPath.row].content, imageURL: posts[indexPath.row].imageUrl, images: [], time: posts[indexPath.row].createdAt, likes: posts[indexPath.row].likes, comments: posts[indexPath.row].comments)
         postVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(postVC, animated: true)
     }

@@ -19,7 +19,7 @@ struct PostCategory { // 카테고리에서 보이는 게시글
 
 struct Post { // 게시글
     var postID: Int
-    var profile: UIImage
+    var profile: String
     var name: String
     var title: String
     var content: String
@@ -33,6 +33,7 @@ struct Post { // 게시글
 struct Comment: Codable { // 댓글
     let commentId: Int
     let postId: Int
+    var profileImageUrl: String
     let nickName: String
     let content: String
     let createdAt: String
@@ -48,6 +49,7 @@ struct PostParsing: Codable { // 게시글(게시판에서 보이는)
     var postID: Int
     var boardType: Int
     var name: String
+    var profileImageUrl: String
     var title: String
     var content: String
     var imageUrl: [String]
@@ -62,6 +64,7 @@ struct PostParsing: Codable { // 게시글(게시판에서 보이는)
         case postID = "postId"
         case boardType
         case name = "nickName"
+        case profileImageUrl
         case title
         case content
         case imageUrl
