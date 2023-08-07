@@ -8,7 +8,7 @@
 import UIKit
 class LoginVC : UIViewController {
     
-    let loginURLString = "http://43.200.240.251/login"
+    let loginURLString = "http://43.200.240.251/member/login"
     
     let Title : UILabel = {
         let title = UILabel()
@@ -96,7 +96,7 @@ class LoginVC : UIViewController {
     
     
     let naverBtn : UIButton = {
-       let btn = UIButton()
+        let btn = UIButton()
         var title = AttributedString("네이버로 간편로그인하기")
         title.font =  UIFont.systemFont(ofSize: 15, weight: .light)
         var config = UIButton.Configuration.plain()
@@ -149,61 +149,69 @@ class LoginVC : UIViewController {
         let isEmailValid = isEmailValidFormat(email: EmailText.text)
         let isPasswordValid = isPasswordValidFormat(password: PasswordText.text)
         
-        if !isEmailValid && !isPasswordValid {
-            // 이메일과 비밀번호 모두 유효하지 않을 때
-            showAlert(message: "[아이디 입력 오류] 이메일을 입력해주세요.\n\n[비밀번호 입력 오류] 특수문자, 알파벳 대소문자 포함 8자 이상을 입력해주세요.")
-        } else if !isEmailValid {
-            // 이메일이 유효하지 않을 때
-            showAlert(message: "[아이디 입력 오류] 이메일을 입력해주세요.")
-        } else if !isPasswordValid {
-            // 비밀번호가 유효하지 않을 때
-            showAlert(message: "[비밀번호 입력 오류] 특수문자, 알파벳 대소문자 포함 8자 이상을 입력해주세요.")
-        } else {
-            // 유효한 이메일과 비밀번호인 경우, 로그인 요청 보내기
-            let loginRequestBody = LoginRequestBody(email: EmailText.text!, password: PasswordText.text!)
-            
-            guard let url = URL(string: loginURLString) else {
-                showAlert(message: "서버 URL을 만들 수 없습니다.")
+        let loginRequestBody = LoginRequestBody(email: EmailText.text!, password: PasswordText.text!)
+        
+        guard let url = URL(string: loginURLString) else {
+            showAlert(message: "서버 URL을 만들 수 없습니다.")
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        do {
+            let jsonData = try JSONEncoder().encode(loginRequestBody)
+            request.httpBody = jsonData
+        } catch {
+            showAlert(message: "JSON 인코딩에 실패하였습니다.")
+            return
+        }
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data else {
+                self.showAlert(message: "응답 데이터를 받아오지 못했습니다.")
                 return
             }
-            
-            var request = URLRequest(url: url)
-            request.httpMethod = "POST"
-            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             
             do {
-                let jsonData = try JSONEncoder().encode(loginRequestBody)
-                request.httpBody = jsonData
-            } catch {
-                showAlert(message: "JSON 인코딩에 실패하였습니다.")
-                return
-            }
-            
-            URLSession.shared.dataTask(with: request) { data, response, error in
-                guard let data = data else {
-                    self.showAlert(message: "응답 데이터를 받아오지 못했습니다.")
-                    return
-                }
+                let loginResponse = try JSONDecoder().decode(LoginResponse.self, from: data)
                 
-                do {
-                    let loginResponse = try JSONDecoder().decode(LoginResponse.self, from: data)
-                    
-                    if loginResponse.message == "로그인 성공" {
-                        DispatchQueue.main.async {
-                            let tabBarController = TabBarController()
-                            tabBarController.modalPresentationStyle = .fullScreen
-                            self.present(tabBarController, animated: true, completion: nil)
+                if loginResponse.message == "로그인 성공" {
+                    DispatchQueue.main.async {
+                        
+                        guard let httpResponse = response as? HTTPURLResponse,
+                              let headers = httpResponse.allHeaderFields as? [String: String] else {
+                            return
                         }
-                    } else {
-                        DispatchQueue.main.async {
-                            self.showAlert(message: "로그인에 실패하였습니다.")
+                        
+                        // 헤더에서 토큰 가져오기
+                        let accessToken = headers["Authorization"]!
+                        let refreshToken = headers["Refresh-Token"]!
+                        
+                        // Info.plist에서 해당 키에 값을 저장
+                        if let infoPlistPath = Bundle.main.path(forResource: "Info", ofType: "plist"),
+                           var infoDict = NSMutableDictionary(contentsOfFile: infoPlistPath) {
+                            infoDict.setValue(accessToken, forKey: "accessToken")
+                            infoDict.setValue(refreshToken, forKey: "refreshToken")
+                            infoDict.write(toFile: infoPlistPath, atomically: true)
+                            
                         }
+                        
+                        let tabBarController = TabBarController()
+                        tabBarController.modalPresentationStyle = .fullScreen
+                        self.present(tabBarController, animated: true, completion: nil)
                     }
-                } catch {
-                    self.showAlert(message: "JSON 디코딩에 실패하였습니다.")
+                } else {
+                    DispatchQueue.main.async {
+                        self.showAlert(message: "로그인에 실패하였습니다.")
+                    }
                 }
-            }.resume()
-        }
+            } catch {
+                self.showAlert(message: "JSON 디코딩에 실패하였습니다.")
+            }
+        }.resume()
+        
     }
     
     
