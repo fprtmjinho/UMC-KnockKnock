@@ -87,8 +87,8 @@ class LoginSecondVC : UIViewController{
         title.font =  UIFont.systemFont(ofSize: 15, weight: .semibold)
         var config = UIButton.Configuration.filled()
         config.attributedTitle = title
-        config.baseBackgroundColor = .systemGray6
-        config.baseForegroundColor = .systemGray
+        config.baseBackgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+        config.baseForegroundColor = .white
         config.cornerStyle = .capsule
         btn.configuration = config
         return btn
@@ -226,10 +226,10 @@ extension LoginSecondVC {
                         self.emailAuthentication = true
                         DispatchQueue.main.async {
                             self.showAlert(message: "인증되셨습니다.")
+                            self.emailCheckBtn.isEnabled = false // 버튼 비활성화
                         }
                     }
-                    else {
-                        DispatchQueue.main.async {
+                    else {                        DispatchQueue.main.async {
                             self.showAlert(message: "유효하지 않는 인증코드입니다.")
                         }
                     }
@@ -306,6 +306,10 @@ extension LoginSecondVC {
         if(checkOne){
             return
         }
+        if emailAuthentication != true {
+            showAlert(message: "이메일 인증 단계를 완료해주세요.")
+        }
+        
         UserDefaults.standard.set(email, forKey: "email")
         // 데이터 동기화
         UserDefaults.standard.synchronize()
