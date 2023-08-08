@@ -8,6 +8,9 @@
 import UIKit
 class LoginSecondVC : UIViewController{
     
+    var sendEmail: Bool = false // 인증코드 전송했는지 확인
+    var emailAuthentication: Bool = false // 인증 여부
+    
     var nextBtn : UIButton = UIButton()
     
     let num4 : UILabel = {
@@ -41,13 +44,13 @@ class LoginSecondVC : UIViewController{
     }()
     
     let emailAlertLabel: UILabel = {
-       let emailAlertLabel = UILabel()
+        let emailAlertLabel = UILabel()
         emailAlertLabel.text = "이메일을 입력해주세요."
         emailAlertLabel.textColor = .white
         emailAlertLabel.font = UIFont.boldSystemFont(ofSize: 14)
         return emailAlertLabel
     }()
-
+    
     
     let emailBtn : UIButton = {
         let btn = UIButton()
@@ -107,7 +110,7 @@ class LoginSecondVC : UIViewController{
     }
     
     
-    }
+}
 
 extension LoginSecondVC {
     func makeSubView(){
@@ -178,7 +181,67 @@ extension LoginSecondVC {
     func makeAddTarget(){
         self.nextBtn.addTarget(self, action: #selector(touchNextBtn(_:)), for: .touchUpInside)
         self.emailBtn.addTarget(self, action: #selector(emailBtnPressed(_:)), for: .touchUpInside)
-
+        self.emailCheckBtn.addTarget(self, action: #selector(emailCheckBtnPressed(_:)), for: .touchUpInside)
+        
+    }
+    
+    @objc func emailCheckBtnPressed(_: UIButton) { // 이메일 인증번호 확인 버튼 눌렀을 때
+        
+        if emailCodeEmptyCheck() {
+            showAlert(message: "이메일 인증코드를 입력하세요.")
+            return
+        }
+        
+        if sendEmail == true {
+            let emailCheckBody = EmailCheckRequest(email: emailText.text!, code: emailCheckText.text!)
+            
+            let emailCheckURLString = "http://43.200.240.251/member/authentication"
+            guard let emailCheckURL = URL(string: emailCheckURLString) else {
+                print("이메일 인증코드 확인 URL 가져올 수 없음.")
+                return
+            }
+            
+            var emailCheckRequest = URLRequest(url: emailCheckURL)
+            emailCheckRequest.httpMethod = "POST"
+            emailCheckRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            
+            do {
+                let jsonData = try JSONEncoder().encode(emailCheckBody)
+                emailCheckRequest.httpBody = jsonData
+            } catch {
+                print("JSON 인코딩에 실패하였음.")
+                return
+            }
+            
+            URLSession.shared.dataTask(with: emailCheckRequest) { data, response, error in
+                
+                guard let data = data else {
+                    print("이메일 인증코드 확인 Response를 받아오지 못했음.")
+                    return
+                }
+                do {
+                    let emailCheckResquestResult = try JSONDecoder().decode(EmailCheckRequestResult.self, from: data)
+                    print("response: \(emailCheckResquestResult)")
+                    if emailCheckResquestResult.message! == "인증이 완료되었습니다." {
+                        self.emailAuthentication = true
+                        DispatchQueue.main.async {
+                            self.showAlert(message: "인증되셨습니다.")
+                        }
+                    }
+                    else {
+                        DispatchQueue.main.async {
+                            self.showAlert(message: "유효하지 않는 인증코드입니다.")
+                        }
+                    }
+                } catch {
+                    print("이메일 인증코드 확인 Response를 디코딩하는데 실패하였음.")
+                }
+            }.resume()
+            
+        }
+        else {
+            showAlert(message: "이메일 인증 코드를 먼저 전송받아주세요.")
+        }
     }
     
     
@@ -195,13 +258,14 @@ extension LoginSecondVC {
             emailText.layer.borderWidth = 0
             emailAlertLabel.textColor = #colorLiteral(red: 0, green: 0.6676340103, blue: 0, alpha: 1)
             emailAlertLabel.text = "해당 이메일로 인증코드를 전송하였습니다."
+            sendEmail = true
             
             // 이메일 보내는 작업
             let emailRequestBody = EmailRequest(email: emailText.text!)
             
             let emailURLString = "http://43.200.240.251/member/emailcode"
             guard let emailURL = URL(string: emailURLString) else {
-                print("유저 정보 가져올 수 없음.")
+                print("이메일 인증 URL 가져올 수 없음.")
                 return
             }
             
@@ -243,26 +307,26 @@ extension LoginSecondVC {
             return
         }
         UserDefaults.standard.set(email, forKey: "email")
-            // 데이터 동기화
-            UserDefaults.standard.synchronize()
-            nextView()
+        // 데이터 동기화
+        UserDefaults.standard.synchronize()
+        nextView()
         
     }
-        
-        //이메일이 빈칸이거나 형식이 틀리면 타이틀 강조 (@를 포함하지 않거나 다른 조건(추가해야함))
-        func emailCheck()->Bool{
-            if(email == "" || !email.contains("@")){
-                emailText.layer.borderColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-                emailText.layer.borderWidth = 2
-                emailAlertLabel.textColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-                return true
-            }
-            else{
-                emailText.layer.borderWidth = 0
-                emailAlertLabel.textColor = .white
-                return false
-            }
+    
+    //이메일이 빈칸이거나 형식이 틀리면 타이틀 강조 (@를 포함하지 않거나 다른 조건(추가해야함))
+    func emailCheck()->Bool{
+        if(email == "" || !email.contains("@")){
+            emailText.layer.borderColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+            emailText.layer.borderWidth = 2
+            emailAlertLabel.textColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+            return true
         }
+        else{
+            emailText.layer.borderWidth = 0
+            emailAlertLabel.textColor = .white
+            return false
+        }
+    }
     
     func emailInvalidCheck()->Bool{
         if(email == "" || !email.contains("@")){
@@ -272,9 +336,40 @@ extension LoginSecondVC {
             return false
         }
     }
-        
+    
+    func emailCodeEmptyCheck() -> Bool {
+        if emailCheckText.text == "" {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+    
     @objc func nextView(){
         let nextView = LoginThirdVC()
         self.navigationController?.pushViewController(nextView, animated: true)
+    }
+    
+    
+    
+    
+    
+    func showAlert(message: String) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
+        alert.addAction(okAction)
+        
+        // 메시지 폰트 사이즈 설정
+        let attributedMessage = NSMutableAttributedString(string: message)
+        let style = NSMutableParagraphStyle()
+        style.alignment = .center
+        attributedMessage.addAttribute(.paragraphStyle, value: style, range: NSRange(location: 0, length: attributedMessage.length))
+        
+        let fontSize: CGFloat = 16
+        attributedMessage.addAttribute(.font, value: UIFont.systemFont(ofSize: fontSize), range: NSRange(location: 0, length: attributedMessage.length))
+        alert.setValue(attributedMessage, forKey: "attributedMessage")
+        
+        present(alert, animated: true, completion: nil)
     }
 }

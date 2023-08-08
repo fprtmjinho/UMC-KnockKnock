@@ -57,3 +57,14 @@ struct EmailReqestResult: Codable {
     let message: String?
     let data: String?
 }
+
+struct EmailCheckRequest: Codable {
+    let email: String
+    let code: String
+}
+
+struct EmailCheckRequestResult: Codable {
+    let statusCode: Int?
+    let message: String?
+    let data: String?
+}
