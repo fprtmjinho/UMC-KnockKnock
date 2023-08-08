@@ -218,6 +218,8 @@ class LoginVC : UIViewController {
                                 do {
                                     let user = try JSONDecoder().decode(User.self, from: data)
                                     print("유저 정보: \(user)")
+                                    var me = MyData.shared
+                                    me.name = user.nickName
                                 } catch {
                                     self.showAlert(message: "유저 정보 디코딩에 실패하였습니다.")
                                 }

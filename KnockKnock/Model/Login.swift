@@ -47,3 +47,13 @@ struct SignUpResponse: Codable {
     let message: String?
     let data: String?
 }
+
+struct EmailRequest: Codable {
+    let email: String?
+}
+
+struct EmailReqestResult: Codable {
+    let statusCode: Int?
+    let message: String?
+    let data: String?
+}

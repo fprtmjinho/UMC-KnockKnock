@@ -195,7 +195,42 @@ extension LoginSecondVC {
             emailText.layer.borderWidth = 0
             emailAlertLabel.textColor = #colorLiteral(red: 0, green: 0.6676340103, blue: 0, alpha: 1)
             emailAlertLabel.text = "해당 이메일로 인증코드를 전송하였습니다."
+            
             // 이메일 보내는 작업
+            let emailRequestBody = EmailRequest(email: emailText.text!)
+            
+            let emailURLString = "http://43.200.240.251/member/emailcode"
+            guard let emailURL = URL(string: emailURLString) else {
+                print("유저 정보 가져올 수 없음.")
+                return
+            }
+            
+            var emailRequest = URLRequest(url: emailURL)
+            emailRequest.httpMethod = "POST"
+            emailRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            
+            do {
+                let jsonData = try JSONEncoder().encode(emailRequestBody)
+                emailRequest.httpBody = jsonData
+            } catch {
+                print("JSON 인코딩에 실패하였음.")
+                return
+            }
+            
+            URLSession.shared.dataTask(with: emailRequest) { data, response, error in
+                
+                guard let data = data else {
+                    print("이메일 코드 전송 성공 여부 Response를 받아오지 못했음.")
+                    return
+                }
+                do {
+                    let emailRequestResult = try JSONDecoder().decode(EmailReqestResult.self, from: data)
+                    print("response: \(emailRequestResult)")
+                } catch {
+                    print("이메일 코드 전송 Response를 디코딩하는데 실패하였음.")
+                }
+                
+            }.resume()
         }
     }
     
