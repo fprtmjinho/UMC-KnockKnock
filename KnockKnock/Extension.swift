@@ -41,8 +41,12 @@ extension UITextField {
 }
 
 extension UITextView {
-    func addLeftPadding() {
+    func addPadding() {
         self.textContainerInset = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15);
+    }
+    
+    func addLeftPadding(){
+        self.textContainerInset = UIEdgeInsets(top: 5, left: 15, bottom: 5, right: 0);
     }
 }
 
