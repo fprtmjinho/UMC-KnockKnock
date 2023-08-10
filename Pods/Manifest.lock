@@ -1,4 +1,5 @@
 PODS:
+  - Alamofire (5.7.1)
   - NMapsGeometry (1.0.1)
   - NMapsMap (3.17.0):
     - NMapsGeometry
@@ -10,12 +11,14 @@ PODS:
     - Pageboy (~> 3.7.0)
 
 DEPENDENCIES:
+  - Alamofire
   - NMapsMap
   - SDWebImage
   - Tabman (~> 2.9)
 
 SPEC REPOS:
   trunk:
+    - Alamofire
     - NMapsGeometry
     - NMapsMap
     - Pageboy
@@ -23,12 +26,13 @@ SPEC REPOS:
     - Tabman
 
 SPEC CHECKSUMS:
+  Alamofire: 0123a34370cb170936ae79a8df46cc62b2edeb88
   NMapsGeometry: 53c573ead66466681cf123f99f698dc8071a4b83
   NMapsMap: a5b909a31b6f3d27a670f6eb2ddc913c38975474
   Pageboy: fe646118f7168960058bea7a96038386aa7c0da8
   SDWebImage: 750adf017a315a280c60fde706ab1e552a3ae4e9
   Tabman: 66ea44c44488327ec20f3c8dc5554a5d22f5908c
 
-PODFILE CHECKSUM: 1606dc73d26a0f160b68634bd42d97692a85ca94
+PODFILE CHECKSUM: ba3c5b55aab8536becc2f371548be520447ba3a4
 
 COCOAPODS: 1.12.1

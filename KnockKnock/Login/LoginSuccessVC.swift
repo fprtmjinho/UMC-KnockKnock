@@ -6,9 +6,11 @@
 //
 
 import UIKit
+import Alamofire
+
 class LoginSuccessVC : UIViewController {
     
-    let signUpURLString = "http://43.200.240.251/signup"
+    let signUpURLString = "http://43.200.240.251/member/signup"
     
     var startBtn : UIButton = UIButton()
     
@@ -36,19 +38,19 @@ class LoginSuccessVC : UIViewController {
     
     let readHowtoUseBtn : UIButton = {
         let nextbtn = UIButton()
-         var title = AttributedString("앱 사용법 익히기")
-         title.font = UIFont.boldSystemFont(ofSize: 20)
-         
-         var config = UIButton.Configuration.filled()
+        var title = AttributedString("앱 사용법 익히기")
+        title.font = UIFont.boldSystemFont(ofSize: 20)
+        
+        var config = UIButton.Configuration.filled()
         config.baseBackgroundColor = .white
-         config.cornerStyle = .capsule
-         config.attributedTitle = title
+        config.cornerStyle = .capsule
+        config.attributedTitle = title
         config.baseForegroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
         config.background.strokeColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-         nextbtn.configuration = config
-         return nextbtn
+        nextbtn.configuration = config
+        return nextbtn
     }()
-
+    
     
     
     
@@ -60,7 +62,7 @@ class LoginSuccessVC : UIViewController {
     var name: String = "123"
     var userPhone: String = "010-XXXX-XXXX"
     
-   
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -107,7 +109,7 @@ extension LoginSuccessVC {
             readHowtoUseBtn.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
             readHowtoUseBtn.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
             readHowtoUseBtn.heightAnchor.constraint(equalToConstant: 50)
-           
+            
         ])
         
     }
@@ -119,16 +121,16 @@ extension LoginSuccessVC {
     
     func debugingFunction(){
         // 데이터 가져오기
-        if let nickNames = UserDefaults.standard.string(forKey: "nickName"),
+        if let nickName = UserDefaults.standard.string(forKey: "nickName"),
            let sex = UserDefaults.standard.string(forKey: "sex"),
            let birthday = UserDefaults.standard.string(forKey: "birthday"),
            let email = UserDefaults.standard.string(forKey: "email"),
            let password = UserDefaults.standard.string(forKey: "password"){
             // 가져온 값 사용
-            nickName = nickNames
+            self.nickName = nickName
             self.sex = sex
-            self.birthday = birthday
             self.email = email
+            self.birthday = birthday
             self.password = password
         } else {
             // 저장된 데이터가 없을 경우 기본값 또는 처리할 로직 설정
@@ -139,55 +141,40 @@ extension LoginSuccessVC {
     }
     
     func performSignUp() {
-        // JSON으로 인코딩할 데이터 생성
-        let signUpData = SignUpData(email: email,
-                                    nickName: nickName,
-                                    password: password,
-                                    userPhone: userPhone,
-                                    memberName: name,
-                                    memberGender: sex,
-                                    birthday: birthday)
+        let signUpData = SignUpData(memberGender: sex, nickName: nickName, email: email, birthday: birthday, password: password)
         
-        guard let url = URL(string: signUpURLString) else {
-            showAlert(message: "서버 URL을 만들 수 없습니다.")
-            return
-        }
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        do {
-            let jsonData = try JSONEncoder().encode(signUpData)
-            request.httpBody = jsonData
-        } catch {
-            showAlert(message: "JSON 인코딩에 실패하였습니다.")
-            return
-        }
-        
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data else {
-                self.showAlert(message: "응답 데이터를 받아오지 못했습니다.")
-                return
+        AF.upload(multipartFormData: { multipartFormData in
+            if let signUpJSONData = try? JSONEncoder().encode(signUpData) {
+                multipartFormData.append(signUpJSONData, withName: "request", mimeType: "application/json")
             }
             
-            do {
-                let signUpResponse = try JSONDecoder().decode(SignUpResponse.self, from: data)
-                
-                if signUpResponse.message == "회원가입 성공" {
-                    DispatchQueue.main.async {
-                        print("회원가입 성공하셨습니다.")
-                    }
-                } else {
-                    DispatchQueue.main.async {
-                        print("회원가입 실패하셨습니다.")
-                    }
-                }
-            } catch {
-                self.showAlert(message: "JSON 디코딩에 실패하였습니다.")
+            if let profileImage = UIImage(named: "karim"),
+               let profileImageData = profileImage.jpegData(compressionQuality: 0.9) {
+                multipartFormData.append(profileImageData, withName: "profileImage", fileName: "profileImage.jpeg", mimeType: "image/jpeg")
             }
-        }.resume()
-
+        }, to: signUpURLString)
+        .response { response in
+            switch response.result {
+            case .success:
+                if let statusCode = response.response?.statusCode {
+                    print("HTTP Status Code: \(statusCode)")
+                    
+                    if let responseData = response.data {
+                        do {
+                            let decoder = JSONDecoder()
+                            let signUpResponse = try decoder.decode(SignUpResponse.self, from: responseData)
+                            print("Sign Up Response: \(signUpResponse)")
+                        } catch {
+                            print("JSON Decoding Error: \(error)")
+                        }
+                    }
+                    
+                }
+            case .failure(let error):
+                print("Error: \(error)")
+            }
+        }
+        
         
     }
     

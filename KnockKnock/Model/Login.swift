@@ -20,11 +20,9 @@ struct LoginResponse: Codable {
 
 struct User: Codable {
     let memberId: Int
-    let memberName: String
     let memberGender: String
     let profileImageUrl: String
     let nickName: String
-    let phoneNumber: String?
     let email: String
     let birthday: String
     let age: Int
@@ -32,14 +30,17 @@ struct User: Codable {
     let modifiedAt: String
 }
 
+struct SignUpRequest: Codable {
+    let request: SignUpData
+    let profileImage: Data?
+}
+
 struct SignUpData: Codable {
-    let email: String
-    let nickName: String
-    let password: String
-    let userPhone: String
-    let memberName: String
     let memberGender: String
+    let nickName: String
+    let email: String
     let birthday: String
+    let password: String
 }
 
 struct SignUpResponse: Codable {

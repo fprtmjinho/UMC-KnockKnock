@@ -312,7 +312,7 @@ extension PostVC: UITableViewDelegate, UITableViewDataSource {
         if indexPath.row == 0 {
             // 행의 index가 0일 때는 게시글
             let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! CustomPostCell
-            cell.profileImageView.sd_setImage(with: URL(string: post.profile), placeholderImage: UIImage(named: "karim"))
+            cell.profileImageView.sd_setImage(with: URL(string: post.profile), placeholderImage: UIImage(named: "anonymous"))
             cell.configureCell(with: post)
             if post.images.count != 0 {
                 cell.makeSubView1()
@@ -328,7 +328,7 @@ extension PostVC: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath) as! CustomCommentCell
             let comment = comments[indexPath.row - 1] // 댓글[행 인덱스 - 1] -> 해당 댓글
             cell.delegate = self
-            cell.profileImageView.sd_setImage(with: URL(string: comment.profileImageUrl), placeholderImage: UIImage(named: "karim"))
+            cell.profileImageView.sd_setImage(with: URL(string: comment.profileImageUrl), placeholderImage: UIImage(named: "anonymous"))
             cell.configureCell(with: comment)
             cell.makeSubView()
             cell.makeConstraint()

@@ -122,11 +122,11 @@ extension GoodVC: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelega
         
         cell.resetCell()
         
-        cell.profileImageView.sd_setImage(with: URL(string: post.profileImageUrl), placeholderImage: UIImage(named: "karim"))
+        cell.profileImageView.sd_setImage(with: URL(string: post.profileImageUrl), placeholderImage: UIImage(named: "anonymous"))
         cell.imagesView.image = nil
         
         if post.imageUrl.count != 0 {
-            cell.imagesView.sd_setImage(with: URL(string: post.imageUrl[0]), placeholderImage: UIImage(named: "beach"))
+            cell.imagesView.sd_setImage(with: URL(string: post.imageUrl[0]), placeholderImage: UIImage(named: "imageLoading"))
             cell.makeSubView1()
             cell.makeConstraint1()
         } else {
