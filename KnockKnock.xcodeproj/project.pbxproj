@@ -67,6 +67,8 @@
 		C98EB7212A7E877900FAB4B8 /* EditGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98EB7202A7E877900FAB4B8 /* EditGroupView.swift */; };
 		C98EB7232A7E878100FAB4B8 /* EditGroupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98EB7222A7E878100FAB4B8 /* EditGroupVC.swift */; };
 		C98EB7252A7EB11700FAB4B8 /* ChangePasswordSuccessVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98EB7242A7EB11700FAB4B8 /* ChangePasswordSuccessVC.swift */; };
+		C98EB7272A7EC2C800FAB4B8 /* MyMessage1.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98EB7262A7EC2C800FAB4B8 /* MyMessage1.swift */; };
+		C98EB7292A7EC2D200FAB4B8 /* MyMessage2.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98EB7282A7EC2D200FAB4B8 /* MyMessage2.swift */; };
 		C9D07CEE2A6A62290071C2F5 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D07CED2A6A62290071C2F5 /* CustomCell.swift */; };
 		C9D07CFA2A6AE74A0071C2F5 /* FriendProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D07CF92A6AE74A0071C2F5 /* FriendProfileView.swift */; };
 		C9D07CFC2A6C427C0071C2F5 /* HowtouseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D07CFB2A6C427C0071C2F5 /* HowtouseVC.swift */; };
@@ -167,6 +169,8 @@
 		C98EB7202A7E877900FAB4B8 /* EditGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditGroupView.swift; sourceTree = "<group>"; };
 		C98EB7222A7E878100FAB4B8 /* EditGroupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditGroupVC.swift; sourceTree = "<group>"; };
 		C98EB7242A7EB11700FAB4B8 /* ChangePasswordSuccessVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordSuccessVC.swift; sourceTree = "<group>"; };
+		C98EB7262A7EC2C800FAB4B8 /* MyMessage1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyMessage1.swift; sourceTree = "<group>"; };
+		C98EB7282A7EC2D200FAB4B8 /* MyMessage2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyMessage2.swift; sourceTree = "<group>"; };
 		C9D07CED2A6A62290071C2F5 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 		C9D07CF92A6AE74A0071C2F5 /* FriendProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendProfileView.swift; sourceTree = "<group>"; };
 		C9D07CFB2A6C427C0071C2F5 /* HowtouseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowtouseVC.swift; sourceTree = "<group>"; };
@@ -365,6 +369,8 @@
 			children = (
 				C93246C02A48315800908D6B /* MyPageController.swift */,
 				C93246B12A4631E200908D6B /* MyPage.swift */,
+				C98EB7262A7EC2C800FAB4B8 /* MyMessage1.swift */,
+				C98EB7282A7EC2D200FAB4B8 /* MyMessage2.swift */,
 				C933F4542A5EFBBA0089670A /* EditMyPageVC.swift */,
 				C935FA1B2A57F1B90035FA2C /* MyProfilePage.swift */,
 				C935FA772A5C01200035FA2C /* SettingVC.swift */,
@@ -644,6 +650,7 @@
 				C935FA782A5C01200035FA2C /* SettingVC.swift in Sources */,
 				C9D07D0E2A6D66450071C2F5 /* GroupProfileVC.swift in Sources */,
 				C9229C8E2A6441DB0017A45C /* AddGroupVC.swift in Sources */,
+				C98EB7272A7EC2C800FAB4B8 /* MyMessage1.swift in Sources */,
 				C9D07D0C2A6D663B0071C2F5 /* GroupProfileView.swift in Sources */,
 				C935FA1C2A57F1B90035FA2C /* MyProfilePage.swift in Sources */,
 				E999620E2A658E6B00FA602C /* MyData.swift in Sources */,
@@ -666,6 +673,7 @@
 				C935FA1F2A58264B0035FA2C /* LoginFirstVC.swift in Sources */,
 				C98EB71B2A7AC4E500FAB4B8 /* BirthTextGuideVC.swift in Sources */,
 				C98EB7252A7EB11700FAB4B8 /* ChangePasswordSuccessVC.swift in Sources */,
+				C98EB7292A7EC2D200FAB4B8 /* MyMessage2.swift in Sources */,
 				00FD26582A5CE1520013E169 /* GuideVC.swift in Sources */,
 				C9D07D102A6D74210071C2F5 /* GroupAlarmVC.swift in Sources */,
 				C933F4552A5EFBBA0089670A /* EditMyPageVC.swift in Sources */,
