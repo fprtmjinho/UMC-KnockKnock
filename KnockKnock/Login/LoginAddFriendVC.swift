@@ -86,7 +86,8 @@ class LoginAddFriendVC : AllowApproachVC {
     //tableView
     var tableView = UITableView(frame: .zero, style: .plain)
     
-    //numberArray
+    let userNotiCenter = UNUserNotificationCenter.current()
+    
     let fre = Friends.shared
     var contacts: NSMutableArray = NSMutableArray()
     
@@ -116,6 +117,7 @@ class LoginAddFriendVC : AllowApproachVC {
         makeAddTarget()
         setNavigationBar()
         setLabel()
+        requestAuthNoti()
        
     }
 }
@@ -370,5 +372,35 @@ extension LoginAddFriendVC {
     @objc func downloadNumberBook(){
         readContacts()
         getFriendInfo()
+    }
+}
+extension LoginAddFriendVC{
+    // 알림 권한 설정
+    func requestAuthNoti() {
+        let notiAuthOptions = UNAuthorizationOptions(arrayLiteral: [.alert, .badge, .sound])
+        userNotiCenter.requestAuthorization(options: notiAuthOptions) { (success, error) in
+            guard success else {return}
+            
+        }
+    }
+    // 알림 전송
+    func requestSendNoti(seconds: Double) {
+        let notiContent = UNMutableNotificationContent()
+        notiContent.title = "'KnockKnock'에서 알림을 보내고자 합니다."
+        notiContent.body = "경고, 사운드 및 아이콘 배지가 알림에 포함될 수 있습니다. 설정에서 이를 구성할 수 있습니다."
+        notiContent.userInfo = ["targetScene": "splash"] // 푸시 받을때 오는 데이터
+
+        // 알림이 trigger되는 시간 설정
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: seconds, repeats: false)
+
+        let request = UNNotificationRequest(
+            identifier: UUID().uuidString,
+            content: notiContent,
+            trigger: trigger
+        )
+
+        userNotiCenter.add(request) { (error) in
+            print(#function, error)
+        }
     }
 }

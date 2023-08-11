@@ -230,23 +230,7 @@ extension AddGroupView {
         }
     }
     func getData(){
-//        var nameCh: Array<String> = []
-//        var numberCh: Array<String> = []
-//        var nickNameCh: Array<String> = []
-//        var bestFriendCh: Array<Bool> = []
-//        for key in friendData.dic.keys{
-//            var dic = friendData.dic[key]
-//            if dic!.bestFriend == true{
-//                nameCh.append(dic!.name)
-//                numberCh.append(key)
-//                nickNameCh.append(dic!.nickName)
-//                bestFriendCh.append(dic!.bestFriend)
-//            }
-//        }
-//        nameList = nameCh
-//        numberList = numberCh
-//        nickNameList = nickNameCh
-//        bestFriendList = bestFriendCh
+        
         var nameCh: Array<String> = []
         var numberCh: Array<String> = []
         for member in group.groupMember{

@@ -17,11 +17,11 @@ class GroupVC: UIViewController {
     var nameList: Array<String> = []
     var timeList: Array<String> = []
     var memberList: [[String]] = [[]]
+    
     let group = Group.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         getData()
         sortData()
         
@@ -30,6 +30,7 @@ class GroupVC: UIViewController {
         makeConstraint()
         makeAddTarget()
         print(nameList)
+        print(timeList)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -42,6 +43,7 @@ class GroupVC: UIViewController {
         makeConstraint()
         makeAddTarget()
         print(nameList)
+        print(timeList)
     }
     
 }
@@ -130,18 +132,19 @@ extension GroupVC {
            self.addGroupBtn.addTarget(self, action: #selector(addGroupFunc(_:)), for: .touchUpInside)
     }
     
-     func nextView(index:IndexPath) {
+     @objc func nextView(index:IndexPath) {
         let nextView = GroupProfileVC()
-         group.choiceTime = nameList[index.row]
+         print(timeList[index.row])
+        group.choiceTime = timeList[index.row]
         nextView.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(nextView, animated: true)
     }
 
     @objc func addGroupFunc(_: UIButton){
-           let addGroupVC = AddGroupVC()
-           //찐친 추가하기
-           addGroupVC.hidesBottomBarWhenPushed = true
-           self.navigationController?.pushViewController(addGroupVC, animated: true)
+        let addGroupVC = AddGroupVC()
+        //찐친 추가하기
+        addGroupVC.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(addGroupVC, animated: true)
     }
     @objc func getData(){
         var nameCh: Array<String> = []

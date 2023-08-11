@@ -138,6 +138,7 @@ extension LoginSuccessVC {
         }
         performSignUp()
         setName()
+        deleteData()
     }
     
     func performSignUp() {
@@ -199,6 +200,13 @@ extension LoginSuccessVC {
     @objc func setName(){
         welcomeLabel.text = "\(nickName)님 환영합니다!"
         //nickName이 안뜸 흠
+    }
+    func deleteData(){
+        UserDefaults.standard.removeObject(forKey: "nickName")
+        UserDefaults.standard.removeObject(forKey: "sex")
+        UserDefaults.standard.removeObject(forKey: "birthday")
+        UserDefaults.standard.removeObject(forKey: "email")
+        UserDefaults.standard.removeObject(forKey: "password")
     }
     @objc func startBtnFunc(_: UIButton){
         let tabBarController = TabBarController()
