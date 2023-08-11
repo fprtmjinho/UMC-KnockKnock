@@ -103,12 +103,12 @@ extension AddGroupVC {
         if let name = addGroupView.nametext.text{
             groupName = name
         }
-//        for number in addGroupView.numberList{
-//            groupMember.append(number)
-//        }
-//        if let gPlace = addGroupView.placetext.text{
-//            groupPlace = gPlace
-//        }
+        for number in addGroupView.numberList{
+            groupMember.append(number)
+        }
+        if let gPlace = addGroupView.placetext.text{
+            groupPlace = gPlace
+        }
         if groupName == ""{
             // 팝업이나 표시
             return
@@ -127,8 +127,8 @@ extension AddGroupVC {
     func setGroupData(){
         let groupInfo: GroupInfo = GroupInfo(
             name: groupName,
-            user: [],
-            place: "",
+            user: groupMember,
+            place: groupPlace,
             alram: true,
             time: groupTime
         )
