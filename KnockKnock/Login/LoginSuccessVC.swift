@@ -209,11 +209,17 @@ extension LoginSuccessVC {
         UserDefaults.standard.removeObject(forKey: "password")
     }
     @objc func startBtnFunc(_: UIButton){
+<<<<<<< HEAD
         navigationController?.popToRootViewController(animated: true)
         
        /* let tabBarController = TabBarController()
         tabBarController.modalPresentationStyle = .fullScreen
         self.present(tabBarController, animated: true, completion: nil)*/
+=======
+        if let navigationController = navigationController {
+                navigationController.popToRootViewController(animated: false)
+            }
+>>>>>>> style4
     }
     
     @objc func readHowtoUseFunc(_: UIButton){
