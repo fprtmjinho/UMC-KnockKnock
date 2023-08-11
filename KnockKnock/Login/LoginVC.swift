@@ -10,14 +10,7 @@ class LoginVC : UIViewController {
     
     let loginURLString = "http://43.200.240.251/member/login"
     
-    let Title : UILabel = {
-        let title = UILabel()
-        title.text = "knock knock"
-        //글씨체 수정 필요
-        title.textColor = #colorLiteral(red: 1, green: 0.1743352413, blue: 0.4743140936, alpha: 1)
-        title.font = UIFont.boldSystemFont(ofSize: 40)
-        return title
-    }()
+    let Title : UIImageView = UIImageView(image: UIImage(named: "title"))
     
     let EmailText : UITextField = {
         let emailBtn = UITextField()
@@ -284,9 +277,11 @@ extension LoginVC {
         
         
         NSLayoutConstraint.activate([
-            Title.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 90),
+            Title.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 130),
             Title.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            Title.heightAnchor.constraint(equalToConstant: 80),
+            Title.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 85),
+            Title.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -85),
+            Title.heightAnchor.constraint(equalToConstant: 30),
             
             //y축 고정
             PasswordText.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -20),

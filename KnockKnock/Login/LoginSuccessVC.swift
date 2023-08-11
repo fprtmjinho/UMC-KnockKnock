@@ -201,9 +201,11 @@ extension LoginSuccessVC {
         //nickName이 안뜸 흠
     }
     @objc func startBtnFunc(_: UIButton){
-        let tabBarController = TabBarController()
+        navigationController?.popToRootViewController(animated: true)
+        
+       /* let tabBarController = TabBarController()
         tabBarController.modalPresentationStyle = .fullScreen
-        self.present(tabBarController, animated: true, completion: nil)
+        self.present(tabBarController, animated: true, completion: nil)*/
     }
     
     @objc func readHowtoUseFunc(_: UIButton){
