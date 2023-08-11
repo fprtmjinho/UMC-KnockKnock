@@ -97,7 +97,7 @@ extension MyPage {
         editBtn.centerXAnchor.constraint(equalTo: self.centerXAnchor),
         editBtn.topAnchor.constraint(equalTo: Name.bottomAnchor, constant: 2),
         
-        textTitle.topAnchor.constraint(equalTo: editBtn.bottomAnchor, constant: 40),
+        textTitle.topAnchor.constraint(equalTo: editBtn.bottomAnchor, constant: 20),
         textTitle.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 30),
         
         messageView.topAnchor.constraint(equalTo: textTitle.bottomAnchor, constant: 8),
