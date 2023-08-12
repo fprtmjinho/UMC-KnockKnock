@@ -32,7 +32,7 @@ class SayHelloTextGuideVC : UIViewController {
     
     let guide1_1 : BasePaddingLabel = {
        let label = BasePaddingLabel()
-        label.text = "000야 잘 지내지? 어떻게 지내는지 궁굼해서 연락해. 자주 연락 못하는 것 같아 미안해 :)"
+        label.text = "000야 잘 지내지? 어떻게 지내는지 궁금해서 연락해. 자주 연락 못하는 것 같아 미안해 :)"
         label.textguideExtension()
         //textguide의 모든 uilabel에 해당되는 사항 extension으로 묶어 처리
         return label
@@ -137,7 +137,7 @@ extension SayHelloTextGuideVC {
             View1.heightAnchor.constraint(equalToConstant: 400),
             View1.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
             
-            titlelabel1.topAnchor.constraint(equalTo: View1.topAnchor, constant: 20),
+            titlelabel1.topAnchor.constraint(equalTo: View1.topAnchor, constant: 30),
             titlelabel1.leadingAnchor.constraint(equalTo: View1.leadingAnchor, constant: 30),
             
             guide1_1.topAnchor.constraint(equalTo: titlelabel1.bottomAnchor, constant: 10),

@@ -24,7 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
        
 
 
-        window?.rootViewController = AppointmentTextGuideVC()
+        window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
     }
 

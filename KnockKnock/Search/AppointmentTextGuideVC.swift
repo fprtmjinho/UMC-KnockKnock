@@ -125,7 +125,7 @@ extension AppointmentTextGuideVC {
             View1.heightAnchor.constraint(equalToConstant: 420),
             View1.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
             
-            titlelabel1.topAnchor.constraint(equalTo: View1.topAnchor, constant: 20),
+            titlelabel1.topAnchor.constraint(equalTo: View1.topAnchor, constant: 30),
             titlelabel1.leadingAnchor.constraint(equalTo: View1.leadingAnchor, constant: 30),
             
             guide1_1.topAnchor.constraint(equalTo: titlelabel1.bottomAnchor, constant: 10),
