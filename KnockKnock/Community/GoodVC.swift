@@ -22,7 +22,7 @@ class GoodVC: UIViewController {
     var posts: [PostParsing] = []
     
     func fetchData(page: Int) {
-        let urlString = "http://54.180.168.54/board/allPosts?boardType=GOOD&page=\(page)&size=5"
+        let urlString = "http://43.200.240.251/board/allPosts?boardType=GOOD&page=\(page)&size=5"
         
         guard let url = URL(string: urlString) else {
             return
@@ -119,7 +119,6 @@ extension GoodVC: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelega
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! CustomCell
         let post = posts[indexPath.row]
-        
         cell.resetCell()
         
         cell.profileImageView.sd_setImage(with: URL(string: post.profileImageUrl), placeholderImage: UIImage(named: "anonymous"))

@@ -22,7 +22,7 @@ class BadVC: UIViewController {
     var posts: [PostParsing] = []
     
     func fetchData(page: Int) {
-        let urlString = "http://54.180.168.54/board/allPosts?boardType=EVIL&page=\(page)&size=5"
+        let urlString = "http://43.200.240.251/board/allPosts?boardType=EVIL&page=\(page)&size=5"
         
         guard let url = URL(string: urlString) else {
             return
