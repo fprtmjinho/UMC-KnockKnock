@@ -30,33 +30,32 @@ class SayHelloTextGuideVC : UIViewController {
         return label
     }()
     
-    let guide1_1 : UILabel = {
-       let label = UILabel()
+    let guide1_1 : BasePaddingLabel = {
+       let label = BasePaddingLabel()
         label.text = "000야 잘 지내지? 어떻게 지내는지 궁굼해서 연락해. 자주 연락 못하는 것 같아 미안해 :)"
         label.textguideExtension()
         //textguide의 모든 uilabel에 해당되는 사항 extension으로 묶어 처리
         return label
     }()
     
-    let guide1_2 : UILabel = {
-       let label = UILabel()
+    let guide1_2 : BasePaddingLabel = {
+       let label = BasePaddingLabel()
         label.text = "000야 안녕, 오랜만에 연락하네. 나 아메리카노야. 잘 지내지?"
         label.textguideExtension()
         return label
     }()
     
-    let guide1_3 : UILabel = {
-       let label = UILabel()
-        label.text = "오랜만에 000가 생각이 나서 이렇게 연락해. 항상 건강 유의하고 행복하기를 바래!"
-        label.font = UIFont.systemFont(ofSize: 15)
+    let guide1_3 : BasePaddingLabel = {
+       let label = BasePaddingLabel()
         label.textguideExtension()
+        label.text = "오랜만에 000가 생각이 나서 이렇게 연락해. 항상 건강 유의하고 행복하기를 바래!"
         return label
     }()
     
-    let guide1_4 : UILabel = {
-       let label = UILabel()
-        label.text = "000, 어떻게 지내! 문득 궁굼해져서 연락했어. 안 본지 한참 된 것 같다ㅎㅎ"
+    let guide1_4 : BasePaddingLabel = {
+       let label = BasePaddingLabel()
         label.textguideExtension()
+        label.text = "000, 어떻게 지내! 문득 궁굼해져서 연락했어. 안 본지 한참 된 것 같다ㅎㅎ"
         return label
     }()
     
@@ -77,23 +76,23 @@ class SayHelloTextGuideVC : UIViewController {
         return label
     }()
     
-    let guide2_1 : UILabel = {
-       let label = UILabel()
+    let guide2_1 : BasePaddingLabel = {
+       let label = BasePaddingLabel()
         label.text = "000님 잘 지내죠? 어떻게 지내는지 궁굼해서 연락드립니다. 자주 연락드리지 못하는 것 같아 죄송하네요."
         label.textguideExtension()
         return label
     }()
     
-    let guide2_2 : UILabel = {
-       let label = UILabel()
+    let guide2_2 : BasePaddingLabel = {
+       let label = BasePaddingLabel()
         label.text = "000님, 평안하시죠? 오랜만에 000님 생각이 나서 이렇게 연락드립니다. 항상 건강 유의하세요."
         label.textguideExtension()
         return label
     }()
     
-    let guide2_3 : UILabel = {
-       let label = UILabel()
-        label.text = "오랜만에 000님이 생각이 나서 연락드리네요. 저 아메리카노입니다. 잘 지내시죠?"
+    let guide2_3 : BasePaddingLabel = {
+       let label = BasePaddingLabel()
+        label.text = "오랜만에 000님이 생각이 나서 연락드리네요. 저 000입니다. 잘 지내시죠?"
         label.textguideExtension()
         return label
     }()
@@ -135,25 +134,25 @@ extension SayHelloTextGuideVC {
             View1.topAnchor.constraint(equalTo: scrollView.topAnchor),
             View1.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             View1.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-            View1.heightAnchor.constraint(equalToConstant: 350),
+            View1.heightAnchor.constraint(equalToConstant: 400),
             View1.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
             
             titlelabel1.topAnchor.constraint(equalTo: View1.topAnchor, constant: 20),
             titlelabel1.leadingAnchor.constraint(equalTo: View1.leadingAnchor, constant: 30),
             
-            guide1_1.topAnchor.constraint(equalTo: titlelabel1.bottomAnchor, constant: 20),
+            guide1_1.topAnchor.constraint(equalTo: titlelabel1.bottomAnchor, constant: 10),
             guide1_1.leadingAnchor.constraint(equalTo: View1.leadingAnchor, constant: 30),
             guide1_1.trailingAnchor.constraint(equalTo: View1.trailingAnchor, constant: -30),
             
-            guide1_2.topAnchor.constraint(equalTo: guide1_1.bottomAnchor, constant: 20),
+            guide1_2.topAnchor.constraint(equalTo: guide1_1.bottomAnchor, constant: 10),
             guide1_2.leadingAnchor.constraint(equalTo: View1.leadingAnchor, constant: 30),
             guide1_2.trailingAnchor.constraint(equalTo: View1.trailingAnchor, constant: -30),
             
-            guide1_3.topAnchor.constraint(equalTo: guide1_2.bottomAnchor, constant: 20),
+            guide1_3.topAnchor.constraint(equalTo: guide1_2.bottomAnchor, constant: 10),
             guide1_3.leadingAnchor.constraint(equalTo: View1.leadingAnchor, constant: 30),
             guide1_3.trailingAnchor.constraint(equalTo: View1.trailingAnchor, constant: -30),
             
-            guide1_4.topAnchor.constraint(equalTo: guide1_3.bottomAnchor, constant: 20),
+            guide1_4.topAnchor.constraint(equalTo: guide1_3.bottomAnchor, constant: 10),
             guide1_4.leadingAnchor.constraint(equalTo: View1.leadingAnchor, constant: 30),
             guide1_4.trailingAnchor.constraint(equalTo: View1.trailingAnchor, constant: -30),
             
@@ -164,16 +163,16 @@ extension SayHelloTextGuideVC {
             View2.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
             View2.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
             
-            titlelabel2.topAnchor.constraint(equalTo: View2.topAnchor, constant: 20),
+            titlelabel2.topAnchor.constraint(equalTo: View2.topAnchor, constant: 10),
             titlelabel2.leadingAnchor.constraint(equalTo: View2.leadingAnchor, constant: 30),
             
-            guide2_1.topAnchor.constraint(equalTo: titlelabel2.bottomAnchor, constant: 20),
+            guide2_1.topAnchor.constraint(equalTo: titlelabel2.bottomAnchor, constant: 10),
             guide2_1.leadingAnchor.constraint(equalTo: View2.leadingAnchor, constant: 30),
             guide2_1.trailingAnchor.constraint(equalTo: View2.trailingAnchor, constant: -30),
-            guide2_2.topAnchor.constraint(equalTo: guide2_1.bottomAnchor, constant: 20),
+            guide2_2.topAnchor.constraint(equalTo: guide2_1.bottomAnchor, constant: 10),
             guide2_2.leadingAnchor.constraint(equalTo: View2.leadingAnchor, constant: 30),
             guide2_2.trailingAnchor.constraint(equalTo: View2.trailingAnchor, constant: -30),
-            guide2_3.topAnchor.constraint(equalTo: guide2_2.bottomAnchor, constant: 20),
+            guide2_3.topAnchor.constraint(equalTo: guide2_2.bottomAnchor, constant: 10),
             guide2_3.leadingAnchor.constraint(equalTo: View2.leadingAnchor, constant: 30),
             guide2_3.trailingAnchor.constraint(equalTo: View2.trailingAnchor, constant: -30),
         

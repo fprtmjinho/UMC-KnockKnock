@@ -155,12 +155,23 @@ extension UILabel {
         UIPasteboard.general.string = label.text // 텍스트가 복사됨
     }
     
+}
+
+extension BasePaddingLabel {
     
     func textguideExtension(){
-        self.font = UIFont.systemFont(ofSize: 16)
+        self.font = UIFont.systemFont(ofSize: 16, weight: .light)
         self.translatesAutoresizingMaskIntoConstraints = false
         self.backgroundColor = .systemGray6
         self.numberOfLines = 0
         self.CopyOnLabel()
+        
+        let padding = UIEdgeInsets(top: 1.0, left: 1.0, bottom: 1.0, right: 1.0)
+        
+        let size = self.sizeThatFits( CGSize(width: self.frame.width, height: CGFloat.greatestFiniteMagnitude))
+        self.lineBreakMode = .byCharWrapping
+        self.frame.size.width = size.width
+        self.frame.size.height = size.height
+        
     }
 }

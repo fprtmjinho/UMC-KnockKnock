@@ -58,6 +58,7 @@
 		C935FA862A5EB6010035FA2C /* FindPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C935FA852A5EB6010035FA2C /* FindPasswordVC.swift */; };
 		C977A2772A684692001249E3 /* GroupMemberVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C977A2762A684692001249E3 /* GroupMemberVC.swift */; };
 		C977A2792A6854B6001249E3 /* AddGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C977A2782A6854B6001249E3 /* AddGroupView.swift */; };
+		C97E2E602A87D5D200760EE9 /* BasePaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97E2E5F2A87D5D200760EE9 /* BasePaddingLabel.swift */; };
 		C98C4DFA2A6120C00001BEAB /* ChangePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C4DF92A6120C00001BEAB /* ChangePasswordVC.swift */; };
 		C98EB7172A7ABA9600FAB4B8 /* LoginThirdVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98EB7162A7ABA9600FAB4B8 /* LoginThirdVC.swift */; };
 		C98EB7192A7AC4D200FAB4B8 /* SayHelloTextGuideVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98EB7182A7AC4D200FAB4B8 /* SayHelloTextGuideVC.swift */; };
@@ -161,6 +162,7 @@
 		C935FA852A5EB6010035FA2C /* FindPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindPasswordVC.swift; sourceTree = "<group>"; };
 		C977A2762A684692001249E3 /* GroupMemberVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupMemberVC.swift; sourceTree = "<group>"; };
 		C977A2782A6854B6001249E3 /* AddGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupView.swift; sourceTree = "<group>"; };
+		C97E2E5F2A87D5D200760EE9 /* BasePaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePaddingLabel.swift; sourceTree = "<group>"; };
 		C98C4DF92A6120C00001BEAB /* ChangePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordVC.swift; sourceTree = "<group>"; };
 		C98EB7162A7ABA9600FAB4B8 /* LoginThirdVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginThirdVC.swift; sourceTree = "<group>"; };
 		C98EB7182A7AC4D200FAB4B8 /* SayHelloTextGuideVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SayHelloTextGuideVC.swift; sourceTree = "<group>"; };
@@ -276,6 +278,7 @@
 				C93246782A458D9400908D6B /* AppDelegate.swift */,
 				C932467A2A458D9400908D6B /* SceneDelegate.swift */,
 				C935FA262A59BC840035FA2C /* Extension.swift */,
+				C97E2E5F2A87D5D200760EE9 /* BasePaddingLabel.swift */,
 				C935FA2C2A59C1B30035FA2C /* TabBarController.swift */,
 				E91EE28C2A61A3AC003D6E5C /* Friends.swift */,
 				E999620D2A658E6B00FA602C /* MyData.swift */,
@@ -658,6 +661,7 @@
 				C98EB7272A7EC2C800FAB4B8 /* MyMessage1.swift in Sources */,
 				C9D07D0C2A6D663B0071C2F5 /* GroupProfileView.swift in Sources */,
 				C935FA1C2A57F1B90035FA2C /* MyProfilePage.swift in Sources */,
+				C97E2E602A87D5D200760EE9 /* BasePaddingLabel.swift in Sources */,
 				E999620E2A658E6B00FA602C /* MyData.swift in Sources */,
 				C935FA862A5EB6010035FA2C /* FindPasswordVC.swift in Sources */,
 				C98EB71F2A7AC52F00FAB4B8 /* AppointmentTextGuideVC.swift in Sources */,
