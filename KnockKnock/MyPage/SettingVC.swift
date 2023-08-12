@@ -31,7 +31,7 @@ class SettingVC: UIViewController {
 
 extension SettingVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 6
+        return 8
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -57,9 +57,16 @@ extension SettingVC: UITableViewDelegate, UITableViewDataSource {
             cell.textLabel?.text = "데이터 초기화"
             cell.accessoryType = .disclosureIndicator
         case 4:
-            cell.textLabel?.text = "개인정보 처리방침"
+            cell.textLabel?.text = "로그아웃"
             cell.accessoryType = .disclosureIndicator
         case 5:
+            cell.textLabel?.text = "회원 탈퇴"
+            cell.accessoryType = .disclosureIndicator
+            cell.textLabel?.textColor = .red
+        case 6:
+            cell.textLabel?.text = "개인정보 처리방침"
+            cell.accessoryType = .disclosureIndicator
+        case 7:
             cell.textLabel?.text = "이용약관"
             cell.accessoryType = .disclosureIndicator
         default:
@@ -80,8 +87,16 @@ extension SettingVC: UITableViewDelegate, UITableViewDataSource {
             let guideVC = GuideVC()
             guideVC.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(guideVC, animated: true)
+        
+         case 4:
+            //로그아웃
+            logoutFunc()
             
-        case 4:
+        case 5:
+         //회원 탈퇴 관련 코드
+            resignFunc()
+            
+        case 6:
             let privacyPolicyVC = PrivacyPolicyVC()
             privacyPolicyVC.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(privacyPolicyVC, animated: true)
@@ -103,6 +118,35 @@ extension SettingVC: UITableViewDelegate, UITableViewDataSource {
             UserDefaults.standard.set(false, forKey: "notificationsEnabled")
         }
     }
+    
+  private func logoutFunc(){
+      //로그아웃 관련 코드
+        let logoutAlert = UIAlertController(title: "로그아웃", message: "로그아웃 하시겠습니까?", preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "cancel", style: .cancel)
+      let allowAction = UIAlertAction(title: "Logout", style: .default){_ in
+          //ok 눌렀을 시 로그아웃 기능 구현
+      }
+        logoutAlert.addAction(cancelAction)
+        logoutAlert.addAction(allowAction)
+    
+        self.present(logoutAlert, animated: true)
+    }
+    
+    private func resignFunc(){
+        //회원 탈퇴 관련 코드
+        let resignAlert = UIAlertController(title: "회원 탈퇴", message: "회원을 탈퇴하시겠습니까?", preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "cancel", style: .cancel)
+        let allowAction = UIAlertAction(title: "Resign", style: .default){_ in
+            //ok 눌렀을 시 회원 탈퇴 기능 구현
+            
+        }
+          resignAlert.addAction(cancelAction)
+          resignAlert.addAction(allowAction)
+      
+          self.present(resignAlert, animated: true)
+      }
+      
+    
 }
 
 extension SettingVC {
@@ -123,4 +167,6 @@ extension SettingVC {
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
+    
+
 }

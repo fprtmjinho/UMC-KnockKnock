@@ -51,10 +51,9 @@ class FriendProfileView : UIView {
     let myText : UITextView = {
        let mytext = UITextView()
         mytext.text = " 남기고 싶은 메모를 작성해주세요!"
-        mytext.addLeftPadding()
+        mytext.textContainerInset = UIEdgeInsets(top: 15, left: 10, bottom: 15, right: 10);
         mytext.layer.cornerRadius = 5
         mytext.backgroundColor = .systemGray6
-        mytext.layer.cornerRadius = 5
         mytext.font = UIFont.systemFont(ofSize: 15)
       
         return mytext

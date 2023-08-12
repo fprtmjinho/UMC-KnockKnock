@@ -47,6 +47,15 @@ class MyPage : UIView{
         message.layer.cornerRadius = 10
         return message
     }()
+    
+    let changeMessageBtn : UIButton = {
+       //문자 글 뷰 변환 버튼
+        let btn = UIButton()
+        let config = UIImage.SymbolConfiguration(paletteColors: [UIColor.systemGray3])
+        let image = UIImage(systemName: "arrow.triangle.2.circlepath", withConfiguration: config)
+        btn.setImage(image, for: .normal)
+        return btn
+    }()
 
     
     let copyBtn : UIButton = {
@@ -85,6 +94,7 @@ extension MyPage {
         textTitle.translatesAutoresizingMaskIntoConstraints = false
         messageView.translatesAutoresizingMaskIntoConstraints = false
         copyBtn.translatesAutoresizingMaskIntoConstraints = false
+        changeMessageBtn.translatesAutoresizingMaskIntoConstraints = false
       
         
         NSLayoutConstraint.activate([
@@ -100,6 +110,11 @@ extension MyPage {
         textTitle.topAnchor.constraint(equalTo: editBtn.bottomAnchor, constant: 20),
         textTitle.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 30),
         
+        changeMessageBtn.topAnchor.constraint(equalTo: textTitle.topAnchor, constant: -5),
+        changeMessageBtn.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
+        changeMessageBtn.widthAnchor.constraint(equalToConstant: 35),
+        changeMessageBtn.heightAnchor.constraint(equalToConstant: 35),
+        
         messageView.topAnchor.constraint(equalTo: textTitle.bottomAnchor, constant: 8),
         messageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
         messageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
@@ -109,7 +124,6 @@ extension MyPage {
         copyBtn.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 30),
         copyBtn.widthAnchor.constraint(equalToConstant: 120),
         copyBtn.heightAnchor.constraint(equalToConstant: 35),
-        
         
         ])
         
@@ -122,9 +136,9 @@ extension MyPage {
         self.addSubview(ProfileView)
         self.addSubview(editBtn)
         self.addSubview(textTitle)
+        self.addSubview(changeMessageBtn)
         self.addSubview(messageView)
         self.addSubview(copyBtn)
-        
         
     }
     

@@ -72,6 +72,7 @@ extension MyPageController {
     
     func makeAddTarget(){
         self.myPage.editBtn.addTarget(self, action: #selector(editBtnFunc(_:)), for: .touchUpInside)
+        self.myPage.changeMessageBtn.addTarget(self, action: #selector(changeMessageFunc(_:)), for: .touchUpInside)
     }
 
     @objc func editBtnFunc(_: UIButton){
@@ -80,6 +81,9 @@ extension MyPageController {
         self.navigationController?.pushViewController(editMypageVC, animated: true)
     }
     
+    @objc func changeMessageFunc(_: UIButton){
+        //메세지 뷰 변환 기능
+    }
  
     
     func setScrollView(){
