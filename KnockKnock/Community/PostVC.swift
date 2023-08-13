@@ -12,7 +12,7 @@ class PostVC: UIViewController, CustomCommentCellDelegate {
     
     var myPost: Bool = true // 자신 글 여부
     var myComment: Bool = true // 자신 댓글 여부
-    
+    var isAnonymousSelected = false // // 익명 체크표시 상태 (댓글)
     var categoryValue: Int! // 게시판 종류
     
     // 테이블 뷰 관련: post, comment, tableView
@@ -25,7 +25,7 @@ class PostVC: UIViewController, CustomCommentCellDelegate {
     
     func fetchComment(postID: Int) {
         
-        let urlString = "http://54.180.168.54/post/comment/\(postID)/all"
+        let urlString = "http://43.200.240.251/post/comment/\(postID)/all"
         
         guard let url = URL(string: urlString) else { return }
         
@@ -84,8 +84,6 @@ class PostVC: UIViewController, CustomCommentCellDelegate {
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
-    
-    var isAnonymousSelected = false // 댓글 익명 여부
     
     let anonymousImageButton: UIButton = {
         let button = UIButton(type: .custom)
@@ -294,7 +292,50 @@ class PostVC: UIViewController, CustomCommentCellDelegate {
     }
     
     @objc func makeCommentImageButtonTapped(_ sender: UIButton) {
+        
         print("댓글 작성 버튼 탭함.")
+        
+        let commentURLString = "http://43.200.240.251/post/comment/\(post.postID)"
+        
+        guard let url = URL(string: commentURLString) else {
+            print("서버 URL을 만들 수 없습니다.")
+            return
+        }
+        
+        let commentRequestBody = MakeComment(content: commentTextField.text!, isAnonymous: isAnonymousSelected)
+        let accessToken = UserDefaults.standard.string(forKey: "Authorization")
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.allHTTPHeaderFields = ["Content-Type": "application/json", "Authorization": accessToken!]
+
+        do {
+            let jsonData = try JSONEncoder().encode(commentRequestBody)
+            request.httpBody = jsonData
+        } catch {
+            print("JSON 인코딩에 실패하였습니다.")
+            return
+        }
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print("네트워크 에러: \(error)")
+                return
+            }
+            
+            guard let httpResponse = response as? HTTPURLResponse else {
+                print("올바른 HTTP 응답이 아닙니다.")
+                return
+            }
+            
+            let statusCode = httpResponse.statusCode
+            print("HTTP 상태 코드: \(statusCode)")
+            
+            if let data = data {
+                // 여기서 응답 데이터(data)를 처리하면 됩니다.
+            }
+        }.resume()
+        
     }
 }
 

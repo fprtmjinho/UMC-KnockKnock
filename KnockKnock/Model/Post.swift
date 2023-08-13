@@ -83,3 +83,8 @@ struct PostCreate: Codable {
     let content: String
     let isAnonymous: Bool
 }
+
+struct MakeComment: Codable {
+    let content: String
+    let isAnonymous: Bool
+}
