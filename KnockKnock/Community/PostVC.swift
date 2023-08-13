@@ -314,6 +314,7 @@ extension PostVC: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! CustomPostCell
             cell.profileImageView.sd_setImage(with: URL(string: post.profile), placeholderImage: UIImage(named: "anonymous"))
             cell.configureCell(with: post)
+            print(post.imageURL)
             if post.images.count != 0 {
                 cell.makeSubView1()
                 cell.makeConstraint1()

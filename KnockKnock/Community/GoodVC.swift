@@ -34,8 +34,7 @@ class GoodVC: UIViewController {
             }
             
             do {
-                let decoder = JSONDecoder()
-                let response = try decoder.decode(Response.self, from: data)
+                let response = try JSONDecoder().decode(Response.self, from: data)
                 
                 if page == 1 {
                     self.posts = response.posts
@@ -120,14 +119,19 @@ extension GoodVC: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelega
         let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! CustomCell
         let post = posts[indexPath.row]
         cell.resetCell()
-        
         cell.profileImageView.sd_setImage(with: URL(string: post.profileImageUrl), placeholderImage: UIImage(named: "anonymous"))
         cell.imagesView.image = nil
         
         if post.imageUrl.count != 0 {
+            if let imageUrl = URL(string: post.imageUrl[0]) {
+                        SDImageCache.shared.removeImage(forKey: imageUrl.absoluteString)
+                    }
             cell.imagesView.sd_setImage(with: URL(string: post.imageUrl[0]), placeholderImage: UIImage(named: "imageLoading"))
             cell.makeSubView1()
             cell.makeConstraint1()
+            print("=========================")
+            print(post.imageUrl[0])
+            print("=========================")
         } else {
             cell.makeSubView2()
             cell.makeConstraint2()
@@ -148,13 +152,15 @@ extension GoodVC: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelega
         navigationController?.pushViewController(postVC, animated: true)
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let position = scrollView.contentOffset.y
-        if position > (tableView.contentSize.height - tableView.bounds.size.height - 100) {
-            if hasNext == true {
-                page += 1
-                fetchData(page: page)
-            }
+        let contentHeight = tableView.contentSize.height
+        let tableViewHeight = tableView.bounds.size.height
+        
+        if position >= (contentHeight - tableViewHeight - 100) && hasNext == true {
+            // 다음 페이지 불러오기
+            page += 1
+            fetchData(page: page)
         }
     }
     

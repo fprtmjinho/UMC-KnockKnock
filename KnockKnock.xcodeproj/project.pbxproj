@@ -75,10 +75,8 @@
 		C9D07D0C2A6D663B0071C2F5 /* GroupProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D07D0B2A6D663B0071C2F5 /* GroupProfileView.swift */; };
 		C9D07D0E2A6D66450071C2F5 /* GroupProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D07D0D2A6D66450071C2F5 /* GroupProfileVC.swift */; };
 		C9D07D102A6D74210071C2F5 /* GroupAlarmVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D07D0F2A6D74210071C2F5 /* GroupAlarmVC.swift */; };
-
 		D5764A510EFE2D2A5B8202C4 /* Pods_KnockKnock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9442D7974E4B919AA27134A /* Pods_KnockKnock.framework */; };
 		E90B7CCB2A7F6DB400195BF1 /* UNUserNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E90B7CCA2A7F6DB400195BF1 /* UNUserNotificationCenter.swift */; };
-
 		E91EE27E2A5C9B24003D6E5C /* GetInformationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91EE27D2A5C9B24003D6E5C /* GetInformationVC.swift */; };
 		E91EE28D2A61A3AC003D6E5C /* Friends.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91EE28C2A61A3AC003D6E5C /* Friends.swift */; };
 		E999620E2A658E6B00FA602C /* MyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E999620D2A658E6B00FA602C /* MyData.swift */; };
@@ -180,12 +178,9 @@
 		C9D07D0B2A6D663B0071C2F5 /* GroupProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupProfileView.swift; sourceTree = "<group>"; };
 		C9D07D0D2A6D66450071C2F5 /* GroupProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupProfileVC.swift; sourceTree = "<group>"; };
 		C9D07D0F2A6D74210071C2F5 /* GroupAlarmVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupAlarmVC.swift; sourceTree = "<group>"; };
-
 		D9442D7974E4B919AA27134A /* Pods_KnockKnock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KnockKnock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-
 		E90B7CC92A7EB6BC00195BF1 /* KnockKnock.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KnockKnock.entitlements; sourceTree = "<group>"; };
 		E90B7CCA2A7F6DB400195BF1 /* UNUserNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UNUserNotificationCenter.swift; sourceTree = "<group>"; };
-
 		E91EE27D2A5C9B24003D6E5C /* GetInformationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetInformationVC.swift; sourceTree = "<group>"; };
 		E91EE28C2A61A3AC003D6E5C /* Friends.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friends.swift; sourceTree = "<group>"; };
 		E999620D2A658E6B00FA602C /* MyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyData.swift; sourceTree = "<group>"; };
@@ -394,11 +389,11 @@
 			isa = PBXGroup;
 			children = (
 				C93246C42A48318B00908D6B /* CommunityController.swift */,
-				C9D07CED2A6A62290071C2F5 /* CustomCell.swift */,
 				008463F82A5D56FC009F4033 /* GoodVC.swift */,
 				008463FA2A5D5713009F4033 /* BadVC.swift */,
 				0041A6EC2A61A2BF008A5048 /* WriteVC.swift */,
 				00124F1A2A63CB6000536EAD /* PostVC.swift */,
+				C9D07CED2A6A62290071C2F5 /* CustomCell.swift */,
 				00086E962A6B62AE00A7C9FF /* CustomPostCell.swift */,
 				00086E982A6B631600A7C9FF /* CustomCommentCell.swift */,
 			);

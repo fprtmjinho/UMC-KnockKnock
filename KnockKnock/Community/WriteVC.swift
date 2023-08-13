@@ -314,7 +314,7 @@ extension WriteVC {
             
             for (index, image) in self.selectedImages.enumerated() {
                     if let imageData = image?.jpegData(compressionQuality: 0.8) {
-                        multipartFormData.append(imageData, withName: "images", fileName: "image_\(index).jpg", mimeType: "image/jpeg")
+                        multipartFormData.append(imageData, withName: "images", fileName: "\(self.titleText)_image_\(index).jpg", mimeType: "image/jpeg")
                     }
                 }
             
