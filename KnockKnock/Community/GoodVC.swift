@@ -129,9 +129,6 @@ extension GoodVC: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelega
             cell.imagesView.sd_setImage(with: URL(string: post.imageUrl[0]), placeholderImage: UIImage(named: "imageLoading"))
             cell.makeSubView1()
             cell.makeConstraint1()
-            print("=========================")
-            print(post.imageUrl[0])
-            print("=========================")
         } else {
             cell.makeSubView2()
             cell.makeConstraint2()
@@ -231,7 +228,7 @@ extension GoodVC {
         refreshControl.addTarget(self, action: #selector(refreshPostsData(_:)), for: .valueChanged)
     }
     
-    @objc private func refreshPostsData(_ sender: Any) {
+    @objc func refreshPostsData(_ sender: Any) {
         page = 1
         fetchData(page: page)
         refreshControl.endRefreshing()

@@ -308,7 +308,7 @@ class PostVC: UIViewController, CustomCommentCellDelegate {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.allHTTPHeaderFields = ["Content-Type": "application/json", "Authorization": accessToken!]
-
+        
         do {
             let jsonData = try JSONEncoder().encode(commentRequestBody)
             request.httpBody = jsonData
@@ -331,11 +331,14 @@ class PostVC: UIViewController, CustomCommentCellDelegate {
             let statusCode = httpResponse.statusCode
             print("HTTP 상태 코드: \(statusCode)")
             
-            if let data = data {
-                // 여기서 응답 데이터(data)를 처리하면 됩니다.
+            // 서버 응답을 받은 후에 테이블 뷰 업데이트
+            DispatchQueue.main.async {
+                self.commentTextField.text = ""
+                self.fetchComment(postID: self.post.postID)
+                self.tableView.reloadData()
             }
+            
         }.resume()
-        
     }
 }
 
