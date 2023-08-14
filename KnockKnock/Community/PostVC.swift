@@ -175,6 +175,11 @@ class PostVC: UIViewController, CustomCommentCellDelegate {
     
     func downloadImageSequentially(from urls: [String], index: Int) {
         guard index < urls.count else {
+            // 이미지 다운로드가 모두 완료되었을 때 셀 업데이트를 수행
+            DispatchQueue.main.async {
+                let indexPath = IndexPath(row: 0, section: 0)
+                self.tableView.reloadRows(at: [indexPath], with: .automatic)
+            }
             return
         }
         
@@ -183,17 +188,13 @@ class PostVC: UIViewController, CustomCommentCellDelegate {
                 if let image = image {
                     self.post.images.append(image)
                     
-                    DispatchQueue.main.async {
-                        let indexPath = IndexPath(row: 0, section: 0)
-                        self.tableView.reloadRows(at: [indexPath], with: .automatic)
-                    }
-                    
                     // 다음 이미지 다운로드
                     self.downloadImageSequentially(from: urls, index: index + 1)
                 }
             }
         }
     }
+    
     
     
     @objc func postShowActionSheet() {
@@ -360,6 +361,7 @@ extension PostVC: UITableViewDelegate, UITableViewDataSource {
             cell.configureCell(with: post)
             print(post.imageURL)
             if post.images.count != 0 {
+                cell.imagesView.image = post.images[0]
                 cell.makeSubView1()
                 cell.makeConstraint1()
             } else {
