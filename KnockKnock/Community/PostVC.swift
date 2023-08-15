@@ -279,6 +279,7 @@ class PostVC: UIViewController, CustomCommentCellDelegate {
                                 }
                                 let deletePost = UIAlertAction(title: "삭제", style: .default) { _ in
                                     // 글 삭제 탭시 수행할 동작
+                                    self.deletePost(postId: self.post.postID)
                                 }
                                 actionSheet.addAction(modifyPost)
                                 actionSheet.addAction(deletePost)
@@ -571,6 +572,36 @@ extension PostVC: UITableViewDelegate, UITableViewDataSource {
             }
             
         }.resume()
+    }
+    
+    func deletePost(postId: Int) {
+        
+        let URLString = "http://43.200.240.251/post/\(postId)"
+        
+        guard let URL = URL(string: URLString) else {
+            return
+        }
+        
+        var request = URLRequest(url: URL)
+        request.httpMethod = "DELETE"
+        
+        URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            
+            guard let httpResponse = response as? HTTPURLResponse else {
+                print("올바른 HTTP 응답이 아닙니다.")
+                return
+            }
+            
+            let statusCode = httpResponse.statusCode
+            print("HTTP 상태 코드: \(statusCode)")
+            
+            DispatchQueue.main.async {
+                self.navigationController?.popViewController(animated: true)
+            }
+            
+        }.resume()
+        
     }
     
     func modifyComment(commentId: Int, content: String) {
