@@ -33,9 +33,10 @@ struct Post { // 게시글
 struct Comment: Codable { // 댓글
     let commentId: Int
     let postId: Int
-    var profileImageUrl: String
     let nickName: String
+    var profileImageUrl: String
     let content: String
+    let reportCount: Int
     let createdAt: String
     let modifiedAt: String
 }

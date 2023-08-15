@@ -25,7 +25,7 @@ class PostVC: UIViewController, CustomCommentCellDelegate {
     
     func fetchComment(postID: Int) {
         
-        let urlString = "http://43.200.240.251/post/comment/\(postID)/all"
+        let urlString = "http://43.200.240.251/post/\(postID)/comments"
         
         guard let url = URL(string: urlString) else { return }
         
@@ -296,7 +296,7 @@ class PostVC: UIViewController, CustomCommentCellDelegate {
         
         print("댓글 작성 버튼 탭함.")
         
-        let commentURLString = "http://43.200.240.251/post/comment/\(post.postID)"
+        let commentURLString = "http://43.200.240.251/post/\(post.postID)/comment/register"
         
         guard let url = URL(string: commentURLString) else {
             print("서버 URL을 만들 수 없습니다.")
