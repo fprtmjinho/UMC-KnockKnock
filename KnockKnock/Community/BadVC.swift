@@ -1,5 +1,5 @@
 //
-//  GoodVC.swift
+//  BadVC.swift
 //  KnockKnock
 //
 //  Created by 티모시 킴 on 2023/07/11.
@@ -16,9 +16,6 @@ class BadVC: UIViewController {
     
     var hasNext: Bool? // 다음 페이지가 있는지 여부
     
-    // 버튼 탭 여부를 저장하는 배열
-    var buttonPressedStates: [String:Bool] = ["10대": false, "20대": false, "30대": false, "40대~": false]
-    
     var posts: [PostParsing] = []
     
     func fetchData(page: Int) {
@@ -34,8 +31,7 @@ class BadVC: UIViewController {
             }
             
             do {
-                let decoder = JSONDecoder()
-                let response = try decoder.decode(Response.self, from: data)
+                let response = try JSONDecoder().decode(Response.self, from: data)
                 
                 if page == 1 {
                     self.posts = response.posts
@@ -63,9 +59,9 @@ class BadVC: UIViewController {
         
         task.resume()
     }
-
     
-    // 나이대 버튼 관련: buttonStackView, buttonTitles, createButtons
+    
+    // 나이대 버튼 관련: buttonStackView, button1,2,3,4
     let buttonStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
@@ -75,9 +71,50 @@ class BadVC: UIViewController {
         return stackView
     }()
     
-    let buttonTitles = ["10대", "20대", "30대", "40대~"]
-    
-    
+    let button1: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setTitle("10대", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.addTarget(self, action: #selector(button1Pressed(_:)), for: .touchUpInside)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
+        button.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
+        button.layer.cornerRadius = 16
+        button.widthAnchor.constraint(equalToConstant: 75).isActive = true
+        return button
+    }()
+    let button2: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setTitle("20대", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.addTarget(self, action: #selector(button2Pressed(_:)), for: .touchUpInside)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
+        button.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
+        button.layer.cornerRadius = 16
+        button.widthAnchor.constraint(equalToConstant: 75).isActive = true
+        return button
+    }()
+    let button3: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setTitle("30대", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.addTarget(self, action: #selector(button3Pressed(_:)), for: .touchUpInside)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
+        button.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
+        button.layer.cornerRadius = 16
+        button.widthAnchor.constraint(equalToConstant: 75).isActive = true
+        return button
+    }()
+    let button4: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setTitle("40대~", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.addTarget(self, action: #selector(button4Pressed(_:)), for: .touchUpInside)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
+        button.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
+        button.layer.cornerRadius = 16
+        button.widthAnchor.constraint(equalToConstant: 75).isActive = true
+        return button
+    }()
     
     // 검색창 관련: searchBar
     let searchBar : UISearchBar = {
@@ -119,14 +156,15 @@ extension BadVC: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegat
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! CustomCell
         let post = posts[indexPath.row]
-        
         cell.resetCell()
-        
-        
+        cell.profileImageView.sd_setImage(with: URL(string: post.profileImageUrl), placeholderImage: UIImage(named: "anonymous"))
         cell.imagesView.image = nil
         
         if post.imageUrl.count != 0 {
-            cell.imagesView.sd_setImage(with: URL(string: post.imageUrl[0]), placeholderImage: UIImage(named: "beach"))
+            if let imageUrl = URL(string: post.imageUrl[0]) {
+                        SDImageCache.shared.removeImage(forKey: imageUrl.absoluteString)
+                    }
+            cell.imagesView.sd_setImage(with: URL(string: post.imageUrl[0]), placeholderImage: UIImage(named: "imageLoading"))
             cell.makeSubView1()
             cell.makeConstraint1()
         } else {
@@ -138,7 +176,8 @@ extension BadVC: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegat
         cell.selectionStyle = .none
         return cell
     }
-
+    
+    
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let postVC = PostVC()
@@ -148,33 +187,22 @@ extension BadVC: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegat
         navigationController?.pushViewController(postVC, animated: true)
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let position = scrollView.contentOffset.y
-        if position > (tableView.contentSize.height - tableView.bounds.size.height - 100) {
-            if hasNext == true {
-                page += 1
-                fetchData(page: page)
-            }
+        let contentHeight = tableView.contentSize.height
+        let tableViewHeight = tableView.bounds.size.height
+        
+        if position >= (contentHeight - tableViewHeight - 100) && hasNext == true {
+            // 다음 페이지 불러오기
+            page += 1
+            fetchData(page: page)
         }
     }
     
 }
 
 extension BadVC {
-    func createButtons() {
-        for title in buttonTitles {
-            let button = UIButton(type: .custom)
-            button.setTitle(title, for: .normal)
-            button.setTitleColor(.black, for: .normal)
-            button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
-            button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
-            button.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
-            button.layer.cornerRadius = 16
-            button.widthAnchor.constraint(equalToConstant: 75).isActive = true
-            
-            buttonStackView.addArrangedSubview(button)
-        }
-    }
+
     func makeSubView() {
         buttonStackView.distribution = .equalSpacing
         buttonStackView.spacing = 5
@@ -184,6 +212,10 @@ extension BadVC {
         tableView.register(CustomCell.self, forCellReuseIdentifier: "PostCell")
         
         view.addSubview(buttonStackView)
+        buttonStackView.addArrangedSubview(button1)
+        buttonStackView.addArrangedSubview(button2)
+        buttonStackView.addArrangedSubview(button3)
+        buttonStackView.addArrangedSubview(button4)
         view.addSubview(searchBar)
         view.addSubview(tableView)
     }
@@ -215,9 +247,8 @@ extension BadVC {
         super.viewDidLoad()
         makeSubView()
         makeConstraint()
-        createButtons()
-        setupRefreshControl()
-        fetchData(page: page)
+        setupRefreshControl() // 새로고침
+        fetchData(page: page) // 첫 화면: page = 1
     }
     
     func setupRefreshControl() {
@@ -225,35 +256,101 @@ extension BadVC {
         refreshControl.addTarget(self, action: #selector(refreshPostsData(_:)), for: .valueChanged)
     }
     
-    @objc private func refreshPostsData(_ sender: Any) {
+    @objc func refreshPostsData(_ sender: Any) {
         page = 1
         fetchData(page: page)
         refreshControl.endRefreshing()
     }
-
-
     
-    @objc func buttonTapped(_ sender: UIButton) {
-        guard let title = sender.titleLabel?.text else {
-            return
-        }
-        
+    @objc func button1Pressed(_ sender: UIButton) {
         if sender.isSelected {
             sender.isSelected = false
-            buttonPressedStates[title] = false
-            sender.setTitleColor(.black, for: .normal)
             sender.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
+            sender.setTitleColor(.black, for: .normal)
         } else {
             sender.isSelected = true
-            buttonPressedStates[title] = true
-            sender.setTitleColor(.white, for: .normal)
             sender.backgroundColor = #colorLiteral(red: 1, green: 0, blue: 0.3764705882, alpha: 1)
+            sender.setTitleColor(.white, for: .normal)
+            button2.isSelected = false
+            button2.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
+            button2.setTitleColor(.black, for: .normal)
+            button3.isSelected = false
+            button3.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
+            button3.setTitleColor(.black, for: .normal)
+            button4.isSelected = false
+            button4.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
+            button4.setTitleColor(.black, for: .normal)
         }
-        
-        print("Button tapped: \(title)")
-        print(buttonPressedStates)
-        
     }
+    
+    @objc func button2Pressed(_ sender: UIButton) {
+        if sender.isSelected {
+            sender.isSelected = false
+            sender.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
+            sender.setTitleColor(.black, for: .normal)
+        } else {
+            sender.isSelected = true
+            sender.backgroundColor = #colorLiteral(red: 1, green: 0, blue: 0.3764705882, alpha: 1)
+            sender.setTitleColor(.white, for: .normal)
+            button1.isSelected = false
+            button1.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
+            button1.setTitleColor(.black, for: .normal)
+            button3.isSelected = false
+            button3.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
+            button3.setTitleColor(.black, for: .normal)
+            button4.isSelected = false
+            button4.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
+            button4.setTitleColor(.black, for: .normal)
+        }
+    }
+    
+    @objc func button3Pressed(_ sender: UIButton) {
+        if sender.isSelected {
+            sender.isSelected = false
+            sender.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
+            sender.setTitleColor(.black, for: .normal)
+        } else {
+            sender.isSelected = true
+            sender.backgroundColor = #colorLiteral(red: 1, green: 0, blue: 0.3764705882, alpha: 1)
+            sender.setTitleColor(.white, for: .normal)
+            button1.isSelected = false
+            button1.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
+            button1.setTitleColor(.black, for: .normal)
+            button2.isSelected = false
+            button2.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
+            button2.setTitleColor(.black, for: .normal)
+            button4.isSelected = false
+            button4.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
+            button4.setTitleColor(.black, for: .normal)
+        }
+    }
+    
+    @objc func button4Pressed(_ sender: UIButton) {
+        if sender.isSelected {
+            sender.isSelected = false
+            sender.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
+            sender.setTitleColor(.black, for: .normal)
+        } else {
+            sender.isSelected = true
+            sender.backgroundColor = #colorLiteral(red: 1, green: 0, blue: 0.3764705882, alpha: 1)
+            sender.setTitleColor(.white, for: .normal)
+            button1.isSelected = false
+            button1.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
+            button1.setTitleColor(.black, for: .normal)
+            button2.isSelected = false
+            button2.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
+            button2.setTitleColor(.black, for: .normal)
+            button3.isSelected = false
+            button3.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
+            button3.setTitleColor(.black, for: .normal)
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        refreshPostsData(self)
+    }
+
     
 }
 

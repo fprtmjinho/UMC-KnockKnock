@@ -64,7 +64,28 @@ struct EmailCheckRequest: Codable {
     let code: String
 }
 
+struct PWEmailCheckRequest: Codable {
+    let code: String
+}
+
 struct EmailCheckRequestResult: Codable {
+    let statusCode: Int?
+    let message: String?
+    let data: String?
+}
+
+struct PWEmailCheckRequestResult: Codable {
+    let statusCode: Int?
+    let message: String?
+    let data: Int?
+}
+
+struct ChangePassword: Codable {
+    let memberId: Int
+    let newPassword: String
+}
+
+struct ChangePasswordResponse: Codable {
     let statusCode: Int?
     let message: String?
     let data: String?
