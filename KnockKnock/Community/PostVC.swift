@@ -11,7 +11,7 @@ import SDWebImage
 class PostVC: UIViewController, CustomCommentCellDelegate {
     
     var myPost: Bool = true // 자신 글 여부
-    var myComment: Bool = true // 자신 댓글 여부
+    var myComment: Bool = false // 자신 댓글 여부(기본값)
     var isAnonymousSelected = false // // 익명 체크표시 상태 (댓글)
     var categoryValue: Int! // 게시판 종류
     
@@ -414,74 +414,112 @@ extension PostVC: UITableViewDelegate, UITableViewDataSource {
     @objc func commentShowActionSheet(cell: CustomCommentCell) {
         let actionSheet = UIAlertController(title: "댓글 메뉴", message: nil, preferredStyle: .actionSheet)
         
-        if myComment {
-            // 자신의 댓글일 때
-            let modifyPost = UIAlertAction(title: "수정", style: .default) { _ in
-                // 댓글 수정 탭시 수행할 동작
-                self.commentTextField.text = cell.commentLabel.text
-            }
-            let deletePost = UIAlertAction(title: "삭제", style: .default) { _ in
-                // 댓글 삭제 탭시 수행할 동작
-            }
-            actionSheet.addAction(modifyPost)
-            actionSheet.addAction(deletePost)
-        } else {
-            // 자신의 댓글이 아닐 때
-            let reportPost = UIAlertAction(title: "신고", style: .default) { _ in
-                let reportActionSheet = UIAlertController(title: "신고 사유 선택", message: nil, preferredStyle: .actionSheet)
-                
-                let report1 = UIAlertAction(title: "게시판 성격에 부적절함", style: .default) { _ in
-                    
-                }
-                
-                let report2 = UIAlertAction(title: "음란물/불건전한 만남 및 대화", style: .default) { _ in
-                    
-                }
-                
-                let report3 = UIAlertAction(title: "낚시/놀람/도배", style: .default) { _ in
-                    
-                }
-                
-                let report4 = UIAlertAction(title: "욕설/비하", style: .default) { _ in
-                    
-                }
-                
-                let report5 = UIAlertAction(title: "정당/정치인 비하 및 선거운동", style: .default) { _ in
-                    
-                }
-                
-                let report6 = UIAlertAction(title: "상업적 광고 및 판매", style: .default) { _ in
-                    
-                }
-                
-                let report7 = UIAlertAction(title: "유출/사칭/사기", style: .default) { _ in
-                    
-                }
-                
-                reportActionSheet.addAction(report1)
-                reportActionSheet.addAction(report2)
-                reportActionSheet.addAction(report3)
-                reportActionSheet.addAction(report4)
-                reportActionSheet.addAction(report5)
-                reportActionSheet.addAction(report6)
-                reportActionSheet.addAction(report7)
-                
-                let cancelAction = UIAlertAction(title: "취소", style: .cancel)
-                reportActionSheet.addAction(cancelAction)
-                
-                self.present(reportActionSheet, animated: true)
-            }
-            actionSheet.addAction(reportPost)
+        let URLString = "http://43.200.240.251/comment/\(cell.commentId)/verification"
+        
+        guard let URL = URL(string: URLString) else {
+            return
         }
         
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel)
-        actionSheet.addAction(cancelAction)
+        var request = URLRequest(url: URL)
+        request.httpMethod = "POST"
+        request.addValue(UserDefaults.standard.string(forKey: "Authorization")!, forHTTPHeaderField: "Authorization")
         
-        // On iPad, the action sheet should be presented as a popover.
-        if let popoverController = actionSheet.popoverPresentationController {
-            popoverController.barButtonItem = navigationItem.rightBarButtonItem
-        }
-        
-        present(actionSheet, animated: true)
+        URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            
+            guard let httpResponse = response as? HTTPURLResponse else {
+                print("올바른 HTTP 응답이 아닙니다.")
+                return
+            }
+            
+            let statusCode = httpResponse.statusCode
+            print("HTTP 상태 코드: \(statusCode)")
+            
+            guard let data = data else {
+                return
+            }
+            
+            do {
+                let commentVerification = try JSONDecoder().decode(CommentVerification.self, from: data)
+                print("\(commentVerification)")
+                if commentVerification.message == "작성자와 일치합니다." {
+                    self.myComment = true
+                }
+                
+                DispatchQueue.main.async {
+                            let actionSheet = UIAlertController(title: "댓글 메뉴", message: nil, preferredStyle: .actionSheet)
+
+                            if self.myComment {
+                                // 자신의 댓글일 때
+                                let modifyPost = UIAlertAction(title: "수정", style: .default) { _ in
+                                    // 댓글 수정 탭시 수행할 동작
+                                    self.commentTextField.text = cell.commentLabel.text
+                                }
+                                let deletePost = UIAlertAction(title: "삭제", style: .default) { _ in
+                                    // 댓글 삭제 탭시 수행할 동작
+                                }
+                                actionSheet.addAction(modifyPost)
+                                actionSheet.addAction(deletePost)
+                            } else {
+                                // 자신의 댓글이 아닐 때
+                                let reportPost = UIAlertAction(title: "신고", style: .default) { _ in
+                                    let reportActionSheet = UIAlertController(title: "신고 사유 선택", message: nil, preferredStyle: .actionSheet)
+                                    
+                                    let report1 = UIAlertAction(title: "게시판 성격에 부적절함", style: .default) { _ in
+                                        
+                                    }
+                                    
+                                    let report2 = UIAlertAction(title: "음란물/불건전한 만남 및 대화", style: .default) { _ in
+                                        
+                                    }
+                                    
+                                    let report3 = UIAlertAction(title: "낚시/놀람/도배", style: .default) { _ in
+                                        
+                                    }
+                                    
+                                    let report4 = UIAlertAction(title: "욕설/비하", style: .default) { _ in
+                                        
+                                    }
+                                    
+                                    let report5 = UIAlertAction(title: "정당/정치인 비하 및 선거운동", style: .default) { _ in
+                                        
+                                    }
+                                    
+                                    let report6 = UIAlertAction(title: "상업적 광고 및 판매", style: .default) { _ in
+                                        
+                                    }
+                                    
+                                    let report7 = UIAlertAction(title: "유출/사칭/사기", style: .default) { _ in
+                                        
+                                    }
+                                    
+                                    reportActionSheet.addAction(report1)
+                                    reportActionSheet.addAction(report2)
+                                    reportActionSheet.addAction(report3)
+                                    reportActionSheet.addAction(report4)
+                                    reportActionSheet.addAction(report5)
+                                    reportActionSheet.addAction(report6)
+                                    reportActionSheet.addAction(report7)
+                                    
+                                    self.present(reportActionSheet, animated: true)
+                                }
+                                actionSheet.addAction(reportPost)
+                            }
+
+                            let cancelAction = UIAlertAction(title: "취소", style: .cancel)
+                            actionSheet.addAction(cancelAction)
+
+                            if let popoverController = actionSheet.popoverPresentationController {
+                                popoverController.barButtonItem = self.navigationItem.rightBarButtonItem
+                            }
+
+                            self.present(actionSheet, animated: true)
+                        }
+                
+            } catch {
+                print("디코딩에 실패하였습니다.")
+            }
+            
+        }.resume()
     }
 }

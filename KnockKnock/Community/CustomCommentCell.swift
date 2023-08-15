@@ -11,6 +11,8 @@ class CustomCommentCell: UITableViewCell { // 댓글 커스텀
     
     weak var delegate: CustomCommentCellDelegate?
     
+    var commentId: Int = 0
+    
     let profileImageView: UIImageView = { // 프로필 사진
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -109,6 +111,7 @@ class CustomCommentCell: UITableViewCell { // 댓글 커스텀
         nameLabel.text = comment.nickName
         commentLabel.text = comment.content
         timeLabel.text = comment.createdAt
+        commentId = comment.commentId
     }
     
 }

@@ -94,3 +94,9 @@ struct CommentDetails: Codable {
     let likeCount: Int
     let commentCount: Int
 }
+
+struct CommentVerification: Codable {
+    let statusCode: Int?
+    let message: String?
+    let data: String?
+}
