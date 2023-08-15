@@ -95,7 +95,7 @@ struct CommentDetails: Codable {
     let commentCount: Int
 }
 
-struct CommentVerification: Codable {
+struct Verification: Codable {
     let statusCode: Int?
     let message: String?
     let data: String?
