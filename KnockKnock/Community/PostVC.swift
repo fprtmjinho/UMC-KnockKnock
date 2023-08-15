@@ -506,6 +506,7 @@ extension PostVC: UITableViewDelegate, UITableViewDataSource {
                                 }
                                 let deletePost = UIAlertAction(title: "삭제", style: .default) { _ in
                                     // 댓글 삭제 탭시 수행할 동작
+                                    self.deleteComment(commentId: cell.commentId)
                                 }
                                 actionSheet.addAction(modifyPost)
                                 actionSheet.addAction(deletePost)
@@ -605,6 +606,39 @@ extension PostVC: UITableViewDelegate, UITableViewDataSource {
             // 서버 응답을 받은 후에 테이블 뷰 업데이트
             DispatchQueue.main.async {
                 self.commentTextField.text = ""
+                self.fetchDetails(postID: self.post.postID)
+                self.fetchComment(postID: self.post.postID)
+                self.tableView.reloadData()
+            }
+            
+        }.resume()
+        
+    }
+    
+    func deleteComment(commentId: Int) {
+        
+        let URLString = "http://43.200.240.251/comment/\(commentId)"
+        
+        guard let URL = URL(string: URLString) else {
+            return
+        }
+        
+        var request = URLRequest(url: URL)
+        request.httpMethod = "DELETE"
+        
+        URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            
+            guard let httpResponse = response as? HTTPURLResponse else {
+                print("올바른 HTTP 응답이 아닙니다.")
+                return
+            }
+            
+            let statusCode = httpResponse.statusCode
+            print("HTTP 상태 코드: \(statusCode)")
+            
+            // 서버 응답을 받은 후에 테이블 뷰 업데이트
+            DispatchQueue.main.async {
                 self.fetchDetails(postID: self.post.postID)
                 self.fetchComment(postID: self.post.postID)
                 self.tableView.reloadData()
