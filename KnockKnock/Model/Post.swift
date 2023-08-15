@@ -89,3 +89,8 @@ struct MakeComment: Codable {
     let content: String
     let isAnonymous: Bool
 }
+
+struct CommentDetails: Codable {
+    let likeCount: Int
+    let commentCount: Int
+}

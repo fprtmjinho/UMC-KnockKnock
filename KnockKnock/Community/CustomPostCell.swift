@@ -318,8 +318,6 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
         titleLabel.text = post.title
         contentLabel.text = post.content
         timeLabel.text = post.time
-        likesLabel.text = "\(post.likes)"
-        commentsLabel.text = "\(post.comments)"
     }
     
 }

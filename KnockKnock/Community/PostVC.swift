@@ -22,6 +22,8 @@ class PostVC: UIViewController, CustomCommentCellDelegate {
     // comment(스트럭트 맨아래 있음)
     var comments: [Comment] = []
     
+    var commentDetails: CommentDetails = CommentDetails(likeCount: 0, commentCount: 0)
+    
     
     func fetchComment(postID: Int) {
         
@@ -50,10 +52,31 @@ class PostVC: UIViewController, CustomCommentCellDelegate {
         task.resume()
     }
     
-    
-    
-    
-    
+    func fetchDetails(postID: Int) {
+        
+        let urlString = "http://43.200.240.251/post/\(postID)/details"
+        
+        guard let url = URL(string: urlString) else { return }
+        
+        let task = URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
+            guard let self = self, let data = data else {
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                let commentDetails = try decoder.decode(CommentDetails.self, from: data)
+                self.commentDetails = commentDetails
+                print(self.commentDetails)
+            } catch {
+                print("Error parsing JSON: \(error)")
+            }
+            
+        }
+        
+        task.resume()
+        
+    }
     
     let tableView: UITableView = {
         let tableView = UITableView()
@@ -159,6 +182,7 @@ class PostVC: UIViewController, CustomCommentCellDelegate {
         var image = UIImage(named: "more_vert")?.resizeImageTo(size: CGSize(width: 30, height: 30))
         let rightBarButton = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(postShowActionSheet))
         navigationItem.rightBarButtonItem = rightBarButton
+        fetchDetails(postID: post.postID)
         fetchComment(postID: post.postID)
         downloadAndSetImages(for: post.imageURL)
         
@@ -335,6 +359,7 @@ class PostVC: UIViewController, CustomCommentCellDelegate {
             // 서버 응답을 받은 후에 테이블 뷰 업데이트
             DispatchQueue.main.async {
                 self.commentTextField.text = ""
+                self.fetchDetails(postID: self.post.postID)
                 self.fetchComment(postID: self.post.postID)
                 self.tableView.reloadData()
             }
@@ -357,6 +382,8 @@ extension PostVC: UITableViewDelegate, UITableViewDataSource {
         if indexPath.row == 0 {
             // 행의 index가 0일 때는 게시글
             let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! CustomPostCell
+            cell.likesLabel.text = "\(commentDetails.likeCount)"
+            cell.commentsLabel.text = "\(commentDetails.commentCount)"
             cell.profileImageView.sd_setImage(with: URL(string: post.profile), placeholderImage: UIImage(named: "anonymous"))
             cell.configureCell(with: post)
             print(post.imageURL)
@@ -458,4 +485,3 @@ extension PostVC: UITableViewDelegate, UITableViewDataSource {
         present(actionSheet, animated: true)
     }
 }
-
