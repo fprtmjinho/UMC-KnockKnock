@@ -82,7 +82,7 @@ extension LoginSuccessVC {
         view.addSubview(welcomeLabel)
         view.addSubview(signInLabel)
         view.addSubview(readHowtoUseBtn)
-        startBtn = setNextBtn(view: self, title: "시작하기")
+        startBtn = setNextBtn(view: self, title: "로그인 화면으로 돌아가기")
     }
     
     func makeConstraint(){

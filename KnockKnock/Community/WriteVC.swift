@@ -7,6 +7,7 @@
 
 import UIKit
 import Photos
+import Alamofire
 
 class WriteVC: UIViewController {
     
@@ -55,7 +56,7 @@ class WriteVC: UIViewController {
     }()
     
     
-
+    
     
     let titleLabel: UILabel = {
         let label = UILabel()
@@ -137,11 +138,11 @@ class WriteVC: UIViewController {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: completeButton)
         // 이미 선택된 이미지들을 imagesStackView에 추가합니다.
-            for image in originalImages {
-                if let originalImage = image {
-                    addRemoveSelectedImage(originalImage)
-                }
+        for image in originalImages {
+            if let originalImage = image {
+                addRemoveSelectedImage(originalImage)
             }
+        }
     }
     
     
@@ -300,7 +301,35 @@ extension WriteVC {
     @objc func completeButtonTapped() {
         titleText = titleTextField.text
         contentText = contentTextView.text
-        navigationController?.popViewController(animated: true)
+        
+        let accessToken = UserDefaults.standard.string(forKey: "Authorization")
+        print(accessToken)
+        
+        let postCreateData = PostCreate(boardType: index!, title: titleText!, content: contentText!, isAnonymous: isAnonymousSelected)
+        
+        AF.upload(multipartFormData: { multipartFormData in
+            if let postCreateJSONData = try? JSONEncoder().encode(postCreateData) {
+                multipartFormData.append(postCreateJSONData, withName: "request", mimeType: "application/json")
+            }
+            
+            for (index, image) in self.selectedImages.enumerated() {
+                    if let imageData = image?.jpegData(compressionQuality: 0.8) {
+                        multipartFormData.append(imageData, withName: "images", fileName: "\(self.titleText)_image_\(index).jpg", mimeType: "image/jpeg")
+                    }
+                }
+            
+        }, to: "http://43.200.240.251/post/create", headers: ["Authorization": accessToken!])
+        .response { response in
+            switch response.result {
+            case .success:
+                if let statusCode = response.response?.statusCode {
+                    print("HTTP Status Code: \(statusCode)")
+                    self.navigationController?.popViewController(animated: true)
+                }
+            case .failure(let error):
+                print("Error: \(error)")
+            }
+        }
     }
     
     @objc func anonymousImageButtonTapped(_ sender: UIButton) {
@@ -310,17 +339,17 @@ extension WriteVC {
     }
     
     @objc func removeSelectedImage(_ sender: UITapGestureRecognizer) { // 탭한 사진 삭제
-            guard let tappedImageView = sender.view as? UIImageView else { return }
-            if let index = imagesStackView.arrangedSubviews.firstIndex(of: tappedImageView) {
-                imagesStackView.removeArrangedSubview(tappedImageView)
-                tappedImageView.removeFromSuperview()
-
-                // 이미지가 1개인 경우, Index out of range 에러가 발생하지 않도록 예외 처리
-                if selectedImages.count == 1 {
-                    selectedImages.removeAll()
-                } else if index < selectedImages.count {
-                    selectedImages.remove(at: index)
-                }
+        guard let tappedImageView = sender.view as? UIImageView else { return }
+        if let index = imagesStackView.arrangedSubviews.firstIndex(of: tappedImageView) {
+            imagesStackView.removeArrangedSubview(tappedImageView)
+            tappedImageView.removeFromSuperview()
+            
+            // 이미지가 1개인 경우, Index out of range 에러가 발생하지 않도록 예외 처리
+            if selectedImages.count == 1 {
+                selectedImages.removeAll()
+            } else if index < selectedImages.count {
+                selectedImages.remove(at: index)
             }
         }
+    }
 }

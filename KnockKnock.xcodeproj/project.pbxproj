@@ -392,11 +392,11 @@
 			isa = PBXGroup;
 			children = (
 				C93246C42A48318B00908D6B /* CommunityController.swift */,
-				C9D07CED2A6A62290071C2F5 /* CustomCell.swift */,
 				008463F82A5D56FC009F4033 /* GoodVC.swift */,
 				008463FA2A5D5713009F4033 /* BadVC.swift */,
 				0041A6EC2A61A2BF008A5048 /* WriteVC.swift */,
 				00124F1A2A63CB6000536EAD /* PostVC.swift */,
+				C9D07CED2A6A62290071C2F5 /* CustomCell.swift */,
 				00086E962A6B62AE00A7C9FF /* CustomPostCell.swift */,
 				00086E982A6B631600A7C9FF /* CustomCommentCell.swift */,
 			);
