@@ -14,6 +14,9 @@ class PostVC: UIViewController, CustomCommentCellDelegate {
     var myComment: Bool = false // 자신 댓글 여부(기본값)
     var isAnonymousSelected = false // // 익명 체크표시 상태 (댓글)
     var categoryValue: Int! // 게시판 종류
+    var modifyCommentValue: Bool = false
+    var modifyCommentId: Int?
+    
     
     // 테이블 뷰 관련: post, comment, tableView
     // post(스트럭트 맨아래 있음)
@@ -265,6 +268,7 @@ class PostVC: UIViewController, CustomCommentCellDelegate {
                                     // 글 수정 탭시 수행할 동작
                                     let writeVC = WriteVC()
                                     writeVC.index = self.categoryValue
+                                    writeVC.postID = self.post.postID
                                     writeVC.modify = true
                                     writeVC.titleTextField.text = self.post.title
                                     writeVC.contentTextView.text = self.post.content
@@ -355,6 +359,13 @@ class PostVC: UIViewController, CustomCommentCellDelegate {
     @objc func makeCommentImageButtonTapped(_ sender: UIButton) {
         
         print("댓글 작성 버튼 탭함.")
+        
+        if modifyCommentValue == true { // 댓글 수정이면
+            modifyComment(commentId: modifyCommentId!, content: commentTextField.text!)
+            modifyCommentValue = false
+            modifyCommentId = nil
+            return
+        }
         
         let commentURLString = "http://43.200.240.251/post/\(post.postID)/comment/register"
         
@@ -490,6 +501,8 @@ extension PostVC: UITableViewDelegate, UITableViewDataSource {
                                 let modifyPost = UIAlertAction(title: "수정", style: .default) { _ in
                                     // 댓글 수정 탭시 수행할 동작
                                     self.commentTextField.text = cell.commentLabel.text
+                                    self.modifyCommentValue = true
+                                    self.modifyCommentId = cell.commentId
                                 }
                                 let deletePost = UIAlertAction(title: "삭제", style: .default) { _ in
                                     // 댓글 삭제 탭시 수행할 동작
@@ -557,5 +570,47 @@ extension PostVC: UITableViewDelegate, UITableViewDataSource {
             }
             
         }.resume()
+    }
+    
+    func modifyComment(commentId: Int, content: String) {
+        
+        let modifyCommentBody = ModifyComment(content: content)
+        
+        let URLString = "http://43.200.240.251/comment/\(commentId)"
+        
+        guard let URL = URL(string: URLString) else {
+            return
+        }
+        
+        var request = URLRequest(url: URL)
+        request.httpMethod = "PUT"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        do { request.httpBody = try JSONEncoder().encode(modifyCommentBody)
+        } catch {
+            print("JSON 인코딩에 실패하였음.")
+            return
+        }
+        
+        URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            
+            guard let httpResponse = response as? HTTPURLResponse else {
+                print("올바른 HTTP 응답이 아닙니다.")
+                return
+            }
+            
+            let statusCode = httpResponse.statusCode
+            print("HTTP 상태 코드: \(statusCode)")
+            
+            // 서버 응답을 받은 후에 테이블 뷰 업데이트
+            DispatchQueue.main.async {
+                self.commentTextField.text = ""
+                self.fetchDetails(postID: self.post.postID)
+                self.fetchComment(postID: self.post.postID)
+                self.tableView.reloadData()
+            }
+            
+        }.resume()
+        
     }
 }

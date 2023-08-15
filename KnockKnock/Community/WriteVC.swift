@@ -11,11 +11,12 @@ import Alamofire
 
 class WriteVC: UIViewController {
     
+    var postID: Int?
     var titleText: String? // 제목
     var contentText: String? // 내용
     var isAnonymousSelected = false // 익명 체크표시 상태
     var index: Int? // 게시판 종류
-    var modify: Bool? // 수정 여부
+    var modify: Bool = false // 수정 여부
     var selectedImages: [UIImage?] = [] // 사진
     var originalImages: [UIImage?] = [] // 기존 게시물 사진
     
@@ -307,28 +308,54 @@ extension WriteVC {
         
         let postCreateData = PostCreate(boardType: index!, title: titleText!, content: contentText!, isAnonymous: isAnonymousSelected)
         
-        AF.upload(multipartFormData: { multipartFormData in
-            if let postCreateJSONData = try? JSONEncoder().encode(postCreateData) {
-                multipartFormData.append(postCreateJSONData, withName: "request", mimeType: "application/json")
-            }
-            
-            for (index, image) in self.selectedImages.enumerated() {
-                    if let imageData = image?.jpegData(compressionQuality: 0.8) {
-                        multipartFormData.append(imageData, withName: "images", fileName: "\(self.titleText)_image_\(index).jpg", mimeType: "image/jpeg")
+        if modify != true {
+            AF.upload(multipartFormData: { multipartFormData in
+                if let postCreateJSONData = try? JSONEncoder().encode(postCreateData) {
+                    multipartFormData.append(postCreateJSONData, withName: "request", mimeType: "application/json")
+                }
+                
+                for (index, image) in self.selectedImages.enumerated() {
+                        if let imageData = image?.jpegData(compressionQuality: 0.8) {
+                            multipartFormData.append(imageData, withName: "images", fileName: "\(self.titleText)_image_\(index).jpg", mimeType: "image/jpeg")
+                        }
                     }
+                
+            }, to: "http://43.200.240.251/post/create", headers: ["Authorization": accessToken!])
+            .response { response in
+                switch response.result {
+                case .success:
+                    if let statusCode = response.response?.statusCode {
+                        print("HTTP Status Code: \(statusCode)")
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                case .failure(let error):
+                    print("Error: \(error)")
                 }
-            
-        }, to: "http://43.200.240.251/post/create", headers: ["Authorization": accessToken!])
-        .response { response in
-            switch response.result {
-            case .success:
-                if let statusCode = response.response?.statusCode {
-                    print("HTTP Status Code: \(statusCode)")
-                    self.navigationController?.popViewController(animated: true)
-                }
-            case .failure(let error):
-                print("Error: \(error)")
             }
+        } else {
+//            AF.upload(multipartFormData: { multipartFormData in
+//                if let postCreateJSONData = try? JSONEncoder().encode(postCreateData) {
+//                    multipartFormData.append(postCreateJSONData, withName: "request", mimeType: "application/json")
+//                }
+//
+//                for (index, image) in self.selectedImages.enumerated() {
+//                        if let imageData = image?.jpegData(compressionQuality: 0.8) {
+//                            multipartFormData.append(imageData, withName: "images", fileName: "\(self.titleText)_image_\(index).jpg", mimeType: "image/jpeg")
+//                        }
+//                    }
+//
+//            }, to: "http://43.200.240.251/post/\(self.postID)", headers: ["Authorization": accessToken!])
+//            .response { response in
+//                switch response.result {
+//                case .success:
+//                    if let statusCode = response.response?.statusCode {
+//                        print("HTTP Status Code: \(statusCode)")
+//                        self.navigationController?.popViewController(animated: true)
+//                    }
+//                case .failure(let error):
+//                    print("Error: \(error)")
+//                }
+//            }
         }
     }
     
