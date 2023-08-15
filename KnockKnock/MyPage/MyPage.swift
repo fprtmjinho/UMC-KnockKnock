@@ -144,9 +144,34 @@ extension MyPage {
     
     func makeAddTarget(){
         self.copyBtn.addTarget(self, action: #selector(pasteText(_:)), for: .touchUpInside)
+        self.changeMessageBtn.addTarget(self, action: #selector(changeText(_:)), for: .touchUpInside)
     }
-    
+    @objc func changeText(_ sender: Any){
+        if let currentView = messageView{
+            if currentView == MyMessage1(){
+                messageView = MyMessage2()
+            }
+            else{
+                messageView = MyMessage1()
+            }
+        }
+    }
     @objc func pasteText(_ sender: Any) {
-              //UIPasteboard.general.string = myText.text
-          }
+        var head: String = ""
+        var connection: String = ""
+        var memo: String = ""
+        var link: String = "" // 여기에 앱 링크가 들어가야함
+        var shareText: String = ""
+        if let label2 = messageView.label2.text{
+            head = label2
+        }
+        if let keyword = messageView.keywordtext.text{
+            connection = keyword
+        }
+        if let memotext = messageView.memotext.text{
+            memo = memotext
+        }
+        shareText = head + "\n" + "관계 : " + connection + "\n" + memo + "\n" + link
+        UIPasteboard.general.string = shareText
+    }
 }
