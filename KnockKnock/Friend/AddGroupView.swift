@@ -88,8 +88,6 @@ class AddGroupView : UIView {
         makeConstraint()
         settableView()
         makeAddTarget()
-        print(nameList)
-        print(numberList)
     }
     
     required init?(coder _: NSCoder) {
@@ -101,7 +99,6 @@ class AddGroupView : UIView {
 
 extension AddGroupView : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("namelist count : \(nameList.count)")
         return nameList.count
     }
     

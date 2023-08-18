@@ -40,11 +40,8 @@ class AddGroupVC : UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        
-        
         addGroupView.getData()
         addGroupView.sortData()
-        print("nameList: \(addGroupView.nameList)")
         addGroupView.memberTableview.reloadData()
         self.scrollView.layoutIfNeeded()
     }
@@ -125,6 +122,7 @@ extension AddGroupVC {
 //            return
 //        }
         setGroupData()
+        deleteGroupData()
         self.navigationController?.popViewController(animated: true)
     }
     func setGroupData(){
@@ -135,6 +133,10 @@ extension AddGroupVC {
             alram: true,
             time: groupTime
         )
+        print("groupInfo : \(groupInfo)")
         group.dic[groupTime] = groupInfo
+    }
+    func deleteGroupData(){
+        group.groupMember = []
     }
 }

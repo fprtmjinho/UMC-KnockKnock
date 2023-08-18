@@ -12,7 +12,7 @@ class Group{
     var dic: [String:GroupInfo] = [:] //키값 : 생성 시간
     
     var groupMember: [String] = []
-    var choiceTime : String = ""
+    var choiceTime : String?
     
     private func Init() {}
 }
