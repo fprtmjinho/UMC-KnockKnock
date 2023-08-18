@@ -22,6 +22,7 @@ class GroupVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        group.groupMember = []
         getData()
         sortData()
         
@@ -29,23 +30,14 @@ class GroupVC: UIViewController {
         makeSubView()
         makeConstraint()
         makeAddTarget()
-        print(nameList)
-        print(timeList)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        group.groupMember = []
         getData()
         sortData()
-        
         tableView.reloadData()
-        setTableView()
-        makeSubView()
-        makeConstraint()
-        makeAddTarget()
-        print(nameList)
-        print(timeList)
     }
-    
 }
 
 
@@ -78,7 +70,10 @@ class GroupVC: UIViewController {
      
      func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
          if editingStyle == .delete {
+             group.dic[timeList[indexPath.row]] = nil
              nameList.remove(at: indexPath.row)
+             timeList.remove(at: indexPath.row)
+             memberList.remove(at: indexPath.row)
              tableView.deleteRows(at: [indexPath], with: .fade)
              //remove 확인용 alarm 필요
          }
@@ -134,8 +129,9 @@ extension GroupVC {
     
      @objc func nextView(index:IndexPath) {
         let nextView = GroupProfileVC()
-         print(timeList[index.row])
-        group.choiceTime = timeList[index.row]
+         group.choiceTime = timeList[index.row]
+         print("timeList : \(timeList[index.row])")
+         print("groupInfo : \(group.dic[timeList[index.row]])")
         nextView.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(nextView, animated: true)
     }

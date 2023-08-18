@@ -8,8 +8,6 @@
 import UIKit
 import NMapsMap
 class AddGroupView : UIView {
-    
-    
     let nameLabel : UILabel = {
        let label = UILabel()
         label.text = "모임 이름"
@@ -90,8 +88,6 @@ class AddGroupView : UIView {
         makeConstraint()
         settableView()
         makeAddTarget()
-        print(nameList)
-        print(numberList)
     }
     
     required init?(coder _: NSCoder) {
@@ -136,13 +132,13 @@ extension AddGroupView : UITableViewDelegate, UITableViewDataSource {
         memberTableview.backgroundColor = .white
         memberTableview.separatorStyle = .none
         
-        memberTableview.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            memberTableview.topAnchor.constraint(equalTo: memberLabel.bottomAnchor, constant: 10),
-            memberTableview.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
-            memberTableview.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
-            memberTableview.heightAnchor.constraint(equalToConstant: CGFloat(nameList.count*60)),
-        ])
+//        memberTableview.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint.activate([
+//            memberTableview.topAnchor.constraint(equalTo: memberLabel.bottomAnchor, constant: 10),
+//            memberTableview.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
+//            memberTableview.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
+//            memberTableview.heightAnchor.constraint(equalToConstant: CGFloat(nameList.count*60)),
+//        ])
         self.memberTableview.dataSource = self
         self.memberTableview.delegate = self
         //addSubView, Constraint는 위에서 실행함
@@ -190,7 +186,10 @@ extension AddGroupView {
             memberTableview.topAnchor.constraint(equalTo: memberLabel.bottomAnchor, constant: 10),
             memberTableview.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
             memberTableview.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
-            memberTableview.heightAnchor.constraint(equalToConstant: CGFloat(nameList.count*60)),
+//            memberTableview.heightAnchor.constraint(equalToConstant: CGFloat(nameList.count*60)),
+//            memberTableview.heightAnchor.constraint(lessThanOrEqualToConstant: 100),
+            memberTableview.heightAnchor.constraint(greaterThanOrEqualToConstant: 60),
+//            memberTableview.heightAnchor.constraint(equalToConstant: CGFloat(100)),
             addmemberBtn.topAnchor.constraint(equalTo: memberTableview.bottomAnchor, constant: 10),
             addmemberBtn.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
             addmemberBtn.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
@@ -212,7 +211,6 @@ extension AddGroupView {
             naverMapView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
             naverMapView.heightAnchor.constraint(equalToConstant: 300),
         ])
-        
     }
     func makeAddTarget(){
         placeSearchButton.addTarget(self, action: #selector(searchMap(_:)), for: .touchUpInside)
