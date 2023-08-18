@@ -11,7 +11,7 @@ class AddGroupVC : UIViewController {
     let scrollView : UIScrollView! = UIScrollView()
     
     var addBtn : UIButton = UIButton()
-    let addGroupView : AddGroupView = {
+    var addGroupView : AddGroupView = {
         let view = AddGroupView()
        return view
     }()
@@ -28,6 +28,7 @@ class AddGroupVC : UIViewController {
         view.backgroundColor = .white
         setNavigationBar()
         self.title = "모임 추가하기"
+        self.addGroupView.memberTableview.rowHeight = UITableView.automaticDimension
         setScrollView()
         
         makeSubView()
@@ -36,17 +37,17 @@ class AddGroupVC : UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        view.backgroundColor = .white
-        setNavigationBar()
-        self.title = "모임 추가하기"
-        setScrollView()
-        
-        AddGroupView().memberTableview.reloadData()
-        makeSubView()
-        makeConstraint()
-        makeAddTarget()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        
+        
+        addGroupView.getData()
+        addGroupView.sortData()
+        print("nameList: \(addGroupView.nameList)")
+        addGroupView.memberTableview.reloadData()
+        self.scrollView.layoutIfNeeded()
+    }
   
     
 }
@@ -60,7 +61,8 @@ extension AddGroupVC {
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.heightAnchor.constraint(equalTo: view.heightAnchor)
         ])
      
     }
@@ -76,13 +78,14 @@ extension AddGroupVC {
             addGroupView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
             addGroupView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
             addGroupView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
-            addGroupView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
+            addGroupView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            addGroupView.heightAnchor.constraint(equalTo: scrollView.heightAnchor)
         ])
         
         //수직 스크롤을 위해 height 조정
-        let contentViewHeight = addGroupView.heightAnchor.constraint(greaterThanOrEqualTo: view.heightAnchor)
-        contentViewHeight.priority = .defaultLow
-        contentViewHeight.isActive = true
+//        let contentViewHeight = addGroupView.heightAnchor.constraint(greaterThanOrEqualTo: view.heightAnchor)
+//        contentViewHeight.priority = .defaultLow
+//        contentViewHeight.isActive = true
       
     }
     

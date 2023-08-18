@@ -147,12 +147,12 @@ extension MyPage {
         self.changeMessageBtn.addTarget(self, action: #selector(changeText(_:)), for: .touchUpInside)
     }
     @objc func changeText(_ sender: Any){
-        if let currentView = messageView{
-            if currentView == MyMessage1(){
-                messageView = MyMessage2()
+        if let currentView = messageView.label2.text{
+            if currentView == MyMessage1().label2.text{
+                messageView.label2.text = MyMessage2().label2.text
             }
             else{
-                messageView = MyMessage1()
+                messageView.label2.text = MyMessage1().label2.text
             }
         }
     }
