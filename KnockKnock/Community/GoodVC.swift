@@ -8,9 +8,12 @@
 import UIKit
 import SDWebImage
 
-class GoodVC: UIViewController {
+class GoodVC: UIViewController
+{
     
     let refreshControl = UIRefreshControl()
+    
+    var age: Int = 0
     
     var page: Int = 1 // 페이지 번호
     
@@ -19,7 +22,14 @@ class GoodVC: UIViewController {
     var posts: [PostParsing] = []
     
     func fetchData(page: Int) {
-        let urlString = "http://43.200.240.251/board/allPosts?boardType=GOOD&page=\(page)&size=5"
+        var urlString: String = ""
+        
+        if age == 0 {
+            urlString = "http://43.200.240.251/board/allPosts?boardType=GOOD&page=\(page)&size=5"
+        }
+        else {
+            urlString = "http://43.200.240.251/board/filter?boardType=GOOD&ageGroup=\(age)&page=\(page)&size=5"
+        }
         
         guard let url = URL(string: urlString) else {
             return
@@ -207,6 +217,8 @@ extension GoodVC {
         buttonStackView.distribution = .equalSpacing
         buttonStackView.spacing = 5
         
+        searchBar.delegate = self
+        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(CustomCell.self, forCellReuseIdentifier: "PostCell")
@@ -267,6 +279,8 @@ extension GoodVC {
             sender.isSelected = false
             sender.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
             sender.setTitleColor(.black, for: .normal)
+            age = 0
+            refreshPostsData(self)
         } else {
             sender.isSelected = true
             sender.backgroundColor = #colorLiteral(red: 1, green: 0, blue: 0.3764705882, alpha: 1)
@@ -280,6 +294,8 @@ extension GoodVC {
             button4.isSelected = false
             button4.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
             button4.setTitleColor(.black, for: .normal)
+            age = 10
+            refreshPostsData(self)
         }
     }
     
@@ -288,6 +304,8 @@ extension GoodVC {
             sender.isSelected = false
             sender.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
             sender.setTitleColor(.black, for: .normal)
+            age = 0
+            refreshPostsData(self)
         } else {
             sender.isSelected = true
             sender.backgroundColor = #colorLiteral(red: 1, green: 0, blue: 0.3764705882, alpha: 1)
@@ -301,6 +319,8 @@ extension GoodVC {
             button4.isSelected = false
             button4.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
             button4.setTitleColor(.black, for: .normal)
+            age = 20
+            refreshPostsData(self)
         }
     }
     
@@ -309,6 +329,8 @@ extension GoodVC {
             sender.isSelected = false
             sender.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
             sender.setTitleColor(.black, for: .normal)
+            age = 0
+            refreshPostsData(self)
         } else {
             sender.isSelected = true
             sender.backgroundColor = #colorLiteral(red: 1, green: 0, blue: 0.3764705882, alpha: 1)
@@ -322,6 +344,8 @@ extension GoodVC {
             button4.isSelected = false
             button4.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
             button4.setTitleColor(.black, for: .normal)
+            age = 30
+            refreshPostsData(self)
         }
     }
     
@@ -330,6 +354,8 @@ extension GoodVC {
             sender.isSelected = false
             sender.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
             sender.setTitleColor(.black, for: .normal)
+            age = 0
+            refreshPostsData(self)
         } else {
             sender.isSelected = true
             sender.backgroundColor = #colorLiteral(red: 1, green: 0, blue: 0.3764705882, alpha: 1)
@@ -343,6 +369,8 @@ extension GoodVC {
             button3.isSelected = false
             button3.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
             button3.setTitleColor(.black, for: .normal)
+            age = 40
+            refreshPostsData(self)
         }
     }
     
@@ -353,3 +381,14 @@ extension GoodVC {
 
     
 }
+
+extension GoodVC: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if let searchText = searchBar.text {
+            // 검색어와 함께 원하는 동작 수행
+            print("검색 버튼이 눌렸습니다. 검색어: \(searchText)")
+            // 여기서 검색 동작을 수행하거나 다른 원하는 동작을 실행할 수 있습니다.
+        }
+    }
+}
+
