@@ -13,7 +13,10 @@ class GoodVC: UIViewController
     
     let refreshControl = UIRefreshControl()
     
-    var age: Int = 0
+    var keyword = "" // 검색 키워드
+    var count = 0 // 키워드 검색 상태에서 새로고침을 했는지를 인식하기 위한 변수
+    
+    var age: Int = 0 // 나이대
     
     var page: Int = 1 // 페이지 번호
     
@@ -24,10 +27,16 @@ class GoodVC: UIViewController
     func fetchData(page: Int) {
         var urlString: String = ""
         
-        if age == 0 {
+        switch age
+        {
+        case 0: // 전체 나이대
             urlString = "http://43.200.240.251/board/allPosts?boardType=GOOD&page=\(page)&size=5"
-        }
-        else {
+            print("전체 나이대")
+        case 1:
+            urlString = "http://43.200.240.251/board/search?boardType=GOOD&searchType=TITLE_AND_CONTENT&keyword=\(keyword)&page=\(page)&size=5"
+            print("키워드 검색")
+            print(urlString)
+        default: // 선택한 나이대
             urlString = "http://43.200.240.251/board/filter?boardType=GOOD&ageGroup=\(age)&page=\(page)&size=5"
         }
         
@@ -269,6 +278,21 @@ extension GoodVC {
     }
     
     @objc func refreshPostsData(_ sender: Any) {
+        if age == 1 {
+            if count == 0 {
+                count += 1
+            }
+            else {
+                age = 0
+                count = 0
+                keyword = ""
+                searchBar.text = ""
+                button1.isEnabled = true
+                button2.isEnabled = true
+                button3.isEnabled = true
+                button4.isEnabled = true
+            }
+        }
         page = 1
         fetchData(page: page)
         refreshControl.endRefreshing()
@@ -384,11 +408,26 @@ extension GoodVC {
 
 extension GoodVC: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if let searchText = searchBar.text {
-            // 검색어와 함께 원하는 동작 수행
-            print("검색 버튼이 눌렸습니다. 검색어: \(searchText)")
-            // 여기서 검색 동작을 수행하거나 다른 원하는 동작을 실행할 수 있습니다.
-        }
+        age = 1
+        count = 0
+        keyword = searchBar.text!
+        button1.isSelected = false
+        button1.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
+        button1.setTitleColor(.black, for: .normal)
+        button2.isSelected = false
+        button2.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
+        button2.setTitleColor(.black, for: .normal)
+        button3.isSelected = false
+        button3.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
+        button3.setTitleColor(.black, for: .normal)
+        button4.isSelected = false
+        button4.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
+        button4.setTitleColor(.black, for: .normal)
+        button1.isEnabled = false
+        button2.isEnabled = false
+        button3.isEnabled = false
+        button4.isEnabled = false
+        refreshPostsData(self)
     }
 }
 
