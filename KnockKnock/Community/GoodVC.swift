@@ -31,11 +31,11 @@ class GoodVC: UIViewController
         {
         case 0: // 전체 나이대
             urlString = "http://43.200.240.251/board/allPosts?boardType=GOOD&page=\(page)&size=5"
-            print("전체 나이대")
         case 1:
-            urlString = "http://43.200.240.251/board/search?boardType=GOOD&searchType=TITLE_AND_CONTENT&keyword=\(keyword)&page=\(page)&size=5"
-            print("키워드 검색")
-            print(urlString)
+            if let encodedKeyword = keyword.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
+                urlString = "http://43.200.240.251/board/search?boardType=GOOD&searchType=TITLE_AND_CONTENT&keyword=\(encodedKeyword)&page=\(page)&size=5"
+            }
+
         default: // 선택한 나이대
             urlString = "http://43.200.240.251/board/filter?boardType=GOOD&ageGroup=\(age)&page=\(page)&size=5"
         }
