@@ -113,3 +113,5 @@ struct Verification: Codable {
 struct Report: Codable {
     let reportType: String
 }
+
+

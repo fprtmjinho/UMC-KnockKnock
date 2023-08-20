@@ -746,11 +746,4 @@ extension PostVC: UITableViewDelegate, UITableViewDataSource {
         }.resume()
         
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.fetchDetails(postID: self.post.postID)
-        self.fetchComment(postID: self.post.postID)
-        self.tableView.reloadData()
-    }
 }

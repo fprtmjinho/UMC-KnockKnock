@@ -316,10 +316,10 @@ extension WriteVC {
                 }
                 
                 for (index, image) in self.selectedImages.enumerated() {
-                        if let imageData = image?.jpegData(compressionQuality: 0.8) {
-                            multipartFormData.append(imageData, withName: "images", fileName: "\(self.titleText)_image_\(index).jpg", mimeType: "image/jpeg")
-                        }
+                    if let imageData = image?.jpegData(compressionQuality: 0.8) {
+                        multipartFormData.append(imageData, withName: "images", fileName: "\(self.titleText)_image_\(index).jpg", mimeType: "image/jpeg")
                     }
+                }
                 
             }, to: "http://\(Server.url)/post/create", headers: ["Authorization": accessToken!])
             .response { response in
@@ -334,27 +334,51 @@ extension WriteVC {
                 }
             }
         } else {
-            
             let postModifyData = PostModify(title: titleText!, content: contentText!)
             print(postModifyData)
             AF.upload(multipartFormData: { multipartFormData in
                 if let postModifyJSONData = try? JSONEncoder().encode(postModifyData) {
                     multipartFormData.append(postModifyJSONData, withName: "request", mimeType: "application/json")
                 }
-
+                
                 for (index, image) in self.selectedImages.enumerated() {
-                        if let imageData = image?.jpegData(compressionQuality: 0.8) {
-                            multipartFormData.append(imageData, withName: "images", fileName: "\(self.titleText)_image_\(index).jpg", mimeType: "image/jpeg")
-                        }
+                    if let imageData = image?.jpegData(compressionQuality: 0.8) {
+                        multipartFormData.append(imageData, withName: "images", fileName: "\(self.titleText)_image_\(index).jpg", mimeType: "image/jpeg")
                     }
-
-            }, to: "http://\(Server.url)/post/\(self.postID)/edit")
+                }
+                
+            }, to: "http://\(Server.url)/post/\(self.postID!)/edit", method: .put)
             .response { response in
                 switch response.result {
                 case .success:
                     if let statusCode = response.response?.statusCode {
                         print("HTTP Status Code: \(statusCode)")
-                        self.navigationController?.popViewController(animated: true)
+                        if let data = response.data {
+                            do { let verification = try JSONDecoder().decode(Verification.self, from: data)
+                                print("\(verification)")
+                            } catch {
+                                print("디코딩 실패")
+                                return
+                            }
+                        }
+                        // WriteVC에서 GoodVC로 이동하는 코드
+                        if let navigationController = self.navigationController {
+                            // 첫 번째 pop
+                            navigationController.popViewController(animated: false)
+                            
+                            // 두 번째 pop
+                            navigationController.popViewController(animated: true)
+                            
+                            // GoodVC로 이동
+                            for viewController in navigationController.viewControllers {
+                                if let goodVC = viewController as? GoodVC {
+                                    navigationController.popToViewController(goodVC, animated: true)
+                                    break
+                                }
+                            }
+                        }
+
+
                     }
                 case .failure(let error):
                     print("Error: \(error)")
