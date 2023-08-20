@@ -8,6 +8,9 @@
 import UIKit
 class FindPasswordVC : UIViewController{
     
+    var sendEmail: Bool = false // 인증코드 전송했는지 확인
+    var emailAuthentication: Bool = false // 인증 여부
+    
     var nextBtn : UIButton = UIButton()
     
     let emailLabel : UILabel = {
@@ -74,6 +77,7 @@ class FindPasswordVC : UIViewController{
         config.baseForegroundColor = .systemGray
         config.cornerStyle = .capsule
         btn.configuration = config
+        btn.addTarget(self, action: #selector(emailCheckBtnPressed(_:)), for: .touchUpInside)
         return btn
     }()
     //인증번호 입력하면 색 변경
@@ -108,8 +112,104 @@ class FindPasswordVC : UIViewController{
             emailText.layer.borderWidth = 0
             emailAlertLabel.textColor = #colorLiteral(red: 0, green: 0.6676340103, blue: 0, alpha: 1)
             emailAlertLabel.text = "해당 이메일로 인증코드를 전송하였습니다."
+            sendEmail = true
+            
             // 이메일 보내는 작업
+            let emailRequestBody = EmailRequest(email: emailText.text!)
+            
+            let emailURLString = "http://43.200.240.251/forgot-password/code"
+            guard let emailURL = URL(string: emailURLString) else {
+                print("이메일 인증 URL 가져올 수 없음.")
+                return
+            }
+            
+            var emailRequest = URLRequest(url: emailURL)
+            emailRequest.httpMethod = "POST"
+            emailRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            
+            do {
+                let jsonData = try JSONEncoder().encode(emailRequestBody)
+                emailRequest.httpBody = jsonData
+            } catch {
+                print("JSON 인코딩에 실패하였음.")
+                return
+            }
+            
+            URLSession.shared.dataTask(with: emailRequest) { data, response, error in
+                
+                guard let data = data else {
+                    print("이메일 코드 전송 성공 여부 Response를 받아오지 못했음.")
+                    return
+                }
+                do {
+                    let emailRequestResult = try JSONDecoder().decode(EmailReqestResult.self, from: data)
+                    print("response: \(emailRequestResult)")
+                } catch {
+                    print("이메일 코드 전송 Response를 디코딩하는데 실패하였음.")
+                }
+                
+            }.resume()
         }
+    }
+    
+    @objc func emailCheckBtnPressed(_: UIButton) { // 이메일 인증번호 확인 버튼 눌렀을 때
+        
+        if emailCodeEmptyCheck() {
+            showAlert(message: "이메일 인증코드를 입력하세요.")
+            return
+        }
+        
+        if sendEmail == true {
+            let emailCheckBody = PWEmailCheckRequest(code: emailCheckText.text!)
+            print(emailCheckBody)
+            
+            let emailCheckURLString = "http://43.200.240.251/forgot-password/authentication"
+            guard let emailCheckURL = URL(string: emailCheckURLString) else {
+                print("이메일 인증코드 확인 URL 가져올 수 없음.")
+                return
+            }
+            
+            var emailCheckRequest = URLRequest(url: emailCheckURL)
+            emailCheckRequest.httpMethod = "POST"
+            emailCheckRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            
+            do {
+                let jsonData = try JSONEncoder().encode(emailCheckBody)
+                emailCheckRequest.httpBody = jsonData
+            } catch {
+                print("JSON 인코딩에 실패하였음.")
+                return
+            }
+            
+            URLSession.shared.dataTask(with: emailCheckRequest) { data, response, error in
+                
+                guard let data = data else {
+                    print("이메일 인증코드 확인 Response를 받아오지 못했음.")
+                    return
+                }
+                do {
+                    let emailCheckResquestResult = try JSONDecoder().decode(PWEmailCheckRequestResult.self, from: data)
+                    print("response: \(emailCheckResquestResult)")
+                    if emailCheckResquestResult.message! == "인증이 완료되었습니다." {
+                        self.emailAuthentication = true
+                        DispatchQueue.main.async {
+                            self.showAlert(message: "인증되셨습니다.")
+                            self.emailCheckBtn.isEnabled = false // 버튼 비활성화
+                            UserDefaults.standard.set(emailCheckResquestResult.data, forKey: "memberId")
+                        }
+                    }
+                } catch {
+                    DispatchQueue.main.async {
+                        self.showAlert(message: "유효하지 않는 인증코드입니다.")
+                    }
+                }
+            }.resume()
+            
+        }
+        else {
+            showAlert(message: "이메일 인증 코드를 먼저 전송받아주세요.")
+        }
+        
     }
     
     @objc func touchNextBtn(_: UIButton){
@@ -121,18 +221,15 @@ class FindPasswordVC : UIViewController{
             code = codetext
         }
         
-        let checkOne: Bool = emailCheck()
-        let checkTwo: Bool = codeCheck()
-        if(checkOne||checkTwo){
-            return
-        }
-        
         // 데이터 저장
         //UserDefaults.standard.set(emailForCode, forKey: "email")
         //UserDefaults.standard.set(code, forKey: "code")
         // 데이터 동기화
         UserDefaults.standard.synchronize()
         
+        if emailAuthentication != true {
+            showAlert(message: "이메일 인증 단계를 완료해주세요.")
+        }
         nextView()
         //인증 완료해야 다음 버튼 활성화
     }
@@ -152,23 +249,6 @@ class FindPasswordVC : UIViewController{
         
     }
     
-    //codeCheck
-    func codeCheck() -> Bool{
-        if(code == ""){
-            //코드 입력 전
-            emailCheckBtn.configuration?.baseBackgroundColor = .systemGray6
-            emailCheckBtn.configuration?.baseForegroundColor = .systemGray
-            return true
-        }
-        else{
-            //코드가 일치하면
-            emailCheckBtn.configuration?.baseBackgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-            emailCheckBtn.configuration?.baseForegroundColor = .white
-            return false
-        }
-        
-    }
-    
     func emailInvalidCheck()->Bool{
         if(email == "" || !email.contains("@")){
             return true
@@ -178,6 +258,14 @@ class FindPasswordVC : UIViewController{
         }
     }
     
+    func emailCodeEmptyCheck() -> Bool {
+        if emailCheckText.text == "" {
+            return true
+        }
+        else {
+            return false
+        }
+    }
 }
 
 extension FindPasswordVC {
@@ -247,4 +335,22 @@ extension FindPasswordVC {
         self.navigationController?.pushViewController(ChangePasswordVC, animated: true)
     }
     
+    
+    func showAlert(message: String) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
+        alert.addAction(okAction)
+        
+        // 메시지 폰트 사이즈 설정
+        let attributedMessage = NSMutableAttributedString(string: message)
+        let style = NSMutableParagraphStyle()
+        style.alignment = .center
+        attributedMessage.addAttribute(.paragraphStyle, value: style, range: NSRange(location: 0, length: attributedMessage.length))
+        
+        let fontSize: CGFloat = 16
+        attributedMessage.addAttribute(.font, value: UIFont.systemFont(ofSize: fontSize), range: NSRange(location: 0, length: attributedMessage.length))
+        alert.setValue(attributedMessage, forKey: "attributedMessage")
+        
+        present(alert, animated: true, completion: nil)
+    }
 }

@@ -107,6 +107,53 @@ extension ChangePasswordVC {
     @objc func changePasswordFunc(_: UIButton){
         //비밀번호 변경
         
+        let changePasswordBody = ChangePassword(memberId: UserDefaults.standard.integer(forKey: "memberId"), newPassword: passwordText.text!)
+        
+        print(changePasswordBody)
+        
+        let changePasswordURLString = "http://43.200.240.251/forgot-password/change-password"
+        
+        guard let changePasswordURL = URL(string: changePasswordURLString) else {
+            print("비밀번호 변경 URL 가져올 수 없음.")
+            return
+        }
+        
+        var changePasswordRequest = URLRequest(url: changePasswordURL)
+        changePasswordRequest.httpMethod = "POST"
+        changePasswordRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        do {
+            let jsonData = try JSONEncoder().encode(changePasswordBody)
+            changePasswordRequest.httpBody = jsonData
+        } catch {
+            print("JSON 인코딩에 실패하였음.")
+            return
+        }
+        
+        URLSession.shared.dataTask(with: changePasswordRequest) {
+            data, response, error in
+            
+            guard let httpResponse = response as? HTTPURLResponse else {
+                print("올바른 HTTP 응답이 아닙니다.")
+                return
+            }
+            
+            let statusCode = httpResponse.statusCode
+            print("HTTP 상태 코드: \(statusCode)")
+            
+            guard let data = data else {
+                print("비밀번호 변경 전송 성공 여부 Response를 받아오지 못했음.")
+                return
+            }
+            
+            do {
+                let changePasswordResponse = try JSONDecoder().decode(ChangePasswordResponse.self, from: data)
+                print("response: \(changePasswordResponse)")
+            } catch {
+                print("비밀번호 변경 전송 Response를 디코딩하는데 실패하였음.")
+            }
+        }.resume()
+        
         navigationController?.popToRootViewController(animated: true)
     }
 }

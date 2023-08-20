@@ -45,12 +45,10 @@ class GroupProfileView : UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         getData()
+        sortData()
         setTableView()
         makeSubView()
         makeConstraint()
-        membertableView.reloadData()
-        setTableView()
-      
     }
     
     required init?(coder _: NSCoder) {
@@ -142,11 +140,27 @@ extension GroupProfileView {
     func getData(){
         var nameCh: Array<String> = []
         var numberCh: Array<String> = []
-        for member in group.groupMember{
-            nameCh.append(friendData.dic[member]!.name)
-            numberCh.append(member)
-        }
+//        var key: String = group.choiceTime!
+//        print("key : \(key)")
+//        for member in group.dic[key]!.user{
+//            nameCh.append(friendData.dic[member]!.name)
+//            numberCh.append(member)
+//        }
         nameList = nameCh
         numberList = numberCh
+    }
+    func sortData(){
+        var combinedList = zip(nameList,numberList).map{($0,$1)}
+
+        // 이름을 기준으로 오름차순 정렬
+        combinedList.sort { $0.0 < $1.0 }
+
+        // 혹은 이렇게도 가능합니다.
+        // combinedList = combinedList.sorted { $0.0 < $1.0 }
+
+        // 정렬된 결과를 다시 리스트로 분리
+        nameList = combinedList.map { $0.0 }
+        numberList = combinedList.map{$0.1}
+        
     }
 }

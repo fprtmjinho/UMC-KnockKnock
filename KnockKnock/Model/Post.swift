@@ -76,3 +76,15 @@ struct PostParsing: Codable { // 게시글(게시판에서 보이는)
         case hashtags
     }
 }
+
+struct PostCreate: Codable {
+    let boardType: Int
+    let title: String
+    let content: String
+    let isAnonymous: Bool
+}
+
+struct MakeComment: Codable {
+    let content: String
+    let isAnonymous: Bool
+}

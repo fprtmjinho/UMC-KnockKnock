@@ -183,15 +183,9 @@ class LoginVC : UIViewController {
                         // 헤더에서 토큰 가져오기
                         let accessToken = headers["Authorization"]!
                         let refreshToken = headers["Refresh-Token"]!
-                        
-                        // Info.plist에서 해당 키에 값을 저장
-                        if let infoPlistPath = Bundle.main.path(forResource: "Info", ofType: "plist"),
-                           var infoDict = NSMutableDictionary(contentsOfFile: infoPlistPath) {
-                            infoDict.setValue(accessToken, forKey: "accessToken")
-                            infoDict.setValue(refreshToken, forKey: "refreshToken")
-                            infoDict.write(toFile: infoPlistPath, atomically: true)
-                            
-                        }
+                        print(accessToken)
+                        UserDefaults.standard.set(accessToken, forKey: "Authorization")
+                        UserDefaults.standard.set(refreshToken, forKey: "Refresh-Token")
                         
                         // User 정보를 가져오기 위한 URL
                             let userURLString = "http://43.200.240.251/member"

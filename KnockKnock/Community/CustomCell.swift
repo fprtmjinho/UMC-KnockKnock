@@ -242,7 +242,7 @@ extension CustomCell {
     func resetCell() {
         self.contentView.subviews.forEach({ $0.removeFromSuperview() })
     }
-    
+     
     func configureCell(with post: PostParsing) {
         titleLabel.text = post.title
         contentLabel.text = post.content
