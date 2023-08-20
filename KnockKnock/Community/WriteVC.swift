@@ -371,9 +371,17 @@ extension WriteVC {
                             
                             // GoodVC로 이동
                             for viewController in navigationController.viewControllers {
-                                if let goodVC = viewController as? GoodVC {
-                                    navigationController.popToViewController(goodVC, animated: true)
-                                    break
+                                if self.index == 0 {
+                                    if let goodVC = viewController as? GoodVC {
+                                        navigationController.popToViewController(goodVC, animated: true)
+                                        break
+                                    }
+                                }
+                                else {
+                                    if let BadVC = viewController as? BadVC {
+                                        navigationController.popToViewController(BadVC, animated: true)
+                                        break
+                                    }
                                 }
                             }
                         }
