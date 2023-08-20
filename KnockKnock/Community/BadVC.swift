@@ -8,9 +8,15 @@
 import UIKit
 import SDWebImage
 
-class BadVC: UIViewController {
+class BadVC: UIViewController
+{
     
     let refreshControl = UIRefreshControl()
+    
+    var keyword = "" // 검색 키워드
+    var count = 0 // 키워드 검색 상태에서 새로고침을 했는지를 인식하기 위한 변수
+    
+    var age: Int = 0 // 나이대
     
     var page: Int = 1 // 페이지 번호
     
@@ -19,7 +25,20 @@ class BadVC: UIViewController {
     var posts: [PostParsing] = []
     
     func fetchData(page: Int) {
-        let urlString = "http://43.200.240.251/board/allPosts?boardType=EVIL&page=\(page)&size=5"
+        var urlString: String = ""
+        
+        switch age
+        {
+        case 0: // 전체 나이대
+            urlString = "http://\(Server.url)/board/allPosts?boardType=EVIL&page=\(page)&size=5"
+        case 1:
+            if let encodedKeyword = keyword.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
+                urlString = "http://\(Server.url)/board/search?boardType=EVIL&searchType=TITLE_AND_CONTENT&keyword=\(encodedKeyword)&page=\(page)&size=5"
+            }
+
+        default: // 선택한 나이대
+            urlString = "http://\(Server.url)/board/filter?boardType=EVIL&ageGroup=\(age)&page=\(page)&size=5"
+        }
         
         guard let url = URL(string: urlString) else {
             return
@@ -207,6 +226,8 @@ extension BadVC {
         buttonStackView.distribution = .equalSpacing
         buttonStackView.spacing = 5
         
+        searchBar.delegate = self
+        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(CustomCell.self, forCellReuseIdentifier: "PostCell")
@@ -257,6 +278,21 @@ extension BadVC {
     }
     
     @objc func refreshPostsData(_ sender: Any) {
+        if age == 1 {
+            if count == 0 {
+                count += 1
+            }
+            else {
+                age = 0
+                count = 0
+                keyword = ""
+                searchBar.text = ""
+                button1.isEnabled = true
+                button2.isEnabled = true
+                button3.isEnabled = true
+                button4.isEnabled = true
+            }
+        }
         page = 1
         fetchData(page: page)
         refreshControl.endRefreshing()
@@ -267,6 +303,8 @@ extension BadVC {
             sender.isSelected = false
             sender.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
             sender.setTitleColor(.black, for: .normal)
+            age = 0
+            refreshPostsData(self)
         } else {
             sender.isSelected = true
             sender.backgroundColor = #colorLiteral(red: 1, green: 0, blue: 0.3764705882, alpha: 1)
@@ -280,6 +318,8 @@ extension BadVC {
             button4.isSelected = false
             button4.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
             button4.setTitleColor(.black, for: .normal)
+            age = 10
+            refreshPostsData(self)
         }
     }
     
@@ -288,6 +328,8 @@ extension BadVC {
             sender.isSelected = false
             sender.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
             sender.setTitleColor(.black, for: .normal)
+            age = 0
+            refreshPostsData(self)
         } else {
             sender.isSelected = true
             sender.backgroundColor = #colorLiteral(red: 1, green: 0, blue: 0.3764705882, alpha: 1)
@@ -301,6 +343,8 @@ extension BadVC {
             button4.isSelected = false
             button4.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
             button4.setTitleColor(.black, for: .normal)
+            age = 20
+            refreshPostsData(self)
         }
     }
     
@@ -309,6 +353,8 @@ extension BadVC {
             sender.isSelected = false
             sender.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
             sender.setTitleColor(.black, for: .normal)
+            age = 0
+            refreshPostsData(self)
         } else {
             sender.isSelected = true
             sender.backgroundColor = #colorLiteral(red: 1, green: 0, blue: 0.3764705882, alpha: 1)
@@ -322,6 +368,8 @@ extension BadVC {
             button4.isSelected = false
             button4.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
             button4.setTitleColor(.black, for: .normal)
+            age = 30
+            refreshPostsData(self)
         }
     }
     
@@ -330,6 +378,8 @@ extension BadVC {
             sender.isSelected = false
             sender.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
             sender.setTitleColor(.black, for: .normal)
+            age = 0
+            refreshPostsData(self)
         } else {
             sender.isSelected = true
             sender.backgroundColor = #colorLiteral(red: 1, green: 0, blue: 0.3764705882, alpha: 1)
@@ -343,6 +393,8 @@ extension BadVC {
             button3.isSelected = false
             button3.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
             button3.setTitleColor(.black, for: .normal)
+            age = 40
+            refreshPostsData(self)
         }
     }
     
@@ -354,3 +406,27 @@ extension BadVC {
     
 }
 
+extension BadVC: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        age = 1
+        count = 0
+        keyword = searchBar.text!
+        button1.isSelected = false
+        button1.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
+        button1.setTitleColor(.black, for: .normal)
+        button2.isSelected = false
+        button2.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
+        button2.setTitleColor(.black, for: .normal)
+        button3.isSelected = false
+        button3.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
+        button3.setTitleColor(.black, for: .normal)
+        button4.isSelected = false
+        button4.backgroundColor = #colorLiteral(red: 0.9656803012, green: 0.965680182, blue: 0.965680182, alpha: 1)
+        button4.setTitleColor(.black, for: .normal)
+        button1.isEnabled = false
+        button2.isEnabled = false
+        button3.isEnabled = false
+        button4.isEnabled = false
+        refreshPostsData(self)
+    }
+}

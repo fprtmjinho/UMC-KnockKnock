@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		00086E972A6B62AE00A7C9FF /* CustomPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00086E962A6B62AE00A7C9FF /* CustomPostCell.swift */; };
 		00086E992A6B631600A7C9FF /* CustomCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00086E982A6B631600A7C9FF /* CustomCommentCell.swift */; };
+		000AD79A2A912F750022F18B /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000AD7992A912F750022F18B /* Server.swift */; };
 		00124F1B2A63CB6000536EAD /* PostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00124F1A2A63CB6000536EAD /* PostVC.swift */; };
 		0041A6ED2A61A2BF008A5048 /* WriteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0041A6EC2A61A2BF008A5048 /* WriteVC.swift */; };
 		007B67C22A6D31F50087B264 /* PromiseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007B67C12A6D31F50087B264 /* PromiseVC.swift */; };
@@ -103,6 +104,7 @@
 /* Begin PBXFileReference section */
 		00086E962A6B62AE00A7C9FF /* CustomPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPostCell.swift; sourceTree = "<group>"; };
 		00086E982A6B631600A7C9FF /* CustomCommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCommentCell.swift; sourceTree = "<group>"; };
+		000AD7992A912F750022F18B /* Server.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
 		00124F1A2A63CB6000536EAD /* PostVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostVC.swift; sourceTree = "<group>"; };
 		0041A6EC2A61A2BF008A5048 /* WriteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteVC.swift; sourceTree = "<group>"; };
 		007B67C12A6D31F50087B264 /* PromiseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseVC.swift; sourceTree = "<group>"; };
@@ -222,6 +224,7 @@
 				008C498D2A714ED700BE6705 /* Post.swift */,
 				008C498B2A714EAF00BE6705 /* Group.swift */,
 				00E558F12A6FD3CC00EA73FC /* Login.swift */,
+				000AD7992A912F750022F18B /* Server.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -645,6 +648,7 @@
 				E91EE27E2A5C9B24003D6E5C /* GetInformationVC.swift in Sources */,
 				C9D07CEE2A6A62290071C2F5 /* CustomCell.swift in Sources */,
 				C935FA742A5BE56D0035FA2C /* TextGuideVC.swift in Sources */,
+				000AD79A2A912F750022F18B /* Server.swift in Sources */,
 				C9D07CFC2A6C427C0071C2F5 /* HowtouseVC.swift in Sources */,
 				0041A6ED2A61A2BF008A5048 /* WriteVC.swift in Sources */,
 				C935FA232A59357B0035FA2C /* LoginSecondVC.swift in Sources */,

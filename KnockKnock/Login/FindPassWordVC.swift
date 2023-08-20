@@ -117,7 +117,7 @@ class FindPasswordVC : UIViewController{
             // 이메일 보내는 작업
             let emailRequestBody = EmailRequest(email: emailText.text!)
             
-            let emailURLString = "http://43.200.240.251/forgot-password/code"
+            let emailURLString = "http://\(Server.url)/forgot-password/code"
             guard let emailURL = URL(string: emailURLString) else {
                 print("이메일 인증 URL 가져올 수 없음.")
                 return
@@ -163,7 +163,7 @@ class FindPasswordVC : UIViewController{
             let emailCheckBody = PWEmailCheckRequest(code: emailCheckText.text!)
             print(emailCheckBody)
             
-            let emailCheckURLString = "http://43.200.240.251/forgot-password/authentication"
+            let emailCheckURLString = "http://\(Server.url)/forgot-password/authentication"
             guard let emailCheckURL = URL(string: emailCheckURLString) else {
                 print("이메일 인증코드 확인 URL 가져올 수 없음.")
                 return

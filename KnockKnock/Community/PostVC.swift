@@ -30,7 +30,7 @@ class PostVC: UIViewController, CustomCommentCellDelegate {
     
     func fetchComment(postID: Int) {
         
-        let urlString = "http://43.200.240.251/post/\(postID)/comments"
+        let urlString = "http://\(Server.url)/post/\(postID)/comments"
         
         guard let url = URL(string: urlString) else { return }
         
@@ -57,7 +57,7 @@ class PostVC: UIViewController, CustomCommentCellDelegate {
     
     func fetchDetails(postID: Int) {
         
-        let urlString = "http://43.200.240.251/post/\(postID)/details"
+        let urlString = "http://\(Server.url)/post/\(postID)/details"
         
         guard let url = URL(string: urlString) else { return }
         
@@ -227,7 +227,7 @@ class PostVC: UIViewController, CustomCommentCellDelegate {
     @objc func postShowActionSheet() {
         let actionSheet = UIAlertController(title: "글 메뉴", message: nil, preferredStyle: .actionSheet)
         
-        let URLString = "http://43.200.240.251/post/\(post.postID)/verification"
+        let URLString = "http://\(Server.url)/post/\(post.postID)/verification"
         
         guard let URL = URL(string: URLString) else {
             return
@@ -289,31 +289,31 @@ class PostVC: UIViewController, CustomCommentCellDelegate {
                                     let reportActionSheet = UIAlertController(title: "신고 사유 선택", message: nil, preferredStyle: .actionSheet)
                                     
                                     let report1 = UIAlertAction(title: "게시판 성격에 부적절함", style: .default) { _ in
-                                        
+                                        self.reportPost(postId: self.post.postID, reason: "INAPPROPRIATE_FOR_BOARD")
                                     }
                                     
                                     let report2 = UIAlertAction(title: "음란물/불건전한 만남 및 대화", style: .default) { _ in
-                                        
+                                        self.reportPost(postId: self.post.postID, reason: "OBSCENE_CONTENT")
                                     }
                                     
                                     let report3 = UIAlertAction(title: "낚시/놀람/도배", style: .default) { _ in
-                                        
+                                        self.reportPost(postId: self.post.postID, reason: "CLICKBAIT_SPAM")
                                     }
                                     
                                     let report4 = UIAlertAction(title: "욕설/비하", style: .default) { _ in
-                                        
+                                        self.reportPost(postId: self.post.postID, reason: "PROFANITY_AND_HATE")
                                     }
                                     
                                     let report5 = UIAlertAction(title: "정당/정치인 비하 및 선거운동", style: .default) { _ in
-                                        
+                                        self.reportPost(postId: self.post.postID, reason: "POLITICAL_REMARKS")
                                     }
                                     
                                     let report6 = UIAlertAction(title: "상업적 광고 및 판매", style: .default) { _ in
-                                        
+                                        self.reportPost(postId: self.post.postID, reason: "COMMERCIAL_ADVERTISING")
                                     }
                                     
                                     let report7 = UIAlertAction(title: "유출/사칭/사기", style: .default) { _ in
-                                        
+                                        self.reportPost(postId: self.post.postID, reason: "LEAK_IMPERSONATION_FRAUD")
                                     }
                                     
                                     reportActionSheet.addAction(report1)
@@ -368,7 +368,7 @@ class PostVC: UIViewController, CustomCommentCellDelegate {
             return
         }
         
-        let commentURLString = "http://43.200.240.251/post/\(post.postID)/comment/register"
+        let commentURLString = "http://\(Server.url)/post/\(post.postID)/comment/register"
         
         guard let url = URL(string: commentURLString) else {
             print("서버 URL을 만들 수 없습니다.")
@@ -462,7 +462,7 @@ extension PostVC: UITableViewDelegate, UITableViewDataSource {
     @objc func commentShowActionSheet(cell: CustomCommentCell) {
         let actionSheet = UIAlertController(title: "댓글 메뉴", message: nil, preferredStyle: .actionSheet)
         
-        let URLString = "http://43.200.240.251/comment/\(cell.commentId)/verification"
+        let URLString = "http://\(Server.url)/comment/\(cell.commentId)/verification"
         
         guard let URL = URL(string: URLString) else {
             return
@@ -517,31 +517,31 @@ extension PostVC: UITableViewDelegate, UITableViewDataSource {
                                     let reportActionSheet = UIAlertController(title: "신고 사유 선택", message: nil, preferredStyle: .actionSheet)
                                     
                                     let report1 = UIAlertAction(title: "게시판 성격에 부적절함", style: .default) { _ in
-                                        
+                                        self.reportComment(commentId: cell.commentId, reason: "INAPPROPRIATE_FOR_BOARD")
                                     }
                                     
                                     let report2 = UIAlertAction(title: "음란물/불건전한 만남 및 대화", style: .default) { _ in
-                                        
+                                        self.reportComment(commentId: cell.commentId, reason: "OBSCENE_CONTENT")
                                     }
                                     
                                     let report3 = UIAlertAction(title: "낚시/놀람/도배", style: .default) { _ in
-                                        
+                                        self.reportComment(commentId: cell.commentId, reason: "CLICKBAIT_SPAM")
                                     }
                                     
                                     let report4 = UIAlertAction(title: "욕설/비하", style: .default) { _ in
-                                        
+                                        self.reportComment(commentId: cell.commentId, reason: "PROFANITY_AND_HATE")
                                     }
                                     
                                     let report5 = UIAlertAction(title: "정당/정치인 비하 및 선거운동", style: .default) { _ in
-                                        
+                                        self.reportComment(commentId: cell.commentId, reason: "POLITICAL_REMARKS")
                                     }
                                     
                                     let report6 = UIAlertAction(title: "상업적 광고 및 판매", style: .default) { _ in
-                                        
+                                        self.reportComment(commentId: cell.commentId, reason: "COMMERCIAL_ADVERTISING")
                                     }
                                     
                                     let report7 = UIAlertAction(title: "유출/사칭/사기", style: .default) { _ in
-                                        
+                                        self.reportComment(commentId: cell.commentId, reason: "LEAK_IMPERSONATION_FRAUD")
                                     }
                                     
                                     reportActionSheet.addAction(report1)
@@ -576,7 +576,7 @@ extension PostVC: UITableViewDelegate, UITableViewDataSource {
     
     func deletePost(postId: Int) {
         
-        let URLString = "http://43.200.240.251/post/\(postId)"
+        let URLString = "http://\(Server.url)/post/\(postId)"
         
         guard let URL = URL(string: URLString) else {
             return
@@ -604,11 +604,79 @@ extension PostVC: UITableViewDelegate, UITableViewDataSource {
         
     }
     
+    func reportPost(postId: Int, reason: String) {
+        
+        let URLString = "http://\(Server.url)/post/\(postId)/report"
+        
+        guard let URL = URL(string: URLString) else {
+            return
+        }
+        
+        var request = URLRequest(url: URL)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue(UserDefaults.standard.string(forKey: "Authorization")!, forHTTPHeaderField: "Authorization")
+        
+        do { request.httpBody = try JSONEncoder().encode(Report(reportType: reason)) }
+        catch {
+            print("JSON 인코딩에 실패하였음.")
+            return
+        }
+        
+        URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            
+            guard let httpResponse = response as? HTTPURLResponse else {
+                print("올바른 HTTP 응답이 아닙니다.")
+                return
+            }
+            
+            let statusCode = httpResponse.statusCode
+            print("HTTP 상태 코드: \(statusCode)")
+            
+        }.resume()
+        
+    }
+    
+    func reportComment(commentId: Int, reason: String) {
+        
+        let URLString = "http://\(Server.url)/post/\(commentId)/report"
+        
+        guard let URL = URL(string: URLString) else {
+            return
+        }
+        
+        var request = URLRequest(url: URL)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue(UserDefaults.standard.string(forKey: "Authorization")!, forHTTPHeaderField: "Authorization")
+        
+        do { request.httpBody = try JSONEncoder().encode(Report(reportType: reason)) }
+        catch {
+            print("JSON 인코딩에 실패하였음.")
+            return
+        }
+        
+        URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            
+            guard let httpResponse = response as? HTTPURLResponse else {
+                print("올바른 HTTP 응답이 아닙니다.")
+                return
+            }
+            
+            let statusCode = httpResponse.statusCode
+            print("HTTP 상태 코드: \(statusCode)")
+            
+        }.resume()
+        
+    }
+    
     func modifyComment(commentId: Int, content: String) {
         
         let modifyCommentBody = ModifyComment(content: content)
         
-        let URLString = "http://43.200.240.251/comment/\(commentId)"
+        let URLString = "http://\(Server.url)/comment/\(commentId)"
         
         guard let URL = URL(string: URLString) else {
             return
@@ -648,7 +716,7 @@ extension PostVC: UITableViewDelegate, UITableViewDataSource {
     
     func deleteComment(commentId: Int) {
         
-        let URLString = "http://43.200.240.251/comment/\(commentId)"
+        let URLString = "http://\(Server.url)/comment/\(commentId)"
         
         guard let URL = URL(string: URLString) else {
             return
@@ -677,5 +745,12 @@ extension PostVC: UITableViewDelegate, UITableViewDataSource {
             
         }.resume()
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.fetchDetails(postID: self.post.postID)
+        self.fetchComment(postID: self.post.postID)
+        self.tableView.reloadData()
     }
 }

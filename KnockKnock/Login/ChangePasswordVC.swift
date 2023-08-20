@@ -111,7 +111,7 @@ extension ChangePasswordVC {
         
         print(changePasswordBody)
         
-        let changePasswordURLString = "http://43.200.240.251/forgot-password/change-password"
+        let changePasswordURLString = "http://\(Server.url)/forgot-password/change-password"
         
         guard let changePasswordURL = URL(string: changePasswordURLString) else {
             print("비밀번호 변경 URL 가져올 수 없음.")
