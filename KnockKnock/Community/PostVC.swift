@@ -434,6 +434,7 @@ extension PostVC: UITableViewDelegate, UITableViewDataSource {
             cell.commentsLabel.text = "\(commentDetails.commentCount)"
             cell.profileImageView.sd_setImage(with: URL(string: post.profile), placeholderImage: UIImage(named: "anonymous"))
             cell.configureCell(with: post)
+            cell.delegate = self
             print(post.imageURL)
             if post.images.count != 0 {
                 cell.imagesView.image = post.images[0]
@@ -745,5 +746,15 @@ extension PostVC: UITableViewDelegate, UITableViewDataSource {
             
         }.resume()
         
+    }
+}
+
+extension PostVC: CustomPostCellDelegate {
+    func reload() {
+        DispatchQueue.main.async {
+            self.fetchDetails(postID: self.post.postID)
+            self.fetchComment(postID: self.post.postID)
+            self.tableView.reloadData()
+        }
     }
 }
