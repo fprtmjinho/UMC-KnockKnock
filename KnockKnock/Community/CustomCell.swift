@@ -10,6 +10,8 @@ import SDWebImage
 
 class CustomCell: UITableViewCell { // 게시글 커스텀
     
+    var postId: Int!
+    
     let profileImageView: UIImageView = { // 프로필 사진
         let imageView = UIImageView()
         return imageView
@@ -67,13 +69,43 @@ class CustomCell: UITableViewCell { // 게시글 커스텀
     let shareButton: UIButton = { // 공유 버튼
         let button = UIButton()
         button.setImage(UIImage(named: "share_333333"), for: .normal)
-        button.addTarget(CustomCell.self, action: #selector(shareButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(shareButtonTapped), for: .touchUpInside)
         return button
     }()
     
     @objc func shareButtonTapped() { // 공유 버튼 눌렀을 때 하는 동작
-        print("공유 버튼 탭하였음")
+        let URLString = "http://\(Server.url)/post/\(postId!)/share"
+        
+        guard let URL = URL(string: URLString) else {
+            return
+        }
+        
+        var request = URLRequest(url: URL)
+        request.httpMethod = "GET"
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            
+            guard let httpResponse = response as? HTTPURLResponse else {
+                print("올바른 HTTP 응답이 아닙니다.")
+                return
+            }
+            
+            let statusCode = httpResponse.statusCode
+            print("HTTP 상태 코드: \(statusCode)")
+            
+            guard let data = data else {
+                return
+            }
+            
+            if let stringData = String(data: data, encoding: .utf8) {
+                print(stringData)
+            } else {
+                print("데이터를 문자열로 변환할 수 없습니다.")
+            }
+            
+        }.resume()
     }
+
     
     
 }
@@ -237,13 +269,21 @@ extension CustomCell {
         profileImageView.layer.cornerRadius = profileImageView.frame.size.width / 2
         profileImageView.clipsToBounds = true
     }
-
+    
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        if let view = shareButton.hitTest(convert(point, to: shareButton), with: event) {
+            return view
+        }
+        
+        return super.hitTest(point, with: event)
+    }
     
     func resetCell() {
         self.contentView.subviews.forEach({ $0.removeFromSuperview() })
     }
      
     func configureCell(with post: PostParsing) {
+        postId = post.postID
         titleLabel.text = post.title
         contentLabel.text = post.content
         likesLabel.text = "\(post.likes)"

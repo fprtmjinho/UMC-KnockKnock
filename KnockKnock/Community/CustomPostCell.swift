@@ -12,6 +12,7 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
     weak var delegate: CustomPostCellDelegate?
     
     var post: Post?
+    
     var postId: Int!
     
     let prevImageButton: UIButton = {
@@ -104,10 +105,10 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
     let shareButton: UIButton = { // 공유 버튼
         let button = UIButton()
         button.setImage(UIImage(named: "share_333333"), for: .normal)
+        button.addTarget(self, action: #selector(shareButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    
     
     func makeSubView1() { // 사진이 있는 경우
         imagesView.addSubview(prevImageButton)
@@ -281,7 +282,6 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
     
     @objc func likesButtonTapped(_ sender: UIButton) {
         let URLString = "http://\(Server.url)/post/\(postId!)/like"
-        print(URLString)
         
         guard let URL = URL(string: URLString) else {
             return
@@ -326,6 +326,39 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
         }.resume()
     }
     
+    @objc func shareButtonTapped() { // 공유 버튼 눌렀을 때 하는 동작
+        let URLString = "http://\(Server.url)/post/\(postId!)/share"
+        
+        guard let URL = URL(string: URLString) else {
+            return
+        }
+        
+        var request = URLRequest(url: URL)
+        request.httpMethod = "GET"
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            
+            guard let httpResponse = response as? HTTPURLResponse else {
+                print("올바른 HTTP 응답이 아닙니다.")
+                return
+            }
+            
+            let statusCode = httpResponse.statusCode
+            print("HTTP 상태 코드: \(statusCode)")
+            
+            guard let data = data else {
+                return
+            }
+            
+            if let stringData = String(data: data, encoding: .utf8) {
+                print(stringData)
+            } else {
+                print("데이터를 문자열로 변환할 수 없습니다.")
+            }
+            
+        }.resume()
+    }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         profileImageView.layer.cornerRadius = profileImageView.frame.size.width / 2
@@ -343,6 +376,10 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
         }
         
         if let view = likesButton.hitTest(convert(point, to: likesButton), with: event) {
+            return view
+        }
+        
+        if let view = shareButton.hitTest(convert(point, to: shareButton), with: event) {
             return view
         }
         
