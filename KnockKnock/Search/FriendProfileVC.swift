@@ -16,12 +16,12 @@ class FriendProfileVC : UIViewController {
     let scrollView : UIScrollView = UIScrollView()
     let friendData = Friends.shared
     
+    var key: Int?
     var names: String = ""
     var number: String = ""
     var nickNames: String = ""
     var best: Bool?
-    var alrams: Bool?
-    var times: String = ""
+    var imagesURL: String = ""
     var images: Data?
 
   
@@ -117,16 +117,52 @@ extension FriendProfileVC {
             best = false
         }
         var dic = friendData.dic[number]
-        var info: Info = Info (
+        var info: Info2 = Info2 (
                 name:names,
                 nickName:nickNames,
+                number: number,
                 bestFriend:best!,
-                alram:alrams!,
-                time:times,
-                image:images
+                imageURL:imagesURL
             )
-        friendData.dic[number] = info
-        print(friendData.dic[number])
+//        var info: Info = Info (
+//                name:names,
+//                nickName:nickNames,
+//                bestFriend:best!,
+//                image:images
+//            )
+        friendData.dic1[key!] = info
+        bestFriendRequest()
+        print(friendData.dic1[key!])
+    }
+    @objc func bestFriendRequest() {
+//        let bestFriendURLString = "http://43.200.240.251/friends/\(friendData.choiceIndex)/bestFriend"
+        let bestFriendURLString = "http://54.180.168.54/friends/\(friendData.choiceIndex!)/bestFriend"
+        guard let url = URL(string: bestFriendURLString) else {
+            print("서버 URL을 만들 수 없습니다.")
+            return
+        }
+        
+        let accessToken = UserDefaults.standard.string(forKey: "Authorization")
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.allHTTPHeaderFields = ["Content-Type": "application/json", "Authorization": accessToken!]
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print("네트워크 에러: \(error)")
+                return
+            }
+            
+            guard let httpResponse = response as? HTTPURLResponse else {
+                print("올바른 HTTP 응답이 아닙니다.")
+                return
+            }
+            
+            let statusCode = httpResponse.statusCode
+            print("HTTP 상태 코드: \(statusCode)")
+            
+        }.resume()
     }
     @objc func setLabel(){
 
@@ -138,21 +174,18 @@ extension FriendProfileVC {
         }else{
             friendprofileView.BfSwitch.isOn = false
         }
-        if images != nil{
-            friendprofileView.ProfileView.layer.cornerRadius = friendprofileView.ProfileView.frame.width/2
-            friendprofileView.ProfileView.image = UIImage(data: images!)
-            friendprofileView.ProfileView.clipsToBounds = true
-        }
+        friendprofileView.ProfileView.layer.cornerRadius = friendprofileView.ProfileView.frame.width/2
+        friendprofileView.ProfileView.image = friendData.dic1[friendData.choiceIndex!]!.image
+        friendprofileView.ProfileView.clipsToBounds = true
     }
     @objc func getData(){
-        number = friendData.choiceNumber!
-        var dic = friendData.dic[number]
+        key = friendData.choiceIndex
+        var dic = friendData.dic1[friendData.choiceIndex!]
         names = dic!.name
         nickNames = dic!.nickName
+        number = dic!.number
         best = dic!.bestFriend
-        alrams = dic!.alram
-        times = dic!.time
-        images = dic!.image
+        imagesURL = dic!.imageURL
     }
     
 }

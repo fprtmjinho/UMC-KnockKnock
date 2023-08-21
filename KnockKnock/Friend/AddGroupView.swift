@@ -72,11 +72,13 @@ class AddGroupView : UIView {
     }()
     
     
-    let naverMapView = NMFNaverMapView(frame: UIScreen.main.bounds)
+    let naverMapView = NMFMapView(frame: UIScreen.main.bounds)
+    let marker = NMFMarker()
+    
     let friendData = Friends.shared
     
     let group = Group.shared
-    
+    var keyList: Array<Int> = []
     var nameList: Array<String> = []
     var numberList: Array<String> = []
     
@@ -84,6 +86,25 @@ class AddGroupView : UIView {
         super.init(frame: frame)
         getData()
         sortData()
+        //아래 지도 코드들을 함수화해서 서버 통신으로 받아온 좌표를 lat,lng에 넣어주면 지도 위치 변경 및 마커 설정 가능
+        //지도 설명 잘 되어 있는 링크 https://navermaps.github.io/ios-map-sdk/guide-ko/5-2.html
+        //지도 좌표
+        naverMapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat:37.498015, lng:127.027974)))
+        //마커좌표
+        marker.position = NMGLatLng(lat: 37.498015, lng: 127.027974)
+        //마커 크기
+        marker.width = 25
+        marker.height = 40
+        //글씨 너비
+        marker.captionRequestedWidth = 100
+        //글씨
+        marker.captionText = "강남역"
+        //글씨 위치
+        marker.captionAligns = [NMFAlignType.top]
+        //글씨 간격
+        marker.captionOffset = 15
+        //마커를 네이버 뷰에 띄우는
+        marker.mapView = naverMapView
         makeSubView()
         makeConstraint()
         settableView()
@@ -188,7 +209,7 @@ extension AddGroupView {
             memberTableview.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
 //            memberTableview.heightAnchor.constraint(equalToConstant: CGFloat(nameList.count*60)),
 //            memberTableview.heightAnchor.constraint(lessThanOrEqualToConstant: 100),
-            memberTableview.heightAnchor.constraint(greaterThanOrEqualToConstant: 60),
+            memberTableview.heightAnchor.constraint(greaterThanOrEqualToConstant: 90),
 //            memberTableview.heightAnchor.constraint(equalToConstant: CGFloat(100)),
             addmemberBtn.topAnchor.constraint(equalTo: memberTableview.bottomAnchor, constant: 10),
             addmemberBtn.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
@@ -214,7 +235,6 @@ extension AddGroupView {
     }
     func makeAddTarget(){
         placeSearchButton.addTarget(self, action: #selector(searchMap(_:)), for: .touchUpInside)
-        
     }
     @objc func searchMap(_:UITextField){
         var searchText: String = ""
@@ -228,12 +248,11 @@ extension AddGroupView {
         }
     }
     func getData(){
-        
         var nameCh: Array<String> = []
         var numberCh: Array<String> = []
         for member in group.groupMember{
-            nameCh.append(friendData.dic[member]!.name)
-            numberCh.append(member)
+            nameCh.append(friendData.dic1[member]!.name)
+            numberCh.append(friendData.dic1[member]!.number)
         }
         nameList = nameCh
         numberList = numberCh

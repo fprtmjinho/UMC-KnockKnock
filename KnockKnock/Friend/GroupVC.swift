@@ -14,29 +14,22 @@ class GroupVC: UIViewController {
     
     var tableView = UITableView(frame: .zero, style: .plain)
     
+    var keyList: Array<Int> = []
     var nameList: Array<String> = []
-    var timeList: Array<String> = []
-    var memberList: [[String]] = [[]]
     
     let group = Group.shared
+    let fre = Friends.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        group.groupMember = []
-        getData()
-        sortData()
-        
+        getGroup()
         setTableView()
         makeSubView()
         makeConstraint()
         makeAddTarget()
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        group.groupMember = []
-        getData()
-        sortData()
-        tableView.reloadData()
+    override func viewDidAppear(_ animated: Bool) {
+        getGroup()
     }
 }
 
@@ -54,11 +47,11 @@ class GroupVC: UIViewController {
          cell.accessoryType = .disclosureIndicator
          
          cell.textLabel?.text = nameList[indexPath.row]
-         cell.detailTextLabel?.text = timeList[indexPath.row]//memberList로 그룹원 이름들 보여주는것도 낫벧
+//         cell.detailTextLabel?.text = timeList[indexPath.row]//memberList로 그룹원 이름들 보여주는것도 낫벧
          cell.textLabel!.font = UIFont.systemFont(ofSize: 15)
          cell.textLabel!.textColor = UIColor.black
-         cell.detailTextLabel!.font = UIFont.systemFont(ofSize: 12)
-         cell.detailTextLabel!.textColor = UIColor.systemGray2
+//         cell.detailTextLabel!.font = UIFont.systemFont(ofSize: 12)
+//         cell.detailTextLabel!.textColor = UIColor.systemGray2
          return cell
      }
   
@@ -70,10 +63,9 @@ class GroupVC: UIViewController {
      
      func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
          if editingStyle == .delete {
-             group.dic[timeList[indexPath.row]] = nil
+//             deleteGroup()
+             group.dic[keyList[indexPath.row]] = nil
              nameList.remove(at: indexPath.row)
-             timeList.remove(at: indexPath.row)
-             memberList.remove(at: indexPath.row)
              tableView.deleteRows(at: [indexPath], with: .fade)
              //remove 확인용 alarm 필요
          }
@@ -129,9 +121,7 @@ extension GroupVC {
     
      @objc func nextView(index:IndexPath) {
         let nextView = GroupProfileVC()
-         group.choiceTime = timeList[index.row]
-         print("timeList : \(timeList[index.row])")
-         print("groupInfo : \(group.dic[timeList[index.row]])")
+         group.choiceIndex = keyList[index.row]
         nextView.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(nextView, animated: true)
     }
@@ -143,33 +133,26 @@ extension GroupVC {
         self.navigationController?.pushViewController(addGroupVC, animated: true)
     }
     @objc func getData(){
+        var keyCh: Array<Int> = []
         var nameCh: Array<String> = []
-        var timeCh: Array<String> = []
-        var memberCh: [[String]] = [[]]
         for key in group.dic.keys{
             var dic = group.dic[key]
+            keyCh.append(key)
             nameCh.append(dic!.name)
-            timeCh.append(key)
-            memberCh.append(dic!.user)
         }
+        keyList = keyCh
         nameList = nameCh
-        timeList = timeCh
-        memberList = memberCh
     }
     @objc func sortData(){
         // 이름, 전화번호, 나이를 튜플로 묶은 배열 생성
-        var combinedList = zip(nameList,zip(timeList,memberList).map{($0,$1)}).map{($0,$1)}
+        var combinedList = zip(nameList,keyList).map{($0,$1)}
 
         // 이름을 기준으로 오름차순 정렬
         combinedList.sort { $0.0 < $1.0 }
 
-        // 혹은 이렇게도 가능합니다.
-        // combinedList = combinedList.sorted { $0.0 < $1.0 }
-
         // 정렬된 결과를 다시 리스트로 분리
+        keyList = combinedList.map{$0.1}
         nameList = combinedList.map { $0.0 }
-        timeList = combinedList.map{$0.1.0}
-        memberList = combinedList.map{$0.1.1}
     }
 //    @objc func groupSelect(index:IndexPath) {
 //        let groupSelect = FriendProfileVC()// 여기를 그룹 수정 뷰 or 그룹 정보 뷰로 넘어가게 해야함
@@ -178,4 +161,49 @@ extension GroupVC {
 //        groupSelect.hidesBottomBarWhenPushed = true
 //        navigationController?.pushViewController(groupSelect, animated: true)
 //    }
+    func getGroup(){
+        let groupURLString = "http://54.180.168.54/gathering"
+//        let friendURLString = "http://43.200.240.251/bestfriend"
+        guard let groupURL = URL(string: groupURLString) else {
+            print("찐친 정보를 가져올 수 없습니다.")
+            return
+        }
+        let accessToken = UserDefaults.standard.string(forKey: "Authorization")
+        var groupRequest = URLRequest(url: groupURL)
+        groupRequest.httpMethod = "GET"
+        groupRequest.addValue(accessToken!, forHTTPHeaderField: "Authorization")
+        URLSession.shared.dataTask(with: groupRequest) { data, response, error in
+            guard let data = data else {
+                print("찐친 정보를 받아오지 못했습니다.")
+                return
+            }
+            do {
+                let user = try JSONDecoder().decode(GroupDataGet.self, from: data)
+//                print("친구 정보: \(user)")
+                var keyCh: [Int] = []
+                var nameCh: [String] = []
+                for datas in user.data{
+                    keyCh.append(datas.gatheringId)
+                    nameCh.append(datas.title)
+//                    let freData: Info2 = Info2(
+//                        name: datas.friendName,
+//                        nickName: "",
+//                        number: datas.phoneNumber,
+//                        bestFriend: datas.bestFriend,
+//                        image: datas.profileImageURL
+//                    )
+//                    fre.dic1[datas.friendId] = freData
+                }
+                self.keyList = keyCh
+                self.nameList = nameCh
+            } catch {
+                print("친구 정보 디코딩에 실패하였습니다.")
+            }
+            DispatchQueue.main.async {
+//                self.getData()
+                self.sortData()
+                self.tableView.reloadData()
+            }
+        }.resume()
+    }
 }

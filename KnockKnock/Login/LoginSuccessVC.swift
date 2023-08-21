@@ -10,7 +10,8 @@ import Alamofire
 
 class LoginSuccessVC : UIViewController {
     
-    let signUpURLString = "http://43.200.240.251/member/signup"
+//    let signUpURLString = "http://43.200.240.251/member/signup"
+    let signUpURLString = "http://54.180.168.54/member/signup"
     
     var startBtn : UIButton = UIButton()
     

@@ -19,12 +19,9 @@ class AddBFVC : UIViewController{
     
     var checked: Array<Bool> = []
     
+    var keyList: Array<Int> = []
     var nameList: Array<String> = []
     var numberList: Array<String> = []
-    var nickNameList: Array<String> = []
-    var bestFriend: Array<Bool> = []
-    var alramList: Array<Bool> = []
-    var timeList: Array<String> = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,11 +69,9 @@ extension AddBFVC : UITableViewDelegate, UITableViewDataSource {
         if (checked[indexPath.row]==false) {
             cell?.accessoryView = UIImageView(image:selectedImage)
             checked[indexPath.row]=true
-            //friendData.bestFriend[indexList[indexPath.row]] = true
         } else {
             cell?.accessoryView = UIImageView(image:unSelectedImage)
             checked[indexPath.row]=false
-            //friendData.bestFriend[indexList[indexPath.row]] = false
         }
         //아래는 추가버튼 보이면 없앨 예정
         
@@ -133,34 +128,120 @@ extension AddBFVC {
         var i=0
         for check in checked{
             if check == true{
-                var formatter = DateFormatter()
-                formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                var info: Info = Info(
-                    name: nameList[i],
-                    nickName: nickNameList[i],
-                    bestFriend: true,
-                    alram: true,
-                    time:formatter.string(from: Date()))
-                friendData.dic[numberList[i]] = info
+                bestFriendRequest(index:keyList[i])
             }
             i+=1
         }
         self.navigationController?.popViewController(animated: true)
     }
+    @objc func bestFriendRequest(index:Int) {
+//        let bestFriendURLString = "http://43.200.240.251/friends/\(friendData.choiceIndex)/bestFriend"
+        let bestFriendURLString = "http://54.180.168.54/friends/\(index)/bestFriend"
+        guard let url = URL(string: bestFriendURLString) else {
+            print("서버 URL을 만들 수 없습니다.")
+            return
+        }
+        
+        let accessToken = UserDefaults.standard.string(forKey: "Authorization")
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.allHTTPHeaderFields = ["Content-Type": "application/json", "Authorization": accessToken!]
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print("네트워크 에러: \(error)")
+                return
+            }
+            
+            guard let httpResponse = response as? HTTPURLResponse else {
+                print("올바른 HTTP 응답이 아닙니다.")
+                return
+            }
+            
+            let statusCode = httpResponse.statusCode
+            print("HTTP 상태 코드: \(statusCode)")
+            
+        }.resume()
+    }
     
     @objc func getData(){
-        for key in friendData.dic.keys{
-            let dic = friendData.dic[key]
+        var keyCh: [Int] = []
+        var nameCh: [String] = []
+        var numberCh: [String] = []
+        var checkedCh: [Bool] = []
+        for key in friendData.dic1.keys{
+            var dic = friendData.dic1[key]
             if dic?.bestFriend == false{
-                nameList.append(dic!.name)
-                numberList.append(key)
-                nickNameList.append(dic!.nickName)
-                bestFriend.append(dic!.bestFriend)
-                checked.append(false)
-                alramList.append(dic!.alram)
-                timeList.append(dic!.time)
+                keyCh.append(key)
+                nameCh.append(dic!.name)
+                numberCh.append(dic!.number)
+                checkedCh.append(false)
             }
         }
+        keyList = keyCh
+        nameList = nameCh
+        numberList = numberCh
+        checked = checkedCh
     }
+    @objc func sortData(){
+        // 이름, 전화번호, 나이를 튜플로 묶은 배열 생성
+        var combinedList = zip(nameList, zip(keyList,zip(numberList,checked).map{($0, $1)}).map{($0, $1)}).map{($0, $1)}
+
+        // 이름을 기준으로 오름차순 정렬
+        combinedList.sort { $0.0 < $1.0 }
+
+        // 혹은 이렇게도 가능합니다.
+        // combinedList = combinedList.sorted { $0.0 < $1.0 }
+
+        // 정렬된 결과를 다시 리스트로 분리
+        nameList = combinedList.map { $0.0 }
+        keyList = combinedList.map { $0.1.0}
+        numberList = combinedList.map { $0.1.1.0 }
+        checked = combinedList.map { $0.1.1.1 }
+        
+    }
+    @objc func getServerData(){
+        let friendURLString = "http://54.180.168.54/friends"
+//        let friendURLString = "http://43.200.240.251/friends"
+        guard let friendURL = URL(string: friendURLString) else {
+            print("친구 정보를 가져올 수 없습니다.")
+            return
+        }
+        let accessToken = UserDefaults.standard.string(forKey: "Authorization")
+        var friendRequest = URLRequest(url: friendURL)
+        friendRequest.httpMethod = "GET"
+        friendRequest.addValue(accessToken!, forHTTPHeaderField: "Authorization")
+        URLSession.shared.dataTask(with: friendRequest) { data, response, error in
+            guard let data = data else {
+                print("친구 정보를 받아오지 못했습니다.")
+                return
+            }
+            do {
+                let user = try JSONDecoder().decode(FriendDataGet.self, from: data)
+//                print("친구 정보: \(user)")
+                let fre = Friends.shared
+                let data = user.data
+                for datas in data{
+                    let freData: Info2 = Info2(
+                        name: datas.friendName,
+                        nickName: "",
+                        number: datas.phoneNumber,
+                        bestFriend: datas.bestFriend,
+                        imageURL: datas.profileImageURL
+                    )
+                    fre.dic1[datas.friendId] = freData
+                }
+            } catch {
+                print("친구 정보 디코딩에 실패하였습니다.")
+            }
+            DispatchQueue.main.async {
+                self.getData()
+                self.sortData()
+                self.tableView.reloadData()
+            }
+        }.resume()
+    }
+    
 
 }

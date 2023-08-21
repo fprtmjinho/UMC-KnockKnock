@@ -160,18 +160,22 @@ extension MyPage {
         var head: String = ""
         var connection: String = ""
         var memo: String = ""
-        var link: String = "" // 여기에 앱 링크가 들어가야함
-        var shareText: String = ""
+        var link: String = "https://itunes.apple.com/app/knockknock"
+        var share: String = ""
+        var paste: String = ""
         if let label2 = messageView.label2.text{
-            head = label2
+            paste = label2
         }
         if let keyword = messageView.keywordtext.text{
-            connection = keyword
+            paste = paste + "\n관계 : " + keyword
         }
         if let memotext = messageView.memotext.text{
-            memo = memotext
+            paste = paste + "\n메모 : " + memotext
         }
-        shareText = head + "\n" + "관계 : " + connection + "\n" + memo + "\n" + link
-        UIPasteboard.general.string = shareText
+//        if let shareText = messageView.lastLabel.text{
+//            share = shareText
+//        }
+        paste = paste + "\n" + link + "\n" + "다운로드 여부와 상관없이 해당 채팅창에서 답장을 이어가주세요. 물론 받은 사람 마음입니다!"
+        UIPasteboard.general.string = paste
     }
 }

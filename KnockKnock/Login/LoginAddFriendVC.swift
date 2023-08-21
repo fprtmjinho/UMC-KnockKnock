@@ -71,8 +71,7 @@ class LoginAddFriendVC : AllowApproachVC {
                         name:ddic!.name,
                         nickName: "",
                         bestFriend: false,
-                        alram: true,
-                        time:formatter.string(from: Date())
+                        image:""
                     )
                     fre.dic[key] = addInfo
                 }
@@ -218,8 +217,7 @@ extension LoginAddFriendVC : UITableViewDelegate, UITableViewDataSource {
                 name: dic[numberList[indexPath.row]]!.name,
                 nickName: "",
                 bestFriend: true,
-                alram: false,
-                time: "")
+                image:"")
             dic[numberList[indexPath.row]] = info
         } else {
             cell?.accessoryView = UIImageView(image:unSelectedImage)
@@ -228,8 +226,7 @@ extension LoginAddFriendVC : UITableViewDelegate, UITableViewDataSource {
                 name: dic[numberList[indexPath.row]]!.name,
                 nickName: "",
                 bestFriend: false,
-                alram: false,
-                time: "")
+                image:"")
             dic[numberList[indexPath.row]] = info
         }
     }
@@ -363,8 +360,7 @@ extension LoginAddFriendVC {
                     name: familyName+givenName,
                     nickName: "",
                     bestFriend: false,
-                    alram: false,
-                    time: "")
+                    image:"")
                 dic[phoneNumbers] = info
             }
         }
