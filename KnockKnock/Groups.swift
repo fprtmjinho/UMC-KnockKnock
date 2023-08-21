@@ -11,7 +11,7 @@ class Group{
     
     var dic: [Int:GroupInfo] = [:] //키값 : 생성 시간
     
-    var groupMember: [Int] = []
+    var groupMember: [String] = []
     var choiceIndex : Int?
     
     private func Init() {}

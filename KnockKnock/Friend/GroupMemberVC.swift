@@ -99,6 +99,7 @@ extension GroupMemberVC {
                 nameCh.append(dic!.name)
                 numberCh.append(dic!.number)
                 bestFriendCh.append(dic!.bestFriend)
+
                 if addGroupView.numberList.contains(dic!.number){
                     checkedCh.append(true)
                 }else{
@@ -155,15 +156,18 @@ extension GroupMemberVC {
         navigationController?.popViewController(animated: true)
     }
     @objc func setData(){
-        var i = 0
-        for check in checked{
-            if check{
-                group.groupMember.append(keyList[i])
-            }
-            i+=1
-        }
+        var memCh: [String] = []
+             var i = 0
+             for check in checked{
+                 if check{
+                     memCh.append(numberList[i])
+                 }
+                 i+=1
+             }
+             group.groupMember = memCh
+         }
     }
-}
+
 extension GroupMemberVC : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
