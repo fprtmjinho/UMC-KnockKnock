@@ -27,7 +27,7 @@ class AddBFVC : UIViewController{
         super.viewDidLoad()
         self.title = "찐친 추가하기"
         view.backgroundColor = .white
-
+        handleEditFunc()
         makeSubView()
         makeConstraint()
         getData()

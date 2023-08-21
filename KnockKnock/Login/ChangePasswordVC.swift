@@ -57,6 +57,7 @@ class ChangePasswordVC : UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setNavigationBar()
+        handleEditFunc()
         self.title = "비밀번호 변경"
         
         makeSubView()

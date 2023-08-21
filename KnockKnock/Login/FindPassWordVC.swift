@@ -86,6 +86,7 @@ class FindPasswordVC : UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigationBar()
+        handleEditFunc()
         self.navigationController?.isNavigationBarHidden = false
         self.title = "비밀번호 찾기"
         view.backgroundColor = .white

@@ -27,6 +27,7 @@ class AddGroupVC : UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setNavigationBar()
+        handleEditFunc()
         self.title = "모임 추가하기"
         self.addGroupView.memberTableview.rowHeight = UITableView.automaticDimension
         setScrollView()

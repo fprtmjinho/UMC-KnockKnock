@@ -77,6 +77,7 @@ class SearchController : UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigationBar()
+        handleEditFunc()
         view.backgroundColor = .white
         print("SearchController")
         getServerData()
@@ -98,6 +99,7 @@ class SearchController : UIViewController{
 //        tableView.reloadData()
 //        setTableView()
     }
+    
 }
 
 extension SearchController {
@@ -438,4 +440,5 @@ extension SearchController {
         nickNameList = nickNameCh
         bestFriendList = bestFriendCh
     }
+
 }

@@ -266,6 +266,7 @@ extension GoodVC {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        handleEditFunc()
         makeSubView()
         makeConstraint()
         setupRefreshControl() // 새로고침

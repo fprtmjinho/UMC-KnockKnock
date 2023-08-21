@@ -30,6 +30,7 @@ class GroupMemberVC : UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setNavigationBar()
+        handleEditFunc()
         self.title = "추가 가능한 사람"
         getData()
         sortData()

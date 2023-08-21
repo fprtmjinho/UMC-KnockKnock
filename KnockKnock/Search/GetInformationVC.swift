@@ -37,6 +37,7 @@ class GetInformationVC : UIViewController {
         view.backgroundColor = .white
         self.title = "주소록 불러오기"
         downloadNumberBook()
+        handleEditFunc()
         setNavigationBar()
         makeSubView()
         makeConstraint()

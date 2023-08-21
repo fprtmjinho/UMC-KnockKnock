@@ -346,7 +346,7 @@ class PostVC: UIViewController, CustomCommentCellDelegate {
         }.resume()
     }
     
-    @objc func handleTap() {
+    @objc override func handleTap() {
         view.endEditing(true)
     }
     

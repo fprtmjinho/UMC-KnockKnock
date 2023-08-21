@@ -133,7 +133,7 @@ class WriteVC: UIViewController {
         super.viewDidLoad()
         self.title = "글 쓰기"
         view.backgroundColor = .white
-        
+        handleEditFunc()
         makeSubView()
         makeConstraint()
         

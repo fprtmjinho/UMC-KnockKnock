@@ -104,6 +104,7 @@ class LoginSecondVC : UIViewController{
         super.viewDidLoad()
         view.backgroundColor = .white
         setNavigationBar()
+        handleEditFunc()
         makeSubView()
         makeConstraint()
         makeAddTarget()

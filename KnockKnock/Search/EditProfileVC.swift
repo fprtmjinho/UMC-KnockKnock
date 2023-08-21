@@ -93,6 +93,7 @@ class EditProfileVC : UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setNavigationBar()
+        handleEditFunc()
         self.title = "편집"
         makeSubView()
         makeConstraint()

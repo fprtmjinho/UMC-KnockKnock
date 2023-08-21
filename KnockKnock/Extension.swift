@@ -133,6 +133,12 @@ extension UIViewController {
 
         return searchBar
     }
+    /*
+    func copypopupMessegeFunc(){
+        let alert = UIAlertController(title: "", message: "복사되었습니다", preferredStyle: .alert)
+        self.present(alert, animated: true, completion: nil)
+        Timer.scheduledTimer(withTimeInterval: 0.8, repeats: false, block: { _ in alert.dismiss(animated: true, completion: nil)} )
+    }*/
 
 }
 
@@ -153,6 +159,7 @@ extension UILabel {
             return
         }
         UIPasteboard.general.string = label.text // 텍스트가 복사됨
+        //copypopupMessegeFunc()
     }
     
 }
@@ -174,4 +181,16 @@ extension BasePaddingLabel {
         self.frame.size.height = size.height
         
     }
+}
+
+extension UIViewController {
+    func handleEditFunc(){
+        let tap : UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+      }
+      
+      @objc func handleTap() {
+          self.view.endEditing(true)
+      }
 }

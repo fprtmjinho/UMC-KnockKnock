@@ -27,6 +27,7 @@ class GroupProfileVC : UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setNavigationBar()
+        handleEditFunc()
         editNavigationBarBtn()
         makeSubView()
         makeConstraint()

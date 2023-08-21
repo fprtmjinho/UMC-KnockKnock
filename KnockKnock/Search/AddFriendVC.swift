@@ -100,7 +100,7 @@ class AddFriendVC : UIViewController {
         view.backgroundColor = .white
         setNavigationBar()
         self.title = "연락처 추가"
-       
+        handleEditFunc()
         makeSubView()
         makeConstraint()
         makeAddTarget()

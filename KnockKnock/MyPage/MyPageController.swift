@@ -27,7 +27,7 @@ class MyPageController : UIViewController{
         self.title = "내 페이지"
         setNavigationBar()
         customNavigationBar()
-        
+        handleEditFunc()
         makeSubView()
         makeConstraint()
         makeAddTarget()

@@ -146,6 +146,7 @@ class LoginFirstVC : UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setNavigationBar()
+        handleEditFunc()
         makeSubView()
         makeConstraint()
         makeAddTarget()

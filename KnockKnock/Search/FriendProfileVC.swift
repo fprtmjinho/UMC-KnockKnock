@@ -30,9 +30,8 @@ class FriendProfileVC : UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         self.title = "Name"
-        //title은 cell 따라 변경 필요
-        //임의 지정
         setNavigationBar()
+        handleEditFunc()
         getData()
         makeScrollView()
         makeConstraint()
