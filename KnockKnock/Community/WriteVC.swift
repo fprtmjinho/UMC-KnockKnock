@@ -11,11 +11,12 @@ import Alamofire
 
 class WriteVC: UIViewController {
     
+    var postID: Int?
     var titleText: String? // 제목
     var contentText: String? // 내용
     var isAnonymousSelected = false // 익명 체크표시 상태
     var index: Int? // 게시판 종류
-    var modify: Bool? // 수정 여부
+    var modify: Bool = false // 수정 여부
     var selectedImages: [UIImage?] = [] // 사진
     var originalImages: [UIImage?] = [] // 기존 게시물 사진
     
@@ -302,32 +303,94 @@ extension WriteVC {
         titleText = titleTextField.text
         contentText = contentTextView.text
         
-        let accessToken = UserDefaults.standard.string(forKey: "Authorization")
-        print(accessToken)
-        
-        let postCreateData = PostCreate(boardType: index!, title: titleText!, content: contentText!, isAnonymous: isAnonymousSelected)
-        
-        AF.upload(multipartFormData: { multipartFormData in
-            if let postCreateJSONData = try? JSONEncoder().encode(postCreateData) {
-                multipartFormData.append(postCreateJSONData, withName: "request", mimeType: "application/json")
-            }
+        if modify != true {
             
-            for (index, image) in self.selectedImages.enumerated() {
+            let accessToken = UserDefaults.standard.string(forKey: "Authorization")
+            print(accessToken)
+            
+            let postCreateData = PostCreate(boardType: index!, title: titleText!, content: contentText!, isAnonymous: isAnonymousSelected)
+            
+            AF.upload(multipartFormData: { multipartFormData in
+                if let postCreateJSONData = try? JSONEncoder().encode(postCreateData) {
+                    multipartFormData.append(postCreateJSONData, withName: "request", mimeType: "application/json")
+                }
+                
+                for (index, image) in self.selectedImages.enumerated() {
                     if let imageData = image?.jpegData(compressionQuality: 0.8) {
                         multipartFormData.append(imageData, withName: "images", fileName: "\(self.titleText)_image_\(index).jpg", mimeType: "image/jpeg")
                     }
                 }
-            
-        }, to: "http://43.200.240.251/post/create", headers: ["Authorization": accessToken!])
-        .response { response in
-            switch response.result {
-            case .success:
-                if let statusCode = response.response?.statusCode {
-                    print("HTTP Status Code: \(statusCode)")
-                    self.navigationController?.popViewController(animated: true)
+                
+            }, to: "http://\(Server.url)/post/create", headers: ["Authorization": accessToken!])
+            .response { response in
+                switch response.result {
+                case .success:
+                    if let statusCode = response.response?.statusCode {
+                        print("HTTP Status Code: \(statusCode)")
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                case .failure(let error):
+                    print("Error: \(error)")
                 }
-            case .failure(let error):
-                print("Error: \(error)")
+            }
+        } else {
+            let postModifyData = PostModify(title: titleText!, content: contentText!)
+            print(postModifyData)
+            AF.upload(multipartFormData: { multipartFormData in
+                if let postModifyJSONData = try? JSONEncoder().encode(postModifyData) {
+                    multipartFormData.append(postModifyJSONData, withName: "request", mimeType: "application/json")
+                }
+                
+                for (index, image) in self.selectedImages.enumerated() {
+                    if let imageData = image?.jpegData(compressionQuality: 0.8) {
+                        multipartFormData.append(imageData, withName: "images", fileName: "\(self.titleText)_image_\(index).jpg", mimeType: "image/jpeg")
+                    }
+                }
+                
+            }, to: "http://\(Server.url)/post/\(self.postID!)/edit", method: .put)
+            .response { response in
+                switch response.result {
+                case .success:
+                    if let statusCode = response.response?.statusCode {
+                        print("HTTP Status Code: \(statusCode)")
+                        if let data = response.data {
+                            do { let verification = try JSONDecoder().decode(Verification.self, from: data)
+                                print("\(verification)")
+                            } catch {
+                                print("디코딩 실패")
+                                return
+                            }
+                        }
+                        // WriteVC에서 GoodVC로 이동하는 코드
+                        if let navigationController = self.navigationController {
+                            // 첫 번째 pop
+                            navigationController.popViewController(animated: false)
+                            
+                            // 두 번째 pop
+                            navigationController.popViewController(animated: true)
+                            
+                            // GoodVC로 이동
+                            for viewController in navigationController.viewControllers {
+                                if self.index == 0 {
+                                    if let goodVC = viewController as? GoodVC {
+                                        navigationController.popToViewController(goodVC, animated: true)
+                                        break
+                                    }
+                                }
+                                else {
+                                    if let BadVC = viewController as? BadVC {
+                                        navigationController.popToViewController(BadVC, animated: true)
+                                        break
+                                    }
+                                }
+                            }
+                        }
+
+
+                    }
+                case .failure(let error):
+                    print("Error: \(error)")
+                }
             }
         }
     }

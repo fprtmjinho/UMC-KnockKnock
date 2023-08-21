@@ -33,9 +33,10 @@ struct Post { // 게시글
 struct Comment: Codable { // 댓글
     let commentId: Int
     let postId: Int
-    var profileImageUrl: String
     let nickName: String
+    var profileImageUrl: String
     let content: String
+    let reportCount: Int
     let createdAt: String
     let modifiedAt: String
 }
@@ -84,7 +85,33 @@ struct PostCreate: Codable {
     let isAnonymous: Bool
 }
 
+struct PostModify: Codable {
+    let title: String
+    let content: String
+}
+
 struct MakeComment: Codable {
     let content: String
     let isAnonymous: Bool
 }
+
+struct ModifyComment: Codable {
+    let content: String
+}
+
+struct CommentDetails: Codable {
+    let likeCount: Int
+    let commentCount: Int
+}
+
+struct Verification: Codable {
+    let statusCode: Int?
+    let message: String?
+    let data: String?
+}
+
+struct Report: Codable {
+    let reportType: String
+}
+
+

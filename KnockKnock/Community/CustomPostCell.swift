@@ -8,8 +8,12 @@
 import UIKit
 
 class CustomPostCell: UITableViewCell { // 게시글 커스텀
+    
+    weak var delegate: CustomPostCellDelegate?
+    
     var post: Post?
-    var likesPressed: Bool = false
+    
+    var postId: Int!
     
     let prevImageButton: UIButton = {
         let button = UIButton()
@@ -71,7 +75,7 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
     
     let likesButton: UIButton = { // 좋아요 버튼
         let button = UIButton()
-        button.setImage(UIImage(named: "like_ff0060"), for: .normal)
+        button.setImage(UIImage(named: "like_fill_ff0060"), for: .normal)
         button.addTarget(self, action: #selector(likesButtonTapped(_:)), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -101,10 +105,10 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
     let shareButton: UIButton = { // 공유 버튼
         let button = UIButton()
         button.setImage(UIImage(named: "share_333333"), for: .normal)
+        button.addTarget(self, action: #selector(shareButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    
     
     func makeSubView1() { // 사진이 있는 경우
         imagesView.addSubview(prevImageButton)
@@ -277,15 +281,82 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
     }
     
     @objc func likesButtonTapped(_ sender: UIButton) {
-        if likesPressed {
-            likesButton.setImage(UIImage(named: "like_ff0060"), for: .normal)
-            likesLabel.text = "\(Int(likesLabel.text!)! - 1)"
-            likesPressed = false
-        } else {
-            likesButton.setImage(UIImage(named: "like_fill_ff0060"), for: .normal)
-            likesLabel.text = "\(Int(likesLabel.text!)! + 1)"
-            likesPressed = true
+        let URLString = "http://\(Server.url)/post/\(postId!)/like"
+        
+        guard let URL = URL(string: URLString) else {
+            return
         }
+        
+        var request = URLRequest(url: URL)
+        request.httpMethod = "POST"
+        request.addValue(UserDefaults.standard.string(forKey: "Authorization")!, forHTTPHeaderField: "Authorization")
+        
+        URLSession.shared.dataTask(with: request) {
+            data, response, error in
+            
+            guard let httpResponse = response as? HTTPURLResponse else {
+                print("올바른 HTTP 응답이 아닙니다.")
+                return
+            }
+            
+            let statusCode = httpResponse.statusCode
+            print("HTTP 상태 코드: \(statusCode)")
+            
+            guard let data = data else {
+                return
+            }
+            
+            do {
+                let decodedData = try JSONDecoder().decode(Verification.self, from: data)
+                print(decodedData)
+                if decodedData.message == "좋아요를 눌렀습니다." {
+                    print("좋아요를 눌렀습니다.")
+                }
+                else {
+                    print("좋아요를 취소했습니다.")
+                }
+                DispatchQueue.main.async {
+                    self.delegate?.reload()
+                }
+            }
+            catch {
+                print("디코딩 실패")
+            }
+            
+        }.resume()
+    }
+    
+    @objc func shareButtonTapped() { // 공유 버튼 눌렀을 때 하는 동작
+        let URLString = "http://\(Server.url)/post/\(postId!)/share"
+        
+        guard let URL = URL(string: URLString) else {
+            return
+        }
+        
+        var request = URLRequest(url: URL)
+        request.httpMethod = "GET"
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            
+            guard let httpResponse = response as? HTTPURLResponse else {
+                print("올바른 HTTP 응답이 아닙니다.")
+                return
+            }
+            
+            let statusCode = httpResponse.statusCode
+            print("HTTP 상태 코드: \(statusCode)")
+            
+            guard let data = data else {
+                return
+            }
+            
+            if let stringData = String(data: data, encoding: .utf8) {
+                print(stringData)
+            } else {
+                print("데이터를 문자열로 변환할 수 없습니다.")
+            }
+            
+        }.resume()
     }
     
     override func layoutSubviews() {
@@ -308,18 +379,25 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
             return view
         }
         
+        if let view = shareButton.hitTest(convert(point, to: shareButton), with: event) {
+            return view
+        }
+        
         return super.hitTest(point, with: event)
     }
     
     func configureCell(with post: Post) {
         self.post = post
         
+        postId = post.postID
         nameLabel.text = post.name
         titleLabel.text = post.title
         contentLabel.text = post.content
         timeLabel.text = post.time
-        likesLabel.text = "\(post.likes)"
-        commentsLabel.text = "\(post.comments)"
     }
     
+}
+
+protocol CustomPostCellDelegate: AnyObject {
+    func reload()
 }

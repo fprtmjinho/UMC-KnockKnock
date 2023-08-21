@@ -8,8 +8,12 @@
 import UIKit
 class LoginVC : UIViewController {
     
+<<<<<<< HEAD
 //    let loginURLString = "http://43.200.240.251/member/login"
     let loginURLString = "http://54.180.168.54/member/login"
+=======
+    let loginURLString = "http://\(Server.url)/member/login"
+>>>>>>> style4
     
     let Title : UIImageView = UIImageView(image: UIImage(named: "title"))
     
@@ -189,9 +193,13 @@ class LoginVC : UIViewController {
                         UserDefaults.standard.set(refreshToken, forKey: "Refresh-Token")
                         
                         // User 정보를 가져오기 위한 URL
+<<<<<<< HEAD
 //                            let userURLString = "http://43.200.240.251/member"
                         let userURLString = "http://54.180.168.54/member"
                         
+=======
+                        let userURLString = "http://\(Server.url)/member"
+>>>>>>> style4
                             guard let userURL = URL(string: userURLString) else {
                                 self.showAlert(message: "유저 정보를 가져올 수 없습니다.")
                                 return
