@@ -84,9 +84,9 @@ class AddGroupView : UIView {
         super.init(frame: frame)
         getData()
         sortData()
+        settableView()
         makeSubView()
         makeConstraint()
-        settableView()
         makeAddTarget()
     }
     
@@ -128,17 +128,9 @@ extension AddGroupView : UITableViewDelegate, UITableViewDataSource {
     }
     
     func settableView(){
-        addSubview(memberTableview)
-        memberTableview.backgroundColor = .white
+        memberTableview.backgroundColor = .systemGray6
         memberTableview.separatorStyle = .none
-        
-//        memberTableview.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint.activate([
-//            memberTableview.topAnchor.constraint(equalTo: memberLabel.bottomAnchor, constant: 10),
-//            memberTableview.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
-//            memberTableview.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
-//            memberTableview.heightAnchor.constraint(equalToConstant: CGFloat(nameList.count*60)),
-//        ])
+
         self.memberTableview.dataSource = self
         self.memberTableview.delegate = self
         //addSubView, Constraint는 위에서 실행함
@@ -186,10 +178,7 @@ extension AddGroupView {
             memberTableview.topAnchor.constraint(equalTo: memberLabel.bottomAnchor, constant: 10),
             memberTableview.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
             memberTableview.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
-//            memberTableview.heightAnchor.constraint(equalToConstant: CGFloat(nameList.count*60)),
-//            memberTableview.heightAnchor.constraint(lessThanOrEqualToConstant: 100),
-            memberTableview.heightAnchor.constraint(greaterThanOrEqualToConstant: 60),
-//            memberTableview.heightAnchor.constraint(equalToConstant: CGFloat(100)),
+            memberTableview.heightAnchor.constraint(greaterThanOrEqualToConstant: 100),
             addmemberBtn.topAnchor.constraint(equalTo: memberTableview.bottomAnchor, constant: 10),
             addmemberBtn.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
             addmemberBtn.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),

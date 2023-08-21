@@ -881,7 +881,7 @@
 				CODE_SIGN_ENTITLEMENTS = KnockKnock/KnockKnock.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = QYW2Y88YJ4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KnockKnock/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -912,7 +912,7 @@
 				CODE_SIGN_ENTITLEMENTS = KnockKnock/KnockKnock.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = QYW2Y88YJ4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KnockKnock/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
