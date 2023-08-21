@@ -7,10 +7,14 @@
 
 import UIKit
 import Contacts
+import Alamofire
 class GetInformationVC : UIViewController {
     
     var addBtn : UIButton = UIButton()
     var searchFriendBar : UISearchBar = UISearchBar()
+//    let friendURLString = "http://43.200.240.251/friends"
+    let friendURLString = "http://54.180.168.54/friends"
+    
  
     
    
@@ -25,7 +29,8 @@ class GetInformationVC : UIViewController {
     var numberList: Array<String> = []
     var checked: Array<Bool> = []
     
-    var dic: [String:Info] = [:]
+    var currentDic: [String:Info] = [:]
+    var requestDic: [String:Info2] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,12 +55,12 @@ extension GetInformationVC : UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "numberBook") ?? UITableViewCell(style: .subtitle, reuseIdentifier: "numberBook")
         let unSelectedImage = UIImage(named: "UnselectedCheckCircle")?.resizeImageTo(size: CGSize(width: 25, height: 25))
         let selectedImage = UIImage(named: "SelectedCheckCircle")?.resizeImageTo(size: CGSize(width: 25, height: 25))
-    if (checked[indexPath.row]==true) {
-        cell.accessoryView = UIImageView(image:selectedImage)
-    }
-    else if (checked[indexPath.row]==false) {
-        cell.accessoryView = UIImageView(image:unSelectedImage)
-    }
+        if (checked[indexPath.row]==true) {
+            cell.accessoryView = UIImageView(image:selectedImage)
+        }
+        else if (checked[indexPath.row]==false) {
+            cell.accessoryView = UIImageView(image:unSelectedImage)
+        }
        
        cell.textLabel?.text = nameList[indexPath.row]
        cell.detailTextLabel?.text = numberList[indexPath.row]
@@ -76,22 +81,20 @@ extension GetInformationVC : UITableViewDelegate, UITableViewDataSource {
             cell?.accessoryView = UIImageView(image:selectedImage)
             checked[indexPath.row]=true
             let info:Info = Info(
-                name: dic[numberList[indexPath.row]]!.name,
+                name: currentDic[numberList[indexPath.row]]!.name,
                 nickName: "",
                 bestFriend: true,
-                alram: false,
-                time: "")
-            dic[numberList[indexPath.row]] = info
+                image: "")
+            currentDic[numberList[indexPath.row]] = info
         } else {
             cell?.accessoryView = UIImageView(image:unSelectedImage)
             checked[indexPath.row]=false
             let info:Info = Info(
-                name: dic[numberList[indexPath.row]]!.name,
+                name: currentDic[numberList[indexPath.row]]!.name,
                 nickName: "",
                 bestFriend: false,
-                alram: false,
-                time: "")
-            dic[numberList[indexPath.row]] = info
+                image: "")
+            currentDic[numberList[indexPath.row]] = info
         }
         
     }
@@ -208,25 +211,56 @@ extension GetInformationVC {
     }
     @objc func getFriendInfo(){
         for contact in contacts {
+            var flag: Bool = false
             if let contact = contact as? CNContact {
                 // CNContact에서 원하는 데이터 추출
                 let givenName = contact.givenName
                 let familyName = contact.familyName
                 let phoneNumbers = contact.phoneNumbers.map { $0.value.stringValue }[0]
-                if !fre.dic.keys.contains(phoneNumbers){
-                    if !dic.keys.contains(phoneNumbers){
+                if !currentDic.keys.contains(phoneNumbers){
+                    for key in fre.dic1.keys{
+                        if fre.dic1[key]!.number == phoneNumbers{
+                            //중복됨
+//                            nameList.append(familyName+givenName)
+//                            numberList.append(phoneNumbers)
+//                            checked.append(true)
+                            flag=true
+                            let info:Info = Info(
+                                name: familyName+givenName,
+                                nickName: "",
+                                bestFriend: true,
+                                image: "")
+                            currentDic[phoneNumbers] = info
+                            break
+                        }
+                    }
+                    if !flag{
                         nameList.append(familyName+givenName)
                         numberList.append(phoneNumbers)
                         checked.append(false)
+                        let info:Info = Info(
+                            name: familyName+givenName,
+                            nickName: "",
+                            bestFriend: false,
+                            image: "")
+                        currentDic[phoneNumbers] = info
                     }
-                    let info:Info = Info(
-                        name: familyName+givenName,
-                        nickName: "",
-                        bestFriend: false,
-                        alram: false,
-                        time: "")
-                    dic[phoneNumbers] = info
+                    
                 }
+//                if !fre.dic.keys.contains(phoneNumbers){
+//                    if !currentDic.keys.contains(phoneNumbers){
+//                        nameList.append(familyName+givenName)
+//                        numberList.append(phoneNumbers)
+//                        checked.append(false)
+//                    }
+//                    let info:Info = Info(
+//                        name: familyName+givenName,
+//                        nickName: "",
+//                        bestFriend: false,
+//                        alram: false,
+//                        time: "")
+//                    currentDic[phoneNumbers] = info
+//                }
             }
         }
     }
@@ -285,15 +319,15 @@ extension GetInformationVC {
         var numberCh: Array<String> = []
         var bestFriendCh: Array<Bool> = []
         if name == ""{
-            for key in dic.keys{
-                let dics = dic[key]
+            for key in currentDic.keys{
+                let dics = currentDic[key]
                 nameCh.append(dics!.name)
                 numberCh.append(key)
                 bestFriendCh.append(dics!.bestFriend)
             }
         }else{
-            for key in dic.keys{
-                let dics = dic[key]
+            for key in currentDic.keys{
+                let dics = currentDic[key]
                 if dics!.name.contains(name){
                     nameCh.append(dics!.name)
                     numberCh.append(key)
@@ -310,26 +344,108 @@ extension GetInformationVC {
         addBtn = setNextBtn(view: self, title: "다음")
         makeAddTarget()
     }
+    //여기 부분에서 서버랑 통신할때 가져오는 값을 알아야할듯
     @objc func setData(_:UIButton){
-        var formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        var i=0
-        for key in dic.keys{
-            let ddic = dic[key]
+        var friendData: [PostFriendRequest] = []
+        for key in currentDic.keys{
+            let ddic = currentDic[key]
             if ddic!.bestFriend == true{
-                if !fre.dic.keys.contains(key){
-                    var addInfo: Info = Info(
-                        name:ddic!.name,
-                        nickName: "",
-                        bestFriend: false,
-                        alram: true,
-                        time:formatter.string(from: Date())
-                    )
-                    fre.dic[key] = addInfo
-                }
+                var data = PostFriendRequest(
+                   friendName: currentDic[key]!.name,
+                   nickName: currentDic[key]!.nickName,
+                   phoneNumber: key
+                )
+                friendData.append(data)
+//                if !fre.dic1.keys.contains(key){
+//                    var addInfo: Info2 = Info2(
+//                        name:ddic!.name,
+//                        nickName: "",
+//                        number: key,
+//                        bestFriend: false,
+//                        alram: true,
+//                        time:formatter.string(from: Date())
+//                    )
+//                    fre.dic1[friendKey] = addInfo
+//                    var addInfo: Info = Info(
+//                        name:ddic!.name,
+//                        nickName: "",
+//                        bestFriend: false,
+//                        alram: true,
+//                        time:formatter.string(from: Date())
+//                    )
+//                    fre.dic[key] = addInfo
+//                }
             }
-            i=i+1
         }
+        print("frinedData:\(friendData)")
+        performFriends(friendData:friendData)
         navigationController?.popViewController(animated: true)
+    }
+    func performFriends(friendData:[PostFriendRequest]){
+        
+        guard let url = URL(string: friendURLString) else {
+            print("서버 URL을 만들 수 없습니다.")
+            return
+        }
+        let accessToken = UserDefaults.standard.string(forKey: "Authorization")
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.allHTTPHeaderFields = ["Content-Type": "application/json", "Authorization": accessToken!]
+        
+        do {
+            let jsonData = try JSONEncoder().encode(friendData)
+            request.httpBody = jsonData
+        } catch {
+            print("JSON 인코딩에 실패하였습니다.")
+            return
+        }
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print("네트워크 에러: \(error)")
+                return
+            }
+            
+            guard let httpResponse = response as? HTTPURLResponse else {
+                print("올바른 HTTP 응답이 아닙니다.")
+                return
+            }
+            
+            let statusCode = httpResponse.statusCode
+            print("HTTP 상태 코드: \(statusCode)")
+        }.resume()
+//        AF.upload(multipartFormData: { multipartFormData in
+//            if let friendsJSONData = try? JSONEncoder().encode(friendData) {
+//                multipartFormData.append(friendsJSONData, withName: "request", mimeType: "application/json")
+//            }
+//            if let profileImage = UIImage(systemName: "person.circle.fill"),
+//               let profileImageData = profileImage.jpegData(compressionQuality: 0.9) {
+//                multipartFormData.append(profileImageData, withName: "profileImage", fileName: "profileImage.jpeg", mimeType: "image/jpeg")
+//            }
+//        }, to: friendURLString)
+//        .response { response in
+//            switch response.result {
+//            case .success:
+//                if let statusCode = response.response?.statusCode {
+//                    print("HTTP Status Code: \(statusCode)")
+//
+//                    if let responseData = response.data {
+//                        do {
+//                            let decoder = JSONDecoder()
+//                            let friendsResponse = try decoder.decode(PostFriendResponse.self, from: responseData)
+//                            //리스폰스로 키값받으면저장
+//                            //friendKey = friendsResponse.???
+//                            print("Sign Up Response: \(friendsResponse)")
+//                        } catch {
+//                            print("JSON Decoding Error: \(error)")
+//                        }
+//                    }
+//
+//                }
+//            case .failure(let error):
+//                print("Error: \(error)")
+//            }
+//        }
     }
 }

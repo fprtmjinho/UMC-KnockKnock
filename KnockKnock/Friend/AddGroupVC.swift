@@ -19,7 +19,7 @@ class AddGroupVC : UIViewController {
     let group = Group.shared
     
     var groupName: String = ""
-    var groupMember: [String] = []
+    var groupMember: [Int] = []
     var groupPlace: String = ""
     var groupTime: String = ""
     
@@ -103,8 +103,8 @@ extension AddGroupVC {
         if let name = addGroupView.nametext.text{
             groupName = name
         }
-        for number in addGroupView.numberList{
-            groupMember.append(number)
+        for key in addGroupView.keyList{
+            groupMember.append(key)
         }
         if let gPlace = addGroupView.placetext.text{
             groupPlace = gPlace
@@ -113,16 +113,16 @@ extension AddGroupVC {
             // 팝업이나 표시
             return
         }
-//        if groupMember.count == 0{
-//            // 팝업이나 표시
-//            return
-//        }
-//        if groupPlace == ""{
-//            //팝업이나 표시
-//            return
-//        }
+        if groupMember.count == 0{
+            // 팝업이나 표시
+            return
+        }
+        if groupPlace == ""{
+            //팝업이나 표시
+            return
+        }
         setGroupData()
-        deleteGroupData()
+        group.groupMember = []
         self.navigationController?.popViewController(animated: true)
     }
     func setGroupData(){
@@ -130,13 +130,47 @@ extension AddGroupVC {
             name: groupName,
             user: groupMember,
             place: groupPlace,
-            alram: true,
             time: groupTime
         )
         print("groupInfo : \(groupInfo)")
-        group.dic[groupTime] = groupInfo
+        groupRequest(group:groupInfo)
     }
-    func deleteGroupData(){
-        group.groupMember = []
+    func groupRequest(group:GroupInfo){
+//        let bestFriendURLString = "http://43.200.240.251/friends/\(friendData.choiceIndex)/bestFriend"
+        let groupURLString = "http://54.180.168.54/gathering/create"
+        guard let url = URL(string: groupURLString) else {
+            print("서버 URL을 만들 수 없습니다.")
+            return
+        }
+        let groupData = PostGroupRequest(
+            title: group.name,
+            gathringMemberIds: group.user,
+            location: group.place
+        )
+        
+        let accessToken = UserDefaults.standard.string(forKey: "Authorization")
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.allHTTPHeaderFields = ["Content-Type": "application/json", "Authorization": accessToken!]
+        do {
+            let jsonData = try JSONEncoder().encode(groupData)
+            request.httpBody = jsonData
+        } catch {
+            print("JSON 인코딩에 실패하였습니다.")
+            return
+        }
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data else {
+                print("그룹 정보를 받아오지 못했습니다.")
+                return
+            }
+            do {
+                let user = try JSONDecoder().decode(PostGroupResponse.self, from: data)
+                print("그룹 정보: \(user)")
+            } catch {
+                print("그룹 정보 디코딩에 실패하였습니다.")
+            }
+        }.resume()
     }
 }

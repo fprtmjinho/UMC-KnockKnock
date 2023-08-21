@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreData
+import Alamofire
 class EditProfileVC : UIViewController {
     
     var saveBtn : UIButton = UIButton()
@@ -39,7 +40,7 @@ class EditProfileVC : UIViewController {
     let nameText : UITextField = {
        let nametext = UITextField()
         let fre = Friends.shared
-        nametext.text = fre.dic[fre.choiceNumber!]!.name
+        nametext.text = fre.dic1[fre.choiceIndex!]!.name
         nametext.placeholder = "입력해주세요!"
         nametext.backgroundColor = .systemGray6
         nametext.layer.cornerRadius = 10
@@ -57,7 +58,7 @@ class EditProfileVC : UIViewController {
      let nicknameText : UITextField = {
         let text = UITextField()
          let fre = Friends.shared
-         text.text = fre.dic[fre.choiceNumber!]!.nickName
+         text.text = fre.dic1[fre.choiceIndex!]!.nickName
          text.placeholder = "입력해주세요!"
          text.backgroundColor = .systemGray6
          text.layer.cornerRadius = 10
@@ -75,7 +76,7 @@ class EditProfileVC : UIViewController {
     let numberText : UITextField = {
        let text = UITextField()
         let fre = Friends.shared
-        text.text = fre.choiceNumber!
+        text.text = fre.dic1[fre.choiceIndex!]?.number
         text.placeholder = "입력해주세요!"
         text.backgroundColor = .systemGray6
         text.layer.cornerRadius = 10
@@ -97,6 +98,7 @@ class EditProfileVC : UIViewController {
         makeSubView()
         makeConstraint()
         makeAddTarget()
+        setLabel()
     }
 }
 
@@ -169,45 +171,133 @@ extension EditProfileVC {
         saveBtn.addTarget(self, action: #selector(saveFriendData(_:)), for: .touchUpInside)
         editBtn.addTarget(self, action: #selector(enrollAlertEvent(_:)), for: .touchUpInside)
     }
+    @objc func setLabel(){
+
+        nameText.text = fre.dic1[fre.choiceIndex!]!.name
+        nicknameText.text = fre.dic1[fre.choiceIndex!]!.nickName
+        numberText.text = fre.dic1[fre.choiceIndex!]!.number
+        ProfileView.layer.cornerRadius = ProfileView.frame.width/2
+        ProfileView.image = fre.dic1[fre.choiceIndex!]!.image
+        ProfileView.clipsToBounds = true
+    }
     @objc func saveFriendData(_:UIButton){
         var newName: String = ""
         var newNickName: String = ""
         var newNumber: String = ""
-        var png: Data?
+        var png: UIImage?
         if let name = nameText.text{
             newName = name
         }
         if newName == ""{
-            newName = fre.dic[fre.choiceNumber!]!.name
+            newName = fre.dic1[fre.choiceIndex!]!.name
         }
         if let nickName = nicknameText.text{
             newNickName = nickName
         }
         if newNickName == ""{
-            newNickName = fre.dic[fre.choiceNumber!]!.nickName
+            newNickName = fre.dic1[fre.choiceIndex!]!.nickName
         }
         if let number = numberText.text{
             newNumber = number
         }
         if newNumber == ""{
-            newNumber = fre.choiceNumber!
+            newNumber = fre.dic1[fre.choiceIndex!]!.number
         }
-        if let data = ProfileView.image?.pngData(){
-            png = data
-        }
-        print(newName)
-        var info: Info = Info(
+//        var info: Info = Info(
+//            name: newName,
+//            nickName: newNickName,
+//            bestFriend: fre.dic1[fre.choiceIndex!]!.bestFriend,
+//            image: ""
+//        )
+        var info: Info2 = Info2(
             name: newName,
             nickName: newNickName,
-            bestFriend: fre.dic[fre.choiceNumber!]!.bestFriend,
-            alram: fre.dic[fre.choiceNumber!]!.alram,
-            time: fre.dic[fre.choiceNumber!]!.time,
-            image: png!
+            number: newNumber,
+            bestFriend: fre.dic1[fre.choiceIndex!]!.bestFriend,
+            imageURL: ""
         )
-        fre.dic.removeValue(forKey: fre.choiceNumber!)
-        fre.dic[newNumber] = info
-        fre.choiceNumber = newNumber
+        friendEditRequest(info:info)
+        fre.dic1[fre.choiceIndex!] = info
         self.navigationController?.popViewController(animated: true)
+    }
+    func friendEditRequest(info:Info2){
+//        let friendURLString = "http://43.200.240.251/friends/\(fre.choiceIndex!)/edit"
+        let friendURLString = "http://54.180.168.54/friends/\(fre.choiceIndex!)/edit"
+        let accessToken = UserDefaults.standard.string(forKey: "Authorization")
+        let friendData = PostFriendRequest(
+            friendName: info.name,
+            nickName: info.nickName,
+            phoneNumber: info.number
+        )
+        AF.upload(multipartFormData: { multipartFormData in
+            if let friendsJSONData = try? JSONEncoder().encode(friendData) {
+                multipartFormData.append(friendsJSONData, withName: "friendRequestDto", mimeType: "application/json")
+            }
+            if let profileImageData = self.ProfileView.image!.jpegData(compressionQuality: 0.8) {
+                multipartFormData.append(profileImageData, withName: "profileImage", fileName: "profileImage.jpeg", mimeType: "image/jpeg")
+            }
+        }, to: friendURLString, method: .patch, headers: ["Authorization": accessToken!])
+        .response { response in
+            switch response.result {
+            case .success:
+                if let statusCode = response.response?.statusCode {
+                    print("HTTP Status Code: \(statusCode)")
+
+                    if let responseData = response.data {
+                        do {
+                            let decoder = JSONDecoder()
+                            let friendsResponse = try decoder.decode(PostFriendResponse.self, from: responseData)
+                            print("Sign Up Response: \(friendsResponse)")
+                        } catch {
+                            print("JSON Decoding Error: \(error)")
+                        }
+                    }
+
+                }
+            case .failure(let error):
+                print("Error: \(error)")
+            }
+        }
+//        print("friendURLString : \(friendURLString)")
+//        let friendData = PostFriendRequest(
+//            friendName: info.name,
+//            nickName: info.nickName,
+//            phoneNumber: info.number
+//        )
+//        guard let url = URL(string: friendURLString) else {
+//            print("서버 URL을 만들 수 없습니다.")
+//            return
+//        }
+//        let accessToken = UserDefaults.standard.string(forKey: "Authorization")
+//
+//        var request = URLRequest(url: url)
+//        request.httpMethod = "PATCH"
+//        request.allHTTPHeaderFields = ["Content-Type": "application/json", "Authorization": accessToken!]
+//
+//        do {
+//            let jsonData = try JSONEncoder().encode(friendData)
+//            request.httpBody = jsonData
+//        } catch {
+//            print("JSON 인코딩에 실패하였습니다.")
+//            return
+//        }
+//
+//        URLSession.shared.dataTask(with: request) { data, response, error in
+//            if let error = error {
+//                print("네트워크 에러: \(error)")
+//                return
+//            }
+//
+//            guard let httpResponse = response as? HTTPURLResponse else {
+//                print("올바른 HTTP 응답이 아닙니다.")
+//                return
+//            }
+//
+//            let statusCode = httpResponse.statusCode
+//            print("HTTP 상태 코드: \(statusCode)")
+//        }.resume()
+//
+        
     }
 }
 // 앨범에서 이미지 가져오기

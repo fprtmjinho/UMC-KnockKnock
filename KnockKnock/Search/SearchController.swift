@@ -5,6 +5,7 @@
 //  Created by 다은 on 2023/06/25.
 //
 import UIKit
+import SDWebImage
 class SearchController : UIViewController{
     //친구 찾기 페이지
     
@@ -68,20 +69,20 @@ class SearchController : UIViewController{
     let friendData = Friends.shared
     let me = MyData.shared
     
+    var keyList: Array<Int> = []
     var nameList: Array<String> = []
     var numberList: Array<String> = []
     var nickNameList: Array<String> = []
     var bestFriendList: Array<Bool> = []
-    var alramList: Array<Bool> = []
-    var timeList: Array<String> = []
-    var hiddenList: Array<Bool> = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigationBar()
         view.backgroundColor = .white
-        getData()
-        sortData()
+        print("SearchController")
+        getServerData()
+//        getData()
+//        sortData()
         customNavigationBar()
         makeSubView()
         makeConstraint()
@@ -89,13 +90,13 @@ class SearchController : UIViewController{
         makeAddTarget()
         setTitle()
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
         Label1.text = me.name
-        getData()
-        sortData()
-        tableView.reloadData()
-        setTableView()
+        getServerData()
+//        getData()
+//        sortData()
+//        tableView.reloadData()
+//        setTableView()
     }
 }
 
@@ -168,6 +169,19 @@ extension SearchController : UITableViewDelegate, UITableViewDataSource {
         cell.detailTextLabel?.textColor = UIColor.systemGray2
         return cell
        
+    }
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            deleteServerData(index: keyList[indexPath.row])
+            friendData.dic1[keyList[indexPath.row]] = nil
+            nameList.remove(at: indexPath.row)
+            nickNameList.remove(at: indexPath.row)
+            numberList.remove(at: indexPath.row)
+            bestFriendList.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            //remove 확인용 alarm 필요
+        }
+        //화이팅!
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
@@ -243,7 +257,7 @@ extension SearchController {
     
     @objc func sortData(){
         // 이름, 전화번호, 나이를 튜플로 묶은 배열 생성
-        var combinedList = zip(nameList, zip(nickNameList,zip(numberList, zip(bestFriendList,zip(alramList,timeList).map{($0,$1)}).map{($0, $1)}).map{($0, $1)}).map{($0, $1)}).map{($0,$1)}
+        var combinedList = zip(nameList, zip(nickNameList,zip(numberList, zip(bestFriendList,keyList).map{($0, $1)}).map{($0, $1)}).map{($0, $1)}).map{($0,$1)}
 
         // 이름을 기준으로 오름차순 정렬
         combinedList.sort { $0.0 < $1.0 }
@@ -256,8 +270,7 @@ extension SearchController {
         nickNameList = combinedList.map {$0.1.0}
         numberList = combinedList.map { $0.1.1.0 }
         bestFriendList = combinedList.map { $0.1.1.1.0 }
-        alramList = combinedList.map {$0.1.1.1.1.0}
-        timeList = combinedList.map{$0.1.1.1.1.1}
+        keyList = combinedList.map { $0.1.1.1.1}
     }
     
     @objc func searchFriend(_:UISearchBar){
@@ -269,41 +282,37 @@ extension SearchController {
         loadFriendArray(name: friendName)
     }
     @objc func loadFriendArray(name: String){
+        var keyCh: Array<Int> = []
         var nameCh: Array<String> = []
         var numberCh: Array<String> = []
         var nickNameCh: Array<String> = []
         var bestFriendCh: Array<Bool> = []
-        var alramCh: Array<Bool> = []
-        var timeCh: Array<String> = []
         if name == ""{
-            for key in friendData.dic.keys{
-                let dic = friendData.dic[key]
+            for key in friendData.dic1.keys{
+                let dic = friendData.dic1[key]
+                keyCh.append(key)
                 nameCh.append(dic!.name)
                 nickNameCh.append(dic!.nickName)
-                numberCh.append(key)
+                numberCh.append(dic!.number)
                 bestFriendCh.append(dic!.bestFriend)
-                alramCh.append(dic!.alram)
-                timeCh.append(dic!.time)
             }
         }else{
-            for key in friendData.dic.keys{
-                let dic = friendData.dic[key]
+            for key in friendData.dic1.keys{
+                let dic = friendData.dic1[key]
                 if dic!.name.contains(name){
+                    keyCh.append(key)
                     nameCh.append(dic!.name)
                     nickNameCh.append(dic!.nickName)
-                    numberCh.append(key)
+                    numberCh.append(dic!.number)
                     bestFriendCh.append(dic!.bestFriend)
-                    alramCh.append(dic!.alram)
-                    timeCh.append(dic!.time)
                 }
             }
         }
+        keyList = keyCh
         nameList = nameCh
         nickNameList = nickNameCh
         numberList = numberCh
         bestFriendList = bestFriendCh
-        alramList = alramCh
-        timeList = timeCh
         sortData()
         tableView.reloadData()
         setTableView()
@@ -332,33 +341,106 @@ extension SearchController {
     
     @objc func friendSelect(index:IndexPath) {
         let friendSelect = FriendProfileVC()
-        friendData.choiceNumber = numberList[index.row]
-//        friendData.choiceIndex = index.row
+        friendData.choiceIndex = keyList[index.row]
         friendSelect.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(friendSelect, animated: true)
     }
+//    @objc func getData(){
+//        var nameCh: Array<String> = []
+//        var numberCh: Array<String> = []
+//        var nickNameCh: Array<String> = []
+//        var bestFriendCh: Array<Bool> = []
+//        var alramCh: Array<Bool> = []
+//        var timeCh: Array<String> = []
+//        requestFriendData()
+//    }
+//    func requestFriendData(){
+//
+//    }
+    @objc func getServerData(){
+        let friendURLString = "http://54.180.168.54/friends"
+//        let friendURLString = "http://43.200.240.251/friends"
+        guard let friendURL = URL(string: friendURLString) else {
+            print("친구 정보를 가져올 수 없습니다.")
+            return
+        }
+        let accessToken = UserDefaults.standard.string(forKey: "Authorization")
+        var friendRequest = URLRequest(url: friendURL)
+        friendRequest.httpMethod = "GET"
+        friendRequest.addValue(accessToken!, forHTTPHeaderField: "Authorization")
+        URLSession.shared.dataTask(with: friendRequest) { data, response, error in
+            guard let data = data else {
+                print("친구 정보를 받아오지 못했습니다.")
+                return
+            }
+            do {
+                let user = try JSONDecoder().decode(FriendDataGet.self, from: data)
+//                print("친구 정보: \(user)")
+                let fre = Friends.shared
+                let data = user.data
+                for datas in data{
+                    let freData: Info2 = Info2(
+                        name: datas.friendName,
+                        nickName: "",
+                        number: datas.phoneNumber,
+                        bestFriend: datas.bestFriend,
+                        imageURL: datas.profileImageURL
+                    )
+//                    print("freData:\(freData)")
+                    fre.dic1[datas.friendId] = freData
+                }
+            } catch {
+                print("친구 정보 디코딩에 실패하였습니다.")
+            }
+            DispatchQueue.main.async {
+                self.getData()
+                self.sortData()
+                self.tableView.reloadData()
+            }
+        }.resume()
+    }
+    @objc func deleteServerData(index:Int){
+        let friendURLString = "http://54.180.168.54/friends/\(index)"
+//        let friendURLString = "http://43.200.240.251/friends"
+        guard let friendURL = URL(string: friendURLString) else {
+            print("친구 정보를 가져올 수 없습니다.")
+            return
+        }
+        let accessToken = UserDefaults.standard.string(forKey: "Authorization")
+        var friendRequest = URLRequest(url: friendURL)
+        friendRequest.httpMethod = "DELETE"
+        friendRequest.addValue(accessToken!, forHTTPHeaderField: "Authorization")
+        URLSession.shared.dataTask(with: friendRequest) { data, response, error in
+            guard let data = data else {
+                print("친구 정보를 받아오지 못했습니다.")
+                return
+            }
+        }.resume()
+    }
     @objc func getData(){
+        var keyCh: Array<Int> = []
         var nameCh: Array<String> = []
         var numberCh: Array<String> = []
         var nickNameCh: Array<String> = []
         var bestFriendCh: Array<Bool> = []
-        var alramCh: Array<Bool> = []
-        var timeCh: Array<String> = []
-        for key in friendData.dic.keys{
-            var dic = friendData.dic[key]
-            print(dic)
+        for key in friendData.dic1.keys{
+            var dic = friendData.dic1[key]
+            let url = URL(string: friendData.dic1[key]!.imageURL)
+            SDWebImageDownloader.shared.downloadImage(with: url) { (image, _, _, _) in
+                if let image = image {
+                    self.friendData.dic1[key]!.image = image
+                }
+            }
+            keyCh.append(key)
             nameCh.append(dic!.name)
-            numberCh.append(key)
+            numberCh.append(dic!.number)
             nickNameCh.append(dic!.nickName)
             bestFriendCh.append(dic!.bestFriend)
-            alramCh.append(dic!.alram)
-            timeCh.append(dic!.time)
         }
+        keyList = keyCh
         nameList = nameCh
         numberList = numberCh
         nickNameList = nickNameCh
         bestFriendList = bestFriendCh
-        alramList = alramCh
-        timeList = timeCh
     }
 }

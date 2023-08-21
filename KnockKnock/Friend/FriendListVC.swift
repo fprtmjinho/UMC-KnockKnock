@@ -14,32 +14,22 @@ class FriendListVC: UIViewController {
     
     let friendData = Friends.shared
     
-    var best: Array<Bool> = []
-    
+    var keyList: Array<Int> = []
     var nameList: Array<String> = []
     var numberList: Array<String> = []
-    var nickNameList: Array<String> = []
     var bestFriendList: Array<Bool> = []
-    var alramList: Array<Bool> = []
-    var timeList: Array<String> = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         makeConstraint()
-
-        getData()
+        getBestFriend()
+//        getData()
         setTableView()
         makeSubView()
         makeAddTarget()
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        getData()
-        sortData()
-        tableView.reloadData()
-        setTableView()
-        makeSubView()
-        makeAddTarget()
+    override func viewDidAppear(_ animated: Bool) {
+        getBestFriend()
     }
    
 }
@@ -63,6 +53,20 @@ extension FriendListVC : UITableViewDelegate, UITableViewDataSource {
         cell.detailTextLabel!.textColor = UIColor.systemGray2
         return cell
     }
+//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+//        if editingStyle == .delete {
+//            friendData.dic[friendData.choiceNumber!] = nil
+//            nameList.remove(at: indexPath.row)
+//            nickNameList.remove(at: indexPath.row)
+//            numberList.remove(at: indexPath.row)
+//            bestFriendList.remove(at: indexPath.row)
+//            alramList.remove(at: indexPath.row)
+//            timeList.remove(at: indexPath.row)
+//            tableView.deleteRows(at: [indexPath], with: .fade)
+//            //remove 확인용 alarm 필요
+//        }
+//        //화이팅!
+//    }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
         nextView(index:indexPath)
@@ -115,7 +119,8 @@ extension FriendListVC : UITableViewDelegate, UITableViewDataSource {
       }
     @objc func nextView(index:IndexPath) {
         let nextView = FriendProfileVC()
-        friendData.choiceNumber = numberList[index.row]
+//        friendData.choiceNumber = keyList[index.row]
+        friendData.choiceIndex = keyList[index.row]
         nextView.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(nextView, animated: true)
     }
@@ -124,7 +129,7 @@ extension FriendListVC : UITableViewDelegate, UITableViewDataSource {
     @objc func sortData(){
 
         // 이름, 전화번호, 나이를 튜플로 묶은 배열 생성
-        var combinedList = zip(nameList, zip(nickNameList,zip(numberList, zip(bestFriendList,zip(alramList,timeList).map{($0,$1)}).map{($0, $1)}).map{($0, $1)}).map{($0, $1)}).map{($0,$1)}
+        var combinedList = zip(nameList, zip(keyList,numberList).map{($0, $1)}).map{($0, $1)}
 
         // 이름을 기준으로 오름차순 정렬
         combinedList.sort { $0.0 < $1.0 }
@@ -134,37 +139,29 @@ extension FriendListVC : UITableViewDelegate, UITableViewDataSource {
 
         // 정렬된 결과를 다시 리스트로 분리
         nameList = combinedList.map { $0.0 }
-        nickNameList = combinedList.map {$0.1.0}
-        numberList = combinedList.map { $0.1.1.0 }
-        bestFriendList = combinedList.map { $0.1.1.1.0 }
-        alramList = combinedList.map {$0.1.1.1.1.0}
-        timeList = combinedList.map{$0.1.1.1.1.1}
+        keyList = combinedList.map{$0.1.0}
+        numberList = combinedList.map { $0.1.1 }
+//        keyList = combinedList.map{$0.1.1.1.1.1.1}
     }
-    @objc func getData(){
-        var nameCh: Array<String> = []
-        var numberCh: Array<String> = []
-        var nickNameCh: Array<String> = []
-        var bestFriendCh: Array<Bool> = []
-        var alramCh: Array<Bool> = []
-        var timeCh: Array<String> = []
-        for key in friendData.dic.keys{
-            let dic = friendData.dic[key]
-            if dic?.bestFriend == true{
-                nameCh.append(dic!.name)
-                numberCh.append(key)
-                nickNameCh.append(dic!.nickName)
-                bestFriendCh.append(dic!.bestFriend)
-                alramCh.append(dic!.alram)
-                timeCh.append(dic!.time)
-            }
-        }
-        nameList = nameCh
-        numberList = numberCh
-        nickNameList = nickNameCh
-        bestFriendList = bestFriendCh
-        alramList = alramCh
-        timeList = timeCh
-    }
+//    @objc func getData(){
+//        var keyCh: Array<Int> = []
+//        var nameCh: Array<String> = []
+//        var numberCh: Array<String> = []
+//        var bestFriendCh: Array<Bool> = []
+//        for key in friendData.dic1.keys{
+//            let dic = friendData.dic1[key]
+//            if dic?.bestFriend == true{
+//                keyCh.append(key)
+//                nameCh.append(dic!.name)
+//                numberCh.append(dic!.number)
+//                bestFriendCh.append(dic!.bestFriend)
+//            }
+//        }
+//        keyList = keyCh
+//        nameList = nameCh
+//        numberList = numberCh
+//        bestFriendList = bestFriendCh
+//    }
     @objc func checkDouble(phoneNumber:String) -> Bool{
         let fre = Friends.shared
         let numberList = numberList
@@ -174,5 +171,53 @@ extension FriendListVC : UITableViewDelegate, UITableViewDataSource {
             }
         }
         return false;
+    }
+    func getBestFriend(){
+        let friendURLString = "http://54.180.168.54/bestfriend"
+//        let friendURLString = "http://43.200.240.251/bestfriend"
+        guard let friendURL = URL(string: friendURLString) else {
+            print("찐친 정보를 가져올 수 없습니다.")
+            return
+        }
+        let accessToken = UserDefaults.standard.string(forKey: "Authorization")
+        var friendRequest = URLRequest(url: friendURL)
+        friendRequest.httpMethod = "GET"
+        friendRequest.addValue(accessToken!, forHTTPHeaderField: "Authorization")
+        URLSession.shared.dataTask(with: friendRequest) { data, response, error in
+            guard let data = data else {
+                print("찐친 정보를 받아오지 못했습니다.")
+                return
+            }
+            do {
+                let user = try JSONDecoder().decode([BestFriendData].self, from: data)
+//                print("친구 정보: \(user)")
+                var keyCh: [Int] = []
+                var nameCh: [String] = []
+                var numberCh: [String] = []
+                for datas in user{
+                    keyCh.append(datas.friendId)
+                    nameCh.append(datas.friendName)
+                    numberCh.append(datas.phoneNumber)
+//                    let freData: Info2 = Info2(
+//                        name: datas.friendName,
+//                        nickName: "",
+//                        number: datas.phoneNumber,
+//                        bestFriend: datas.bestFriend,
+//                        image: datas.profileImageURL
+//                    )
+//                    fre.dic1[datas.friendId] = freData
+                }
+                self.keyList = keyCh
+                self.nameList = nameCh
+                self.numberList = numberCh
+            } catch {
+                print("친구 정보 디코딩에 실패하였습니다.")
+            }
+            DispatchQueue.main.async {
+//                self.getData()
+                self.sortData()
+                self.tableView.reloadData()
+            }
+        }.resume()
     }
 }

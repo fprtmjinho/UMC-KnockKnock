@@ -30,7 +30,7 @@ class GuideVC: UIViewController {
     }()
 
     let containerView1: UIView = {
-        let containerView1 = makeContainerView(title: "꼭 명분이 없어도 쉽게 연락할 수 있어요 🙌", text: "낙낙의 연락 기능은 두 가지로 나뉘어져 있어요. 연락이 끊긴 사람과의 재연결, 알고는 있지만 별로 친하지 않았던 사람과의 새시작 중 하나의 목적을 골라 문자글을 작성해주시면 돼요. 문자글 가이드라인은 친구 프로필을 누르거나 내 페이지에 가면 입력할 수 있는 칸이 나와요. 글을 다 쓰고 나면 바로 보내거나 글 전체 복사하기 버튼을 누른 후 해당 글을 직접 상대에게 보내주세요.")
+        let containerView1 = makeContainerView(title: "꼭 명분이 없어도 쉽게 연락할 수 있어요 🙌", text: "낙낙의 연락 기능은 두 가지로 나뉘어져 있어요. 연락이 끊긴 사람과의 재연결, 알고는 있지만 별로 친하지 않았던 사람과의 새시작 중 하나의 목적을 골라 문자글을 작성해주시면 돼요. 연락 목적을 고를 때는 입력 창 오른쪽 상단의 새로고침 버튼을 누르시면 됩니다. 문자글 가이드라인은 친구 프로필을 누르거나 내 페이지에 가면 입력할 수 있는 칸이 나와요. 글을 다 쓰고 나면 바로 보내거나 글 전체 복사하기 버튼을 누른 후 해당 글을 직접 상대에게 보내주세요.")
         containerView1.translatesAutoresizingMaskIntoConstraints = false
         return containerView1
     }()

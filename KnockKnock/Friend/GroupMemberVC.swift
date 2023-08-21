@@ -12,13 +12,14 @@ class GroupMemberVC : UIViewController {
     var searchFriendBar : UISearchBar = UISearchBar()
     
     let addGroupView : AddGroupView = AddGroupView()
-    var addMemberList: Array<String> = []
+    var addMemberList: Array<Int> = []
     
     var tableView = UITableView(frame: .zero, style: .plain)
     
     let friendData = Friends.shared
     let group = Group.shared
     
+    var keyList: Array<Int> = []
     var nameList: Array<String> = []
     var numberList: Array<String> = []
     var bestFriendList: Array<Bool> = []
@@ -43,20 +44,70 @@ class GroupMemberVC : UIViewController {
 }
 
 extension GroupMemberVC {
+    @objc func getServerData(){
+        let friendURLString = "http://54.180.168.54/friends"
+//        let friendURLString = "http://43.200.240.251/friends"
+        guard let friendURL = URL(string: friendURLString) else {
+            print("친구 정보를 가져올 수 없습니다.")
+            return
+        }
+        let accessToken = UserDefaults.standard.string(forKey: "Authorization")
+        var friendRequest = URLRequest(url: friendURL)
+        friendRequest.httpMethod = "GET"
+        friendRequest.addValue(accessToken!, forHTTPHeaderField: "Authorization")
+        URLSession.shared.dataTask(with: friendRequest) { data, response, error in
+            guard let data = data else {
+                print("친구 정보를 받아오지 못했습니다.")
+                return
+            }
+            do {
+                let user = try JSONDecoder().decode(FriendDataGet.self, from: data)
+//                print("친구 정보: \(user)")
+                let fre = Friends.shared
+                let data = user.data
+                for datas in data{
+                    let freData: Info2 = Info2(
+                        name: datas.friendName,
+                        nickName: "",
+                        number: datas.phoneNumber,
+                        bestFriend: datas.bestFriend,
+                        imageURL: datas.profileImageURL
+                    )
+//                    print("freData:\(freData)")
+                    fre.dic1[datas.friendId] = freData
+                }
+            } catch {
+                print("친구 정보 디코딩에 실패하였습니다.")
+            }
+            DispatchQueue.main.async {
+                self.getData()
+                self.sortData()
+                self.tableView.reloadData()
+            }
+        }.resume()
+    }
     @objc func getData(){
+        var keyCh: Array<Int> = []
         var nameCh: Array<String> = []
         var numberCh: Array<String> = []
         var bestFriendCh: Array<Bool> = []
         var checkedCh: Array<Bool> = []
-        for key in friendData.dic.keys{
+        for key in friendData.dic1.keys{
             if !addMemberList.contains(key){
-                var dic = friendData.dic[key]
+                var dic = friendData.dic1[key]
+                keyCh.append(key)
                 nameCh.append(dic!.name)
-                numberCh.append(key)
+                numberCh.append(dic!.number)
                 bestFriendCh.append(dic!.bestFriend)
-                checkedCh.append(false)
+                if addGroupView.numberList.contains(dic!.number){
+                    checkedCh.append(true)
+                }else{
+                    checkedCh.append(false)
+                }
+                
             }
         }
+        keyList = keyCh
         nameList = nameCh
         numberList = numberCh
         bestFriendList = bestFriendCh
@@ -65,7 +116,7 @@ extension GroupMemberVC {
     }
     @objc func sortData(){
         // 이름, 전화번호, 나이를 튜플로 묶은 배열 생성
-        var combinedList = zip(nameList, zip(numberList,zip(bestFriendList,checked).map{($0, $1)}).map{($0,$1)}).map{($0,$1)}
+        var combinedList = zip(nameList, zip(numberList,zip(bestFriendList,zip(checked,keyList).map{($0,$1)}).map{($0, $1)}).map{($0,$1)}).map{($0,$1)}
 
         // 이름을 기준으로 오름차순 정렬
         combinedList.sort { $0.0 < $1.0 }
@@ -77,7 +128,8 @@ extension GroupMemberVC {
         nameList = combinedList.map { $0.0 }
         numberList = combinedList.map { $0.1.0 }
         bestFriendList = combinedList.map {$0.1.1.0}
-        checked = combinedList.map{$0.1.1.1}
+        checked = combinedList.map{$0.1.1.1.0}
+        keyList = combinedList.map{$0.1.1.1.1}
     }
     func makeSubView(){
         searchFriendBar = setSearchBar(VC: self, title: "친구를 입력해주세요!")
@@ -106,7 +158,7 @@ extension GroupMemberVC {
         var i = 0
         for check in checked{
             if check{
-                group.groupMember.append(numberList[i])
+                group.groupMember.append(keyList[i])
             }
             i+=1
         }

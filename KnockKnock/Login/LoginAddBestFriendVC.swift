@@ -84,13 +84,11 @@ class LoginAddBestFriendVC : AllowApproachVC {
             nameList.append(friendData.dic[key]!.name)
             numberList.append(key)
             checked.append(false)
-            date.append(friendData.dic[key]!.time)
             let info: Info = Info(
                 name: friendData.dic[key]!.name,
                 nickName: "",
                 bestFriend: false,
-                alram: false,
-                time: friendData.dic[key]!.time)
+                image: "")
             dic[key] = info
         }
     }
@@ -106,9 +104,7 @@ class LoginAddBestFriendVC : AllowApproachVC {
                     name:ddic!.name,
                     nickName: "",
                     bestFriend: true,
-                    alram: true,
-                    time:formatter.string(from: Date())
-                )
+                    image: "")
                 fre.dic[key] = addInfo
             }
             i=i+1
@@ -212,8 +208,7 @@ extension LoginAddBestFriendVC : UITableViewDelegate, UITableViewDataSource {
                 name: dic[numberList[indexPath.row]]!.name,
                 nickName: "",
                 bestFriend: true,
-                alram: false,
-                time: "")
+                image:"")
             dic[numberList[indexPath.row]] = info
         } else {
             cell?.accessoryView = UIImageView(image:unSelectedImage)
@@ -222,8 +217,7 @@ extension LoginAddBestFriendVC : UITableViewDelegate, UITableViewDataSource {
                 name: dic[numberList[indexPath.row]]!.name,
                 nickName: "",
                 bestFriend: false,
-                alram: false,
-                time: "")
+                image:"")
             dic[numberList[indexPath.row]] = info
         }
     }

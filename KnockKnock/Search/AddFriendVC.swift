@@ -6,9 +6,12 @@
 //
 
 import UIKit
+import Alamofire
 class AddFriendVC : UIViewController {
     
     var saveBtn : UIButton = UIButton()
+    
+    let searchController: SearchController = SearchController()
     
     let ProfileView : UIImageView = {
        var profileView = UIImageView()
@@ -19,14 +22,12 @@ class AddFriendVC : UIViewController {
         return profileView
     }()
     
-    let Name : UILabel = {
-        let name = UILabel()
-        name.text = "프로필 사진 편집"
-        name.textAlignment = .center
-        name.font = .systemFont(ofSize: 14)
-        name.textColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-
-        return name
+    let Name : UIButton = {
+        let btn = UIButton()
+        btn.setTitle("프로필 사진 편집", for: .normal)
+        btn.setTitleColor(#colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1), for: .normal)
+        btn.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        return btn
     }()
     
     let WarningLabel : UILabel = {
@@ -88,6 +89,8 @@ class AddFriendVC : UIViewController {
         return numbertext
     }()
     
+    var imagePickerController = UIImagePickerController()
+    let alertController = UIAlertController(title: "올릴 방식을 선택하세요", message: "사진 찍기 또는 앨범에서 선택", preferredStyle: .actionSheet)
  
     
     
@@ -178,12 +181,14 @@ extension AddFriendVC {
     }
     func makeAddTarget(){
         saveBtn.addTarget(self, action: #selector(saveBtnPressed(_:)), for: .touchUpInside)
+        Name.addTarget(self, action: #selector(enrollAlertEvent(_:)), for: .touchUpInside)
     }
     
     @objc func saveBtnPressed(_: UIButton){
         setData()
         navigationController?.popViewController(animated: true)
     }
+                       
     @objc func setData(){
         let fre = Friends.shared
         var names: String = ""
@@ -194,36 +199,21 @@ extension AddFriendVC {
         if let nickName = nicknameText.text{
             nickNames = nickName
         }
-        var formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         if let number = numberText.text{
+            var addInfo: Info2?
             if number != ""{
                 print("number1")
-                var phoneNumber: String = number
-                var addInfo: Info = Info(
+                addInfo = Info2(
                     name:names,
                     nickName: nickNames,
+                    number: number,
                     bestFriend: false,
-                    alram: true,
-                    time:formatter.string(from: Date()),
-                    image:nil
+                    imageURL:""
                 )
-                fre.dic[phoneNumber] = addInfo
             }else{
                 print("number2")
-                var addInfo: Info = Info(
-                    name:names,
-                    nickName: nickNames,
-                    bestFriend: false,
-                    alram: true,
-                    time:formatter.string(from: Date()),
-                    image:nil
-                )
-                for key in fre.dic.keys{
-                    var dic = fre.dic[key]
-                    print("number3")
-                    print(names)
-                    print(dic!.name)
+                for key in fre.dic1.keys{
+                    var dic = fre.dic1[key]
                     if dic!.name.contains(names){
                         print("number4")
                         var i: Int=1
@@ -235,7 +225,13 @@ extension AddFriendVC {
                                 print("number6")
                                 i+=1
                             }else{
-                                fre.dic[nkey] = addInfo
+                                addInfo = Info2(
+                                    name:names,
+                                    nickName: nickNames,
+                                    number: nkey,
+                                    bestFriend: false,
+                                    imageURL:""
+                                )
                                 print("number7")
                                 break
                             }
@@ -244,10 +240,124 @@ extension AddFriendVC {
                 }
                 if fre.dic[names] == nil{
                     print("number8")
-                    names = names + String(1)
-                    fre.dic[names] = addInfo
+                    addInfo = Info2(
+                        name:names,
+                        nickName: nickNames,
+                        number: names + String(1),
+                        bestFriend: false,
+                        imageURL:""
+                    )
                 }
             }
+            addFriendData(info:addInfo!)
         }
     }
+    func addFriendData(info:Info2){
+        //        let friendURLString = "http://43.200.240.251/friends/\(fre.choiceIndex!)/edit"
+        let friendURLString = "http://54.180.168.54/friends/create"
+        let accessToken = UserDefaults.standard.string(forKey: "Authorization")
+        print("friendURLString : \(friendURLString)")
+        let friendData = PostFriendRequest(
+            friendName: info.name,
+            nickName: info.nickName,
+            phoneNumber: info.number
+        )
+        AF.upload(multipartFormData: { multipartFormData in
+            if let friendsJSONData = try? JSONEncoder().encode(friendData) {
+                multipartFormData.append(friendsJSONData, withName: "friendRequestDto", mimeType: "application/json")
+            }
+            if let profileImageData = self.ProfileView.image!.jpegData(compressionQuality: 0.8) {
+                multipartFormData.append(profileImageData, withName: "profileImage", fileName: "profileImage.jpeg", mimeType: "image/jpeg")
+            }
+        }, to: friendURLString, headers: ["Authorization": accessToken!])
+        .response { response in
+            switch response.result {
+            case .success:
+                if let statusCode = response.response?.statusCode {
+                    print("HTTP Status Code: \(statusCode)")
+
+                    if let responseData = response.data {
+                        do {
+                            let decoder = JSONDecoder()
+                            let friendsResponse = try decoder.decode(PostFriendResponse.self, from: responseData)
+                            
+                            print("Sign Up Response: \(friendsResponse)")
+                        } catch {
+                            print("JSON Decoding Error: \(error)")
+                        }
+                    }
+
+                }
+            case .failure(let error):
+                print("Error: \(error)")
+            }
+        }
+//        guard let url = URL(string: friendURLString) else {
+//            print("서버 URL을 만들 수 없습니다.")
+//            return
+//        }
+//        let accessToken = UserDefaults.standard.string(forKey: "Authorization")
+//
+//        var request = URLRequest(url: url)
+//        request.httpMethod = "POST"
+//        request.allHTTPHeaderFields = ["Content-Type": "application/json", "Authorization": accessToken!]
+//
+//        do {
+//            let jsonData = try JSONEncoder().encode(friendData)
+//            request.httpBody = jsonData
+//        } catch {
+//            print("JSON 인코딩에 실패하였습니다.")
+//            return
+//        }
+//
+//        URLSession.shared.dataTask(with: request) { data, response, error in
+//            if let error = error {
+//                print("네트워크 에러: \(error)")
+//                return
+//            }
+//
+//            guard let httpResponse = response as? HTTPURLResponse else {
+//                print("올바른 HTTP 응답이 아닙니다.")
+//                return
+//            }
+//
+//            let statusCode = httpResponse.statusCode
+//            print("HTTP 상태 코드: \(statusCode)")
+//        }.resume()
+    }
+}
+extension AddFriendVC: UIImagePickerControllerDelegate,UINavigationControllerDelegate {
+   
+   @objc func enrollAlertEvent(_:UILabel) {
+       let alert = UIAlertController(title: "사진 가져오기", message: "사진 유형을 선택해주세요", preferredStyle: .actionSheet)
+       let photoLibraryAlertAction = UIAlertAction(title: "사진 앨범", style: .default) { action in
+           self.openAlbum()
+           //DatePicker의 date를 btn의 title로 설정
+       }
+       let cancelAlertAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+                       
+       
+       alert.addAction(photoLibraryAlertAction)
+       alert.addAction(cancelAlertAction)
+       self.present(alert, animated: true)
+   }
+   @objc func openAlbum(){
+       self.imagePickerController.delegate = self
+       self.imagePickerController.sourceType = .photoLibrary
+       self.imagePickerController.allowsEditing = false
+       present(self.imagePickerController, animated: false, completion: nil)
+   }
+   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+       if let image = info[.originalImage]
+               as? UIImage {
+               //가져온 이미지를 UIImage뷰에 넣는 곳
+               ProfileView.image = image
+               ProfileView.layer.cornerRadius = ProfileView.frame.width/2
+               ProfileView.clipsToBounds = true
+           }
+           else {
+               print("error detected in didFinishPickinMediaWithInfo method")
+           }
+           dismiss(animated: true, completion: nil) // 반드시 dismiss 하기.
+   }
 }
