@@ -184,8 +184,8 @@ extension LoginThirdVC {
             UserDefaults.standard.synchronize()
             nextView()
         }
-        
     }
+    
     func isPasswordValidFormat(password: String?) -> Bool {
         guard let password = password else { return false }
         let passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])[A-Za-z\\d!@#$%^&*]{8,}$"
@@ -230,8 +230,8 @@ extension LoginThirdVC {
         }
     }
     @objc func nextView(){
-        let allowApproachVC = AllowApproachVC()
-        self.navigationController?.pushViewController(allowApproachVC, animated: true)
+        let loginFourthVC = LoginFourthVC()
+        self.navigationController?.pushViewController(loginFourthVC, animated: true)
     }
 }
 

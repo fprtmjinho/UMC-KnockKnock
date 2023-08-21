@@ -149,7 +149,8 @@ extension LoginSuccessVC {
                 multipartFormData.append(signUpJSONData, withName: "request", mimeType: "application/json")
             }
             
-            if let profileImage = UIImage(named: "karim"),
+            if let savedImageData = UserDefaults.standard.object(forKey: "profileImage") as? Data,
+               let profileImage = UIImage(data: savedImageData),
                let profileImageData = profileImage.jpegData(compressionQuality: 0.9) {
                 multipartFormData.append(profileImageData, withName: "profileImage", fileName: "profileImage.jpeg", mimeType: "image/jpeg")
             }

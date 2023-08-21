@@ -19,6 +19,7 @@
 		008463FF2A5D93FF009F4033 /* GroupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008463FE2A5D93FF009F4033 /* GroupVC.swift */; };
 		008C498C2A714EAF00BE6705 /* Groups.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008C498B2A714EAF00BE6705 /* Groups.swift */; };
 		008C498E2A714ED700BE6705 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008C498D2A714ED700BE6705 /* Post.swift */; };
+		00AF03352A935BD800BE4B5F /* LoginFourthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00AF03342A935BD800BE4B5F /* LoginFourthVC.swift */; };
 		00E558F22A6FD3CC00EA73FC /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E558F12A6FD3CC00EA73FC /* Login.swift */; };
 		00E648552A7A2C05005AB40B /* PrivacyPolicyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E648542A7A2C05005AB40B /* PrivacyPolicyVC.swift */; };
 		00FD26582A5CE1520013E169 /* GuideVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FD26572A5CE1520013E169 /* GuideVC.swift */; };
@@ -116,6 +117,7 @@
 		008463FE2A5D93FF009F4033 /* GroupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupVC.swift; sourceTree = "<group>"; };
 		008C498B2A714EAF00BE6705 /* Groups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Groups.swift; sourceTree = "<group>"; };
 		008C498D2A714ED700BE6705 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		00AF03342A935BD800BE4B5F /* LoginFourthVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFourthVC.swift; sourceTree = "<group>"; };
 		00E558F12A6FD3CC00EA73FC /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		00E648542A7A2C05005AB40B /* PrivacyPolicyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyVC.swift; sourceTree = "<group>"; };
 		00FD26572A5CE1520013E169 /* GuideVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideVC.swift; sourceTree = "<group>"; };
@@ -338,6 +340,7 @@
 				C935FA7D2A5D63840035FA2C /* LoginAddBestFriendVC.swift */,
 				C935FA242A59475A0035FA2C /* LoginSuccessVC.swift */,
 				C9D07CFB2A6C427C0071C2F5 /* HowtouseVC.swift */,
+				00AF03342A935BD800BE4B5F /* LoginFourthVC.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -702,6 +705,7 @@
 				007B67C22A6D31F50087B264 /* PromiseVC.swift in Sources */,
 				C935FA252A59475A0035FA2C /* LoginSuccessVC.swift in Sources */,
 				00E648552A7A2C05005AB40B /* PrivacyPolicyVC.swift in Sources */,
+				00AF03352A935BD800BE4B5F /* LoginFourthVC.swift in Sources */,
 				C93246BF2A48313000908D6B /* SearchController.swift in Sources */,
 				C935FA802A5D74980035FA2C /* AllowApproachVC.swift in Sources */,
 				008463FD2A5D93BF009F4033 /* FriendListVC.swift in Sources */,
