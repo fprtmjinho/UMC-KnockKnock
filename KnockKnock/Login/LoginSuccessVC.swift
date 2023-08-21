@@ -208,6 +208,7 @@ extension LoginSuccessVC {
         UserDefaults.standard.removeObject(forKey: "birthday")
         UserDefaults.standard.removeObject(forKey: "email")
         UserDefaults.standard.removeObject(forKey: "password")
+        UserDefaults.standard.removeObject(forKey: "profileImage")
     }
     @objc func startBtnFunc(_: UIButton){
         if let navigationController = navigationController {
