@@ -898,12 +898,9 @@
 				CODE_SIGN_ENTITLEMENTS = KnockKnock/KnockKnock.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-<<<<<<< HEAD
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = QYW2Y88YJ4;
-=======
 				DEVELOPMENT_TEAM = MR2VBKY7CB;
->>>>>>> style5
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KnockKnock/Info.plist;
 				INFOPLIST_KEY_NSContactsUsageDescription = "";
@@ -937,12 +934,9 @@
 				CODE_SIGN_ENTITLEMENTS = KnockKnock/KnockKnock.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-<<<<<<< HEAD
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = QYW2Y88YJ4;
-=======
 				DEVELOPMENT_TEAM = MR2VBKY7CB;
->>>>>>> style5
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KnockKnock/Info.plist;
 				INFOPLIST_KEY_NSContactsUsageDescription = "";
