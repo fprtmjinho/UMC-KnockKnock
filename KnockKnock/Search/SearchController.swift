@@ -398,7 +398,7 @@ extension SearchController {
         }.resume()
     }
     @objc func deleteServerData(index:Int){
-        let friendURLString = "http://\(Server.url)friends/\(index)"
+        let friendURLString = "http://\(Server.url)/friends/\(index)"
         guard let friendURL = URL(string: friendURLString) else {
             print("친구 정보를 가져올 수 없습니다.")
             return
@@ -408,6 +408,13 @@ extension SearchController {
         friendRequest.httpMethod = "DELETE"
         friendRequest.addValue(accessToken!, forHTTPHeaderField: "Authorization")
         URLSession.shared.dataTask(with: friendRequest) { data, response, error in
+            guard let httpResponse = response as? HTTPURLResponse else {
+                print("올바른 HTTP 응답이 아닙니다.")
+                return
+            }
+            
+            let statusCode = httpResponse.statusCode
+            print("HTTP 상태 코드: \(statusCode)")
             guard let data = data else {
                 print("친구 정보를 받아오지 못했습니다.")
                 return
