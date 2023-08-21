@@ -50,7 +50,7 @@ class SayHelloTextGuideVC : UIViewController {
     
     let guide1_2 : BasePaddingLabel = {
        let label = BasePaddingLabel()
-        label.text = "000야 안녕, 오랜만에 연락하네. 나 아메리카노야. 잘 지내지?"
+        label.text = "000야 안녕, 오랜만에 연락하네. 나 000이야. 잘 지내지?"
         label.textguideExtension()
         return label
     }()
@@ -88,7 +88,7 @@ class SayHelloTextGuideVC : UIViewController {
     
     let guide2_1 : BasePaddingLabel = {
        let label = BasePaddingLabel()
-        label.text = "000님 잘 지내죠? 어떻게 지내는지 궁굼해서 연락드립니다. 자주 연락드리지 못하는 것 같아 죄송하네요."
+        label.text = "000님 잘 지내죠? 어떻게 지내는지 궁금해서 연락드립니다. 자주 연락드리지 못하는 것 같아 죄송하네요."
         label.textguideExtension()
         return label
     }()
@@ -176,7 +176,7 @@ extension SayHelloTextGuideVC {
             View2.topAnchor.constraint(equalTo: View1.bottomAnchor),
             View2.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             View2.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-            View2.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            View2.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor, constant: 500),
             View2.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
             
             titlelabel2.topAnchor.constraint(equalTo: View2.topAnchor, constant: 10),
@@ -193,9 +193,9 @@ extension SayHelloTextGuideVC {
             guide2_3.trailingAnchor.constraint(equalTo: View2.trailingAnchor, constant: -30),
         
         ])
-        let View1Height = View1.heightAnchor.constraint(greaterThanOrEqualTo: view.heightAnchor)
-        View1Height.priority = .defaultLow
-        View1Height.isActive = true
+       // let View1Height = View1.heightAnchor.constraint(greaterThanOrEqualTo: view.heightAnchor)
+       // View1Height.priority = .defaultLow
+        //View1Height.isActive = true
         let View2Height = View2.heightAnchor.constraint(greaterThanOrEqualTo: view.heightAnchor)
         View2Height.priority = .defaultLow
         View2Height.isActive = true

@@ -8,6 +8,8 @@
 import UIKit
 class MyMessage1 : UIView {
     
+    let me = MyData.shared
+    
     let label1 : UILabel = {
        let label = UILabel()
         label.text = "[낙낙(KnockKnock)]"
@@ -18,7 +20,6 @@ class MyMessage1 : UIView {
     
     let label2 : UILabel = {
        let label = UILabel()
-        label.attributedText =  NSAttributedString("똑똑! (아메리카노)님이 문을 두드렸어요!\n낙낙은 연락이 끊겼던 친구와의 재연결을 도와주는 서비스를 제공해요 :)")
         label.font = UIFont.systemFont(ofSize: 13, weight: .light)
         label.numberOfLines = 3
         return label
@@ -115,7 +116,9 @@ class MyMessage1 : UIView {
         backgroundColor = .systemGray6
         makeSubView()
         makeConstraint()
-      
+        var nickName: String = loadLocalName()
+        label2.attributedText =  NSAttributedString(string: "똑똑! \(nickName)님이 문을 두드렸어요!\n낙낙은 연락이 끊겼던 친구와의 재연결을 도와주는 서비스를 제공해요 :)")
+        
     }
     
     required init?(coder _: NSCoder) {
@@ -196,5 +199,9 @@ extension MyMessage1 {
             
         ])
         
+    }
+    
+    @objc func loadLocalName()->String{
+        return me.name
     }
 }

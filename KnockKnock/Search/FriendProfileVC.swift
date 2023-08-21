@@ -68,7 +68,7 @@ extension FriendProfileVC {
         friendprofileView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             friendprofileView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
-            friendprofileView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
+            friendprofileView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor, constant: -100),
             friendprofileView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
             friendprofileView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
             friendprofileView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
@@ -173,8 +173,8 @@ extension FriendProfileVC {
         }else{
             friendprofileView.BfSwitch.isOn = false
         }
-        friendprofileView.ProfileView.layer.cornerRadius = friendprofileView.ProfileView.frame.width/2
         friendprofileView.ProfileView.image = friendData.dic1[friendData.choiceIndex!]!.image
+        friendprofileView.ProfileView.layer.cornerRadius = friendprofileView.ProfileView.frame.width / 2
         friendprofileView.ProfileView.clipsToBounds = true
     }
     @objc func getData(){

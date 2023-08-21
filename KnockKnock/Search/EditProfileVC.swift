@@ -25,7 +25,7 @@ class EditProfileVC : UIViewController {
        var profileView = UIImageView()
         let config = UIImage.SymbolConfiguration(paletteColors: [ #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)])
         profileView.image = UIImage(systemName: "person.circle.fill", withConfiguration: config)
-        profileView.layer.cornerRadius = 40
+        profileView.layer.cornerRadius = 50
         
         return profileView
     }()
@@ -92,7 +92,6 @@ class EditProfileVC : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        
         setNavigationBar()
         self.title = "편집"
         makeSubView()
@@ -176,8 +175,8 @@ extension EditProfileVC {
         nameText.text = fre.dic1[fre.choiceIndex!]!.name
         nicknameText.text = fre.dic1[fre.choiceIndex!]!.nickName
         numberText.text = fre.dic1[fre.choiceIndex!]!.number
-        ProfileView.layer.cornerRadius = ProfileView.frame.width/2
         ProfileView.image = fre.dic1[fre.choiceIndex!]!.image
+        ProfileView.layer.cornerRadius = ProfileView.frame.width/2
         ProfileView.clipsToBounds = true
     }
     @objc func saveFriendData(_:UIButton){

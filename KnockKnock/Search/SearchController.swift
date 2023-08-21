@@ -87,9 +87,11 @@ class SearchController : UIViewController{
         makeConstraint()
         setTableView()
         makeAddTarget()
-        setTitle()
+        
     }
     override func viewDidAppear(_ animated: Bool) {
+        var nickName: String = loadLocalName()
+        Label1.text = "\(nickName)님,\n연락하고 싶은 분이 생겼나요?"
         getServerData()
 //        getData()
 //        sortData()
@@ -315,10 +317,7 @@ extension SearchController {
         tableView.reloadData()
         setTableView()
     }
-    @objc func setTitle(){
-        var nickName: String = loadLocalName()//loadNickName()
-        Label1.text = "\(nickName)님,\n연락하고 싶은 분이 생겼나요?"
-    }
+ 
     @objc func loadLocalName()->String{
         var me = MyData.shared
         return me.name

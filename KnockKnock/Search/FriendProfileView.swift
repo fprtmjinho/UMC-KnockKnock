@@ -93,16 +93,14 @@ class FriendProfileView : UIView {
         return alarmMemoLabel
     }()
     
-    let AlarmMemoText : UITextField = {
-       let alarmMemoText = UITextField()
-        alarmMemoText.placeholder = "메모를 입력해주세요\n(최대 45자)"
-        alarmMemoText.addLeftPadding()
-        alarmMemoText.contentVerticalAlignment = .top
-        alarmMemoText.contentHorizontalAlignment = .left
-        
-        alarmMemoText.backgroundColor = .systemGray6
-        alarmMemoText.layer.cornerRadius = 5
-        return alarmMemoText
+    let AlarmMemoText : UITextView = {
+       let mytext = UITextView()
+        mytext.text = "메모를 입력해주세요\n(최대 45자)"
+        mytext.textContainerInset = UIEdgeInsets(top: 15, left: 10, bottom: 15, right: 10);
+        mytext.layer.cornerRadius = 5
+        mytext.backgroundColor = .systemGray6
+        mytext.font = UIFont.systemFont(ofSize: 15)
+        return mytext
     }()
     
     let AlarmLabel : UILabel = {
