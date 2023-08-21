@@ -47,7 +47,7 @@ class LoginSecondVC : UIViewController{
         let emailAlertLabel = UILabel()
         emailAlertLabel.text = "이메일을 입력해주세요."
         emailAlertLabel.textColor = .white
-        emailAlertLabel.font = UIFont.boldSystemFont(ofSize: 14)
+        emailAlertLabel.font = UIFont.systemFont(ofSize: 14, weight: .light)
         return emailAlertLabel
     }()
     
@@ -102,6 +102,7 @@ class LoginSecondVC : UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.handleEditFunc()
         view.backgroundColor = .white
         setNavigationBar()
         makeSubView()
@@ -225,7 +226,7 @@ extension LoginSecondVC {
                     if emailCheckResquestResult.message! == "인증이 완료되었습니다." {
                         self.emailAuthentication = true
                         DispatchQueue.main.async {
-                            self.showAlert(message: "인증되셨습니다.")
+                            self.showAlert(message: "인증되었습니다.")
                             self.emailCheckBtn.isEnabled = false // 버튼 비활성화
                         }
                     }

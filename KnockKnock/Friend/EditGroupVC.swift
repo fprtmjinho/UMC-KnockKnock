@@ -18,6 +18,7 @@ class EditGroupVC : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.handleEditFunc()
         setNavigationBar()
         self.title = "모임 편집하기"
         view.backgroundColor = .white

@@ -78,6 +78,7 @@ class SearchController : UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.handleEditFunc()
         setNavigationBar()
         view.backgroundColor = .white
         getData()

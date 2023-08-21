@@ -65,6 +65,7 @@ class EditMyPageVC : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        view.handleEditFunc()
         setNavigationBar()
         self.title = "편집"
         makeSubView()

@@ -155,6 +155,7 @@ class FriendProfileView : UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        handleEditFunc()
         makeSubView()
         makeConstraint()
       

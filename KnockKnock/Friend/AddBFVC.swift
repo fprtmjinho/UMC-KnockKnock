@@ -11,7 +11,6 @@ class AddBFVC : UIViewController{
     var addBtn : UIButton = UIButton()
     var searchFriendBar : UISearchBar = UISearchBar()
 
-
     
     var tableView = UITableView(frame: .zero, style: .plain)
     
@@ -29,6 +28,7 @@ class AddBFVC : UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "찐친 추가하기"
+        view.handleEditFunc()
         view.backgroundColor = .white
 
         makeSubView()

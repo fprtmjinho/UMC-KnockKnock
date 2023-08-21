@@ -25,6 +25,7 @@ class AddGroupVC : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.handleEditFunc()
         view.backgroundColor = .white
         setNavigationBar()
         self.title = "모임 추가하기"

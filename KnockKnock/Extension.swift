@@ -175,3 +175,14 @@ extension BasePaddingLabel {
         
     }
 }
+
+extension UIView {
+    func handleEditFunc(){
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        self.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc func handleTap() {
+        self.endEditing(true)
+    }
+}

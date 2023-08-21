@@ -25,6 +25,7 @@ class GroupProfileVC : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.handleEditFunc()
         view.backgroundColor = .white
         setNavigationBar()
         editNavigationBarBtn()

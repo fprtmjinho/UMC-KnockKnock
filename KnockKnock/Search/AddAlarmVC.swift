@@ -70,6 +70,7 @@ class AddAlarmVC : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.handleEditFunc()
         view.backgroundColor = .white
         self.title = "연락 주기 및 예정 알림"
         setNavigationBar()

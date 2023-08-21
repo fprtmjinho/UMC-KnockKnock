@@ -27,6 +27,7 @@ class GroupMemberVC : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.handleEditFunc()
         view.backgroundColor = .white
         setNavigationBar()
         self.title = "추가 가능한 사람"

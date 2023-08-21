@@ -25,9 +25,9 @@ class MyPageController : UIViewController{
         super.viewDidLoad()
         self.view.backgroundColor = .white
         self.title = "내 페이지"
+        view.handleEditFunc()
         setNavigationBar()
         customNavigationBar()
-        
         makeSubView()
         makeConstraint()
         makeAddTarget()

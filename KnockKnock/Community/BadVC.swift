@@ -245,6 +245,7 @@ extension BadVC {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.handleEditFunc()
         makeSubView()
         makeConstraint()
         setupRefreshControl() // 새로고침

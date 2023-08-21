@@ -94,6 +94,7 @@ class AddFriendVC : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.handleEditFunc()
         view.backgroundColor = .white
         setNavigationBar()
         self.title = "연락처 추가"

@@ -41,10 +41,10 @@ class LoginThirdVC : UIViewController {
    
     let infoLabel : UILabel = {
        let label = UILabel()
-        label.text = "*8자리 이상 영문 대소문자, 숫자, 특수문자를 포함해야합니다."
+        label.text = "*8자리 이상 영문 대문자, 소문자, 숫자, 특수문자를 포함해야합니다.*"
         label.textColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
         label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 13)
+        label.font = UIFont.systemFont(ofSize: 12)
         return label
     }()
     
@@ -97,6 +97,7 @@ class LoginThirdVC : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.handleEditFunc()
         view.backgroundColor = .white
         setNavigationBar()
         makeSubView()
@@ -142,7 +143,8 @@ extension LoginThirdVC {
             passwordText.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
             passwordText.heightAnchor.constraint(equalToConstant: 45),
             infoLabel.topAnchor.constraint(equalTo: passwordText.bottomAnchor, constant: 5),
-            infoLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            infoLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            infoLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             
             
             passwordAlertLabel.topAnchor.constraint(equalTo: infoLabel.bottomAnchor, constant: 5),
