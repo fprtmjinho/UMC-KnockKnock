@@ -136,8 +136,7 @@ extension AddGroupVC {
         groupRequest(group:groupInfo)
     }
     func groupRequest(group:GroupInfo){
-//        let bestFriendURLString = "http://43.200.240.251/friends/\(friendData.choiceIndex)/bestFriend"
-        let groupURLString = "http://54.180.168.54/gathering/create"
+        let groupURLString = "http://\(Server.url)/gathering/create"
         guard let url = URL(string: groupURLString) else {
             print("서버 URL을 만들 수 없습니다.")
             return

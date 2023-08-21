@@ -253,8 +253,7 @@ extension AddFriendVC {
         }
     }
     func addFriendData(info:Info2){
-        //        let friendURLString = "http://43.200.240.251/friends/\(fre.choiceIndex!)/edit"
-        let friendURLString = "http://54.180.168.54/friends/create"
+        let friendURLString = "http://\(Server.url)/friends/create"
         let accessToken = UserDefaults.standard.string(forKey: "Authorization")
         print("friendURLString : \(friendURLString)")
         let friendData = PostFriendRequest(

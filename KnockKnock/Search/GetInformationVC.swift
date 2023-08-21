@@ -13,7 +13,7 @@ class GetInformationVC : UIViewController {
     var addBtn : UIButton = UIButton()
     var searchFriendBar : UISearchBar = UISearchBar()
 //    let friendURLString = "http://43.200.240.251/friends"
-    let friendURLString = "http://54.180.168.54/friends"
+    let friendURLString = "http://\(Server.url)/friends"
     
  
     

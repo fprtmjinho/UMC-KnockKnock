@@ -162,8 +162,7 @@ extension GroupVC {
 //        navigationController?.pushViewController(groupSelect, animated: true)
 //    }
     func getGroup(){
-        let groupURLString = "http://54.180.168.54/gathering"
-//        let friendURLString = "http://43.200.240.251/bestfriend"
+        let groupURLString = "http://\(Server.url)/gathering"
         guard let groupURL = URL(string: groupURLString) else {
             print("찐친 정보를 가져올 수 없습니다.")
             return

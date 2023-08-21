@@ -221,8 +221,7 @@ extension EditProfileVC {
         self.navigationController?.popViewController(animated: true)
     }
     func friendEditRequest(info:Info2){
-//        let friendURLString = "http://43.200.240.251/friends/\(fre.choiceIndex!)/edit"
-        let friendURLString = "http://54.180.168.54/friends/\(fre.choiceIndex!)/edit"
+        let friendURLString = "http://\(Server.url)/friends/\(fre.choiceIndex!)/edit"
         let accessToken = UserDefaults.standard.string(forKey: "Authorization")
         let friendData = PostFriendRequest(
             friendName: info.name,

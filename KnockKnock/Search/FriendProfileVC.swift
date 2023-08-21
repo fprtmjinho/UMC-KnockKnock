@@ -135,8 +135,7 @@ extension FriendProfileVC {
         print(friendData.dic1[key!])
     }
     @objc func bestFriendRequest() {
-//        let bestFriendURLString = "http://43.200.240.251/friends/\(friendData.choiceIndex)/bestFriend"
-        let bestFriendURLString = "http://54.180.168.54/friends/\(friendData.choiceIndex!)/bestFriend"
+        let bestFriendURLString = "http://\(Server.url)/friends/\(friendData.choiceIndex!)/bestFriend"
         guard let url = URL(string: bestFriendURLString) else {
             print("서버 URL을 만들 수 없습니다.")
             return

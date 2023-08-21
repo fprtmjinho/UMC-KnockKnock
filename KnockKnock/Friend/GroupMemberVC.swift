@@ -45,8 +45,7 @@ class GroupMemberVC : UIViewController {
 
 extension GroupMemberVC {
     @objc func getServerData(){
-        let friendURLString = "http://54.180.168.54/friends"
-//        let friendURLString = "http://43.200.240.251/friends"
+        let friendURLString = "http://\(Server.url)/friends"
         guard let friendURL = URL(string: friendURLString) else {
             print("친구 정보를 가져올 수 없습니다.")
             return

@@ -44,7 +44,6 @@ class SearchController : UIViewController{
     
     let Label1 : UILabel = {
         let label1 = UILabel()
-        label1.text = "Name님,\n연락하고 싶은 분이 생겼나요?"
         label1.textColor = .white
         label1.backgroundColor = .clear
         label1.font = UIFont.boldSystemFont(ofSize: 23)
@@ -91,7 +90,6 @@ class SearchController : UIViewController{
         setTitle()
     }
     override func viewDidAppear(_ animated: Bool) {
-        Label1.text = me.name
         getServerData()
 //        getData()
 //        sortData()
@@ -358,8 +356,7 @@ extension SearchController {
 //
 //    }
     @objc func getServerData(){
-        let friendURLString = "http://54.180.168.54/friends"
-//        let friendURLString = "http://43.200.240.251/friends"
+        let friendURLString = "http://\(Server.url)/friends"
         guard let friendURL = URL(string: friendURLString) else {
             print("친구 정보를 가져올 수 없습니다.")
             return
@@ -400,8 +397,7 @@ extension SearchController {
         }.resume()
     }
     @objc func deleteServerData(index:Int){
-        let friendURLString = "http://54.180.168.54/friends/\(index)"
-//        let friendURLString = "http://43.200.240.251/friends"
+        let friendURLString = "http://\(Server.url)friends/\(index)"
         guard let friendURL = URL(string: friendURLString) else {
             print("친구 정보를 가져올 수 없습니다.")
             return

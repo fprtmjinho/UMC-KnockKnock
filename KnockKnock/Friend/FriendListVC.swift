@@ -173,8 +173,7 @@ extension FriendListVC : UITableViewDelegate, UITableViewDataSource {
         return false;
     }
     func getBestFriend(){
-        let friendURLString = "http://54.180.168.54/bestfriend"
-//        let friendURLString = "http://43.200.240.251/bestfriend"
+        let friendURLString = "http://\(Server.url)/bestfriend"
         guard let friendURL = URL(string: friendURLString) else {
             print("찐친 정보를 가져올 수 없습니다.")
             return
