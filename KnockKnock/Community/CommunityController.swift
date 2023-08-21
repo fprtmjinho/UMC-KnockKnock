@@ -128,9 +128,9 @@ extension CommunityController: PageboyViewControllerDataSource {
 extension CommunityController: TMBarDataSource {
     func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
         if index == 0 {
-            return TMBarItem(title: "선 게시판")
+            return TMBarItem(title: "지킬 게시판")
         } else {
-            return TMBarItem(title: "악 게시판")
+            return TMBarItem(title: "하이드 게시판")
         }
     }
 }

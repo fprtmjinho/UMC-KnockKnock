@@ -180,7 +180,7 @@ class PostVC: UIViewController, CustomCommentCellDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = categoryValue == 0 ? "선 게시판" : "악 게시판"
+        self.title = categoryValue == 0 ? "지킬 게시판" : "하이드 게시판"
         view.backgroundColor = .white
         var image = UIImage(named: "more_vert")?.resizeImageTo(size: CGSize(width: 30, height: 30))
         let rightBarButton = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(postShowActionSheet))
