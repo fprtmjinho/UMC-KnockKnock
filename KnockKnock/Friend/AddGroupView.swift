@@ -243,8 +243,11 @@ extension AddGroupView {
         var nameCh: Array<String> = []
         var numberCh: Array<String> = []
         for member in group.groupMember{
-            nameCh.append(friendData.dic1[member]!.name)
-            numberCh.append(friendData.dic1[member]!.number)
+            nameCh.append(friendData.dic[member]!.name)
+                        numberCh.append(member)
+                        //진창이 수정한 서버랑 연결하는 부분
+                       // nameCh.append(friendData.dic1[member]!.name)
+                       //numberCh.append(friendData.dic1[member]!.number)
         }
         nameList = nameCh
         numberList = numberCh

@@ -227,12 +227,9 @@
 			children = (
 				008C498D2A714ED700BE6705 /* Post.swift */,
 				00E558F12A6FD3CC00EA73FC /* Login.swift */,
-<<<<<<< HEAD
 				E90B7CCC2A8A5BC500195BF1 /* Friend.swift */,
 				E90ACE022A921BAF0091977E /* GroupModel.swift */,
-=======
 				000AD7992A912F750022F18B /* Server.swift */,
->>>>>>> style4
 			);
 			path = Model;
 			sourceTree = "<group>";

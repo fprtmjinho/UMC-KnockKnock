@@ -194,13 +194,9 @@ extension LoginSecondVC {
         
         if sendEmail == true {
             let emailCheckBody = EmailCheckRequest(email: emailText.text!, code: emailCheckText.text!)
-<<<<<<< HEAD
-            let emailCheckURLString = "http://54.180.168.54/member/authentication"
-//            let emailCheckURLString = "http://43.200.240.251/member/authentication"
-=======
             
             let emailCheckURLString = "http://\(Server.url)/member/authentication"
->>>>>>> style4
+            
             guard let emailCheckURL = URL(string: emailCheckURLString) else {
                 print("이메일 인증코드 확인 URL 가져올 수 없음.")
                 return
@@ -267,13 +263,7 @@ extension LoginSecondVC {
             
             // 이메일 보내는 작업
             let emailRequestBody = EmailRequest(email: emailText.text!)
-<<<<<<< HEAD
-            let emailURLString = "http://54.180.168.54/member/emailcode"
-//            let emailURLString = "http://43.200.240.251/member/emailcode"
-=======
-            
             let emailURLString = "http://\(Server.url)/member/emailcode"
->>>>>>> style4
             guard let emailURL = URL(string: emailURLString) else {
                 print("이메일 인증 URL 가져올 수 없음.")
                 return
