@@ -162,9 +162,9 @@ extension MyPage {
         var memo: String = ""
         var link: String = "https://itunes.apple.com/app/knockknock"
         var share: String = ""
-        var paste: String = ""
+        var paste: String = "[낙낙(KnockKnock)]\n"
         if let label2 = messageView.label2.text{
-            paste = label2
+            paste = paste + label2
         }
         if let keyword = messageView.keywordtext.text{
             paste = paste + "\n관계 : " + keyword
