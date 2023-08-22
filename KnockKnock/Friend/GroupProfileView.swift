@@ -87,7 +87,7 @@ extension GroupProfileView : UITableViewDelegate, UITableViewDataSource {
     }
     
     func setTableView(){
-        membertableView.backgroundColor = .white
+        membertableView.backgroundColor = .systemGray6
         membertableView.separatorStyle = .none
         membertableView.register(UITableViewCell.self, forCellReuseIdentifier: "groupmemberList")
         
@@ -122,7 +122,7 @@ extension GroupProfileView {
             membertableView.topAnchor.constraint(equalTo: memberLabel.bottomAnchor, constant: 7),
             membertableView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
             membertableView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
-            membertableView.heightAnchor.constraint(equalToConstant:  CGFloat(nameList.count*60)),
+            membertableView.heightAnchor.constraint(equalToConstant: 100),
             
             groupAlarmLabel.topAnchor.constraint(equalTo: membertableView.bottomAnchor, constant: 30),
             groupAlarmLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),

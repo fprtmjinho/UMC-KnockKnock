@@ -25,6 +25,7 @@ class GroupProfileVC : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = groupName
         view.backgroundColor = .white
         setNavigationBar()
         handleEditFunc()

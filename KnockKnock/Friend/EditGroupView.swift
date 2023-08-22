@@ -32,7 +32,7 @@ class EditGroupView : UIView {
     }()
     
     //구성원에 대한 tableView
-    let memberTableview = UITableView(frame: .zero, style: .plain)
+    let membertableView = UITableView(frame: .zero, style: .plain)
     
     let addmemberBtn : UIButton = {
         let btn = UIButton()
@@ -140,7 +140,12 @@ extension EditGroupView : UITableViewDelegate, UITableViewDataSource {
     }
     
     func settableView(){
+        membertableView.backgroundColor = .systemGray6
+        membertableView.separatorStyle = .none
+        membertableView.register(UITableViewCell.self, forCellReuseIdentifier: "groupmemberList")
         
+        self.membertableView.dataSource = self
+        self.membertableView.delegate = self
     }
 }
 
@@ -150,7 +155,7 @@ extension EditGroupView {
         addSubview(nameLabel)
         addSubview(nametext)
         addSubview(memberLabel)
-        addSubview(memberTableview)
+        addSubview(membertableView)
         addSubview(addmemberBtn)
         addSubview(loopLabel)
         addSubview(loopOnceBtn)
@@ -164,7 +169,7 @@ extension EditGroupView {
         nameLabel.translatesAutoresizingMaskIntoConstraints  = false
         nametext.translatesAutoresizingMaskIntoConstraints = false
         memberLabel.translatesAutoresizingMaskIntoConstraints = false
-        memberTableview.translatesAutoresizingMaskIntoConstraints = false
+        membertableView.translatesAutoresizingMaskIntoConstraints = false
         addmemberBtn.translatesAutoresizingMaskIntoConstraints = false
         loopLabel.translatesAutoresizingMaskIntoConstraints = false
         loopOnceBtn.translatesAutoresizingMaskIntoConstraints = false
@@ -182,11 +187,11 @@ extension EditGroupView {
             
             memberLabel.topAnchor.constraint(equalTo: nametext.bottomAnchor, constant: 40),
             memberLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
-            memberTableview.topAnchor.constraint(equalTo: memberLabel.bottomAnchor, constant: 10),
-            memberTableview.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
-            memberTableview.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
-            memberTableview.heightAnchor.constraint(equalToConstant: CGFloat(nameList.count*60)),
-            addmemberBtn.topAnchor.constraint(equalTo: memberTableview.bottomAnchor, constant: 10),
+            membertableView.topAnchor.constraint(equalTo: memberLabel.bottomAnchor, constant: 10),
+            membertableView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
+            membertableView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
+            membertableView.heightAnchor.constraint(equalToConstant: 100),
+            addmemberBtn.topAnchor.constraint(equalTo: membertableView.bottomAnchor, constant: 10),
             addmemberBtn.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
             addmemberBtn.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
             addmemberBtn.heightAnchor.constraint(equalToConstant: 50),
