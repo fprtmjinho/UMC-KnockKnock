@@ -41,10 +41,10 @@ class LoginThirdVC : UIViewController {
    
     let infoLabel : UILabel = {
        let label = UILabel()
-        label.text = "*8자리 이상 영문 대소문자, 숫자, 특수문자를 포함해야합니다."
+        label.text = "*8자리 이상 영문 대문자, 소문자, 숫자, 특수문자를 포함해야합니다.*"
         label.textColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
         label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 13)
+        label.font = UIFont.systemFont(ofSize: 12, weight: .light)
         return label
     }()
     
