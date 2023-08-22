@@ -205,8 +205,8 @@ extension FriendProfileView {
         NSLayoutConstraint.activate([
             ProfileView.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
             ProfileView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 30),
-            ProfileView.widthAnchor.constraint(equalToConstant: 100),
-            ProfileView.heightAnchor.constraint(equalToConstant: 100),
+            ProfileView.widthAnchor.constraint(equalToConstant: 120),
+            ProfileView.heightAnchor.constraint(equalToConstant: 120),
             Number.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
             Number.topAnchor.constraint(equalTo: ProfileView.bottomAnchor, constant: 10),
             editBtn.centerXAnchor.constraint(equalTo: centerXAnchor),

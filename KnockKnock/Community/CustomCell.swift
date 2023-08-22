@@ -50,7 +50,7 @@ class CustomCell: UITableViewCell { // 게시글 커스텀
     
     let likesLabel: UILabel = { // 좋아요 개수
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.font = UIFont.systemFont(ofSize: 14)
         return label
     }()
     
@@ -62,7 +62,7 @@ class CustomCell: UITableViewCell { // 게시글 커스텀
     
     let commentsLabel: UILabel = { // 댓글 개수
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.font = UIFont.systemFont(ofSize: 14)
         return label
     }()
     
@@ -180,7 +180,7 @@ extension CustomCell {
             likesView.heightAnchor.constraint(equalToConstant: 20),
             
             likesLabel.topAnchor.constraint(equalTo: imagesView.bottomAnchor, constant: 4),
-            likesLabel.leadingAnchor.constraint(equalTo: likesView.trailingAnchor, constant: 10),
+            likesLabel.leadingAnchor.constraint(equalTo: likesView.trailingAnchor, constant: 5),
             likesLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
             
             commentsView.topAnchor.constraint(equalTo: imagesView.bottomAnchor, constant: 4),
@@ -190,7 +190,7 @@ extension CustomCell {
             commentsView.heightAnchor.constraint(equalToConstant: 20),
             
             commentsLabel.topAnchor.constraint(equalTo: imagesView.bottomAnchor, constant: 4),
-            commentsLabel.leadingAnchor.constraint(equalTo: commentsView.trailingAnchor, constant: 10),
+            commentsLabel.leadingAnchor.constraint(equalTo: commentsView.trailingAnchor, constant: 5),
             commentsLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
             
             shareButton.topAnchor.constraint(equalTo: imagesView.bottomAnchor, constant: 4),

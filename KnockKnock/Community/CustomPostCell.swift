@@ -83,7 +83,7 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
     
     let likesLabel: UILabel = { // 좋아요 개수
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.font = UIFont.systemFont(ofSize: 14)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -97,7 +97,7 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
     
     let commentsLabel: UILabel = { // 댓글 개수
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.font = UIFont.systemFont(ofSize: 14)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -187,7 +187,7 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
             likesButton.heightAnchor.constraint(equalToConstant: 20),
             
             likesLabel.topAnchor.constraint(equalTo: imagesView.bottomAnchor, constant: verticalMargin),
-            likesLabel.leadingAnchor.constraint(equalTo: likesButton.trailingAnchor, constant: 10),
+            likesLabel.leadingAnchor.constraint(equalTo: likesButton.trailingAnchor, constant: 5),
             likesLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
             
             commentsView.topAnchor.constraint(equalTo: imagesView.bottomAnchor, constant: verticalMargin),
@@ -197,7 +197,7 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
             commentsView.heightAnchor.constraint(equalToConstant: 20),
             
             commentsLabel.topAnchor.constraint(equalTo: imagesView.bottomAnchor, constant: verticalMargin),
-            commentsLabel.leadingAnchor.constraint(equalTo: commentsView.trailingAnchor, constant: 10),
+            commentsLabel.leadingAnchor.constraint(equalTo: commentsView.trailingAnchor, constant: 5),
             commentsLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
             
             shareButton.topAnchor.constraint(equalTo: imagesView.bottomAnchor, constant: verticalMargin),
@@ -242,7 +242,7 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
             likesButton.heightAnchor.constraint(equalToConstant: 20),
             
             likesLabel.topAnchor.constraint(equalTo: contentLabel.bottomAnchor, constant: verticalMargin),
-            likesLabel.leadingAnchor.constraint(equalTo: likesButton.trailingAnchor, constant: 10),
+            likesLabel.leadingAnchor.constraint(equalTo: likesButton.trailingAnchor, constant: 5),
             likesLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
             
             commentsView.topAnchor.constraint(equalTo: contentLabel.bottomAnchor, constant: verticalMargin),
@@ -252,7 +252,7 @@ class CustomPostCell: UITableViewCell { // 게시글 커스텀
             commentsView.heightAnchor.constraint(equalToConstant: 20),
             
             commentsLabel.topAnchor.constraint(equalTo: contentLabel.bottomAnchor, constant: verticalMargin),
-            commentsLabel.leadingAnchor.constraint(equalTo: commentsView.trailingAnchor, constant: 10),
+            commentsLabel.leadingAnchor.constraint(equalTo: commentsView.trailingAnchor, constant: 5),
             commentsLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
             
             shareButton.topAnchor.constraint(equalTo: contentLabel.bottomAnchor, constant: verticalMargin),

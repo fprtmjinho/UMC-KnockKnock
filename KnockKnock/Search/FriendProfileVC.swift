@@ -33,18 +33,18 @@ class FriendProfileVC : UIViewController {
         setNavigationBar()
         handleEditFunc()
         getData()
+        setLabel()
         makeScrollView()
         makeConstraint()
         makeAddTarget()
-        setLabel()
-       
+        
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        makeConstraint()
         getData()
-        makeAddTarget()
         setLabel()
+        makeConstraint()
+        makeAddTarget()
     }
     
 }
@@ -172,8 +172,12 @@ extension FriendProfileVC {
         }else{
             friendprofileView.BfSwitch.isOn = false
         }
-        friendprofileView.ProfileView.image = friendData.dic1[friendData.choiceIndex!]!.image
-        friendprofileView.ProfileView.layer.cornerRadius = friendprofileView.ProfileView.frame.width / 2
+        
+        var image = friendData.dic1[friendData.choiceIndex!]?.image
+        image = image?.resizeImageTo(size: CGSize(width: 120, height: 120))
+        print("width : \(image?.size.width), height : \(image?.size.height)")
+        friendprofileView.ProfileView.image = image
+        friendprofileView.ProfileView.layer.cornerRadius = 60
         friendprofileView.ProfileView.clipsToBounds = true
     }
     @objc func getData(){
