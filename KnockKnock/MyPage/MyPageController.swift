@@ -41,9 +41,14 @@ class MyPageController : UIViewController{
         makeAddTarget()
         setScrollView()
         if let imageData = UserDefaults.standard.data(forKey: "ProfileImage") {
-            if let image = UIImage(data: imageData) {
+            if var image = UIImage(data: imageData) {
                 // 이미지 뷰에 이미지 설정
+                image = image.resizeImageTo(size: CGSize(width: 120, height: 120))!
+               // print("width : \(image?.size.width), height : \(image?.size.height)")
                 myPage.ProfileView.image = image
+                myPage.ProfileView.layer.cornerRadius = 50
+                myPage.ProfileView.clipsToBounds = true
+                
             }
         }
     }

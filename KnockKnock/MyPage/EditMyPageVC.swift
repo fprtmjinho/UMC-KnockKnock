@@ -28,10 +28,15 @@ class EditMyPageVC : UIViewController {
         profileView.clipsToBounds = true
         profileView.layer.masksToBounds = true // 마스크 적용
         if let imageData = UserDefaults.standard.data(forKey: "ProfileImage") {
-            if let image = UIImage(data: imageData) {
+            if var image = UIImage(data: imageData) {
                 // 이미지 뷰에 이미지 설정
+                image = image.resizeImageTo(size: CGSize(width: 120, height: 120))!
+                // print("width : \(image?.size.width), height : \(image?.size.height)")
                 profileView.image = image
+                profileView.layer.cornerRadius = 50
+                profileView.clipsToBounds = true
             }
+            
         }
         return profileView
     }()
