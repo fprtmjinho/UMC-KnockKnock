@@ -29,3 +29,16 @@ struct PostGroupResponse: Codable{
     let message: String
     let data: String
 }
+
+struct Gathering: Codable {
+    let title: String
+    let gatheringMembers: [GatheringMember]
+    let location: String
+}
+
+struct GatheringMember: Codable {
+    let friendId: Int
+    let friendName: String
+    let phoneNumber: String?
+    let bestFriend: Bool
+}
