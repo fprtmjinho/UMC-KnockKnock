@@ -156,11 +156,13 @@ extension GroupMemberVC {
         navigationController?.popViewController(animated: true)
     }
     @objc func setData(){
-        var memCh: [String] = []
+//        var memCh: [String] = []
+        var memCh: [Int] = []
              var i = 0
              for check in checked{
                  if check{
-                     memCh.append(numberList[i])
+//                     memCh.append(numberList[i])
+                     memCh.append(keyList[i])
                  }
                  i+=1
              }

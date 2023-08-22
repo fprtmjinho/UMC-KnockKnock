@@ -87,26 +87,7 @@ class AddGroupView : UIView {
         getData()
         sortData()
 
-        //아래 지도 코드들을 함수화해서 서버 통신으로 받아온 좌표를 lat,lng에 넣어주면 지도 위치 변경 및 마커 설정 가능
-        //지도 설명 잘 되어 있는 링크 https://navermaps.github.io/ios-map-sdk/guide-ko/5-2.html
-        //지도 좌표
-        naverMapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat:37.498015, lng:127.027974)))
-        //마커좌표
-        marker.position = NMGLatLng(lat: 37.498015, lng: 127.027974)
-        //마커 크기
-        marker.width = 25
-        marker.height = 40
-        //글씨 너비
-        marker.captionRequestedWidth = 100
-        //글씨
-        marker.captionText = "강남역"
-        //글씨 위치
-        marker.captionAligns = [NMFAlignType.top]
-        //글씨 간격
-        marker.captionOffset = 15
-        //마커를 네이버 뷰에 띄우는
-        marker.mapView = naverMapView
-
+        setMap()
         settableView()
 
         makeSubView()
@@ -239,15 +220,37 @@ extension AddGroupView {
             //naverMapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat:, lng:)))
         }
     }
+    func setMap(){
+        //아래 지도 코드들을 함수화해서 서버 통신으로 받아온 좌표를 lat,lng에 넣어주면 지도 위치 변경 및 마커 설정 가능
+        //지도 설명 잘 되어 있는 링크 https://navermaps.github.io/ios-map-sdk/guide-ko/5-2.html
+        //지도 좌표
+        naverMapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat:37.498015, lng:127.027974)))
+        //마커좌표
+        marker.position = NMGLatLng(lat: 37.498015, lng: 127.027974)
+        //마커 크기
+        marker.width = 25
+        marker.height = 40
+        //글씨 너비
+        marker.captionRequestedWidth = 100
+        //글씨
+        marker.captionText = "강남역"
+        //글씨 위치
+        marker.captionAligns = [NMFAlignType.top]
+        //글씨 간격
+        marker.captionOffset = 15
+        //마커를 네이버 뷰에 띄우는
+        marker.mapView = naverMapView
+
+    }
     func getData(){
         var nameCh: Array<String> = []
         var numberCh: Array<String> = []
         for member in group.groupMember{
-            nameCh.append(friendData.dic[member]!.name)
-                        numberCh.append(member)
-                        //진창이 수정한 서버랑 연결하는 부분
-                       // nameCh.append(friendData.dic1[member]!.name)
-                       //numberCh.append(friendData.dic1[member]!.number)
+//            nameCh.append(friendData.dic[member]!.name)
+//            numberCh.append(member)
+            //진창이 수정한 서버랑 연결하는 부분
+            nameCh.append(friendData.dic1[member]!.name)
+            numberCh.append(friendData.dic1[member]!.number)
         }
         nameList = nameCh
         numberList = numberCh

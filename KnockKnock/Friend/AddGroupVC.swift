@@ -104,7 +104,7 @@ extension AddGroupVC {
         if let name = addGroupView.nametext.text{
             groupName = name
         }
-        for key in addGroupView.keyList{
+        for key in group.groupMember{
             groupMember.append(key)
         }
         if let gPlace = addGroupView.placetext.text{
