@@ -13,7 +13,6 @@ class MyData {
     var nickName: String = ""
     var sex: String = ""
     var birthday: String = ""
-    var profileImageUrl: String = ""
     //내 멘트
     var myText: String = ""
     

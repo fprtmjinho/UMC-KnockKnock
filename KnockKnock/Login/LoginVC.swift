@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 class LoginVC : UIViewController {
     
     let loginURLString = "http://\(Server.url)/member/login"
@@ -191,30 +192,36 @@ class LoginVC : UIViewController {
                         // User 정보를 가져오기 위한 URL
                         let userURLString = "http://\(Server.url)/member"
                         
-                            guard let userURL = URL(string: userURLString) else {
-                                self.showAlert(message: "유저 정보를 가져올 수 없습니다.")
+                        guard let userURL = URL(string: userURLString) else {
+                            self.showAlert(message: "유저 정보를 가져올 수 없습니다.")
+                            return
+                        }
+                        
+                        var userRequest = URLRequest(url: userURL)
+                        userRequest.httpMethod = "GET"
+                        userRequest.addValue(accessToken, forHTTPHeaderField: "Authorization")
+                        URLSession.shared.dataTask(with: userRequest) { data, response, error in
+                            
+                            guard let data = data else {
+                                self.showAlert(message: "유저 정보를 받아오지 못했습니다.")
                                 return
                             }
-
-                            var userRequest = URLRequest(url: userURL)
-                            userRequest.httpMethod = "GET"
-                            userRequest.addValue(accessToken, forHTTPHeaderField: "Authorization")
-                            URLSession.shared.dataTask(with: userRequest) { data, response, error in
-                                
-                                guard let data = data else {
-                                    self.showAlert(message: "유저 정보를 받아오지 못했습니다.")
-                                    return
+                            do {
+                                let user = try JSONDecoder().decode(User.self, from: data)
+                                print("유저 정보: \(user)")
+                                var me = MyData.shared
+                                me.name = user.nickName
+                                if let profileImageURL = URL(string: user.profileImageUrl) {
+                                    SDWebImageDownloader.shared.downloadImage(with: profileImageURL) { image, _, _, _ in
+                                        if let imageData = image?.jpegData(compressionQuality: 1.0) {
+                                            UserDefaults.standard.set(imageData, forKey: "ProfileImage")
+                                        }
+                                    }
                                 }
-                                do {
-                                    let user = try JSONDecoder().decode(User.self, from: data)
-                                    print("유저 정보: \(user)")
-                                    var me = MyData.shared
-                                    me.name = user.nickName
-                                    me.profileImageUrl = user.profileImageUrl
-                                } catch {
-                                    self.showAlert(message: "유저 정보 디코딩에 실패하였습니다.")
-                                }
-                            }.resume()
+                            } catch {
+                                self.showAlert(message: "유저 정보 디코딩에 실패하였습니다.")
+                            }
+                        }.resume()
                         
                         let tabBarController = TabBarController()
                         tabBarController.modalPresentationStyle = .fullScreen
@@ -390,16 +397,16 @@ extension LoginVC{
         notiContent.title = "'KnockKnock'에서 알림을 보내고자 합니다."
         notiContent.body = "경고, 사운드 및 아이콘 배지가 알림에 포함될 수 있습니다. 설정에서 이를 구성할 수 있습니다."
         notiContent.userInfo = ["targetScene": "LoginVC"] // 푸시 받을때 오는 데이터
-
+        
         // 알림이 trigger되는 시간 설정
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: seconds, repeats: false)
-
+        
         let request = UNNotificationRequest(
             identifier: UUID().uuidString,
             content: notiContent,
             trigger: trigger
         )
-
+        
         userNotiCenter.add(request) { (error) in
             print(#function, error)
         }

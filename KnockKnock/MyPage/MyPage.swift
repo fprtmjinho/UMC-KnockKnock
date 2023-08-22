@@ -20,15 +20,22 @@ class MyPage : UIView{
     
     
     let ProfileView : UIImageView = {
-       var profileView = UIImageView()
-        let config = UIImage.SymbolConfiguration(paletteColors: [#colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)])
-        profileView.image = UIImage(systemName: "person.circle.fill", withConfiguration: config)
-        profileView.layer.cornerRadius = 40
+        var profileView = UIImageView()
+        profileView.layer.cornerRadius = 50
+        profileView.clipsToBounds = true
+        profileView.layer.masksToBounds = true // 마스크 적용
+        if let imageData = UserDefaults.standard.data(forKey: "ProfileImage") {
+            if let image = UIImage(data: imageData) {
+                // 이미지 뷰에 이미지 설정
+                profileView.image = image
+            }
+        }
         return profileView
     }()
+
     
     let editBtn : UIButton = {
-       let btn = UIButton()
+        let btn = UIButton()
         btn.setTitle("편집 >", for: .normal)
         btn.setTitleColor(.gray, for: .normal)
         btn.titleLabel?.font = UIFont.systemFont(ofSize: 12)
@@ -36,38 +43,38 @@ class MyPage : UIView{
     }()
     
     let textTitle : UILabel = {
-       let texttitle =  UILabel()
+        let texttitle =  UILabel()
         texttitle.text = "내 문자 글"
         texttitle.font = UIFont.boldSystemFont(ofSize: 17)
         return texttitle
     }()
     
     let messageView : MyMessage1 = {
-       let message = MyMessage1()
+        let message = MyMessage1()
         message.layer.cornerRadius = 10
         return message
     }()
     
     let changeMessageBtn : UIButton = {
-       //문자 글 뷰 변환 버튼
+        //문자 글 뷰 변환 버튼
         let btn = UIButton()
         let config = UIImage.SymbolConfiguration(paletteColors: [UIColor.systemGray3])
         let image = UIImage(systemName: "arrow.triangle.2.circlepath", withConfiguration: config)
         btn.setImage(image, for: .normal)
         return btn
     }()
-
+    
     
     let copyBtn : UIButton = {
         let btn = UIButton()
-           var title = AttributedString("글 전체 복사")
-           title.font = UIFont.boldSystemFont(ofSize: 15)
-           var config = UIButton.Configuration.filled()
-           config.cornerStyle = .capsule
-           config.baseBackgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
-           config.attributedTitle = title
-           btn.configuration = config
-           return btn
+        var title = AttributedString("글 전체 복사")
+        title.font = UIFont.boldSystemFont(ofSize: 15)
+        var config = UIButton.Configuration.filled()
+        config.cornerStyle = .capsule
+        config.baseBackgroundColor = #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)
+        config.attributedTitle = title
+        btn.configuration = config
+        return btn
     }()
     
     
@@ -76,7 +83,7 @@ class MyPage : UIView{
         makeSubView()
         makeConstraint()
         makeAddTarget()
-      
+        
     }
     
     required init?(coder _: NSCoder) {
@@ -95,36 +102,36 @@ extension MyPage {
         messageView.translatesAutoresizingMaskIntoConstraints = false
         copyBtn.translatesAutoresizingMaskIntoConstraints = false
         changeMessageBtn.translatesAutoresizingMaskIntoConstraints = false
-      
+        
         
         NSLayoutConstraint.activate([
-        ProfileView.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
-        ProfileView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 30),
-        ProfileView.widthAnchor.constraint(equalToConstant: 100),
-        ProfileView.heightAnchor.constraint(equalToConstant: 100),
-        Name.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
-        Name.topAnchor.constraint(equalTo: ProfileView.bottomAnchor, constant: 7),
-        editBtn.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-        editBtn.topAnchor.constraint(equalTo: Name.bottomAnchor, constant: 2),
-        
-        textTitle.topAnchor.constraint(equalTo: editBtn.bottomAnchor, constant: 20),
-        textTitle.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 30),
-        
-        changeMessageBtn.topAnchor.constraint(equalTo: textTitle.topAnchor, constant: -5),
-        changeMessageBtn.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
-        changeMessageBtn.widthAnchor.constraint(equalToConstant: 35),
-        changeMessageBtn.heightAnchor.constraint(equalToConstant: 35),
-        
-        messageView.topAnchor.constraint(equalTo: textTitle.bottomAnchor, constant: 8),
-        messageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
-        messageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
-        messageView.heightAnchor.constraint(equalToConstant: 250),
-        
-        copyBtn.topAnchor.constraint(equalTo: messageView.bottomAnchor, constant: 8),
-        copyBtn.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 30),
-        copyBtn.widthAnchor.constraint(equalToConstant: 120),
-        copyBtn.heightAnchor.constraint(equalToConstant: 35),
-        
+            ProfileView.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
+            ProfileView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 30),
+            ProfileView.widthAnchor.constraint(equalToConstant: 100),
+            ProfileView.heightAnchor.constraint(equalToConstant: 100),
+            Name.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
+            Name.topAnchor.constraint(equalTo: ProfileView.bottomAnchor, constant: 7),
+            editBtn.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            editBtn.topAnchor.constraint(equalTo: Name.bottomAnchor, constant: 2),
+            
+            textTitle.topAnchor.constraint(equalTo: editBtn.bottomAnchor, constant: 20),
+            textTitle.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            
+            changeMessageBtn.topAnchor.constraint(equalTo: textTitle.topAnchor, constant: -5),
+            changeMessageBtn.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
+            changeMessageBtn.widthAnchor.constraint(equalToConstant: 35),
+            changeMessageBtn.heightAnchor.constraint(equalToConstant: 35),
+            
+            messageView.topAnchor.constraint(equalTo: textTitle.bottomAnchor, constant: 8),
+            messageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
+            messageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
+            messageView.heightAnchor.constraint(equalToConstant: 250),
+            
+            copyBtn.topAnchor.constraint(equalTo: messageView.bottomAnchor, constant: 8),
+            copyBtn.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            copyBtn.widthAnchor.constraint(equalToConstant: 120),
+            copyBtn.heightAnchor.constraint(equalToConstant: 35),
+            
         ])
         
     }
@@ -172,9 +179,9 @@ extension MyPage {
         if let memotext = messageView.memotext.text{
             paste = paste + "\n메모 : " + memotext
         }
-//        if let shareText = messageView.lastLabel.text{
-//            share = shareText
-//        }
+        //        if let shareText = messageView.lastLabel.text{
+        //            share = shareText
+        //        }
         paste = paste + "\n" + link + "\n" + "다운로드 여부와 상관없이 해당 채팅창에서 답장을 이어가주세요. 물론 받은 사람 마음입니다!"
         UIPasteboard.general.string = paste
     }
