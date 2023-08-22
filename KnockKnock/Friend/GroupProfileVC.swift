@@ -35,6 +35,7 @@ class GroupProfileVC : UIViewController {
         makeSubView()
         makeConstraint()
         makeAddTarget()
+        location()
         
         print("group : \(group.choiceIndex!)")
         print("index : \(UserDefaults.standard.integer(forKey: "index"))")
@@ -133,22 +134,46 @@ extension GroupProfileVC {
                     numberCh.append(member.phoneNumber!)
                     bestCh.append(member.bestFriend)
                 }
-                self.groupProfileView.nameList = nameCh
-                self.groupProfileView.numberList = numberCh
-                self.groupProfileView.bestFriendList = bestCh
-                self.title = decodedData.title
-                self.searchPlace = decodedData.location
-                self.groupProfileView.place.text = self.searchPlace
-                print("\(decodedData)")
+                DispatchQueue.main.async {
+                        self.groupProfileView.nameList = nameCh
+                        self.groupProfileView.numberList = numberCh
+                        self.groupProfileView.bestFriendList = bestCh
+                        self.title = decodedData.title
+                        self.searchPlace = decodedData.location
+                        self.groupProfileView.place.text = self.searchPlace
+                        self.groupProfileView.sortData()
+                        self.groupProfileView.membertableView.reloadData()
+                    }
             } catch {
                 print("그룹 정보 디코딩에 실패하였습니다.")
             }
-            DispatchQueue.main.async {
-//                self.getData()
-                self.groupProfileView.sortData()
-                self.groupProfileView.membertableView.reloadData()
+        }.resume()
+    }
+    
+    func location() {
+        let URLString = "http://\(Server.url)/gathering/\(UserDefaults.standard.integer(forKey: "index"))/location"
+        
+        print(URLString)
+        
+        guard let url = URL(string: URLString) else {
+            print("서버 URL을 만들 수 없습니다.")
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let httpResponse = response as? HTTPURLResponse else {
+                print("올바른 HTTP 응답이 아닙니다.")
+                return
             }
-            
+            let statusCode = httpResponse.statusCode
+            print("HTTP 상태 코드: \(statusCode)")
+            guard let data = data else {
+                print("그룹 정보를 받아오지 못했습니다.")
+                return
+            }
         }.resume()
     }
     

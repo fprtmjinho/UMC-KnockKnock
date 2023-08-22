@@ -61,18 +61,6 @@ class AddGroupView : UIView {
         return text
     }()
     
-    let placeSearchButton : UIButton = {
-        let btn = UIButton()
-        btn.setTitle("검색하기", for: .normal)
-        btn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-        btn.setTitleColor(#colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1), for: .normal)
-        btn.layer.borderWidth = 1
-        btn.layer.borderColor = UIColor.systemGray4.cgColor
-        return btn
-    }()
-    
-    
-    let naverMapView = NMFMapView(frame: UIScreen.main.bounds)
     let marker = NMFMarker()
     
     let friendData = Friends.shared
@@ -87,12 +75,10 @@ class AddGroupView : UIView {
         getData()
         sortData()
 
-        setMap()
         settableView()
 
         makeSubView()
         makeConstraint()
-        makeAddTarget()
     }
     
     required init?(coder _: NSCoder) {
@@ -154,8 +140,6 @@ extension AddGroupView {
         addSubview(addmemberBtn)
         addSubview(placeLabel)
         addSubview(placetext)
-        addSubview(placeSearchButton)
-        addSubview(naverMapView)
     }
     
     func makeConstraint(){
@@ -166,8 +150,6 @@ extension AddGroupView {
         addmemberBtn.translatesAutoresizingMaskIntoConstraints = false
         placeLabel.translatesAutoresizingMaskIntoConstraints = false
         placetext.translatesAutoresizingMaskIntoConstraints = false
-        placeSearchButton.translatesAutoresizingMaskIntoConstraints = false
-        naverMapView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             
@@ -195,20 +177,10 @@ extension AddGroupView {
             placetext.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
             placetext.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
             placetext.heightAnchor.constraint(equalToConstant: 45),
-            placeSearchButton.topAnchor.constraint(equalTo: placetext.bottomAnchor, constant: 10),
-            placeSearchButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
-            placeSearchButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
-            placeSearchButton.heightAnchor.constraint(equalToConstant: 50),
             
-            naverMapView.topAnchor.constraint(equalTo: placeSearchButton.bottomAnchor, constant: 40),
-            naverMapView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
-            naverMapView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
-            naverMapView.heightAnchor.constraint(equalToConstant: 300),
         ])
     }
-    func makeAddTarget(){
-        placeSearchButton.addTarget(self, action: #selector(searchMap(_:)), for: .touchUpInside)
-    }
+    
     @objc func searchMap(_:UITextField){
         var searchText: String = ""
         if let text = placetext.text{
@@ -220,28 +192,7 @@ extension AddGroupView {
             //naverMapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat:, lng:)))
         }
     }
-    func setMap(){
-        //아래 지도 코드들을 함수화해서 서버 통신으로 받아온 좌표를 lat,lng에 넣어주면 지도 위치 변경 및 마커 설정 가능
-        //지도 설명 잘 되어 있는 링크 https://navermaps.github.io/ios-map-sdk/guide-ko/5-2.html
-        //지도 좌표
-        naverMapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat:37.498015, lng:127.027974)))
-        //마커좌표
-        marker.position = NMGLatLng(lat: 37.498015, lng: 127.027974)
-        //마커 크기
-        marker.width = 25
-        marker.height = 40
-        //글씨 너비
-        marker.captionRequestedWidth = 100
-        //글씨
-        marker.captionText = "강남역"
-        //글씨 위치
-        marker.captionAligns = [NMFAlignType.top]
-        //글씨 간격
-        marker.captionOffset = 15
-        //마커를 네이버 뷰에 띄우는
-        marker.mapView = naverMapView
-
-    }
+    
     func getData(){
         var nameCh: Array<String> = []
         var numberCh: Array<String> = []
