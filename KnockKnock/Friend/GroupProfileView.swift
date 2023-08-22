@@ -12,7 +12,7 @@ class GroupProfileView : UIView {
     let memberLabel : UILabel = {
        let label = UILabel()
         label.text = "모임 구성원"
-        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.font = UIFont.boldSystemFont(ofSize: 17)
         return label
     }()
     
@@ -21,7 +21,7 @@ class GroupProfileView : UIView {
     let groupAlarmLabel : UILabel = {
         let label = UILabel()
          label.text = "모임 연락 알림"
-        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.font = UIFont.boldSystemFont(ofSize: 17)
          return label
     }()
     
@@ -33,8 +33,16 @@ class GroupProfileView : UIView {
     let placeLabel : UILabel = {
         let label = UILabel()
          label.text = "만남 장소"
-        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.font = UIFont.boldSystemFont(ofSize: 17)
          return label
+    }()
+    
+    let place : BasePaddingLabel = {
+       let label = BasePaddingLabel()
+        label.layer.borderWidth = 0.5
+        label.layer.borderColor = UIColor.systemGray4.cgColor
+        label.font = UIFont.systemFont(ofSize: 15)
+        return label
     }()
     
     let naverMapView = NMFMapView(frame: UIScreen.main.bounds)
@@ -117,6 +125,7 @@ extension GroupProfileView {
         addSubview(groupAlarmLabel)
         addSubview(groupAlarmSwitch)
         addSubview(placeLabel)
+        addSubview(place)
         addSubview(naverMapView)
     }
     func makeConstraint(){
@@ -125,6 +134,7 @@ extension GroupProfileView {
         groupAlarmLabel.translatesAutoresizingMaskIntoConstraints = false
         groupAlarmSwitch.translatesAutoresizingMaskIntoConstraints = false
         placeLabel.translatesAutoresizingMaskIntoConstraints = false
+        place.translatesAutoresizingMaskIntoConstraints = false
         naverMapView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -143,8 +153,12 @@ extension GroupProfileView {
             
             placeLabel.topAnchor.constraint(equalTo: groupAlarmSwitch.bottomAnchor, constant: 30),
             placeLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
+            
+            place.topAnchor.constraint(equalTo: placeLabel.bottomAnchor, constant: 7),
+            place.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
+            place.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
         
-            naverMapView.topAnchor.constraint(equalTo: placeLabel.bottomAnchor, constant: 40),
+            naverMapView.topAnchor.constraint(equalTo: place.bottomAnchor, constant: 7),
             naverMapView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
             naverMapView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
             naverMapView.heightAnchor.constraint(equalToConstant: 300),
@@ -168,25 +182,27 @@ extension GroupProfileView {
         
     }
     func setMap(){
-        //아래 지도 코드들을 함수화해서 서버 통신으로 받아온 좌표를 lat,lng에 넣어주면 지도 위치 변경 및 마커 설정 가능
-        //지도 설명 잘 되어 있는 링크 https://navermaps.github.io/ios-map-sdk/guide-ko/5-2.html
-        //지도 좌표
-        naverMapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat:37.498015, lng:127.027974)))
-        //마커좌표
-        marker.position = NMGLatLng(lat: 37.498015, lng: 127.027974)
-        //마커 크기
-        marker.width = 25
-        marker.height = 40
-        //글씨 너비
-        marker.captionRequestedWidth = 100
-        //글씨
-        marker.captionText = "강남역"
-        //글씨 위치
-        marker.captionAligns = [NMFAlignType.top]
-        //글씨 간격
-        marker.captionOffset = 15
-        //마커를 네이버 뷰에 띄우는
-        marker.mapView = naverMapView
-
+        
+       
+            //아래 지도 코드들을 함수화해서 서버 통신으로 받아온 좌표를 lat,lng에 넣어주면 지도 위치 변경 및 마커 설정 가능
+            //지도 설명 잘 되어 있는 링크 https://navermaps.github.io/ios-map-sdk/guide-ko/5-2.html
+            //지도 좌표
+            self.naverMapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat:37.498015, lng:127.027974)))
+            //마커좌표
+            self.marker.position = NMGLatLng(lat: 37.498015, lng: 127.027974)
+            //마커 크기
+            self.marker.width = 25
+            self.marker.height = 40
+            //글씨 너비
+            self.marker.captionRequestedWidth = 100
+            //글씨
+            self.marker.captionText = "강남역"
+            //글씨 위치
+            self.marker.captionAligns = [NMFAlignType.top]
+            //글씨 간격
+            self.marker.captionOffset = 15
+            //마커를 네이버 뷰에 띄우는
+            self.marker.mapView = self.naverMapView
+        
     }
 }

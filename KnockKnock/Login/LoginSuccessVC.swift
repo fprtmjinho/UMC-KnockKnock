@@ -67,10 +67,11 @@ class LoginSuccessVC : UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setNavigationBar()
-        debugingFunction()
+        
         makeSubView()
         makeConstraint()
         makeAddTarget()
+        debugingFunction()
         
     }
     
@@ -200,7 +201,7 @@ extension LoginSuccessVC {
     
     @objc func setName(){
         welcomeLabel.text = "\(nickName)님 환영합니다!"
-        //nickName이 안뜸 흠
+        print(nickName)
     }
     func deleteData(){
         UserDefaults.standard.removeObject(forKey: "nickName")

@@ -138,6 +138,7 @@ extension GroupProfileVC {
                 self.groupProfileView.bestFriendList = bestCh
                 self.title = decodedData.title
                 self.searchPlace = decodedData.location
+                self.groupProfileView.place.text = self.searchPlace
                 print("\(decodedData)")
             } catch {
                 print("그룹 정보 디코딩에 실패하였습니다.")

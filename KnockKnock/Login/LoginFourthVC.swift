@@ -31,7 +31,7 @@ class LoginFourthVC: UIViewController, UIImagePickerControllerDelegate, UINaviga
     
     let profileLabel2: UILabel = {
         let label = UILabel()
-        label.text = "마음에 드는 샐카 사진이 있나요? 등록해주세요!"
+        label.text = "마음에 드는 셀카 사진이 있나요? 등록해주세요!"
         label.font = UIFont.systemFont(ofSize: 18)
         return label
     }()
@@ -138,7 +138,7 @@ class LoginFourthVC: UIViewController, UIImagePickerControllerDelegate, UINaviga
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        
+        setNavigationBar()
         makeSubView()
         makeConstraint()
         makeAddTarget()
