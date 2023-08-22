@@ -22,6 +22,7 @@
 		00AF03352A935BD800BE4B5F /* LoginFourthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00AF03342A935BD800BE4B5F /* LoginFourthVC.swift */; };
 		00E558F22A6FD3CC00EA73FC /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E558F12A6FD3CC00EA73FC /* Login.swift */; };
 		00E648552A7A2C05005AB40B /* PrivacyPolicyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E648542A7A2C05005AB40B /* PrivacyPolicyVC.swift */; };
+		00F703362A946F57008C0EC6 /* 스플래쉬.png in Resources */ = {isa = PBXBuildFile; fileRef = 00F703352A946F57008C0EC6 /* 스플래쉬.png */; };
 		00FD26582A5CE1520013E169 /* GuideVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FD26572A5CE1520013E169 /* GuideVC.swift */; };
 		315929B221AF3730C27FE966 /* Pods_KnockKnock_KnockKnockUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B949C73879C04B9FC4ACE3EA /* Pods_KnockKnock_KnockKnockUITests.framework */; };
 		A0E7635362411C1ACB51A8CD /* Pods_KnockKnockTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E8F0D32BD1B74DCFCEDEE5F /* Pods_KnockKnockTests.framework */; };
@@ -61,7 +62,6 @@
 		C977A2772A684692001249E3 /* GroupMemberVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C977A2762A684692001249E3 /* GroupMemberVC.swift */; };
 		C977A2792A6854B6001249E3 /* AddGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C977A2782A6854B6001249E3 /* AddGroupView.swift */; };
 		C97E2E602A87D5D200760EE9 /* BasePaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97E2E5F2A87D5D200760EE9 /* BasePaddingLabel.swift */; };
-		C97E2E622A93D79400760EE9 /* 스플래쉬.png in Resources */ = {isa = PBXBuildFile; fileRef = C97E2E612A93D79400760EE9 /* 스플래쉬.png */; };
 		C98C4DFA2A6120C00001BEAB /* ChangePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C4DF92A6120C00001BEAB /* ChangePasswordVC.swift */; };
 		C98EB7172A7ABA9600FAB4B8 /* LoginThirdVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98EB7162A7ABA9600FAB4B8 /* LoginThirdVC.swift */; };
 		C98EB7192A7AC4D200FAB4B8 /* SayHelloTextGuideVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98EB7182A7AC4D200FAB4B8 /* SayHelloTextGuideVC.swift */; };
@@ -121,6 +121,7 @@
 		00AF03342A935BD800BE4B5F /* LoginFourthVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginFourthVC.swift; sourceTree = "<group>"; };
 		00E558F12A6FD3CC00EA73FC /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		00E648542A7A2C05005AB40B /* PrivacyPolicyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyVC.swift; sourceTree = "<group>"; };
+		00F703352A946F57008C0EC6 /* 스플래쉬.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "스플래쉬.png"; path = "../../../../../../../Downloads/스플래쉬.png"; sourceTree = "<group>"; };
 		00FD26572A5CE1520013E169 /* GuideVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideVC.swift; sourceTree = "<group>"; };
 		10C241B0944D1FE10DB9FA74 /* Pods-KnockKnock-KnockKnockUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KnockKnock-KnockKnockUITests.release.xcconfig"; path = "Target Support Files/Pods-KnockKnock-KnockKnockUITests/Pods-KnockKnock-KnockKnockUITests.release.xcconfig"; sourceTree = "<group>"; };
 		2785C989BFCB8DA3DC584189 /* Pods-KnockKnock.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KnockKnock.release.xcconfig"; path = "Target Support Files/Pods-KnockKnock/Pods-KnockKnock.release.xcconfig"; sourceTree = "<group>"; };
@@ -170,7 +171,6 @@
 		C977A2762A684692001249E3 /* GroupMemberVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupMemberVC.swift; sourceTree = "<group>"; };
 		C977A2782A6854B6001249E3 /* AddGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupView.swift; sourceTree = "<group>"; };
 		C97E2E5F2A87D5D200760EE9 /* BasePaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePaddingLabel.swift; sourceTree = "<group>"; };
-		C97E2E612A93D79400760EE9 /* 스플래쉬.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "스플래쉬.png"; path = "../../../Downloads/스플래쉬.png"; sourceTree = "<group>"; };
 		C98C4DF92A6120C00001BEAB /* ChangePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordVC.swift; sourceTree = "<group>"; };
 		C98EB7162A7ABA9600FAB4B8 /* LoginThirdVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginThirdVC.swift; sourceTree = "<group>"; };
 		C98EB7182A7AC4D200FAB4B8 /* SayHelloTextGuideVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SayHelloTextGuideVC.swift; sourceTree = "<group>"; };
@@ -286,7 +286,7 @@
 		C93246772A458D9400908D6B /* KnockKnock */ = {
 			isa = PBXGroup;
 			children = (
-				C97E2E612A93D79400760EE9 /* 스플래쉬.png */,
+				00F703352A946F57008C0EC6 /* 스플래쉬.png */,
 				E90B7CC92A7EB6BC00195BF1 /* KnockKnock.entitlements */,
 				C93246782A458D9400908D6B /* AppDelegate.swift */,
 				C932467A2A458D9400908D6B /* SceneDelegate.swift */,
@@ -529,7 +529,7 @@
 			files = (
 				C93246882A458D9600908D6B /* LaunchScreen.storyboard in Resources */,
 				C93246852A458D9600908D6B /* Assets.xcassets in Resources */,
-				C97E2E622A93D79400760EE9 /* 스플래쉬.png in Resources */,
+				00F703362A946F57008C0EC6 /* 스플래쉬.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -896,10 +896,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = KnockKnock/KnockKnock.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = QYW2Y88YJ4;
 				DEVELOPMENT_TEAM = MR2VBKY7CB;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KnockKnock/Info.plist;
@@ -916,8 +916,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = taegyeong.KnockKnock;
+				PRODUCT_BUNDLE_IDENTIFIER = daeun.KnockKnock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -932,10 +933,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = KnockKnock/KnockKnock.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = QYW2Y88YJ4;
 				DEVELOPMENT_TEAM = MR2VBKY7CB;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KnockKnock/Info.plist;
@@ -952,8 +953,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = taegyeong.KnockKnock;
+				PRODUCT_BUNDLE_IDENTIFIER = daeun.KnockKnock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
