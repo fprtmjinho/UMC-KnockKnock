@@ -73,7 +73,27 @@ class GroupVC: UIViewController {
      }
      
      func deleteGroup() {
+         let URLString = "http://\(Server.url)/gathering/\(UserDefaults.standard.integer(forKey: "index"))"
          
+         print(URLString)
+         
+         guard let url = URL(string: URLString) else {
+             print("서버 URL을 만들 수 없습니다.")
+             return
+         }
+         
+         var request = URLRequest(url: url)
+         request.httpMethod = "DELETE"
+         let accessToken = UserDefaults.standard.string(forKey: "Authorization")
+         request.allHTTPHeaderFields = ["Authorization": accessToken!]
+         URLSession.shared.dataTask(with: request) { data, response, error in
+             guard let httpResponse = response as? HTTPURLResponse else {
+                 print("올바른 HTTP 응답이 아닙니다.")
+                 return
+             }
+             let statusCode = httpResponse.statusCode
+             print("HTTP 상태 코드: \(statusCode)")
+         }.resume()
      }
      
      func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
