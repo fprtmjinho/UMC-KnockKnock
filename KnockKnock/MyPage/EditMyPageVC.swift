@@ -15,16 +15,22 @@ class EditMyPageVC : UIViewController {
         btn.setTitle("프로필 사진 편집", for: .normal)
         btn.setTitleColor(#colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1), for: .normal)
         btn.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        btn.addTarget(self, action: #selector(editProfileImageButtonTapped(_:)), for: .touchUpInside)
         return btn
     }()
     
     
     let ProfileView : UIImageView = {
-       var profileView = UIImageView()
-        let config = UIImage.SymbolConfiguration(paletteColors: [ #colorLiteral(red: 0.9972829223, green: 0, blue: 0.4537630677, alpha: 1)])
-        profileView.image = UIImage(systemName: "person.circle.fill", withConfiguration: config)
-        profileView.layer.cornerRadius = 40
-        
+        var profileView = UIImageView()
+        profileView.layer.cornerRadius = 50
+        profileView.clipsToBounds = true
+        profileView.layer.masksToBounds = true // 마스크 적용
+        if let imageData = UserDefaults.standard.data(forKey: "ProfileImage") {
+            if let image = UIImage(data: imageData) {
+                // 이미지 뷰에 이미지 설정
+                profileView.image = image
+            }
+        }
         return profileView
     }()
     
@@ -75,8 +81,25 @@ class EditMyPageVC : UIViewController {
   
 }
 
-extension EditMyPageVC {
+extension EditMyPageVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    @objc func editProfileImageButtonTapped(_: UIButton) {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.sourceType = .photoLibrary
+        present(imagePickerController, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let selectedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            ProfileView.image = selectedImage
+        }
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
     
     func makeSubView(){
         view.addSubview(ProfileView)
