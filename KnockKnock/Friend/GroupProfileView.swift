@@ -138,6 +138,38 @@ extension GroupProfileView {
     
     //임시로 적용
     func getData(){
+        
+        let URLString = "http://\(Server.url)/gathering/3"
+        print(URLString)
+        guard let url = URL(string: URLString) else {
+            print("서버 URL을 만들 수 없습니다.")
+            return
+        }
+        let accessToken = UserDefaults.standard.string(forKey: "Authorization")
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.allHTTPHeaderFields = ["Authorization": accessToken!]
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let httpResponse = response as? HTTPURLResponse else {
+                print("올바른 HTTP 응답이 아닙니다.")
+                return
+            }
+            let statusCode = httpResponse.statusCode
+            print("HTTP 상태 코드: \(statusCode)")
+            guard let data = data else {
+                print("그룹 정보를 받아오지 못했습니다.")
+                return
+            }
+            do {
+                let decodedData = try JSONDecoder().decode(Gathering.self, from: data)
+                print("\(decodedData)")
+            } catch {
+                print("그룹 정보 디코딩에 실패하였습니다.")
+            }
+        }.resume()
+        
+        
+        
         var nameCh: Array<String> = []
         var numberCh: Array<String> = []
 //        var key: String = group.choiceTime!

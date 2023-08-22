@@ -195,6 +195,7 @@ extension GroupVC {
                 }
                 self.keyList = keyCh
                 self.nameList = nameCh
+                print(self.keyList)
             } catch {
                 print("친구 정보 디코딩에 실패하였습니다.")
             }
