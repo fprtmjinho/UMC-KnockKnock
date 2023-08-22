@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Alamofire
+
 class EditMyPageVC : UIViewController {
     
     var saveBtn : UIButton = UIButton()
@@ -34,32 +36,32 @@ class EditMyPageVC : UIViewController {
         return profileView
     }()
     
-    let nameLabel : UILabel = {
-       let namelabel = UILabel()
-        namelabel.text = "이름(필수)"
-        namelabel.font = UIFont.boldSystemFont(ofSize: 17)
-        return namelabel
+    let nickNameLabel : UILabel = {
+       let label = UILabel()
+        label.text = "닉네임"
+        label.font = UIFont.boldSystemFont(ofSize: 17)
+        return label
     }()
     
-    let nameText : UITextField = {
-       let nametext = UITextField()
-        nametext.placeholder = "입력해주세요!"
-        nametext.backgroundColor = .systemGray6
-        nametext.layer.cornerRadius = 10
-        nametext.addLeftPadding()
-        return nametext
+    let nickNameText : UITextField = {
+       let text = UITextField()
+        text.placeholder = "입력해주세요."
+        text.backgroundColor = .systemGray6
+        text.layer.cornerRadius = 10
+        text.addLeftPadding()
+        return text
     }()
     
-    let nicknameLabel : UILabel = {
+    let birthdayLabel : UILabel = {
         let label = UILabel()
-         label.text = "닉네임(선택)"
+         label.text = "생년월일"
          label.font = UIFont.boldSystemFont(ofSize: 17)
          return label
      }()
 
-     let nicknameText : UITextField = {
+     let birthdayText : UITextField = {
         let text = UITextField()
-         text.placeholder = "입력해주세요!"
+         text.placeholder = "생년월일 6자리 입력해주세요."
          text.backgroundColor = .systemGray6
          text.layer.cornerRadius = 10
          text.addLeftPadding()
@@ -104,10 +106,10 @@ extension EditMyPageVC: UIImagePickerControllerDelegate, UINavigationControllerD
     func makeSubView(){
         view.addSubview(ProfileView)
         view.addSubview(editBtn)
-        view.addSubview(nameLabel)
-        view.addSubview(nameText)
-        view.addSubview(nicknameLabel)
-        view.addSubview(nicknameText)
+        view.addSubview(nickNameLabel)
+        view.addSubview(nickNameText)
+        view.addSubview(birthdayLabel)
+        view.addSubview(birthdayText)
         
         saveBtn = setNextBtn(view: self, title: "저장하기")
     }
@@ -116,10 +118,10 @@ extension EditMyPageVC: UIImagePickerControllerDelegate, UINavigationControllerD
     func makeConstraint(){
         ProfileView.translatesAutoresizingMaskIntoConstraints = false
         editBtn.translatesAutoresizingMaskIntoConstraints = false
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        nameText.translatesAutoresizingMaskIntoConstraints = false
-        nicknameLabel.translatesAutoresizingMaskIntoConstraints = false
-        nicknameText.translatesAutoresizingMaskIntoConstraints = false
+        nickNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        nickNameText.translatesAutoresizingMaskIntoConstraints = false
+        birthdayLabel.translatesAutoresizingMaskIntoConstraints = false
+        birthdayText.translatesAutoresizingMaskIntoConstraints = false
         
         
         NSLayoutConstraint.activate([
@@ -130,23 +132,23 @@ extension EditMyPageVC: UIImagePickerControllerDelegate, UINavigationControllerD
             editBtn.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             editBtn.topAnchor.constraint(equalTo: ProfileView.bottomAnchor, constant: 5),
             
-            nameLabel.topAnchor.constraint(equalTo: editBtn.bottomAnchor, constant: 50),
-            nameLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            nameLabel.heightAnchor.constraint(equalToConstant: 30),
+            nickNameLabel.topAnchor.constraint(equalTo: editBtn.bottomAnchor, constant: 50),
+            nickNameLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            nickNameLabel.heightAnchor.constraint(equalToConstant: 30),
             
-            nameText.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 7),
-            nameText.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            nameText.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
-            nameText.heightAnchor.constraint(equalToConstant: 45),
+            nickNameText.topAnchor.constraint(equalTo: nickNameLabel.bottomAnchor, constant: 7),
+            nickNameText.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            nickNameText.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
+            nickNameText.heightAnchor.constraint(equalToConstant: 45),
             
-            nicknameLabel.topAnchor.constraint(equalTo: nameText.bottomAnchor, constant: 20),
-            nicknameLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            nicknameLabel.heightAnchor.constraint(equalToConstant: 30),
+            birthdayLabel.topAnchor.constraint(equalTo: nickNameText.bottomAnchor, constant: 20),
+            birthdayLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            birthdayLabel.heightAnchor.constraint(equalToConstant: 30),
 
-            nicknameText.topAnchor.constraint(equalTo: nicknameLabel.bottomAnchor, constant: 7),
-            nicknameText.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            nicknameText.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
-            nicknameText.heightAnchor.constraint(equalToConstant: 45),
+            birthdayText.topAnchor.constraint(equalTo: birthdayLabel.bottomAnchor, constant: 7),
+            birthdayText.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            birthdayText.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
+            birthdayText.heightAnchor.constraint(equalToConstant: 45),
             
         ])
         
@@ -158,16 +160,48 @@ extension EditMyPageVC: UIImagePickerControllerDelegate, UINavigationControllerD
     
     
     @objc func saveMyData(_:UIButton){
-        var newName: String = ""
+        
+        let accessToken = UserDefaults.standard.string(forKey: "Authorization")
+        
         var newNickName: String = ""
-        if let name = nameText.text{
-            newName = name
-        }
-        if let nickName = nicknameText.text{
+        var newBirthday: String = ""
+        if let nickName = nickNameText.text{
             newNickName = nickName
         }
-        me.name = newName
+        if let birthday = birthdayText.text{
+            newBirthday = birthday
+        }
         me.nickName = newNickName
+        me.birthday = newBirthday
+        
+        if let profileImageData = ProfileView.image?.jpegData(compressionQuality: 1.0) {
+                UserDefaults.standard.set(profileImageData, forKey: "ProfileImage")
+            }
+        
+        let editUserData = EditUserData(nickName: me.nickName, birthday: me.birthday)
+        
+        AF.upload(multipartFormData: { multipartFormData in
+            if let editUserJSONData = try? JSONEncoder().encode(editUserData) {
+                multipartFormData.append(editUserJSONData, withName: "request", mimeType: "application/json")
+            }
+            
+            if let savedImageData = UserDefaults.standard.data(forKey: "ProfileImage") as? Data,
+               let profileImage = UIImage(data: savedImageData),
+               let profileImageData = profileImage.jpegData(compressionQuality: 0.9) {
+                multipartFormData.append(profileImageData, withName: "profileImage", fileName: "profileImage.jpeg", mimeType: "image/jpeg")
+            }
+        }, to: URL(string: "http://\(Server.url)/member/update")!, method: .put, headers: ["Authorization": accessToken!])
+        .response { response in
+            switch response.result {
+            case .success:
+                if let statusCode = response.response?.statusCode {
+                    print("HTTP Status Code: \(statusCode)")
+                }
+            case .failure(let error):
+                print("Error: \(error)")
+            }
+        }
+        
         self.navigationController?.popViewController(animated: true)
     }
 }

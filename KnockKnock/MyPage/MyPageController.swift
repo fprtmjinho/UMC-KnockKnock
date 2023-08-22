@@ -40,6 +40,12 @@ class MyPageController : UIViewController{
         makeConstraint()
         makeAddTarget()
         setScrollView()
+        if let imageData = UserDefaults.standard.data(forKey: "ProfileImage") {
+            if let image = UIImage(data: imageData) {
+                // 이미지 뷰에 이미지 설정
+                myPage.ProfileView.image = image
+            }
+        }
     }
    
 }
