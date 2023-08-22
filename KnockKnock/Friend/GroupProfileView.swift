@@ -139,7 +139,7 @@ extension GroupProfileView {
     //임시로 적용
     func getData(){
         
-        let URLString = "http://\(Server.url)/gathering/3"
+        let URLString = "http://\(Server.url)/gathering/\(UserDefaults.standard.integer(forKey: "index"))"
         print(URLString)
         guard let url = URL(string: URLString) else {
             print("서버 URL을 만들 수 없습니다.")

@@ -33,6 +33,9 @@ class GroupProfileVC : UIViewController {
         makeSubView()
         makeConstraint()
         makeAddTarget()
+        
+        print("group : \(group.choiceIndex!)")
+        print("index : \(UserDefaults.standard.integer(forKey: "index"))")
     }
     
     override func viewWillAppear(_ animated: Bool) {

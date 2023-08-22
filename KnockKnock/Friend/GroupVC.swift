@@ -63,13 +63,17 @@ class GroupVC: UIViewController {
      
      func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
          if editingStyle == .delete {
-//             deleteGroup()
+             deleteGroup()
              group.dic[keyList[indexPath.row]] = nil
              nameList.remove(at: indexPath.row)
              tableView.deleteRows(at: [indexPath], with: .fade)
              //remove 확인용 alarm 필요
          }
          //화이팅!
+     }
+     
+     func deleteGroup() {
+         
      }
      
      func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -119,12 +123,13 @@ extension GroupVC {
            self.addGroupBtn.addTarget(self, action: #selector(addGroupFunc(_:)), for: .touchUpInside)
     }
     
-     @objc func nextView(index:IndexPath) {
-        let nextView = GroupProfileVC()
-         group.choiceIndex = keyList[index.row]
-        nextView.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(nextView, animated: true)
-    }
+    @objc func nextView(index:IndexPath) {
+            let nextView = GroupProfileVC()
+             group.choiceIndex = keyList[index.row]
+             UserDefaults.standard.set(keyList[index.row], forKey: "index")
+            nextView.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(nextView, animated: true)
+        }
 
     @objc func addGroupFunc(_: UIButton){
         let addGroupVC = AddGroupVC()
