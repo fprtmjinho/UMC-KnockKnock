@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import NMapsMap
 class GroupProfileView : UIView {
     
     let memberLabel : UILabel = {
@@ -35,17 +36,22 @@ class GroupProfileView : UIView {
         label.font = UIFont.boldSystemFont(ofSize: 16)
          return label
     }()
+    
+    let naverMapView = NMFMapView(frame: UIScreen.main.bounds)
+    let marker = NMFMarker()
     let friendData = Friends.shared
     let group = Group.shared
     
     var nameList: Array<String> = []
     var numberList: Array<String> = []
+    var bestFriendList : Array<Bool> = []
+    
+    var searchPlace: String = ""
     
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        getData()
-        sortData()
+        setMap()
         setTableView()
         makeSubView()
         makeConstraint()
@@ -63,9 +69,14 @@ extension GroupProfileView : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "groupmemberList") ?? UITableViewCell(style: .subtitle, reuseIdentifier: "groupmemberList")
-        let BFimage = UIImage(named: "BF")?.resizeImageTo(size: CGSize(width: 65, height: 25))
+        let selected = UIImage(named: "BF")?.resizeImageTo(size: CGSize(width: 65, height: 25))
+        let unSelected = UIImage(named: "expand")?.resizeImageTo(size: CGSize(width: 25, height:25))
+        if bestFriendList[indexPath.row] == true{
+            cell.accessoryView = UIImageView(image: selected)
+        }else{
+            cell.accessoryView = UIImageView(image:unSelected)
+        }
         cell.backgroundColor = .systemGray6
-        cell.accessoryView = UIImageView(image: BFimage)
         
         cell.textLabel?.text = nameList[indexPath.row]
         cell.detailTextLabel?.text = numberList[indexPath.row]
@@ -106,7 +117,7 @@ extension GroupProfileView {
         addSubview(groupAlarmLabel)
         addSubview(groupAlarmSwitch)
         addSubview(placeLabel)
-        
+        addSubview(naverMapView)
     }
     func makeConstraint(){
         memberLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -114,6 +125,7 @@ extension GroupProfileView {
         groupAlarmLabel.translatesAutoresizingMaskIntoConstraints = false
         groupAlarmSwitch.translatesAutoresizingMaskIntoConstraints = false
         placeLabel.translatesAutoresizingMaskIntoConstraints = false
+        naverMapView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             memberLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 30),
@@ -130,59 +142,18 @@ extension GroupProfileView {
             groupAlarmSwitch.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
             
             placeLabel.topAnchor.constraint(equalTo: groupAlarmSwitch.bottomAnchor, constant: 30),
-            placeLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30)
+            placeLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
         
-            
+            naverMapView.topAnchor.constraint(equalTo: placeLabel.bottomAnchor, constant: 40),
+            naverMapView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
+            naverMapView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
+            naverMapView.heightAnchor.constraint(equalToConstant: 300),
         ])
     }
     
     //임시로 적용
-    func getData(){
-        
-        let URLString = "http://\(Server.url)/gathering/\(UserDefaults.standard.integer(forKey: "index"))"
-        print(URLString)
-        guard let url = URL(string: URLString) else {
-            print("서버 URL을 만들 수 없습니다.")
-            return
-        }
-        let accessToken = UserDefaults.standard.string(forKey: "Authorization")
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        request.allHTTPHeaderFields = ["Authorization": accessToken!]
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let httpResponse = response as? HTTPURLResponse else {
-                print("올바른 HTTP 응답이 아닙니다.")
-                return
-            }
-            let statusCode = httpResponse.statusCode
-            print("HTTP 상태 코드: \(statusCode)")
-            guard let data = data else {
-                print("그룹 정보를 받아오지 못했습니다.")
-                return
-            }
-            do {
-                let decodedData = try JSONDecoder().decode(Gathering.self, from: data)
-                print("\(decodedData)")
-            } catch {
-                print("그룹 정보 디코딩에 실패하였습니다.")
-            }
-        }.resume()
-        
-        
-        
-        var nameCh: Array<String> = []
-        var numberCh: Array<String> = []
-//        var key: String = group.choiceTime!
-//        print("key : \(key)")
-//        for member in group.dic[key]!.user{
-//            nameCh.append(friendData.dic[member]!.name)
-//            numberCh.append(member)
-//        }
-        nameList = nameCh
-        numberList = numberCh
-    }
     func sortData(){
-        var combinedList = zip(nameList,numberList).map{($0,$1)}
+        var combinedList = zip(nameList,zip(numberList,bestFriendList).map{($0,$1)}).map{($0,$1)}
 
         // 이름을 기준으로 오름차순 정렬
         combinedList.sort { $0.0 < $1.0 }
@@ -192,7 +163,30 @@ extension GroupProfileView {
 
         // 정렬된 결과를 다시 리스트로 분리
         nameList = combinedList.map { $0.0 }
-        numberList = combinedList.map{$0.1}
+        numberList = combinedList.map{$0.1.0}
+        bestFriendList = combinedList.map{$0.1.1}
         
+    }
+    func setMap(){
+        //아래 지도 코드들을 함수화해서 서버 통신으로 받아온 좌표를 lat,lng에 넣어주면 지도 위치 변경 및 마커 설정 가능
+        //지도 설명 잘 되어 있는 링크 https://navermaps.github.io/ios-map-sdk/guide-ko/5-2.html
+        //지도 좌표
+        naverMapView.moveCamera(NMFCameraUpdate(scrollTo: NMGLatLng(lat:37.498015, lng:127.027974)))
+        //마커좌표
+        marker.position = NMGLatLng(lat: 37.498015, lng: 127.027974)
+        //마커 크기
+        marker.width = 25
+        marker.height = 40
+        //글씨 너비
+        marker.captionRequestedWidth = 100
+        //글씨
+        marker.captionText = "강남역"
+        //글씨 위치
+        marker.captionAligns = [NMFAlignType.top]
+        //글씨 간격
+        marker.captionOffset = 15
+        //마커를 네이버 뷰에 띄우는
+        marker.mapView = naverMapView
+
     }
 }

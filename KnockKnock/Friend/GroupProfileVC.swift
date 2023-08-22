@@ -17,19 +17,21 @@ class GroupProfileVC : UIViewController {
     
     let group = Group.shared
     
-    var groupName: String = ""
-    var groupMember: [String] = []
-    var groupPlace: String = ""
-    var groupTime: String = ""
+    var searchPlace: String = ""
+    
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = groupName
+        self.title = ""
         view.backgroundColor = .white
         setNavigationBar()
         handleEditFunc()
         editNavigationBarBtn()
+        print("index : \(UserDefaults.standard.integer(forKey: "index"))")
+        getData()
+        
+//        setMap()
         makeSubView()
         makeConstraint()
         makeAddTarget()
@@ -98,4 +100,55 @@ extension GroupProfileVC {
     @objc func editNavigationBarBtnFunc(_: UINavigationItem){
         navigationController?.pushViewController(EditGroupVC(), animated: true)
     }
+    func getData(){
+        
+        let URLString = "http://\(Server.url)/gathering/\(UserDefaults.standard.integer(forKey: "index"))"
+        print(URLString)
+        guard let url = URL(string: URLString) else {
+            print("서버 URL을 만들 수 없습니다.")
+            return
+        }
+        let accessToken = UserDefaults.standard.string(forKey: "Authorization")
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.allHTTPHeaderFields = ["Authorization": accessToken!]
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let httpResponse = response as? HTTPURLResponse else {
+                print("올바른 HTTP 응답이 아닙니다.")
+                return
+            }
+            let statusCode = httpResponse.statusCode
+            print("HTTP 상태 코드: \(statusCode)")
+            guard let data = data else {
+                print("그룹 정보를 받아오지 못했습니다.")
+                return
+            }
+            do {
+                var nameCh: Array<String> = []
+                var numberCh: Array<String> = []
+                var bestCh: Array<Bool> = []
+                let decodedData = try JSONDecoder().decode(Gathering.self, from: data)
+                for member in decodedData.gatheringMembers{
+                    nameCh.append(member.friendName)
+                    numberCh.append(member.phoneNumber!)
+                    bestCh.append(member.bestFriend)
+                }
+                self.groupProfileView.nameList = nameCh
+                self.groupProfileView.numberList = numberCh
+                self.groupProfileView.bestFriendList = bestCh
+                self.title = decodedData.title
+                self.searchPlace = decodedData.location
+                print("\(decodedData)")
+            } catch {
+                print("그룹 정보 디코딩에 실패하였습니다.")
+            }
+            DispatchQueue.main.async {
+//                self.getData()
+                self.groupProfileView.sortData()
+                self.groupProfileView.membertableView.reloadData()
+            }
+            
+        }.resume()
+    }
+    
 }

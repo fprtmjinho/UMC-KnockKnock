@@ -8,5 +8,5 @@
 import Foundation
 
 struct Server {
-    static let url: String = "43.200.240.251"
+    static let url: String = "54.180.168.54"//"43.200.240.251"
 }
