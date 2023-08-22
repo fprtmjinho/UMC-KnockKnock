@@ -20,7 +20,7 @@ struct GroupDataGet: Codable{
 
 struct PostGroupRequest: Codable{
     let title: String
-    let gathringMemberIds: [Int]
+    let gatheringMemberIds: [Int]
     let location: String
 }
 

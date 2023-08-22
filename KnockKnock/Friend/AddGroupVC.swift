@@ -142,11 +142,14 @@ extension AddGroupVC {
             print("서버 URL을 만들 수 없습니다.")
             return
         }
+        
         let groupData = PostGroupRequest(
             title: group.name,
-            gathringMemberIds: group.user,
+            gatheringMemberIds: group.user,
             location: group.place
         )
+        
+        print(groupData)
         
         let accessToken = UserDefaults.standard.string(forKey: "Authorization")
         
@@ -161,6 +164,14 @@ extension AddGroupVC {
             return
         }
         URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let httpResponse = response as? HTTPURLResponse else {
+                print("올바른 HTTP 응답이 아닙니다.")
+                return
+            }
+            
+            let statusCode = httpResponse.statusCode
+            print("HTTP 상태 코드: \(statusCode)")
+            
             guard let data = data else {
                 print("그룹 정보를 받아오지 못했습니다.")
                 return
